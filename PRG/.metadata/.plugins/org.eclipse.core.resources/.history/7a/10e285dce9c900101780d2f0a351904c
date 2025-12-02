@@ -1,0 +1,73 @@
+package BubbleSort;
+
+import java.util.concurrent.*;
+import java.util.*;
+
+public class prueba_3 {
+
+    private static final int RUN = 32;
+
+    private static void insertionSort(int[] arr, int left, int right) {
+        for (int i = left + 1; i <= right; i++) {
+            int temp = arr[i];
+            int j = i - 1;
+            while (j >= left && arr[j] > temp) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = temp;
+        }
+    }
+
+    private static void merge(int[] arr, int l, int m, int r) {
+        int len1 = m - l + 1;
+        int len2 = r - m;
+
+        int[] left = new int[len1];
+        int[] right = new int[len2];
+
+        System.arraycopy(arr, l, left, 0, len1);
+        System.arraycopy(arr, m + 1, right, 0, len2);
+
+        int i = 0, j = 0, k = l;
+        while (i < len1 && j < len2) {
+            arr[k++] = (left[i] <= right[j]) ? left[i++] : right[j++];
+        }
+        while (i < len1) arr[k++] = left[i++];
+        while (j < len2) arr[k++] = right[j++];
+    }
+
+    public static void timsort(int[] arr) {
+        int n = arr.length;
+        int cores = Runtime.getRuntime().availableProcessors();
+        ExecutorService pool = Executors.newFixedThreadPool(cores);
+        List<Callable<Void>> tasks = new ArrayList<>();
+
+        // Phase 1: sort RUN blocks in parallel
+        for (int i = 0; i < n; i += RUN) {
+            final int left = i;
+            final int right = Math.min(i + RUN - 1, n - 1);
+            tasks.add(() -> {
+                insertionSort(arr, left, right);
+                return null;
+            });
+        }
+
+        try {
+            pool.invokeAll(tasks);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Phase 2: merge sorted runs sequentially (safe, simple)
+        for (int size = RUN; size < n; size *= 2) {
+            for (int left = 0; left < n; left += 2 * size) {
+                int mid = left + size - 1;
+                int right = Math.min(left + 2 * size - 1, n - 1);
+                if (mid < right) merge(arr, left, mid, right);
+            }
+        }
+
+        pool.shutdown();
+    }
+}

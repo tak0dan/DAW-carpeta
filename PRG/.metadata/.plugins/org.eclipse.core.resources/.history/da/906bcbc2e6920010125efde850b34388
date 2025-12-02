@@ -1,0 +1,9 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+	    System.out.println("abc\\ndef");	}
+}

@@ -1,0 +1,18 @@
+package Examen_Bucles;
+import java.util.Scanner;
+public class Ej_2 {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		boolean n = false;
+		System.out.println("Núm\tCuad\tCub\t^4\t^5");
+		System.out.println("----\t----\t----\t----\t----");
+		for(int i = 1; i<=10;i++) {
+			System.out.println();
+			for(int j = 0; j<5; j++) {
+				double res=Math.pow(i, j);
+				System.out.print(res);
+			}
+		}
+		
+	}
+}

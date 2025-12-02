@@ -1,0 +1,20 @@
+package Tema_2;
+import java.util.Scanner;
+public class Parte_de_clase {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Introduzca tus apellidos");
+		String apellidos = scanner.nextLine();
+		System.out.println("Introduzca tu nombre");
+		String nombre = scanner.nextLine();
+		String completo = (apellidos+", "+nombre);
+			int iguales = completo.compareToIgnoreCase("Perez Perez, Raquel");
+			if(iguales == 0) {
+			System.out.println("Lol, tu eres Perez Perez, Raquel");
+			}else if(iguales>0){
+				System.out.println("Perteneces a la segunda mitad de la clase");
+			}else{
+				System.out.println("Perteneces a la primera mitad de la clase");
+			}
+	}
+}

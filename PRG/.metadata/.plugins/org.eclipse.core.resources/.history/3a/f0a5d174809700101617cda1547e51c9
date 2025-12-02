@@ -1,0 +1,55 @@
+package Tema_2;
+
+
+public class Ej5 {
+    public static void main(String[] args) {
+        
+        //int a, b, c=0;
+        int a;
+        int b;
+        int c = 0;
+        //System.out.println("a="+a);
+        //System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //a = 5;
+        a = 5;
+        System.out.println("a="+a);
+        //System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //b = -6+a;
+        b = (-6 + a);
+        System.out.println("a="+a);
+        System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //a++;
+        a++;
+        System.out.println("a="+a);
+        System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //b = a * 10;
+        b = a * 10;
+        System.out.println("a="+a);
+        System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //c --;
+        c--;
+        System.out.println("a="+a);
+        System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        //c = b;
+        c = b;
+        System.out.println("a="+a);
+        System.out.println("b=" +b);
+        System.out.println("c="+c);
+        
+        int n = 4;
+        int res = n++ * 2;
+        System.out.println(res);
+    }
+}

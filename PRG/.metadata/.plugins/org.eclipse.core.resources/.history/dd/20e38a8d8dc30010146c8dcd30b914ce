@@ -1,0 +1,38 @@
+package Tema_5;
+import java.util.Scanner;
+import java.util.Random;
+public class Tarea4_1_Ej_8 {
+	public static void main(String[] args) {
+		Random r = new Random();
+		Scanner tec = new Scanner(System.in);
+		boolean salir_del_bucle = false;
+		int cantidad_numeros = 0;
+		
+		while(salir_del_bucle == false && cantidad_numeros==0) {
+			System.out.println("Dime cuantos numeros quieres generar.");
+			if(tec.hasNextInt()) {
+				cantidad_numeros = tec.nextInt();
+				salir_del_bucle = true;
+			}
+		}
+		int holder = 0;
+		int calc_length;
+		int v[] = new int[cantidad_numeros];
+		if(v.length%2==0) {
+			calc_length = v.length/2;
+		}else {
+			calc_length = (v.length-1)/2;
+		}
+		for(int i = 0; i<v.length; i++) {
+			System.out.print(v[i] + " ");
+		}
+		for(int i = 0; i<calc_length;i++) {
+			holder = v[i];
+			v[i] = v[v.length-i];
+			v[v.length-i] = holder;
+		}
+		for(int i = 0; i<v.length; i++) {
+			System.out.print(v[i] + " ");
+		}
+	}
+}

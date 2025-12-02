@@ -1,0 +1,23 @@
+package Tema_3.Tareas3_4;
+
+public class cuadrdvco {
+    public static void main(String[] args) {
+        final int FIN = 9;
+
+        for (int i = 0; i < FIN; i++) {
+            for (int j = 0; j < FIN; j++) {
+
+                // Determine how far from the closest edge we are
+                int distance = Math.min(Math.min(i, j), Math.min(FIN - 1 - i, FIN - 1 - j));
+
+                // If that distance is even, we’re on a visible border
+                if (distance % 2 == 0) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print("  ");
+                }
+            }
+            System.out.println();
+        }
+    }
+}

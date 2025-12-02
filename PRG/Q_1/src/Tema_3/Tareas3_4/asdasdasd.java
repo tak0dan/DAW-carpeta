@@ -1,0 +1,19 @@
+package Tema_3.Tareas3_4;
+import java.util.Scanner;
+public class asdasdasd {
+    public static void main(String[] args) {
+    	Scanner tec = new Scanner(System.in);
+        int FIN = tec.nextInt();
+
+        for (int i = 0; i < FIN; i++) {
+            for (int j = 0; j < FIN; j++) {
+                if (i>=j && (i==j || i==FIN-1 || j==0 )) {
+                    System.out.print("* ");
+                } else {
+                    System.out.print("  "); 
+                }
+            }
+            System.out.println();
+        }
+    }
+}

@@ -1,0 +1,22 @@
+package Tema_2;
+
+import java.util.Scanner;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		
+		Scanner tec = new Scanner(System.in);
+		
+		System.out.println("Dime tu edad");
+		int num = tec.nextInt();
+		
+		System.out.println("Dime tu altura (en metros)");
+		double altura = tec.nextDouble();
+		
+		System.out.println("Tienes " + num + " años.");
+		System.out.print("Mides " + altura + " metros.");
+	}
+}

@@ -1,0 +1,34 @@
+
+package EddTests;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
+
+public class CalculoEdad {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+
+		System.out.print("¿Cómo te llamas? ");
+		String nombre = sc.nextLine(); 
+
+		System.out.print("Introduce tu año de nacimiento (por ejemplo, 1990): ");
+		int anio = sc.nextInt();	sc.nextLine();
+
+		System.out.print("Introduce tu mes de nacimiento (1-12): ");
+		int mes = sc.nextInt();	sc.nextLine();
+
+		System.out.print("Introduce tu día de nacimiento (1-31): ");
+		int dia = sc.nextInt();	sc.nextLine();
+
+		LocalDate fechaNacimiento = LocalDate.of(anio, dia, mes);
+		LocalDate hoy = LocalDate.now();
+
+		Period edad = Period.between(fechaNacimiento, hoy);
+
+		System.out.println("\nHola, " + nombre + ". Tienes " + edad.getYears() + " años.");
+
+		sc.close();
+	}
+}

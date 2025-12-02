@@ -1,0 +1,47 @@
+package Tema_5;
+
+import java.util.Scanner;
+import java.util.Random;
+
+public class cfgedgher {
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+        Random r = new Random();
+
+        int TAM = 0;
+
+        while (true) {
+            System.out.println("Introduce length of the arrays.");
+            if (tec.hasNextInt()) {
+                TAM = tec.nextInt();
+                if (TAM > 1) break;
+            } else {
+                tec.next();
+            }
+        }
+
+        int[] v1 = new int[TAM];
+        int[] v2 = new int[TAM];
+        int[] v3 = new int[TAM];
+
+        String concat_v1 = "";
+        String concat_v2 = "";
+        String concat_v3 = "";
+
+        for (int i = 0; i < TAM; i++) {
+            v1[i] = r.nextInt(-30, 30);
+            v2[i] = r.nextInt(-30, 30);
+            v3[i] = v1[i] + v2[i];
+
+            concat_v1 += String.format("[%4d]   ", v1[i]);
+            concat_v2 += String.format("[%4d]   ", v2[i]);
+            concat_v3 += String.format("[%4d]   ", v3[i]);
+        }
+
+        System.out.println("v1 = " + concat_v1);
+        System.out.println("+");
+        System.out.println("v2 = " + concat_v2);
+        System.out.println("=");
+        System.out.println("v3 = " + concat_v3);
+    }
+}

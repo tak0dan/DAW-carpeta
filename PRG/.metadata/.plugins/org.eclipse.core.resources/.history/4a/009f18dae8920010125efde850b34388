@@ -1,0 +1,18 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		
+		int a = 1;
+		int b = 2;
+		int c = 3;
+		
+		double x1 = (-b);
+		System.out.println(x1);
+		
+	
+	}
+}

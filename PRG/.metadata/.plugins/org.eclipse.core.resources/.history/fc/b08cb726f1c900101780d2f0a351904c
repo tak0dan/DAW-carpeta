@@ -1,0 +1,82 @@
+package BubbleSort;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class prueba_3 {
+
+public static void main(String[] args) {
+
+    final int START = 1;      // initial length
+    final int END   = 500;    // final length
+    final int STEP  = 2;      // increment per loop
+    final int TRIES = 10;     // runs per size
+
+    double highestVelocity = Double.MIN_VALUE;
+    double lowestVelocity = Double.MAX_VALUE;
+    int sizeAtHighestVelocity = -1;
+    int sizeAtLowestVelocity = -1;
+
+    List<String> summary = new ArrayList<>();
+
+    for (int n = START; n <= END; n += STEP) {
+
+        int[] v = new int[n];
+        long[] runTimes = new long[TRIES];
+
+        // Run sorting TRIES times
+        for (int i = 0; i < TRIES; i++) {
+            MetodosA.llenarArrayRandom(v, 1, 99);
+
+            long t1 = System.nanoTime();
+            MetodosA.Timsort2.timsort(v);
+            long t2 = System.nanoTime();
+
+            runTimes[i] = t2 - t1;
+        }
+
+        // Compute stats
+        long max = runTimes[0];
+        long min = runTimes[0];
+        long sum = 0;
+        for (long time : runTimes) {
+            if (time > max) max = time;
+            if (time < min) min = time;
+            sum += time;
+        }
+        double avg = sum / (double) TRIES;
+
+        // Convert to milliseconds
+        double avgMs = avg / 1_000_000.0;
+        double maxMs = max / 1_000_000.0;
+        double minMs = min / 1_000_000.0;
+
+        // Compute velocity: size / avgSeconds
+        double avgSec = avg / 1_000_000_000.0; // convert nanoseconds to seconds
+        double velocity = n / avgSec; // size per second
+
+        // Track highest and lowest velocities
+        if (velocity > highestVelocity) {
+            highestVelocity = velocity;
+            sizeAtHighestVelocity = n;
+        }
+        if (velocity < lowestVelocity) {
+            lowestVelocity = velocity;
+            sizeAtLowestVelocity = n;
+        }
+
+        summary.add(String.format("Size: %d | Max: %.3f ms | Min: %.3f ms | Avg: %.3f ms | Velocity: %.3f size/sec",
+                n, maxMs, minMs, avgMs, velocity));
+    }
+
+    // Print summary after all runs
+    System.out.println("=== Benchmark Summary ===");
+    for (String line : summary) {
+        System.out.println(line);
+    }
+
+    System.out.printf("Highest velocity: %.3f size/sec at Size %d%n", highestVelocity, sizeAtHighestVelocity);
+    System.out.printf("Lowest velocity: %.3f size/sec at Size %d%n", lowestVelocity, sizeAtLowestVelocity);
+}
+
+}

@@ -1,0 +1,35 @@
+package BubbleSort;
+
+public class ghfhgfu {
+
+    public static void main(String[] args) {
+
+        final int START = 1;   // initial length
+        final int END   = 50000;  // final length (your new variable)
+        final int STEP  = 1;   // how much to grow each iteration
+        final int TRIES = 10;    // runs per size
+
+        for (int n = START; n <= END; n += STEP) {
+
+            int[] v = new int[n];
+            long totalTime = 0;
+
+            for (int i = 0; i < TRIES; i++) {
+                MetodosA.llenarArrayRandom(v, 1, 99);
+
+                long t1 = System.nanoTime(); 
+                MetodosA.Timsort.timsort(v);
+                long t2 = System.nanoTime();
+
+                totalTime += (t2 - t1);
+            }
+
+            double avgTime = totalTime / (double) TRIES;
+            double timePerElement = avgTime / n;
+
+            System.out.println("Size: " + n +
+                               " | Avg time: " + (avgTime / 1_000_000.0) + " ms" +
+                               " | Time per element: " + timePerElement + " ns/element");
+        }
+    }
+}

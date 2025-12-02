@@ -1,0 +1,36 @@
+package BubbleSort;
+
+public class prueba_2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		 int []v=new int[500];
+
+		 long tiempo=0;
+
+		 
+
+		 for(int i=1; i<10; i++) {
+
+		 
+
+		 MetodosA.llenarArrayRandom(v, 1, 36);
+
+		 long t1 = System.currentTimeMillis();
+
+		 MetodosA.bubbleSort(v);
+
+		 long t2 = System.currentTimeMillis();
+
+		 tiempo+=(t2-t1);
+
+		 
+
+		 }
+
+		 System.out.println("Tiempo medio de ejecución de BubbleSort con 1000");
+
+		 System.out.println(tiempo/10 + "ms");
+	}
+
+}

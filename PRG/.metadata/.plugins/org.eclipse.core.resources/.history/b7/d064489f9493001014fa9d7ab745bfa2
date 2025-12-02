@@ -1,0 +1,19 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		
+		double number = (1.0/3) * 3;
+	     System.out.println("(1/3) * 3 is equal to " + number);
+		
+			
+			
+		
+
+		
+	
+	}
+}

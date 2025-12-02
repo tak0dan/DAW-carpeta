@@ -1,0 +1,112 @@
+package Tema_3.Tareas3_4;
+import java.util.Random;
+
+public class Bingo {
+    public static void main(String[] args) {
+        final int FIN = 5;
+        int[][] card_player = new int[FIN][FIN];
+        Random r = new Random();
+        Random rr = new Random();
+
+        // Generate unique Bingo card
+        for (int i = 0; i < FIN; i++) {
+            for (int j = 0; j < FIN; j++) {
+                boolean unique;
+                int new_number;
+                do {
+                    new_number = r.nextInt(100);
+                    unique = true;
+                    for (int x = 0; x <= i; x++) {
+                        for (int y = 0; y < FIN; y++) {
+                            if (x == i && y >= j) continue;
+                            if (card_player[x][y] == new_number) unique = false;
+                        }
+                    }
+                } while (!unique);
+                card_player[i][j] = new_number;
+            }
+        }
+
+        // Print card
+        System.out.println("Your Bingo card:");
+        printCard(card_player);
+
+        // Draw a random number
+        int next_number = rr.nextInt(100);
+        System.out.println("\nNext number is: " + next_number);
+
+        // Mark the number on the card
+        for (int i = 0; i < FIN; i++) {
+            for (int j = 0; j < FIN; j++) {
+                if (card_player[i][j] == next_number) {
+                    card_player[i][j] = -1; // mark as hit
+                    System.out.println("You have a match on number " + next_number + " at (" + i + "," + j + ")");
+                }
+            }
+        }
+
+        // Check for complete lines
+        boolean bingo = false;
+
+        // Check rows
+        for (int i = 0; i < FIN; i++) {
+            boolean fullRow = true;
+            for (int j = 0; j < FIN; j++) {
+                if (card_player[i][j] != -1) fullRow = false;
+            }
+            if (fullRow) {
+                System.out.println("Line completed on row " + i + "!");
+                bingo = true;
+            }
+        }
+
+        // Check columns
+        for (int j = 0; j < FIN; j++) {
+            boolean fullCol = true;
+            for (int i = 0; i < FIN; i++) {
+                if (card_player[i][j] != -1) fullCol = false;
+            }
+            if (fullCol) {
+                System.out.println("Line completed on column " + j + "!");
+                bingo = true;
+            }
+        }
+
+        // Check diagonals
+        boolean diag1 = true;
+        boolean diag2 = true;
+        for (int i = 0; i < FIN; i++) {
+            if (card_player[i][i] != -1) diag1 = false;
+            if (card_player[i][FIN - 1 - i] != -1) diag2 = false;
+        }
+        if (diag1) System.out.println("Diagonal completed!");
+        if (diag2) System.out.println("Diagonal completed!");
+        if (diag1 || diag2) bingo = true;
+
+        // Check Bingo (all marked)
+        boolean allMarked = true;
+        for (int i = 0; i < FIN; i++) {
+            for (int j = 0; j < FIN; j++) {
+                if (card_player[i][j] != -1) allMarked = false;
+            }
+        }
+        if (allMarked) {
+            System.out.println("BINGO! Entire card is completed!");
+            bingo = true;
+        }
+
+        if (!bingo) System.out.println("No complete line yet. Keep going!");
+        System.out.println("\nUpdated card:");
+        printCard(card_player);
+    }
+
+    private static void printCard(int[][] card) {
+        for (int[] row : card) {
+            for (int n : row) {
+                if (n == -1) System.out.print(" X ");
+                else System.out.printf("%2d ", n);
+            }
+            System.out.println();
+        }
+    }
+}

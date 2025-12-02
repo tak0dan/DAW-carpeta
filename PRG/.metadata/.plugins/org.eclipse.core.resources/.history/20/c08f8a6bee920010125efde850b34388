@@ -1,0 +1,33 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		
+		double a = 1;
+		double b = 2;
+		double c = 3;
+		
+		double x1 = ((-b + (Math.sqrt((b*b)-(4*a*c))))/(a*2));
+		double x2 = ((-b - (Math.sqrt((b*b)-(4*a*c))))/(a*2));
+
+		if (!Double.isNaN(x1)) {
+		    System.out.println(x1);
+		} 
+
+		if (!Double.isNaN(x2)) {
+		    System.out.println(x2);
+		} else {
+		    System.out.println("No tiene soluciones reales");
+		}
+
+			
+			
+		
+
+		
+	
+	}
+}

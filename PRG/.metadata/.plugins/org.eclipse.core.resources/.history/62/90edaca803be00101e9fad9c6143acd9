@@ -1,0 +1,7 @@
+package Tema_5;
+
+public class Prueba_array {
+	public static void main(String[] args) {
+		MetodosA.MostrarArray(2.6);
+	}
+}

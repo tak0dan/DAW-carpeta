@@ -1,0 +1,19 @@
+package Tema_5;
+import java.util.Scanner;
+public class drfgdgerd {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		int estudiantes = 0;
+		boolean aceptado = false;
+		int nota;
+		do {
+			System.out.println("Dime la cantidad de estudiantes en la clase");
+			if(tec.hasNextInt()&&tec.nextInt()>0) {
+				estudiantes = tec.nextInt();
+				aceptado = true;
+			}
+		
+		}while(!aceptado);
+		System.out.println(estudiantes);
+	}
+}

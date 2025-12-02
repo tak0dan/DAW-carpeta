@@ -1,0 +1,14 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		String test = "Hello Tony";
+	    test = test.toUpperCase();
+	    System.out.println(test);	    
+	
+	
+	}
+}

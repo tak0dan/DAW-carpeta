@@ -1,0 +1,15 @@
+package Tema_2;
+import java.util.Scanner;
+public class Tarea_2_3_1 {
+		public static void main(String[] args){
+			Scanner scanner = new Scanner(System.in);
+			
+			System.out.println("Dame aldun String");
+			String algun_String = scanner.nextLine();
+			System.out.println("Dame algun int. Pero ten en cuenta que no debe ser mas alto de la longtitud");
+			int algun_int = scanner.nextInt();
+			System.out.println("Felicidades en esta posición tienes el caracter " + algun_String.charAt(algun_int));
+			
+	}
+}
+

@@ -1,0 +1,82 @@
+package BubbleSort;
+
+public class WeirdSorter {
+
+    public static void customSort(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return; // Nothing to do
+        }
+
+        int n = arr.length;
+
+        // 1. Find smallest and largest
+        int minIndex = 0;
+        int maxIndex = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (arr[i] < arr[minIndex]) minIndex = i;
+            if (arr[i] > arr[maxIndex]) maxIndex = i;
+        }
+
+        // 2. Swap smallest to front
+        swap(arr, 0, minIndex);
+
+        // If max was at 0 and moved, update index
+        if (maxIndex == 0) maxIndex = minIndex;
+
+        // 3. Swap largest to end
+        swap(arr, n - 1, maxIndex);
+
+        int leftPivot = arr[0];
+        int rightPivot = arr[n - 1];
+
+        // 4. “Bubble-ish” movement: everything > leftPivot goes left,
+        // and everything < rightPivot goes right.
+        int left = 1;
+        int right = n - 2;
+
+        while (left <= right) {
+            boolean movedLeft = false;
+            boolean movedRight = false;
+
+            if (arr[left] <= leftPivot) {
+                // should stay or move rightward
+                left++;
+            } else {
+                // should move left
+                swap(arr, left, left - 1);
+                left--;
+                movedLeft = true;
+            }
+
+            if (arr[right] >= rightPivot) {
+                // should stay or move leftward
+                right--;
+            } else {
+                // should move right
+                swap(arr, right, right + 1);
+                right++;
+                movedRight = true;
+            }
+
+            // “Block formation” stop condition
+            if (!movedLeft && !movedRight) {
+                break;
+            }
+        }
+    }
+
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    // Quick test
+    public static void main(String[] args) {
+        int[] arr = { 5, 2, 9, 1, 8, 3, 7, 4, 6 };
+        customSort(arr);
+
+        for (int v : arr) System.out.print(v + " ");
+    }
+}

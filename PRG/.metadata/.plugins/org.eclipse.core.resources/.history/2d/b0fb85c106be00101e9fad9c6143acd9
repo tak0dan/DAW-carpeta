@@ -1,0 +1,21 @@
+package Tema_5;
+import java.util.Scanner;
+import java.util.Random;
+
+public class Ej_x {
+    public static void main(String[] args) {
+        Random r = new Random();
+        Scanner tec = new Scanner(System.in);
+
+        int[] v = new int[8];           // step 1: create array
+        MetodosA.LLenarArrayRandom(v);        // step 2: fill array
+        MetodosA.MostrarArray(v);       // step 3: display array
+
+        
+        
+        
+        
+        
+        tec.close();
+    }
+}

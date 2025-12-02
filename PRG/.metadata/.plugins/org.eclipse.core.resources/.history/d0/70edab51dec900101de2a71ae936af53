@@ -1,0 +1,150 @@
+package BubbleSort;
+
+import java.util.Arrays;
+import java.util.Random;
+
+public class WeirdSorter {
+
+    public static void main(String[] args) {
+
+        int[] v = new int[300];
+        long tiempo = 0;
+
+        for (int i = 1; i <= 10; i++) {
+            MetodosA.llenarArrayRandom(v, 1, 36);
+
+            long t1 = System.currentTimeMillis();
+            WeirdSorter.customSort(v, false);  // enable debug by setting true
+            long t2 = System.currentTimeMillis();
+
+            tiempo += (t2 - t1);
+        }
+
+        System.out.println("Tiempo medio de ejecución de WeirdSort con 300 elementos:");
+        System.out.println(tiempo / 10 + "ms");
+    }
+
+	private static void customSort(int[] v, boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+}
+
+/* --------------------------------------------------------------- */
+/* ------------------------ WeirdSorter --------------------------- */
+/* --------------------------------------------------------------- */
+
+class WeirdSorter {
+
+    public static void customSort(int[] arr, boolean debug) {
+        if (arr == null || arr.length < 2) return;
+
+        int n = arr.length;
+
+        /* ---- STEP 1: find smallest & largest ---- */
+        int minIndex = 0;
+        int maxIndex = 0;
+
+        for (int i = 1; i < n; i++) {
+            if (arr[i] < arr[minIndex]) minIndex = i;
+            if (arr[i] > arr[maxIndex]) maxIndex = i;
+        }
+
+        /* ---- STEP 2: force smallest to front ---- */
+        swap(arr, 0, minIndex);
+
+        if (maxIndex == 0) maxIndex = minIndex;
+
+        /* ---- STEP 3: force largest to end ---- */
+        swap(arr, n - 1, maxIndex);
+
+        int leftPivot = arr[0];
+        int rightPivot = arr[n - 1];
+
+        int left = 1;
+        int right = n - 2;
+
+        /* ---- DEBUG ---- */
+        if (debug) {
+            System.out.println("Initial array: " + Arrays.toString(arr));
+            System.out.println("Left pivot: " + leftPivot + " | Right pivot: " + rightPivot);
+        }
+
+        /* ---- STEP 4: weird bubbling phase ---- */
+        while (left <= right) {
+
+            boolean movedLeft = false;
+            boolean movedRight = false;
+
+            // ---- LEFT SIDE: move > leftPivot to the left ----
+            if (arr[left] > leftPivot) {
+                if (left > 1) {
+                    swap(arr, left, left - 1);
+                    left--;
+                    movedLeft = true;
+                } else {
+                    left++; // can't go further left
+                }
+            } else {
+                left++;
+            }
+
+            // ---- RIGHT SIDE: move < rightPivot to the right ----
+            if (arr[right] < rightPivot) {
+                if (right < n - 2) {
+                    swap(arr, right, right + 1);
+                    right++;
+                    movedRight = true;
+                } else {
+                    right--; // can't go further right
+                }
+            } else {
+                right--;
+            }
+
+            if (debug) {
+                System.out.println("L=" + left + ", R=" + right + " → " + Arrays.toString(arr));
+            }
+
+            // ---- BLOCK FORMATION STOP ----
+            if (!movedLeft && !movedRight) {
+                if (debug) System.out.println("Block formed. Stopping movement.");
+                break;
+            }
+        }
+
+        /* ---- OPTIONAL: post-process small region ---- */
+        // Slight enhancement: perform a lightweight insertion-sort
+        // on the middle block to smooth chaos while respecting pivots.
+
+        insertionSortBetween(arr, 1, n - 2);
+
+        if (debug) System.out.println("Final: " + Arrays.toString(arr));
+    }
+
+    /* Small cleanup of the interior region for better final structure */
+    private static void insertionSortBetween(int[] arr, int start, int end) {
+        for (int i = start + 1; i <= end; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= start && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+    }
+
+    /* Simple swap */
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+}
+
+/* --------------------------------------------------------------- */
+/* ------------------------ MetodosA ------------------------------ */
+/* --------------------------------------------------------------- */
+
+

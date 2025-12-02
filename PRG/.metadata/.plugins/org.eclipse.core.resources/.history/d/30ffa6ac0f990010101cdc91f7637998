@@ -1,0 +1,11 @@
+package Tema_2;
+
+public class MasPruebas {
+		public static void main(String[] args){
+			String saludo = "Hola, don Pepito";
+			String saludo2 = "Hola, don Jose";
+			
+			System.out.println(saludo.toUpperCase());
+	}
+}
+

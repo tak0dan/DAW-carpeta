@@ -1,0 +1,22 @@
+package Examen_Bucles;
+import java.util.Scanner;
+public class Ej_3 {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		boolean n = false;
+		double DIST = 0;
+		while (!n) {
+            System.out.println("Introduce la distancia objetivo entre 50 y 100 (en kilometros).");
+            if (tec.hasNextInt()) {
+                DIST = tec.nextInt();
+                if (DIST > 1) n=true;
+            } else {
+                tec.next();
+            }
+        }
+		
+		System.out.println(DIST);
+		
+		
+	}
+}

@@ -1,0 +1,52 @@
+package BubbleSort;
+
+import java.util.Arrays;
+
+public class prueba_3 {
+
+    public static void main(String[] args) {
+
+        final int START = 5;     // initial length
+        final int END   = 500;   // final length
+        final int STEP  = 50;    // how much to grow each iteration
+        final int TRIES = 10;    // runs per size
+
+        System.out.println("Benchmark results:");
+        System.out.println("Size | Min(ms) | Max(ms) | Avg(ms) | Time per element(ns)");
+
+        for (int n = START; n <= END; n += STEP) {
+
+            int[] v = new int[n];
+            long[] times = new long[TRIES];
+
+            // run the sort TRIES times
+            for (int i = 0; i < TRIES; i++) {
+                MetodosA.llenarArrayRandom(v, 1, 99);
+
+                long t1 = System.nanoTime();
+                MetodosA.Timsort.timsort(v);
+                long t2 = System.nanoTime();
+
+                times[i] = t2 - t1;
+            }
+
+            long min = Arrays.stream(times).min().orElse(0);
+            long max = Arrays.stream(times).max().orElse(0);
+            double avg = Arrays.stream(times).average().orElse(0.0);
+            double timePerElement = avg / n;
+
+            System.out.printf("%4d | %7.3f | %7.3f | %7.3f | %10.3f%n",
+                    n,
+                    min / 1_000_000.0,
+                    max / 1_000_000.0,
+                    avg / 1_000_000.0,
+                    timePerElement);
+            
+            // optional textual bar graph
+            int barLength = (int)(avg / 1_000_000.0 * 10); // scale factor
+            System.out.print("      ");
+            for(int j=0; j<barLength; j++) System.out.print("█");
+            System.out.println();
+        }
+    }
+}

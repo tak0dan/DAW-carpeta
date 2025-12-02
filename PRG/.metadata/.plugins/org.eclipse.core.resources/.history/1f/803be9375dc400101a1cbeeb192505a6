@@ -1,0 +1,15 @@
+package Tema_5;
+import java.util.Scanner;
+public class sfsfsf {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		String frase = "";
+		do {
+			System.out.println("Give me a phrase with max 10 characters");
+			frase = tec.nextLine();
+		}while(frase.length()>10);
+		
+		System.out.println("La frase es "+frase);
+		
+	}
+}

@@ -1,0 +1,14 @@
+package Tema_2;
+
+public class tema_2 {
+	
+	
+	public static void main(String[] args) {
+		
+		double celsius = 20;
+	     double fahrenheit;
+	     fahrenheit = (10 / 5) * celsius + 32.0;
+	     System.out.println(fahrenheit);
+		
+	}
+}

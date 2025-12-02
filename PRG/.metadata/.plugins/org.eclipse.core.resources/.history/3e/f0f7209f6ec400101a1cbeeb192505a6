@@ -1,0 +1,33 @@
+package Tema_5;
+import java.util.Scanner;
+public class drfgdgerd {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		int estudiantes = 0;
+		boolean aceptado = false;
+		int nota;
+		int notas=0;
+		do {
+			System.out.println("Dime la cantidad de estudiantes en la clase");
+			if(tec.hasNextInt()&&tec.nextInt()>0) {
+				estudiantes = tec.nextInt();
+				aceptado = true;
+			}
+
+		}while(!aceptado);
+		aceptado = false;
+		for(int i=0; i<estudiantes;i++) {
+			do {
+				System.out.println("Dime la nota de estudiante "+i+1);
+				if(tec.hasNextInt()&&tec.nextInt()>0) {
+					nota = tec.nextInt();
+					aceptado = true;
+					notas = notas+nota;
+				}
+			}while(!aceptado);	
+		}
+		
+		System.out.println("La nota media entre los estudiantes es "+notas/estudiantes);
+		
+	}
+}

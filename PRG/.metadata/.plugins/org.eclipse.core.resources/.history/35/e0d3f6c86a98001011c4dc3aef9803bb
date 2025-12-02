@@ -1,0 +1,21 @@
+package Tema_2;
+import java.util.Scanner;
+public class Letras_Mayusculas {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Introduzca tu palabra para el analisis");
+		String texto = scanner.nextLine();
+		boolean equals_upper = texto.equals(texto.toUpperCase());
+		boolean equals_lower = texto.equals(texto.toLowerCase());
+
+		if(equals_upper = true) {
+			System.out.println("Las letras estan en mayusculas");
+		}else if(equals_lower = true){
+			System.out.println("No todas las letras estan en mayusculas");
+		}else{
+			System.out.println("No se. Palabra como palabra. Hay mayusculas, hay minusculas...");
+
+		}
+		
+	}
+}

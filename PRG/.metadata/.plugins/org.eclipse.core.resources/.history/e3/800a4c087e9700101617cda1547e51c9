@@ -1,0 +1,19 @@
+package Tema_2;
+
+import java.util.Scanner;
+
+public class Ej5 {
+	public static void main(String[] args) {
+		
+		Scanner tec = new Scanner(System.in);
+		
+		int a, b, c=0;
+		a = 5;
+			b = -6+a;
+		a++;
+		b = a –*10;
+		c --;;
+		c = b;
+
+	}
+}

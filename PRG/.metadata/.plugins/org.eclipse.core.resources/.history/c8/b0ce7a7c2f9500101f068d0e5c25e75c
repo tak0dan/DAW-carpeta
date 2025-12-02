@@ -1,0 +1,18 @@
+package Tema_2;
+
+import java.util.Scanner;
+
+public class Pesetas_A_Euros {
+	public static void main(String[] args) {
+		final double FACTOR = 166.386;
+		Scanner tec = new Scanner(System.in);
+		//I ask for a value in pesetas
+		System.out.println("Dame el valor de convertación en pesetas");
+		double pesetas = tec.nextDouble();
+		//calc value in euros
+		double euros = pesetas/FACTOR;
+		//print result
+		System.out.printf("El valor de convertación en euros es %.2f%n" + euros + "€");
+		//buscar como mostrar valor de euros solo con 2 decimales
+	}
+}
