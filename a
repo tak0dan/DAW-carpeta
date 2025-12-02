@@ -1,0 +1,68 @@
+#!/bin/bash
+echo "🔥 INICIANDO RESCATE TOTAL DE TU CÓDIGO PERDIDO 🔥"
+
+# Carpeta donde vamos a vomitar TODO lo recuperado
+TARGET="RESCUED_FILES_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$TARGET"
+cd "$TARGET" || exit 1
+
+# Lista todos los commits que git aún recuerda (reflog + dangling)
+COMMITS=$(git reflog | awk '{print $1}' | sort -u)
+COMMITS="$COMMITS $(git fsck --lost-found | awk '/dangling commit/ {print $3}')"
+
+echo "Encontrados $(echo "$COMMITS" | wc -w) commits en el limbo... extrayendo todo..."
+
+for commit in $COMMITS; do
+    echo "🧹 Revisando commit: $commit"
+    
+    # Intentamos extraer TODOS los archivos de ese commit
+    if git show --pretty="" --name-only "$commit" | grep -q .; then
+        git archive --format=tar "$commit" 2>/dev/null | tar x 2>/dev/null
+        
+        # Si se extrajo algo, renombramos conflictos
+        if [ "$(find . -type f | wc -l)" -gt 0 ]; then
+            for file in $(find . -type f); do
+                if [ -f "../$file" ]; then
+                    dir=$(dirname "$file")
+                    base=$(basename "$file")
+                    name="${base%.*}"
+                    ext="${base##*.}"
+                    [ "$name" = "$base" ] && ext="" && name="$base"
+                    
+                    counter=1
+                    newfile="$dir/${name}$counter${ext:+.$ext}"
+                    while [ -f "../$newfile" ]; do
+                        counter=$((counter + 1))
+                        newfile="$dir/${name}$counter${ext:+.$ext}"
+                    done
+                    echo "   ⚡ Conflicto → $file  →  $newfile"
+                    mkdir -p "$(dirname "../$newfile")"
+                    cp "$file" "../$newfile"
+                else
+                    mkdir -p "$(dirname "../$file")"
+                    cp "$file" ../
+                fi
+            done
+            # Limpiamos para el siguiente commit
+            find . -mindepth 1 -delete
+        fi
+    fi
+done
+
+cd ..
+echo "🎉 ¡RESCATE COMPLETADO!"
+echo "   Todos tus archivos están en: $TARGET"
+echo "   Y también hay copias con sufijos (nombre1.java, nombre2.java, etc.)"
+echo "   Buscá tu ProductoEscalar.java, PRG/, Q_1/src/, etc."
+echo ""
+echo "   Cuando encuentres lo que necesitas, copiá a mano lo bueno y borrá el resto."
+echo "   Nunca más hagas reset --hard sin backup, rey 😘💀"
+
+# Bonus: buscamos tu archivo estrella
+echo ""
+echo "🔍 Búsqueda rápida de ProductoEscalar.java:"
+find . -name "ProductoEscalar.java" -type f 2>/dev/null | head -10
+
+echo ""
+echo "🔍 Búsqueda rápida de carpetas PRG o Q_1:"
+find . -type d -name "PRG" -o -name "Q_1" 2>/dev/null | head -10
