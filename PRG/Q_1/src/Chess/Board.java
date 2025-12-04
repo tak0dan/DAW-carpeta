@@ -17,18 +17,6 @@ public class Board {
     // Actual pieces on the board
     public static Piece[][] pieces = new Piece[8][8];
 
-    // Initialize board with pieces
-    public static void initialize() {
-        // Example: place knights only
-        pieces[0][1] = new Knight("Black", 0, 1);
-        pieces[0][6] = new Knight("Black", 0, 6);
-
-        pieces[7][1] = new Knight("White", 7, 1);
-        pieces[7][6] = new Knight("White", 7, 6);
-
-        // TODO: Add pawns, rooks, bishops, queen, king later
-    }
-
     // Convert "e2" into array indices [row,col]
     public static int[] parseSquare(String dest) {
         if (dest == null || dest.length() != 2) return null;
@@ -44,23 +32,67 @@ public class Board {
         return new int[] { row, col };
     }
 
-    // Display the board in ASCII
-    public static void printBoard() {
-        System.out.println("\n  a  b  c  d  e  f  g  h");
+    public static final String[] PIECE_UNICODE = {
+        " ", "♔", "♕", "♖", "♗", "♘", "♙", // White
+        "♚", "♛", "♜", "♝", "♞", "♟"  // Black, no extra space you clown
+    };
 
+    public enum PieceType {
+        EMPTY, KING, QUEEN, ROOK, BISHOP, KNIGHT, PAWN
+    }
+
+    public static void printBoard() {
+        System.out.println("\n   ╔═══════════════════════════════════════╗");
         for (int r = 0; r < 8; r++) {
-            System.out.print(8 - r + " ");
+            System.out.print((8 - r) + "  ║ ");
             for (int c = 0; c < 8; c++) {
-                if (pieces[r][c] == null) {
-                    System.out.print("-- ");
-                } else {
-                    String color = pieces[r][c].color.equals("White") ? "W" : "B";
-                    String type = pieces[r][c].getClass().getSimpleName().substring(0, 1); // e.g., N for Knight
-                    System.out.print(color + type + " ");
+                Piece p = pieces[r][c];
+                String symbol = "·"; // empty square
+
+                if (p != null) {
+                    int idx = p instanceof King ? 1 :
+                        p instanceof Queen ? 2 :
+                        p instanceof Rook ? 3 :
+                        p instanceof Bishop ? 4 :
+                        p instanceof Knight ? 5 :
+                        p instanceof Pawn ? 6 : 0;
+
+                    if (p.color.equals("Black")) idx += 6;
+                    symbol = PIECE_UNICODE[idx];
                 }
+                System.out.print(symbol + "  ");
             }
-            System.out.println(8 - r);
+            System.out.println("║ " + (8 - r));
         }
-        System.out.println("  a  b  c  d  e  f  g  h\n");
+        System.out.println("   ╚═══════════════════════════════════════╝");
+        System.out.println("     a  b  c  d  e  f  g  h\n");
+    }
+
+    public static void setupStandardBoard() {
+        for (int r = 0; r < 8; r++)
+            for (int c = 0; c < 8; c++)
+                pieces[r][c] = null;
+
+        for (int c = 0; c < 8; c++) {
+            pieces[1][c] = new Pawn("Black", 1, c);
+            pieces[6][c] = new Pawn("White", 6, c);
+        }
+
+        PieceType[] backRank = {PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
+                                PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK};
+        for (int c = 0; c < 8; c++) {
+            pieces[0][c] = createPiece(backRank[c], "Black", 0, c);
+            pieces[7][c] = createPiece(backRank[c], "White", 7, c);
+        }
+    }
+
+    private static Piece createPiece(PieceType type, String color, int row, int col) {
+        if (type == PieceType.KING) return new King(color, row, col);
+        if (type == PieceType.QUEEN) return new Queen(color, row, col);
+        if (type == PieceType.ROOK) return new Rook(color, row, col);
+        if (type == PieceType.BISHOP) return new Bishop(color, row, col);
+        if (type == PieceType.KNIGHT) return new Knight(color, row, col);
+        if (type == PieceType.PAWN) return new Pawn(color, row, col);
+        return null;
     }
 }

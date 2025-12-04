@@ -9,7 +9,7 @@ public class Ej_x {
         int y=0;
         int[] v = new int[8];   
         String ng="";// step 1: create array
-        MetodosA.LLenarArrayRandom(v, 1, 10);        // step 2: fill array
+        MetodosA.llenarArrayRandom(v, 1, 10);        // step 2: fill array
         MetodosA.MostrarArray(v);       // step 3: display array
 
         for(int i=0; i<v.length;i++) {
