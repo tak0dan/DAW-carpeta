@@ -1,9 +1,0 @@
-package Tema_2;
-
-public class MasPruebas {
-		public static void main(String[] args){
-			String text = "was wolle wir trinken";
-			System.out.println(text.substring(4, 9));
-	}
-}
-

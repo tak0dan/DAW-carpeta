@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="jdk.internal.org.jline.terminal.TerminalBuilder.SystemOutput"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="tema6.Punto"/>
+    <fullyQualifiedTypeName name="Tema_3.a"/>
+    <fullyQualifiedTypeName name="java.lang.System"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="Ejs_de_clases.Triangulo"/>
+    <fullyQualifiedTypeName name="java.nio.channels.NonReadableChannelException"/>
+    <fullyQualifiedTypeName name="Ejs_de_clases.Punto"/>
 </qualifiedTypeNameHistroy>
