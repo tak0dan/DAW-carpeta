@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
     <fullyQualifiedTypeName name="tema6.Punto"/>
+    <fullyQualifiedTypeName name="Tema_3.a"/>
     <fullyQualifiedTypeName name="java.lang.System"/>
     <fullyQualifiedTypeName name="Ejs_de_clases.Triangulo"/>
     <fullyQualifiedTypeName name="java.nio.channels.NonReadableChannelException"/>
     <fullyQualifiedTypeName name="Ejs_de_clases.Punto"/>
-    <fullyQualifiedTypeName name="jdk.internal.platform.CgroupInfo"/>
-    <fullyQualifiedTypeName name="java.awt.event.WindowStateListener"/>
-    <fullyQualifiedTypeName name="Tarea6_2.Ej_3"/>
-    <fullyQualifiedTypeName name="com.sun.tools.jdeprscan.CSVParseException"/>
-    <fullyQualifiedTypeName name="Tarea6_2.Ej_4"/>
-    <fullyQualifiedTypeName name="Tema_3.a"/>
-    <fullyQualifiedTypeName name="java.lang.Character"/>
+    <fullyQualifiedTypeName name="herencia.PersonTester"/>
+    <fullyQualifiedTypeName name="Clases_y_UML.Student"/>
+    <fullyQualifiedTypeName name="jdk.internal.org.jline.reader.impl.history.DefaultHistory"/>
+    <fullyQualifiedTypeName name="Clases_y_UML.Person"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xml.internal.utils.ListingErrorHandler"/>
+    <fullyQualifiedTypeName name="java.awt.event.ItemEvent"/>
+    <fullyQualifiedTypeName name="Examen_u_6.Ej_1.ShoppingList"/>
     <fullyQualifiedTypeName name="java.lang.String"/>
-    <fullyQualifiedTypeName name="com.sun.tools.classfile.StackMapTable_attribute.verification_type_info"/>
+    <fullyQualifiedTypeName name="Examen_u_6.Ej_1.item"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>
