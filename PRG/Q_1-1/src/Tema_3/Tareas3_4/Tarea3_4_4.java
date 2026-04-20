@@ -1,0 +1,24 @@
+package Tema_3.Tareas3_4;
+import java.util.Scanner;
+public class Tarea3_4_4 {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		
+		int n;
+		System.out.println("Give me your number");
+
+		n = tec.nextInt();
+
+		while(!(n>0)) {
+			System.out.println("Give me a positive number");
+			n = tec.nextInt();
+
+			System.out.println();
+		}
+		long result = 1;
+		for(int i = 1; i<=n;i++) {
+			result = result*n;
+		}
+		System.out.println(n+" In power of itself("+n+") = "+result);
+	}
+}

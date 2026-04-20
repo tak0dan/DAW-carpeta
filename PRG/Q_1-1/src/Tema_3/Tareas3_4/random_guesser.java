@@ -1,0 +1,104 @@
+package Tema_3.Tareas3_4;
+
+import java.util.Random;
+import java.util.Scanner;
+
+public class random_guesser {
+    public static void main(String[] args) {
+        Scanner tec = new Scanner(System.in);
+        Random r = new Random();
+        int safezone = 0, range = 0;
+
+        int[] numbers = new int[10];
+        int playerPoints = 0;
+        int botPoints = 0;
+        int bot_points = 0;
+
+
+        int level = 0;
+        while (level < 1 || level > 5) {
+            System.out.println("Select a difficulty level:");
+            System.out.println("Level 1");
+            System.out.println("Level 2");
+            System.out.println("Level 3");
+            System.out.println("Level 4");
+            System.out.println("Level 5");
+            level = tec.nextInt();
+        }
+
+        switch (level) {
+            case 1:
+                safezone = 3;
+                range = 10;
+                bot_points = 2;
+                break;
+            case 2:
+                safezone = 25;
+                range = 100;
+                bot_points = 3;
+
+                break;
+            case 3:
+                safezone = 20;
+                range = 100;
+                bot_points = 5;
+
+                break;
+            case 4:
+                safezone = 15;
+                range = 100;
+                bot_points = 7;
+
+                break;
+            case 5:
+                safezone = 10;
+                range = 100;
+                bot_points = 10;
+
+                break;
+        }
+
+        // ✅ Generate random numbers *after* selecting difficulty
+        for (int i = 0; i < numbers.length; i++) {
+            numbers[i] = r.nextInt(range + 1);
+        }
+
+        System.out.println("=== Welcome to Guess-Bingo ===");
+        System.out.println("Try to guess the numbers! (Range 0–" + range + ")");
+        System.out.println("You get up to 15 points per guess depending on accuracy (within ±" + safezone + ").");
+        System.out.println("----------------------------------");
+
+        for (int i = 0; i < numbers.length; i++) {
+            System.out.print("Guess number " + (i + 1) + ": ");
+            int guess = tec.nextInt();
+            int real = numbers[i];
+
+            int diff = Math.abs(real - guess);
+
+            if (diff <= safezone) {
+                int points = safezone - diff;
+                if (points < 1) points = 1;
+                playerPoints += points;
+                System.out.println("✅ Nice! The real number was " + real + ". You get " + points + " points.");
+            } else {
+                botPoints += bot_points;
+                System.out.println("❌ Too far off! The number was " + real + ". Bot gets "+bot_points+" points.");
+            }
+        }
+
+        System.out.println("----------------------------------");
+        System.out.println("Game over!");
+        System.out.println("Your points: " + playerPoints);
+        System.out.println("Bot's points: " + botPoints);
+
+        if (playerPoints > botPoints) {
+            System.out.println("🎉 You win!");
+        } else if (playerPoints < botPoints) {
+            System.out.println("🤖 Bot wins!");
+        } else {
+            System.out.println("🤝 It's a tie!");
+        }
+
+        tec.close();
+    }
+}

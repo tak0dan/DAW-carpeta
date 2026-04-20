@@ -1,0 +1,22 @@
+package Tema_5;
+import java.util.Scanner;
+public class correafajiwefhgaiwjgf {
+	public static void main(String[] args) {
+		Scanner tec = new Scanner(System.in);
+		String input_a = "";
+		String constr = "";
+		boolean end = false;
+		do {
+		System.out.println("Give me a email or print *** to end the execution.");
+		input_a = tec.nextLine();
+		if(input_a.contains("@")&&!input_a.contains(" ")) {
+			constr = constr + input_a + "; ";
+		}else if(input_a.equals("***")) {
+			end = true;
+		}else {
+			System.out.println("No parece a un input valido");
+		}
+		}while(!end);
+		System.out.println(constr.substring(0, constr.length()));
+	}
+}
