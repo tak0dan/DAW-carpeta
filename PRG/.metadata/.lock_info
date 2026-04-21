@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 #Fri Apr 17 08:52:28 CEST 2026
 display=\:1
 host=LAPTOP-TAK0
 process-id=11038
+=======
+#Mon Apr 20 22:06:36 CEST 2026
+display=\:1
+host=HUNGRYTAK0
+process-id=1576723
+>>>>>>> 9804313a53a3243881f2e0897e5c75a9ef10ad3e
 user=tak_0

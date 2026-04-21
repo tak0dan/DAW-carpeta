@@ -1,4 +1,8 @@
 INDEX VERSION 1.134+/home/tak_0/DAW-carpeta/PRG/.metadata/.plugins/org.eclipse.jdt.core
 1192637205.index
 1865797976.index
+<<<<<<< HEAD
+=======
+3323667571.index
+>>>>>>> 9804313a53a3243881f2e0897e5c75a9ef10ad3e
 3633734994.index
