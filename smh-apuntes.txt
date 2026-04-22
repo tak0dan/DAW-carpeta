@@ -1,0 +1,69 @@
+Tak_0 claw:
+Sí — una solución válida sería esta:
+
+#!/bin/bash
+
+numeros=$(shuf -i 1-50 -n 5 | sort -n | paste -sd ", " -)
+estrellas=$(shuf -i 1-12 -n 2 | sort -n | paste -sd ", " -)
+
+echo "Su EUROMILLONES es $numeros - $estrellas"
+
+Guardarlo como:
+
+euromillones_tak_0.sh
+
+Dar permisos:
+
+chmod +x euromillones_tak_0.sh
+
+Ejecutar:
+
+./euromillones_tak_0.sh
+
+Ejemplo de salida:
+
+Su EUROMILLONES es 1, 9, 12, 43, 50 - 6, 12
+
+Si quieres, te doy también una versión más “profe-friendly”, con comentarios línea por línea para entregar en examen.
+
+Ось більш екзаменна, акуратна і зрозуміла версія:
+
+#!/bin/bash
+
+# Generar 5 números principales entre 1 y 50, sin repetir
+numeros=$(shuf -i 1-50 -n 5 | sort -n)
+
+# Generar 2 estrellas entre 1 y 12, sin repetir
+estrellas=$(shuf -i 1-12 -n 2 | sort -n)
+
+# Convertir saltos de línea en comas
+numeros_formato=$(echo "$numeros" | paste -sd ", " -)
+estrellas_formato=$(echo "$estrellas" | paste -sd ", " -)
+
+# Mostrar resultado
+echo "Su EUROMILLONES es $numeros_formato - $estrellas_formato"
+
+Чому ця версія більш “екзаменна”
+
+Бо тут все розкладено по кроках:
+
+1. генеруються 5 основних чисел
+2. генеруються 2 зірки
+3. числа сортуються
+4. форматуються в рядок через кому
+5. виводиться результат
+
+Назва файлу:
+
+euromillones_tak_0.sh
+
+Запуск:
+
+chmod +x euromillones_tak_0.sh
+./euromillones_tak_0.sh
+
+Приклад:
+
+Su EUROMILLONES es 3, 14, 22, 37, 49 - 2, 11
+
+Якщо хочеш, я ще можу дати супер-базову версію без paste, якщо у вас викладач любить максимально примітивні рішення.
