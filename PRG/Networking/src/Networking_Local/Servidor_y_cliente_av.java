@@ -153,16 +153,16 @@ public class Servidor_y_cliente_av extends JFrame {
         JComboBox<String> selectorDeRol = new JComboBox<>(new String[]{"Servidor", "Cliente"});
 
         JLabel etiquetaDePuerto  = new JLabel("Puerto:");
-        JTextField cajaDelPuerto = new JTextField("5000");
+        JTextField cajaDelPuerto = new JTextField("511");
 
         JLabel etiquetaDeIP      = new JLabel("IP del servidor:");
-        JTextField cajaDeIP      = new JTextField("127.0.0.1");
+        JTextField cajaDeIP      = new JTextField("10.2.1.187");
 
         JLabel etiquetaDeMiNombre    = new JLabel("Mi nombre:");
-        JTextField cajaDeMiNombre    = new JTextField("Anes");
+        JTextField cajaDeMiNombre    = new JTextField("Client_1");
 
         JLabel etiquetaDelOtro       = new JLabel("Nombre del otro:");
-        JTextField cajaDelNombreOtro = new JTextField("Nacho");
+        JTextField cajaDelNombreOtro = new JTextField("Anes_Server");
 
         etiquetaDeIP.setVisible(false);
         cajaDeIP.setVisible(false);
