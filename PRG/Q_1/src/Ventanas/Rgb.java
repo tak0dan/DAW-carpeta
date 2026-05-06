@@ -34,7 +34,7 @@ public class Rgb extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    TestJframe frame = new TestJframe();
+                    Rgb frame = new Rgb();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

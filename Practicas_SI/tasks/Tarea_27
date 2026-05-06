@@ -1,0 +1,35 @@
+TRABAJO 27: utiles1.sh (menú con while/case)
+
+Elabora un menú de opciones.
+
+El formato del menú es el siguiente:
+
+
+-----------------------------------------------
+  MENÚ DE OPCIONES
+
+  1 Listar ficheros/carpetas del home
+  2 Listar permisos del home
+  3 Ver árbol del home
+  4 Lo que tú quieras
+  5 Ver memoria ram
+  6 Ver información de la máquina
+
+  q|Q Salir
+-----------------------------------------------
+Introduzca una opción 1-6 (q|Q salir):
+
+
+NOTA 1: Obligado: Para el menú usa el while y el case, no usar funciones
+NOTA 2: El menú debe aparecer una y otra vez hasta pulsar q|Q
+NOTA 3: Para cada opción del menú primero borra la pantalla antes
+NOTA 4: La opción 4 debes poner la funcionalidad que desees (así cada uno tenéis una distinta)
+NOTA 5: Para la información de memoria y de la máquina podemos usar los comandos free u uname -a respectivamente
+NOTA 6: Si ponemos una opción no válida dirá "ERROR opción no válida", y aparecerá el menú de nuevo
+NOTA 7: El menú solo aparecerá en el código una vez
+
+NOTA 8: Tras ejecutar las opciones [1-6] mostrará en pantalla "Pulse ENTER para continuar" y al pulsar ENTER se borrará la pantalla y saldrá de nuevo el menú
+
+Se pide entregar el archivo utiles1.sh
+
+Todo trabajo entregado fuera de plazo no se podrá valorar con más de un 5.

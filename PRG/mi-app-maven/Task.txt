@@ -1,0 +1,16 @@
+Desde el Ayuntamiento de Valencia se ha realizado una actualización de los datos abiertos. En concreto se han cambiado las API que comparten. Esta semana nos vamos a centrar en actualizar las tareas 1 y 2 haciendo las modificaciones pertienentes para que funcionen.
+
+También subiremos a GitHub el proyecto funcionando con la nueva API.
+
+Para que la tarea la podáis hacer sin problemas, os adjunto:
+
+    el fichero ValenbisiAPI26T1v2_1.java que tendréis que completar,
+    el ficheor Geometry.java que no tenéis que modificar.
+    el fichero pom. Cogeréis de este fichero sólo las dependencias y el build.
+    dos esquemas de las tareas que tenéis que realizar.
+        El primer esquema explica cómo crear un proyecto Maven.
+        El segundo esquema, es un repaso para subir el proyecto a GitHub.
+
+¿Qué tenéis que entregar? Un documento en el que aparezcan las capturas de pantalla necesarias para comprobar que habéis realizado la tarea, que el proyecto os funciona y que está subido a GitHub. También la dirección del repositorio que habéis creado.
+
+Geometry.java Geometry.java
