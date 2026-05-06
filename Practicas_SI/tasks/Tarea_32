@@ -1,0 +1,53 @@
+
+
+----------------------------------------------------------------------------------------
+TRABAJO 32 mypapelera.sh (find wc con funciones)
+----------------------------------------------------------------------------------------
+
+Crea un bash script linux que simule una papelera de reciclaje, debes llamarlo mypapelera.sh, con el fin de simplificar la búsqueda solamente trabajará dentro de tu home.
+
+Es obligatorio usar funciones, de manera que cuando seleccionemos cualquier opción del menú funcione haciendo una llamada a función, es decir, tras pulsar cualquier opción dentro del rango 1-8 llamará a una función distinta. Lo lógico sería usar además los comandos find y wc.
+
+Al ejecutar borrará la pantalla y mostrará el siguiente menú:
+
+
+/* ----------------------------------------------------- */
+              PAPELERA DE RECICLAJE
+/* ----------------------------------------------------- */
+1) Numero de archivos *.tmp en home
+2) Mover los *.tmp a la papelera
+3) Numero de archivos *.txt en home
+4) Mover todos los *.txt a la papelera
+5) Listar el contenido de la papelera
+6) Borrar el contenido de la papelera
+7) Eliminar la carpeta de la papelera
+8) Salir
+/* ----------------------------------------------------- */
+
+
+NOTAS GENERALES:
+-OJO ES OBLIGATIRIO USAR FUNCIONES
+-Las opciones 1 y 3 muestran el número de archivos que existan en el home del usuario y anidados que ejecute el script sean tmp o txt respectivamente, si no existe ninguno debe mostrar un mensaje personalizado de que no hay archivos.
+-Las opciones 2 y 4 mueven TODOS los archivos que existan en el home del usuario y anidados que ejecute el script que sean tmp o txt respectivamente a la carpeta $HOME/papelera, para ello, si no existe dicha carpeta la crea antes, al terminar debe mostrar un mensaje personalizado de si ha movido algún archivo o no
+-Las opciones 5, 6 y 7 dan un mensaje de error personalizado si no existe $HOME/papelera, y si existe hace lo indicando en el menú
+-El menú debe imprimirse una y otra vez tras cada ejecución de una opción hasta que no se pulse la opción 8
+
+
+-Intenta solventar las posibles dudas y/o problemas por tu cuenta, pues la iniciativa y autonomía personal es parte de los objetivos educativos
+
+
+NOTA 1:
+Para contar los archivos se sugiere usar el comando wc, puedes estudiar 
+https://cambiatealinux.com/contar-ficheros-de-un-directorio-en-linux
+
+NOTA 2:
+El siguiente enlace te puede ser de ayuda para el uso del exec con el find (o bien usad xargs)
+https://unix.stackexchange.com/questions/154818/how-to-integrate-mv-command-after-find-command
+
+Se pide entregar mypapelera.sh
+
+
+OJO ESTA TEREA NO ADMITE RETRASOS AL SER EL EXAMEN
+
+ 
+	

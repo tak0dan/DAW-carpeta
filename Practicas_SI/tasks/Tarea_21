@@ -1,0 +1,47 @@
+--------------------------------------------------------------------------------------
+TRABAJO 21: Copia de seguridad de un archivo pasado
+----------------------------------------------------------------------------------------
+
+Vamos a elaborar el shell script llamado copiabak.sh 
+
+-Puede aceptar un único parámetro (que será la ruta absoluta o relativa del fichero que deseamos copiar) o ninguno, dará error en caso de pasarle más de un parámetro  y tras una pausa de 3 segundos se saldrá del script retornando el error 1, en el caso de que NO se le pase ningún parámetro nos preguntará por el nombre del fichero (ruta absoluta o relativa), es decir, el script debe funcionar tanto si se le pasa un único parámetro o ninguno
+
+-Una vez sepamos el nombre/ruta del fichero comprobará que existe, si no existe dará error por la pantalla y tras una pausa de 3 segundos se saldrá del script dando el error 2
+
+-Llegados a este punto ya tenemos la certeza de que el fichero existe, lo que hará seguidamente será copiar el mismo a la carpeta /home/tuusuario/baks (siendo tuusuario tu id digital), ojo la carpeta /home/tuusuario/baks la debe crear el propio script si no existe lo cual comprobará entes de intentar copiar
+
+-Una vez intentado hacer la copia comprobaremos si se ha copiado efectivamente o no, dando un mensaje de ERROR o EXITO según sea el caso, en el caso del mensaje de error tras una pausa de 3 segundos se saldrá del script danto el error 3
+
+-Si el script llega al final del todo debe listar por pantalla los ficheros en la carpeta /home/tuusuario/baks y seguidamente debe retornar el error 0 (ningún error)
+
+Ejemplos de uso:
+
+./copiabak.sh uno dos tres
+
+ERROR: Demasiados parámetros, se requiere uno o ninguno
+
+
+./copiabak.sh
+
+Por favor, deme la ruta o nombre del fichero:   xRUTAx
+
+EXITO: Una copia del archivo xRUTAx ha sido guardada correctamente
+(y lista fichero/s)
+
+ó
+
+ERROR: No se pudo copiar el archivo
+
+./copiabak.sh RUTA
+
+EXITO: Una copia del archivo RUTA ha sido guardada correctamente
+(y lista fichero/s)
+
+ó
+
+ERROR: No se pudo copiar el archivo
+
+Se pide entregar el fichero copiabak.sh
+
+
+Todo trabajo entregado fuera de plazo no se podrá valorar con más de un 5.

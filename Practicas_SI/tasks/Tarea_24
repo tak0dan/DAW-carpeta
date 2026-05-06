@@ -1,0 +1,32 @@
+----------------------------------------------------------------------------------------
+TRABAJO 24:  NIF
+----------------------------------------------------------------------------------------
+
+OJO: Para este script está prohibido expresamente usar comandos y/o estructuras NO vistas en clase, especialmente los vectores. Teniendo en cuenta que vas a analizar 23 veces la misma variable escoge el condicional (if ó case) más apropiado.
+
+Crea mynif.sh, recuerda que hay que poner en la cabecera que se debe ejecutar en bash,  tener al menos un comentario  y borrar la pantalla.
+
+Al ejecutar debe preguntar...
+
+Introduzca su nombre seguido de un espacio y el número de DNI sin letra:
+
+PEPE 18000000
+
+Y si se ha introducido un nombre válido y el número tiene 8 cifras debe contestar...
+
+El NIF de PEPE es 18000000Q
+
+Evidentemente debe funcionar con cualquier nombre y número de DNI. NO es necesario que funcione con el NIE.
+
+Gestión de errores (investiga por tu cuenta cómo hacer esto): 
+
+-Se debe comprobar que el primer dato dado es solo texto (no debe admitir números) y dar error en caso contrario, terminando el programa sin salirse del shell
+
+-Se debe comprobar que el  segundo dato dado es sólo número (no debe admitir texto)  que tiene una longitud de 8 cifras y dar error en caso contrario, terminando el programa sin salirse del shell
+
+NOTA: URL de un calculador NIF, explica como calcular la letra dando un DNI sin letra:
+https://tickelia.com/blog/calculadoras/calculadora-nif/
+
+Se pide entregar el sh
+
+Todo trabajo entregado fuera de plazo no se podrá valorar con más de un 5.
