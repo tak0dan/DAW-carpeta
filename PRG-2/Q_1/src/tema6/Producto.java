@@ -6,7 +6,7 @@ public class Producto {
 	private double Precio;
 	final double IVA = 21;
 	
-	public Producto() {
+	public Producto(String Nombre, int Precio) {
 		super();
 		this.Nombre = Nombre;
 		this.Precio = Precio;

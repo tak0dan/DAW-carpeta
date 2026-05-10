@@ -1,0 +1,288 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.container { padding: 1rem 0; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.tab { padding: 6px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+.tab:hover:not(.active) { background: var(--color-background-secondary); }
+.exercise { display: none; }
+.exercise.active { display: block; }
+.ex-header { margin-bottom: 1rem; }
+.ex-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+.ex-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; margin-bottom: 1rem; }
+.code-block { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 1rem 1.25rem; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--color-text-primary); white-space: pre; overflow-x: auto; margin-bottom: 1rem; }
+.kw { color: #7F77DD; font-weight: 500; }
+.cm { color: var(--color-text-tertiary); }
+.str { color: #1D9E75; }
+.num { color: #BA7517; }
+.note-box { background: var(--color-background-info); border-left: 3px solid #378ADD; border-radius: 0; padding: 0.75rem 1rem; font-size: 13px; color: var(--color-text-primary); line-height: 1.6; margin-bottom: 1rem; }
+.ask-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: var(--border-radius-md); border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); font-size: 13px; cursor: pointer; margin-top: 0.5rem; }
+.ask-btn:hover { background: var(--color-background-secondary); color: var(--color-text-primary); }
+</style>
+
+<div class="container">
+  <div class="tabs">
+    <button class="tab active" onclick="show(0)">1. Recorrido normal</button>
+    <button class="tab" onclick="show(1)">2. Recorrido inverso</button>
+    <button class="tab" onclick="show(2)">3. Copiar pila</button>
+    <button class="tab" onclick="show(3)">4. Buscar elemento</button>
+    <button class="tab" onclick="show(4)">5. Contar elementos</button>
+    <button class="tab" onclick="show(5)">6. Pila a lista</button>
+    <button class="tab" onclick="show(6)">7. Comprobar palíndromo</button>
+  </div>
+
+  <div class="exercise active" id="ex0">
+    <div class="ex-header">
+      <div class="ex-title">Recorrer una pila sin destruirla (hacia delante)</div>
+      <div class="ex-desc">Muestra todos los elementos de la pila usando una pila auxiliar para no perder los datos originales.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static void</span> recorrerPila(Stack&lt;Integer&gt; pila) {
+    Stack&lt;Integer&gt; aux = <span class="kw">new</span> Stack&lt;&gt;();
+
+    <span class="cm">// Vaciamos la pila original en la auxiliar</span>
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        aux.push(pila.pop());
+    }
+
+    <span class="cm">// Mostramos y restauramos</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        <span class="kw">int</span> elem = aux.pop();
+        System.out.println(elem);
+        pila.push(elem);
+    }
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; p = <span class="kw">new</span> Stack&lt;&gt;();
+p.push(<span class="num">1</span>); p.push(<span class="num">2</span>); p.push(<span class="num">3</span>);
+recorrerPila(p); <span class="cm">// imprime: 1 2 3</span>
+<span class="cm">// La pila sigue intacta después</span></div>
+    <div class="note-box">La pila guarda elementos en orden LIFO (último en entrar, primero en salir). Para recorrerla de base a cima sin destruirla necesitas una pila auxiliar.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Cómo funciona el recorrido de una pila con pila auxiliar en Java? Explícamelo paso a paso')">¿Cómo funciona paso a paso? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex1">
+    <div class="ex-header">
+      <div class="ex-title">Recorrer una pila al revés (hacia atrás, de cima a base)</div>
+      <div class="ex-desc">Muestra los elementos desde la cima hasta la base usando una pila auxiliar.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static void</span> recorrerInverso(Stack&lt;Integer&gt; pila) {
+    Stack&lt;Integer&gt; aux = <span class="kw">new</span> Stack&lt;&gt;();
+
+    <span class="cm">// Guardamos todos en auxiliar (invirte el orden)</span>
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        aux.push(pila.pop());
+    }
+
+    <span class="cm">// Mostramos desde la cima de aux (= base de original)</span>
+    <span class="cm">// y restauramos la pila original</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        <span class="kw">int</span> elem = aux.pop();
+        System.out.println(elem); <span class="cm">// orden: cima → base</span>
+        pila.push(elem);
+    }
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; p = <span class="kw">new</span> Stack&lt;&gt;();
+p.push(<span class="num">1</span>); p.push(<span class="num">2</span>); p.push(<span class="num">3</span>); <span class="cm">// cima = 3</span>
+recorrerInverso(p); <span class="cm">// imprime: 3 2 1</span></div>
+    <div class="note-box">Pasar todos los elementos a una pila auxiliar invierte automáticamente el orden, ya que cada pop() saca la cima y cada push() la mete de nuevo en sentido contrario.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Cuál es la diferencia entre recorrer una pila hacia delante y hacia atrás en Java?')">¿Diferencia entre delante y atrás? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex2">
+    <div class="ex-header">
+      <div class="ex-title">Copiar una pila</div>
+      <div class="ex-desc">Devuelve una copia exacta de la pila sin modificar la original.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static</span> Stack&lt;Integer&gt; copiarPila(Stack&lt;Integer&gt; pila) {
+    Stack&lt;Integer&gt; aux   = <span class="kw">new</span> Stack&lt;&gt;();
+    Stack&lt;Integer&gt; copia = <span class="kw">new</span> Stack&lt;&gt;();
+
+    <span class="cm">// Paso 1: volcamos en aux (queda invertida)</span>
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        aux.push(pila.pop());
+    }
+
+    <span class="cm">// Paso 2: volcamos aux en copia y restauramos original</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        <span class="kw">int</span> elem = aux.pop();
+        copia.push(elem);
+        pila.push(elem);
+    }
+
+    <span class="kw">return</span> copia;
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; original = <span class="kw">new</span> Stack&lt;&gt;();
+original.push(<span class="num">10</span>); original.push(<span class="num">20</span>); original.push(<span class="num">30</span>);
+Stack&lt;Integer&gt; copia = copiarPila(original);
+<span class="cm">// original: [10, 20, 30] ← intacta</span>
+<span class="cm">// copia:    [10, 20, 30] ← igual</span></div>
+    <div class="note-box">Se necesitan dos pilas auxiliares: una para invertir y otra para copiar. Al final, aux se vuelca a copia y a la vez se restaura la original.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Por qué necesito dos pilas auxiliares para copiar una pila en Java?')">¿Por qué dos pilas auxiliares? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex3">
+    <div class="ex-header">
+      <div class="ex-title">Buscar un elemento en la pila</div>
+      <div class="ex-desc">Devuelve true si el elemento existe en la pila, sin destruirla.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static boolean</span> buscarEnPila(Stack&lt;Integer&gt; pila, <span class="kw">int</span> valor) {
+    Stack&lt;Integer&gt; aux = <span class="kw">new</span> Stack&lt;&gt;();
+    <span class="kw">boolean</span> encontrado = <span class="kw">false</span>;
+
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        <span class="kw">int</span> elem = pila.pop();
+        <span class="kw">if</span> (elem == valor) {
+            encontrado = <span class="kw">true</span>;
+        }
+        aux.push(elem);
+    }
+
+    <span class="cm">// Restaurar la pila original</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        pila.push(aux.pop());
+    }
+
+    <span class="kw">return</span> encontrado;
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; p = <span class="kw">new</span> Stack&lt;&gt;();
+p.push(<span class="num">5</span>); p.push(<span class="num">12</span>); p.push(<span class="num">8</span>);
+System.out.println(buscarEnPila(p, <span class="num">12</span>)); <span class="cm">// true</span>
+System.out.println(buscarEnPila(p, <span class="num">99</span>)); <span class="cm">// false</span></div>
+    <div class="note-box">No hacemos break al encontrarlo para poder seguir restaurando la pila. Si quisiéramos ser más eficientes podríamos parar al encontrarlo y luego restaurar desde aux.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Cómo optimizaría la búsqueda en una pila Java si quiero parar al encontrar el elemento?')">¿Cómo optimizar con parada temprana? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex4">
+    <div class="ex-header">
+      <div class="ex-title">Contar cuántas veces aparece un elemento</div>
+      <div class="ex-desc">Recorre la pila contando las ocurrencias de un valor dado.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static int</span> contarOcurrencias(Stack&lt;Integer&gt; pila, <span class="kw">int</span> valor) {
+    Stack&lt;Integer&gt; aux = <span class="kw">new</span> Stack&lt;&gt;();
+    <span class="kw">int</span> contador = <span class="num">0</span>;
+
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        <span class="kw">int</span> elem = pila.pop();
+        <span class="kw">if</span> (elem == valor) {
+            contador++;
+        }
+        aux.push(elem);
+    }
+
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        pila.push(aux.pop());
+    }
+
+    <span class="kw">return</span> contador;
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; p = <span class="kw">new</span> Stack&lt;&gt;();
+p.push(<span class="num">3</span>); p.push(<span class="num">7</span>); p.push(<span class="num">3</span>); p.push(<span class="num">3</span>); p.push(<span class="num">1</span>);
+System.out.println(contarOcurrencias(p, <span class="num">3</span>)); <span class="cm">// 3</span></div>
+    <div class="note-box">El patrón es siempre el mismo: recorrer vaciando en aux, operar, y luego restaurar volcando aux de vuelta a la original.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Qué otros métodos puedo implementar con el patrón pila auxiliar en Java?')">¿Qué más puedo hacer con este patrón? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex5">
+    <div class="ex-header">
+      <div class="ex-title">Convertir una pila en ArrayList</div>
+      <div class="ex-desc">Pasa todos los elementos de la pila a un ArrayList (de base a cima), sin destruir la pila.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static</span> ArrayList&lt;Integer&gt; pilaALista(Stack&lt;Integer&gt; pila) {
+    Stack&lt;Integer&gt; aux = <span class="kw">new</span> Stack&lt;&gt;();
+    ArrayList&lt;Integer&gt; lista = <span class="kw">new</span> ArrayList&lt;&gt;();
+
+    <span class="cm">// Volcamos en aux para invertir el orden</span>
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        aux.push(pila.pop());
+    }
+
+    <span class="cm">// De aux sacamos en orden base→cima</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        <span class="kw">int</span> elem = aux.pop();
+        lista.add(elem);   <span class="cm">// añadimos a la lista</span>
+        pila.push(elem);   <span class="cm">// restauramos original</span>
+    }
+
+    <span class="kw">return</span> lista;
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Integer&gt; p = <span class="kw">new</span> Stack&lt;&gt;();
+p.push(<span class="num">1</span>); p.push(<span class="num">2</span>); p.push(<span class="num">3</span>);
+ArrayList&lt;Integer&gt; lista = pilaALista(p);
+System.out.println(lista); <span class="cm">// [1, 2, 3]</span></div>
+    <div class="note-box">Útil para combinar pilas con otros ejercicios del tema (como los de ArrayList que ya tienes). El índice 0 de la lista corresponde a la base de la pila.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Cómo haría el proceso inverso, pasar un ArrayList a una Stack en Java?')">¿Cómo pasar ArrayList a pila? ↗</button>
+  </div>
+
+  <div class="exercise" id="ex6">
+    <div class="ex-header">
+      <div class="ex-title">Comprobar si una pila de caracteres es un palíndromo</div>
+      <div class="ex-desc">Clásico ejercicio de pilas: comprueba si la secuencia de caracteres se lee igual al derecho que al revés.</div>
+    </div>
+    <div class="code-block"><span class="kw">public static boolean</span> esPalindromo(Stack&lt;Character&gt; pila) {
+    Stack&lt;Character&gt; aux  = <span class="kw">new</span> Stack&lt;&gt;();
+    Stack&lt;Character&gt; copia = <span class="kw">new</span> Stack&lt;&gt;();
+
+    <span class="cm">// Copiamos la pila en aux (queda invertida)</span>
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        aux.push(pila.pop());
+    }
+
+    <span class="cm">// Restauramos original y guardamos copia invertida</span>
+    <span class="kw">while</span> (!aux.isEmpty()) {
+        <span class="kw">char</span> c = aux.pop();
+        pila.push(c);
+        copia.push(c);  <span class="cm">// copia = pila al revés</span>
+    }
+
+    <span class="cm">// Comparamos pila original vs copia invertida</span>
+    Stack&lt;Character&gt; orig2 = <span class="kw">new</span> Stack&lt;&gt;();
+    <span class="kw">boolean</span> esPalin = <span class="kw">true</span>;
+
+    <span class="kw">while</span> (!pila.isEmpty()) {
+        <span class="kw">char</span> c1 = pila.pop();
+        <span class="kw">char</span> c2 = copia.pop();
+        <span class="kw">if</span> (c1 != c2) esPalin = <span class="kw">false</span>;
+        orig2.push(c1);
+    }
+    <span class="cm">// Restaurar pila original</span>
+    <span class="kw">while</span> (!orig2.isEmpty()) pila.push(orig2.pop());
+
+    <span class="kw">return</span> esPalin;
+}
+
+<span class="cm">// Uso:</span>
+Stack&lt;Character&gt; p1 = <span class="kw">new</span> Stack&lt;&gt;();
+<span class="kw">for</span> (<span class="kw">char</span> c : <span class="str">"radar"</span>.toCharArray()) p1.push(c);
+System.out.println(esPalindromo(p1)); <span class="cm">// true</span>
+
+Stack&lt;Character&gt; p2 = <span class="kw">new</span> Stack&lt;&gt;();
+<span class="kw">for</span> (<span class="kw">char</span> c : <span class="str">"hola"</span>.toCharArray()) p2.push(c);
+System.out.println(esPalindromo(p2)); <span class="cm">// false</span></div>
+    <div class="note-box">El palíndromo con pilas es un ejercicio muy típico de examen. La clave: una copia invertida de la pila original es simplemente la pila leída de cima a base.</div>
+    <button class="ask-btn" onclick="sendPrompt('¿Hay una forma más sencilla de comprobar palíndromo con Stack en Java?')">¿Hay forma más sencilla? ↗</button>
+  </div>
+</div>
+
+<script>
+function show(i) {
+  document.querySelectorAll('.exercise').forEach((e, idx) => {
+    e.classList.toggle('active', idx === i);
+  });
+  document.querySelectorAll('.tab').forEach((t, idx) => {
+    t.classList.toggle('active', idx === i);
+  });
+}
+</script>

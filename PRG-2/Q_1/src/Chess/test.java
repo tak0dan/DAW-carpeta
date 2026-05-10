@@ -1,5 +1,5 @@
 package Chess;
-
+/*
 public class test {
     public static void main(String[] args) {
         Knight whiteKnight = new Knight("white", 7, 1); 
@@ -24,3 +24,4 @@ public class test {
         }
     }
 }
+*/

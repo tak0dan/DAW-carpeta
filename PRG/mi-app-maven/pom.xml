@@ -50,6 +50,7 @@
             </configuration>
         </plugin>
     </plugins>
+    <defaultGoal>compile exec:java</defaultGoal>
 </build>
 
 </project>

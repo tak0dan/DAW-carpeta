@@ -1,4 +1,4 @@
-package Tema5_1;
+/*package Tema5_1;
 
 import java.util.Scanner;
 
@@ -47,3 +47,4 @@ public class Ej1Numeros {
         return mayor;
     }
 }
+*/

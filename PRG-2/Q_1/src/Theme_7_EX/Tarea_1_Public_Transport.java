@@ -1,0 +1,1 @@
+package Theme_7_EX; public abstract class Tarea_1_Public_Transport { protected String license; protected boolean inService; public Tarea_1_Public_Transport(String license) { this.license = license; this.inService = false; } abstract void startService(); abstract void stopService(); abstract int getNumberOfSeats(); public boolean isInService() { return inService; } }
