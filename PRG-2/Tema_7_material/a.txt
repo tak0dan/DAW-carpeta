@@ -1,0 +1,371 @@
+Alright Tak_0, here’s a **fully explained solution document** for the exam file you uploaded.
+Everything is broken down step-by-step, with reasoning, UML structure, Java code, and explanations — basically what a sane teacher *should* have given in the first place 😄
+
+(I’ll cite the uploaded document content once, as required: )
+
+---
+
+# **📄 SOLUTION DOCUMENT — Detailed & Explained**
+
+---
+
+# **1. UML CLASS DIAGRAM IMPLEMENTATION**
+
+The statement describes a platform storing *digital content*, and all content types share some common attributes but also have specific data. We must implement:
+
+* **Superclass:** `Contenido`
+* **Subclasses:** `Pelicula`, `Podcast`, `Serie`
+* Auxiliary classes:
+
+  * `Capitulo` (for podcast episodes)
+  * `Temporada` (for series seasons)
+
+## **1.1. Superclass: `Contenido`**
+
+### **Fields (common to all content):**
+
+* `protected String titulo`
+* `protected boolean disponible`
+
+### **Constructor:**
+
+* Throws `AtributoVacioException` when `titulo.equals("")`.
+
+### **Methods to implement:**
+
+* `public abstract double calcularDuracion();`
+* `public boolean isDisponible()`
+
+---
+
+## **1.2. `Pelicula` class**
+
+### Additional fields:
+
+* `private double duracion`
+* `private double duracionExtra`
+
+### Duration calculation:
+
+```
+duración total = duracion + duracionExtra
+```
+
+---
+
+## **1.3. `Podcast` class**
+
+### Fields:
+
+* `private List<Capitulo> capitulos`
+
+### Duration calculation:
+
+Sum of all episodes’ durations.
+
+---
+
+## **1.4. `Serie` class**
+
+### Fields:
+
+* `private List<Temporada> temporadas`
+
+### Duration = sum of all seasons’ durations
+
+Each `Temporada` has:
+
+* A `List<Double>` of episodes durations, OR a numeric field `duracion`
+  (you choose; exam doesn't strictly define).
+
+---
+
+# **✔ Example UML-like Code Structure**
+
+```java
+public abstract class Contenido {
+    protected String titulo;
+    protected boolean disponible;
+
+    public Contenido(String titulo, boolean disponible) throws AtributoVacioException {
+        if (titulo.equals(""))
+            throw new AtributoVacioException();
+        this.titulo = titulo;
+        this.disponible = disponible;
+    }
+
+    public boolean isDisponible() { return disponible; }
+
+    public abstract double calcularDuracion();
+}
+```
+
+### **Pelicula**
+
+```java
+public class Pelicula extends Contenido {
+    private double duracion;
+    private double duracionExtra;
+
+    public Pelicula(String titulo, boolean disponible, double dur, double extra)
+        throws AtributoVacioException {
+        super(titulo, disponible);
+        this.duracion = dur;
+        this.duracionExtra = extra;
+    }
+
+    @Override
+    public double calcularDuracion() {
+        return duracion + duracionExtra;
+    }
+}
+```
+
+### **Podcast**
+
+```java
+public class Capitulo {
+    private double duracion;
+    public Capitulo(double d) { this.duracion = d; }
+    public double getDuracion() { return duracion; }
+}
+
+public class Podcast extends Contenido {
+    private List<Capitulo> capitulos;
+
+    public Podcast(String titulo, boolean disponible) throws AtributoVacioException {
+        super(titulo, disponible);
+        this.capitulos = new ArrayList<>();
+    }
+
+    public void addCapitulo(Capitulo c) { capitulos.add(c); }
+
+    @Override
+    public double calcularDuracion() {
+        double total = 0;
+        for (Capitulo c : capitulos)
+            total += c.getDuracion();
+        return total;
+    }
+}
+```
+
+### **Serie**
+
+```java
+public class Temporada {
+    private double duracion;
+
+    public Temporada(double d) { this.duracion = d; }
+    public double getDuracion() { return duracion; }
+}
+
+public class Serie extends Contenido {
+    private List<Temporada> temporadas;
+
+    public Serie(String titulo, boolean disponible) throws AtributoVacioException {
+        super(titulo, disponible);
+        temporadas = new ArrayList<>();
+    }
+
+    public void addTemporada(Temporada t) { temporadas.add(t); }
+    public int numTemporadas() { return temporadas.size(); }
+
+    @Override
+    public double calcularDuracion() {
+        double total = 0;
+        for (Temporada t : temporadas)
+            total += t.getDuracion();
+        return total;
+    }
+}
+```
+
+---
+
+# **2. Static Methods (ContenidoTester.java)**
+
+The exam explicitly says: "**use downcasting only if absolutely necessary**".
+For the requested methods, we **don’t need downcasting at all**.
+
+---
+
+## **2.1. `duracionTotalDisponible(List<Contenido> l)`**
+
+Returns total duration of available content.
+
+```java
+public static double duracionTotalDisponible(List<Contenido> l) {
+    double total = 0;
+    for (Contenido c : l) {
+        if (c.isDisponible())
+            total += c.calcularDuracion();
+    }
+    return total;
+}
+```
+
+---
+
+## **2.2. `mostrarSeriesConMasDeUnaTemporada(List<Contenido> l)`**
+
+We do need downcasting *here* to check number of seasons.
+
+```java
+public static void mostrarSeriesConMasDeUnaTemporada(List<Contenido> l) {
+    for (Contenido c : l) {
+        if (c instanceof Serie) {
+            Serie s = (Serie) c;  // Downcasting allowed
+            if (s.numTemporadas() > 1)
+                System.out.println("Serie: " + s.titulo);
+        }
+    }
+}
+```
+
+---
+
+# **3. MAIN WITH 10 OBJECTS**
+
+```java
+public static void main(String[] args) {
+    ArrayList<Contenido> lista = new ArrayList<>();
+
+    try {
+        // 4 Películas
+        lista.add(new Pelicula("P1", true, 90, 10));
+        lista.add(new Pelicula("P2", false, 120, 20));
+        lista.add(new Pelicula("P3", true, 100, 5));
+        lista.add(new Pelicula("P4", true, 80, 0));
+
+        // 3 Podcasts
+        Podcast pod1 = new Podcast("TechTalk", true);
+        pod1.addCapitulo(new Capitulo(20));
+        pod1.addCapitulo(new Capitulo(30));
+
+        Podcast pod2 = new Podcast("MusicPod", false);
+        pod2.addCapitulo(new Capitulo(45));
+
+        Podcast pod3 = new Podcast("GammaCast", true);
+        pod3.addCapitulo(new Capitulo(10));
+        pod3.addCapitulo(new Capitulo(12));
+        pod3.addCapitulo(new Capitulo(22));
+
+        lista.add(pod1); lista.add(pod2); lista.add(pod3);
+
+        // 3 Series
+        Serie s1 = new Serie("S1", true);
+        s1.addTemporada(new Temporada(200));
+
+        Serie s2 = new Serie("S2", true);
+        s2.addTemporada(new Temporada(150));
+        s2.addTemporada(new Temporada(180));
+
+        Serie s3 = new Serie("S3", false);
+        s3.addTemporada(new Temporada(90));
+        s3.addTemporada(new Temporada(110));
+        s3.addTemporada(new Temporada(95));
+
+        lista.add(s1); lista.add(s2); lista.add(s3);
+
+        System.out.println("Duración total disponible: " +
+            duracionTotalDisponible(lista));
+
+        mostrarSeriesConMasDeUnaTemporada(lista);
+
+    } catch (AtributoVacioException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+```
+
+---
+
+# **4. Custom Exception: `AtributoVacioException`**
+
+```java
+public class AtributoVacioException extends Exception {
+    public AtributoVacioException() {
+        super("Atributo contiene cadena vacía");
+    }
+
+    public AtributoVacioException(String msg) {
+        super(msg);
+    }
+}
+```
+
+### Triggering the exception from main
+
+```java
+try {
+    Contenido x = new Pelicula("", true, 90, 10);
+} catch (AtributoVacioException e) {
+    System.out.println("Excepción capturada: " + e.getMessage());
+}
+```
+
+---
+
+# **5. Number + LinkedList Exercise (2 points)**
+
+### **Requirements:**
+
+* LinkedList<Number>
+* 10 objects: 5 Doubles, 5 Integers
+* Include numbers between 4 and 8
+* Traverse backwards and print
+* Traverse forwards and delete numbers in [4,8]
+* Show only Doubles after
+
+---
+
+## **Code:**
+
+```java
+public static void main(String[] args) {
+    LinkedList<Number> lista = new LinkedList<>();
+
+    // Add 10 numbers
+    lista.add(2);
+    lista.add(4.5);
+    lista.add(8);
+    lista.add(1);
+    lista.add(6.7);
+    lista.add(10);
+    lista.add(4);
+    lista.add(5.0);
+    lista.add(3);
+    lista.add(7);
+
+    // Backwards traversal
+    ListIterator<Number> it = lista.listIterator(lista.size());
+    System.out.println("Hacia atrás:");
+    while (it.hasPrevious()) {
+        System.out.println(it.previous());
+    }
+
+    // Delete numbers between 4 and 8 inclusive
+    it = lista.listIterator();
+    while (it.hasNext()) {
+        double n = it.next().doubleValue();
+        if (n >= 4 && n <= 8)
+            it.remove();
+    }
+
+    System.out.println("Lista tras borrar [4,8]: " + lista);
+
+    // Show only Doubles
+    System.out.println("Solo Doubles:");
+    for (Number n : lista) {
+        if (n instanceof Double)
+            System.out.println(n);
+    }
+}
+```
+
+---
+
+# **If you want, I can also generate this as a downloadable DOCX or PDF.**
+
+Just say **“give me the DOCX”** (or PDF, or both).

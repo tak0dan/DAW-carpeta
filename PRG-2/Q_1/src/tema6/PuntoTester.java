@@ -1,6 +1,9 @@
 package tema6;
 
 import java.util.Scanner;
+
+import Tema_3.a;
+
 import java.util.Random;
 
 public class PuntoTester {
@@ -48,14 +51,12 @@ public class PuntoTester {
 	}
 	
 	
-	
 	p.setX(6.5);
 	System.out.println(p);
 
 	p.setY(-4.7);
 	System.out.println(p);
 	
-	
-	
+     
 	}
 }

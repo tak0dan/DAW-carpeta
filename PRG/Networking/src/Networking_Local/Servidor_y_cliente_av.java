@@ -11,6 +11,7 @@ public class Servidor_y_cliente_av extends JFrame {
     JTextArea espacioParaLeerMensajes;
     JTextField cajaParaEscribir;
     JButton botonDeEnviar;
+    JButton botonDeDesconectar;
 
     Socket conexion;
     PrintWriter lineaDeEnvio;
@@ -35,12 +36,21 @@ public class Servidor_y_cliente_av extends JFrame {
         JScrollPane scrollDelChat = new JScrollPane(espacioParaLeerMensajes);
 
         cajaParaEscribir = new JTextField();
-        botonDeEnviar    = new JButton("Enviar");
+        botonDeEnviar       = new JButton("Enviar");
         botonDeEnviar.setEnabled(false);
+
+        botonDeDesconectar  = new JButton("Desconectar");
+        botonDeDesconectar.setEnabled(false);
 
         botonDeEnviar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 enviarMensaje();
+            }
+        });
+
+        botonDeDesconectar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                desconectar();
             }
         });
 
@@ -51,8 +61,12 @@ public class Servidor_y_cliente_av extends JFrame {
         });
 
         JPanel panelDeAbajo = new JPanel(new BorderLayout());
-        panelDeAbajo.add(cajaParaEscribir, BorderLayout.CENTER);
-        panelDeAbajo.add(botonDeEnviar,    BorderLayout.EAST);
+        panelDeAbajo.add(cajaParaEscribir,   BorderLayout.CENTER);
+
+        JPanel panelDeBotones = new JPanel(new GridLayout(1, 2));
+        panelDeBotones.add(botonDeEnviar);
+        panelDeBotones.add(botonDeDesconectar);
+        panelDeAbajo.add(panelDeBotones, BorderLayout.EAST);
 
         add(scrollDelChat, BorderLayout.CENTER);
         add(panelDeAbajo,  BorderLayout.SOUTH);
@@ -80,6 +94,7 @@ public class Servidor_y_cliente_av extends JFrame {
                     lineaDeRecepcion = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
 
                     botonDeEnviar.setEnabled(true);
+                    botonDeDesconectar.setEnabled(true);
                     escucharMensajes();
 
                 } catch (IOException e) {
@@ -102,6 +117,7 @@ public class Servidor_y_cliente_av extends JFrame {
                     lineaDeRecepcion = new BufferedReader(new InputStreamReader(conexion.getInputStream()));
 
                     botonDeEnviar.setEnabled(true);
+                    botonDeDesconectar.setEnabled(true);
                     escucharMensajes();
 
                 } catch (IOException e) {
@@ -119,6 +135,11 @@ public class Servidor_y_cliente_av extends JFrame {
                     String mensajeRecibido;
                     while ((mensajeRecibido = lineaDeRecepcion.readLine()) != null) {
                         espacioParaLeerMensajes.append(nombreDelOtro + ": " + mensajeRecibido + "\n");
+                        if (mensajeRecibido.equals("***")) {
+                            lineaDeEnvio.println("***");
+                            cerrarConexion();
+                            break;
+                        }
                     }
                 } catch (IOException e) {
                     espacioParaLeerMensajes.append("Se ha cerrado la conexion.\n");
@@ -137,6 +158,30 @@ public class Servidor_y_cliente_av extends JFrame {
         cajaParaEscribir.setText("");
     }
 
+    void desconectar() {
+        if (lineaDeEnvio != null) {
+            lineaDeEnvio.println("***");
+            espacioParaLeerMensajes.append("***");
+            botonDeDesconectar.setEnabled(false);
+            
+        }
+        cerrarConexion();
+    }
+
+    void cerrarConexion() {
+        try {
+            if (lineaDeEnvio     != null) lineaDeEnvio.close();
+            if (lineaDeRecepcion != null) lineaDeRecepcion.close();
+            if (conexion != null && !conexion.isClosed()) conexion.close();
+        } catch (IOException e) {
+            // ignore
+        }
+        botonDeEnviar.setEnabled(false);
+        botonDeDesconectar.setEnabled(false);
+        cajaParaEscribir.setEnabled(false);
+        espacioParaLeerMensajes.append("Desconectado.\n");
+    }
+
     public static void main(String[] args) {
 
         JDialog ventanaDeInicio = new JDialog();
@@ -153,16 +198,16 @@ public class Servidor_y_cliente_av extends JFrame {
         JComboBox<String> selectorDeRol = new JComboBox<>(new String[]{"Servidor", "Cliente"});
 
         JLabel etiquetaDePuerto  = new JLabel("Puerto:");
-        JTextField cajaDelPuerto = new JTextField("511");
+        JTextField cajaDelPuerto = new JTextField("5001");
 
         JLabel etiquetaDeIP      = new JLabel("IP del servidor:");
         JTextField cajaDeIP      = new JTextField("10.2.1.187");
 
         JLabel etiquetaDeMiNombre    = new JLabel("Mi nombre:");
-        JTextField cajaDeMiNombre    = new JTextField("Client_1");
+        JTextField cajaDeMiNombre    = new JTextField("");
 
         JLabel etiquetaDelOtro       = new JLabel("Nombre del otro:");
-        JTextField cajaDelNombreOtro = new JTextField("Anes_Server");
+        JTextField cajaDelNombreOtro = new JTextField("");
 
         etiquetaDeIP.setVisible(false);
         cajaDeIP.setVisible(false);

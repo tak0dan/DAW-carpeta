@@ -1,0 +1,309 @@
+package Java_DB_Connection;
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.FlowLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class CRUD_Frame extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
+	private JTextField txtEmail;
+	private JTextField txtId;
+	private JTextField txtUsername;
+	private DatabaseManager dbManager;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CRUD_Frame frame = new CRUD_Frame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public CRUD_Frame() {
+		// Initialize database connection
+		try {
+			dbManager = new DatabaseManager();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, 
+				"Error connecting to database: " + e.getMessage(), 
+				"Database Error", 
+				JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		contentPane = new JPanel();
+		FlowLayout flowLayout = (FlowLayout) contentPane.getLayout();
+		flowLayout.setVgap(25);
+		flowLayout.setHgap(25);
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1);
+		
+		txtId = new JTextField();
+		txtId.setText("");
+		panel_1.add(txtId);
+		txtId.setColumns(10);
+		txtId.setToolTipText("ID");
+		
+		txtUsername = new JTextField();
+		txtUsername.setText("");
+		panel_1.add(txtUsername);
+		txtUsername.setColumns(10);
+		txtUsername.setToolTipText("Username");
+		
+		txtEmail = new JTextField();
+		txtEmail.setText("");
+		panel_1.add(txtEmail);
+		txtEmail.setColumns(10);
+		txtEmail.setToolTipText("Email");
+		
+		JPanel panel = new JPanel();
+		FlowLayout flowLayout_1 = (FlowLayout) panel.getLayout();
+		contentPane.add(panel);
+		
+		// CREATE button
+		JButton btnCreate = new JButton("C");
+		btnCreate.setToolTipText("Create - Insert new user");
+		btnCreate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				createUser();
+			}
+		});
+		panel.add(btnCreate);
+		
+		// READ button
+		JButton btnRead = new JButton("R");
+		btnRead.setToolTipText("Read - Get user by ID");
+		btnRead.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				readUser();
+			}
+		});
+		panel.add(btnRead);
+		
+		// UPDATE button
+		JButton btnUpdate = new JButton("U");
+		btnUpdate.setToolTipText("Update - Modify existing user");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateUser();
+			}
+		});
+		panel.add(btnUpdate);
+		
+		// DELETE button
+		JButton btnDelete = new JButton("D");
+		btnDelete.setToolTipText("Delete - Remove user");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteUser();
+			}
+		});
+		panel.add(btnDelete);
+		
+		// GET ALL button
+		JButton btnGetAll = new JButton("G");
+		btnGetAll.setToolTipText("Get All - Display all users");
+		btnGetAll.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				getAllUsers();
+			}
+		});
+		panel.add(btnGetAll);
+		
+		// CLEAR button
+		JButton btnClear = new JButton("CL");
+		btnClear.setToolTipText("Clear - Clear all fields");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				clearFields();
+			}
+		});
+		panel.add(btnClear);
+		
+		// Add window closing listener to close database connection
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				try {
+					if (dbManager != null) {
+						dbManager.close();
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	// CREATE operation
+	private void createUser() {
+		try {
+			int id = Integer.parseInt(txtId.getText().trim());
+			String username = txtUsername.getText().trim();
+			String email = txtEmail.getText().trim();
+			
+			if (username.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Username cannot be empty!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			boolean success = dbManager.createUser(id, username, email);
+			
+			if (success) {
+				JOptionPane.showMessageDialog(this, "User created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+				clearFields();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to create user!", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	// READ operation
+	private void readUser() {
+		try {
+			int id = Integer.parseInt(txtId.getText().trim());
+			String[] userData = dbManager.readUser(id);
+			
+			if (userData != null) {
+				txtId.setText(userData[0]);
+				txtUsername.setText(userData[1]);
+				txtEmail.setText(userData[2]);
+				JOptionPane.showMessageDialog(this, "User found!", "Success", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "User not found!", "Not Found", JOptionPane.WARNING_MESSAGE);
+			}
+			
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	// UPDATE operation
+	private void updateUser() {
+		try {
+			int id = Integer.parseInt(txtId.getText().trim());
+			String username = txtUsername.getText().trim();
+			String email = txtEmail.getText().trim();
+			
+			if (username.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Username cannot be empty!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			boolean success = dbManager.updateUser(id, username, email);
+			
+			if (success) {
+				JOptionPane.showMessageDialog(this, "User updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "User not found or update failed!", "Error", JOptionPane.WARNING_MESSAGE);
+			}
+			
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	// DELETE operation
+	private void deleteUser() {
+		try {
+			int id = Integer.parseInt(txtId.getText().trim());
+			
+			int confirm = JOptionPane.showConfirmDialog(this, 
+				"Are you sure you want to delete user with ID " + id + "?", 
+				"Confirm Delete", 
+				JOptionPane.YES_NO_OPTION);
+			
+			if (confirm == JOptionPane.YES_OPTION) {
+				boolean success = dbManager.deleteUser(id);
+				
+				if (success) {
+					JOptionPane.showMessageDialog(this, "User deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+					clearFields();
+				} else {
+					JOptionPane.showMessageDialog(this, "User not found or delete failed!", "Error", JOptionPane.WARNING_MESSAGE);
+				}
+			}
+			
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "ID must be a valid number!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	// GET ALL operation
+	private void getAllUsers() {
+		try {
+			ResultSet rs = dbManager.getAllUsers();
+			StringBuilder userList = new StringBuilder("All Users:\n\n");
+			
+			boolean hasUsers = false;
+			while (rs.next()) {
+				hasUsers = true;
+				userList.append("ID: ").append(rs.getInt("id"))
+						.append(", Name: ").append(rs.getString("nombre"))
+						.append(", Email: ").append(rs.getString("email"))
+						.append("\n");
+			}
+			
+			rs.close();
+			
+			if (hasUsers) {
+				JOptionPane.showMessageDialog(this, userList.toString(), "All Users", JOptionPane.INFORMATION_MESSAGE);
+			} else {
+				JOptionPane.showMessageDialog(this, "No users found in database!", "Empty", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+	}
+	
+	// Clear all text fields
+	private void clearFields() {
+		txtId.setText("");
+		txtUsername.setText("");
+		txtEmail.setText("");
+	}
+}
