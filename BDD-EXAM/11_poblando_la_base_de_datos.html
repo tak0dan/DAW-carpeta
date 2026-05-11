@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<link rel="stylesheet" type="text/css" href="11_poblando_la_base_de_datos_files/base.css">
+<link rel="stylesheet" type="text/css" href="11_poblando_la_base_de_datos_files/exe_highlighter.css">
+<link rel="stylesheet" type="text/css" href="11_poblando_la_base_de_datos_files/content.css">
+<link rel="stylesheet" type="text/css" href="11_poblando_la_base_de_datos_files/nav.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>1.1. Poblando la base de datos | UD 11. BASES DE DATOS NOSQL Parte 2. MongoDB: DML y consultas avanzadas </title>
+<link rel="shortcut icon" href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/favicon.ico" type="image/x-icon">
+<meta name="author" content="María Elena González Moreno y Abelardo Martínez Serrano. Basado en y modificado de Abelardo Martínez, Pau Miñana Climent y Sergio Badal. ">
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<meta name="generator" content="eXeLearning 2.9 - exelearning.net">
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="11_poblando_la_base_de_datos_files/exe_jquery.js"></script>
+<script type="text/javascript" src="11_poblando_la_base_de_datos_files/exe_highlighter.js"></script>
+<script type="text/javascript" src="11_poblando_la_base_de_datos_files/common_i18n.js"></script>
+<script type="text/javascript" src="11_poblando_la_base_de_datos_files/common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+<body class="exe-web-site js" id="exe-node-88"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" style="background-image: url(logojuandegaray_exe.png); background-repeat: no-repeat;" role="banner"><div id="headerContent">UD 11. BASES DE DATOS NOSQL Parte 2. MongoDB: DML y consultas avanzadas</div></header>
+<p id="nav-toggler"><a href="#" onclick="myTheme.toggleMenu(this);return false" class="hide-nav" id="toggle-nav" title="Ocultar"><span>Menú</span></a></p><nav id="siteNav" role="navigation" style="padding-bottom: 0px; margin-bottom: 15px;">
+<ul>
+   <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/index.html" class="daddy main-node">DAW/DAM. Bases de datos (BD)</a></li>
+   <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/1_modificacin_de_datos_dml.html" class="current-page-parent daddy">1. Modificación de datos (DML)</a>
+   <ul>
+      <li id="active" class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/11_poblando_la_base_de_datos.html" class="active no-ch">1.1. Poblando la base de datos</a></li>
+      <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/12_insercin_de_documentos.html" class="no-ch">1.2. Inserción de documentos</a></li>
+      <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/13_actualizacin_de_documentos.html" class="daddy">1.3. Actualización de documentos<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/131_ejemplo_1.html" class="no-ch">1.3.1. Ejemplo 1</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/132_ejemplo_2.html" class="no-ch">1.3.2. Ejemplo 2</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/133_ejemplo_3.html" class="no-ch">1.3.3. Ejemplo 3</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/134_ejemplo_4.html" class="no-ch">1.3.4. Ejemplo 4</a></li>
+      </ul>
+      </li>
+      <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/14_borrado_de_documentos.html" class="daddy">1.4. Borrado de documentos<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/141_ejemplo_1.html" class="no-ch">1.4.1. Ejemplo 1</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/142_ejemplo_2.html" class="no-ch">1.4.2. Ejemplo 2</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/143_ejemplo_3.html" class="no-ch">1.4.3. Ejemplo 3</a></li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+   <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/2_consultas_avanzadas.html" class="daddy">2. Consultas avanzadas</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/21_documentos_embebidos_y_arrays.html" class="daddy">2.1. Documentos embebidos y arrays<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/211_consultas_en_documentos_embebidos.html" class="no-ch">2.1.1. Consultas en documentos embebidos</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/22_agregaciones.html" class="daddy">2.2. Agregaciones<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/221_fases_stages_con_equivalencia_en_el_find.html" class="no-ch">2.2.1. Fases (stages) con equivalencia en el find</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/222_fase_para_descomponer_arrays.html" class="no-ch">2.2.2. Fase para descomponer arrays</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/223_enlazar_colecciones_join.html" class="no-ch">2.2.3. Enlazar colecciones. "JOIN"</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/224_agrupamiento_y_funciones_agregadas.html" class="no-ch">2.2.4. Agrupamiento y funciones agregadas</a></li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+   <li class="sfout"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/3_bibliografa.html" class="no-ch">3. Bibliografía</a></li>
+</ul>
+</nav>
+<div id="topPagination">
+<nav class="pagination noprt"><a href="#" onclick="window.print();return false" title="Imprimir" class="print-page"><span>Imprimir</span></a> 
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/1_modificacin_de_datos_dml.html" class="prev"><span><span>« </span>Anterior</span></a> <span class="sep">| </span><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/12_insercin_de_documentos.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main" role="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">1.1. Poblando la base de datos</h1></header>
+<article class="iDevice_wrapper textIdevice" id="id137">
+<div class="iDevice emphasis0">
+<div id="ta137_147_2" class="block iDevice_content">
+<div class="exe-text"><p style="text-align: justify;">Creamos una colección donde aplicaremos los posteriores ejemplos.</p>
+<div class="highlighted-code language-js">
+<div>
+<pre class="  language-js"><code class="  language-js"><span class="token comment" spellcheck="true">// limpiar pantalla (buena praxis)</span>
+cls
+<span class="token comment" spellcheck="true">// conectar con la BD y borrarla (la crea si no existe)</span>
+use pruebas
+db<span class="token punctuation">.</span><span class="token function">dropDatabase</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+use pruebas
+<span class="token comment" spellcheck="true">// crear una nueva colección</span>
+db<span class="token punctuation">.</span><span class="token function">createCollection</span><span class="token punctuation">(</span><span class="token string">"estudiantes"</span><span class="token punctuation">)</span>
+<span class="token comment" spellcheck="true">// crea varios documentos</span>
+<span class="token keyword">var</span> st1 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">100</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Sergio"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Gracia Merinda"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"sergio@gmail.com"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">19</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">5</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st2 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">200</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Pablo"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Concar López"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"graciamerinda@gmail.com"</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st3 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">300</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Eva"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Gredos Martínez"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"gredoseva@gmail.com"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">13</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">7</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st4 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">400</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Miranda"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Aranda Bada"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"indo@arandabada.com"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">49</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st5 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">500</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Gabriel"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Muro Menéndez"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">12</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st6 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">600</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Ana"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Gracia Merinda"</span><span class="token punctuation">,</span> email<span class="token punctuation">:</span><span class="token string">"ana@gmail.com"</span><span class="token punctuation">,</span>
+edad<span class="token punctuation">:</span><span class="token number">19</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">4</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st7 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">700</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Tania"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Concar López"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"tania@gmail.com"</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">6</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st8 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">800</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Miguel"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Gredos Martínez"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"miguel@gmail.com"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">39</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">9</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st9 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">900</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Álvaro"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Aranda Bada"</span><span class="token punctuation">,</span>
+email<span class="token punctuation">:</span><span class="token string">"diana@genial.com"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">49</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">1</span><span class="token punctuation">}</span>
+<span class="token keyword">var</span> st10 <span class="token operator">=</span> <span class="token punctuation">{</span>_id<span class="token punctuation">:</span> <span class="token number">1000</span><span class="token punctuation">,</span> nombre<span class="token punctuation">:</span><span class="token string">"Diana"</span><span class="token punctuation">,</span> apellidos<span class="token punctuation">:</span><span class="token string">"Muro Menéndez"</span><span class="token punctuation">,</span> edad<span class="token punctuation">:</span><span class="token number">29</span><span class="token punctuation">,</span> nota<span class="token punctuation">:</span><span class="token number">7</span><span class="token punctuation">}</span>
+<span class="token comment" spellcheck="true">// inserta esos documentos en la colección</span>
+db<span class="token punctuation">.</span>estudiantes<span class="token punctuation">.</span><span class="token function">insertMany</span><span class="token punctuation">(</span><span class="token punctuation">[</span>st1<span class="token punctuation">,</span> st2<span class="token punctuation">,</span> st3<span class="token punctuation">,</span> st4<span class="token punctuation">,</span> st5<span class="token punctuation">,</span> st6<span class="token punctuation">,</span> st7<span class="token punctuation">,</span> st8<span class="token punctuation">,</span> st9<span class="token punctuation">,</span> st10<span class="token punctuation">]</span><span class="token punctuation">)</span></code></pre>
+</div>
+</div>
+<p style="text-align: justify;"></p></div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id="bottomPagination">
+<nav class="pagination noprt">
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/1_modificacin_de_datos_dml.html" class="prev"><span><span>« </span>Anterior</span></a> <span class="sep">| </span><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099598/mod_resource/content/2/12_insercin_de_documentos.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+</div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><script type="text/javascript" src="11_poblando_la_base_de_datos_files/_style_js.js"></script></body></html>

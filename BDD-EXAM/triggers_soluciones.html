@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<link rel="stylesheet" type="text/css" href="triggers_soluciones_files/base.css">
+<link rel="stylesheet" type="text/css" href="triggers_soluciones_files/content.css">
+<link rel="stylesheet" type="text/css" href="triggers_soluciones_files/nav.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>UD 10. Extensiones SQL. P2. Triggers y cursores. Tarea no evaluable. SOLUCIÓN </title>
+<link rel="shortcut icon" href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/favicon.ico" type="image/x-icon">
+<meta name="author" content="Abelardo Martínez y Pau Miñana. Basado y modificado de Sergio Badal (www.sergiobadal.com) y Raquel Torres.">
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<meta name="generator" content="eXeLearning 2.9 - exelearning.net">
+<meta name="description" content="DAW/DAM. UD 10. Extensiones SQL. P2. Triggers y cursores. Tarea no evaluable. SOLUCIÓN">
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="triggers_soluciones_files/exe_jquery.js"></script>
+<script type="text/javascript" src="triggers_soluciones_files/common_i18n.js"></script>
+<script type="text/javascript" src="triggers_soluciones_files/common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+<body class="exe-web-site js" id="exe-node-0"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" style="background-image: url(logojuandegaray_exe.png); background-repeat: no-repeat;" role="banner"><div id="headerContent">UD 10. Extensiones SQL. P2. Triggers y cursores. Tarea no evaluable. SOLUCIÓN</div></header>
+<p id="nav-toggler"><a href="#" onclick="myTheme.toggleMenu(this);return false" class="hide-nav" id="toggle-nav" title="Ocultar"><span>Menú</span></a></p><nav id="siteNav" role="navigation" style="padding-bottom: 0px; margin-bottom: 15px;">
+<ul>
+   <li id="active"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/index.html" class="active daddy main-node">DAW/DAM. Bases de datos (BD)</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/aspectos_a_tener_en_cuenta.html" class="no-ch">Aspectos a tener en cuenta</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/recomendaciones.html" class="no-ch">Recomendaciones</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/1_bd_centro_educativo.html" class="daddy">1. BD Centro educativo</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/11_triggers_antes_de_insertar_nota_y_antes_de_actualizar_nota.html" class="no-ch">1.1. Triggers. Antes de insertar nota y antes de actualizar nota</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/12_funcin_eliminar_espacios_y_pasar_a_minsculas.html" class="no-ch">1.2. Función. Eliminar espacios y pasar a minúsculas</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/13_procedimiento_crear_correo_electrnico.html" class="no-ch">1.3. Procedimiento. Crear correo electrónico</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/14_trigger_antes_de_insertar_correo_electrnico.html" class="no-ch">1.4. Trigger. Antes de insertar correo electrónico</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/15_trigger_despus_de_actualizar_correo_electrnico.html" class="no-ch">1.5. Trigger. Después de actualizar correo electrónico</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/16_trigger_despus_de_borrar_alumnado.html" class="no-ch">1.6. Trigger. Después de borrar alumnado</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/17_trigger_participaciones_mnimas_1n_en_relaciones_nm.html" class="no-ch">1.7. Trigger. Participaciones mínimas (1,n) en relaciones N:M</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/18_cursor_materias_en_las_que_est_matriculado_un_alumnoa.html" class="no-ch">1.8. Cursor. Materias en las que está matriculado un alumno/a</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/19_cursor_alumnado_por_materia.html" class="no-ch">1.9. Cursor. Alumnado por materia</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/110_cursor_alumnado_por_nota_y_materias_en_las_que_est_matriculado.html" class="no-ch">1.10. Cursor. Alumnado por nota y materias en las que está matriculado</a></li>
+   </ul>
+   </li>
+</ul>
+</nav>
+<div id="topPagination">
+<nav class="pagination noprt"><a href="#" onclick="window.print();return false" title="Imprimir" class="print-page"><span>Imprimir</span></a> 
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/aspectos_a_tener_en_cuenta.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main" role="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">DAW/DAM. Bases de datos (BD)</h1></header>
+<article class="iDevice_wrapper textIdevice" id="id3">
+<div class="iDevice emphasis0">
+<div id="ta3_123_2" class="block iDevice_content">
+<div class="exe-text"><h2>UD 10. EXTENSIONES SQL</h2>
+<h4>Parte 2. <em>Triggers</em> y cursores</h4>
+<h4>Tarea no evaluable. <span style="background-color: #ffff99;">SOLUCIÓN</span></h4>
+<p></p>
+<p><strong>María Elena González</strong> y <strong>Abelardo Martínez</strong><span style="color: #000000;"></span><br>Basado en y modificado de Abelardo Martínez, <strong>Pau Miñana</strong>, <strong>Sergio Badal</strong> y <strong>Raquel Torres</strong>. CEED Comunidad Valenciana<br><span style="color: #ff0000;">Curso 2025-2026 <img src="triggers_soluciones_files/logojuandegaray.png" alt="IES Juan de Garay" width="250" height="136" style="vertical-align: text-top; margin-bottom: 50px; margin-top: 50px;"></span></p></div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id="bottomPagination">
+<nav class="pagination noprt">
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13023597/mod_resource/content/1/aspectos_a_tener_en_cuenta.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+</div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><script type="text/javascript" src="triggers_soluciones_files/_style_js.js"></script></body></html>

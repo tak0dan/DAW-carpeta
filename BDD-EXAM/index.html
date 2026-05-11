@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<link rel="stylesheet" type="text/css" href="index_files/base.css">
+<link rel="stylesheet" type="text/css" href="index_files/content.css">
+<link rel="stylesheet" type="text/css" href="index_files/nav.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>UD 11. BASES DE DATOS NOSQL Parte 1. MongoDB: DDL y DQL </title>
+<link rel="shortcut icon" href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/favicon.ico" type="image/x-icon">
+<meta name="author" content="María Elena González Moreno y Abelardo Martínez Serrano. Basado en y modificado de Abelardo Martínez, Pau Miñana Climent y Sergio Badal. CEED Comunidad Valenciana">
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<meta name="generator" content="eXeLearning 2.9 - exelearning.net">
+<meta name="description" content="DAW/DAM. UD 11. BASES DE DATOS NOSQL Parte 1. MongoDB: DDL y DQL">
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="index_files/exe_jquery.js"></script>
+<script type="text/javascript" src="index_files/common_i18n.js"></script>
+<script type="text/javascript" src="index_files/common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+<body class="exe-web-site js" id="exe-node-0"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" style="background-image: url(logojuandegaray_exe.png); background-repeat: no-repeat;" role="banner"><div id="headerContent">UD 11. BASES DE DATOS NOSQL Parte 1. MongoDB: DDL y DQL</div></header>
+<p id="nav-toggler"><a href="#" onclick="myTheme.toggleMenu(this);return false" class="hide-nav" id="toggle-nav" title="Ocultar"><span>Menú</span></a></p><nav id="siteNav" role="navigation" style="padding-bottom: 0px; margin-bottom: 15px;">
+<ul>
+   <li id="active"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/index.html" class="active daddy main-node">DAW/DAM. Bases de datos (BD)</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/1_bd_no_relacionales_nosql.html" class="daddy">1. BD no relacionales (NoSQL)</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/11_por_qu_nosql.html" class="no-ch">1.1. ¿Por qué No-SQL?</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/12_estructura_y_tipos.html" class="no-ch">1.2. Estructura y tipos</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/13_diferencias_y_usos.html" class="no-ch">1.3. Diferencias y usos</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/14_teorema_cap.html" class="no-ch">1.4. Teorema CAP</a></li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/2_introduccin_a_mongodb.html" class="daddy">2. Introducción a MongoDB</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/21_qu_es_mongodb.html" class="no-ch">2.1. ¿Qué es MongoDB?</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/22_cmo_funciona_mongodb.html" class="no-ch">2.2. ¿Cómo funciona MongoDB?</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/23_dnde_se_puede_utilizar_mongodb.html" class="no-ch">2.3. ¿Dónde se puede utilizar MongoDB?</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/24_dnde_no_se_debe_utilizar_mongodb.html" class="no-ch">2.4. ¿Dónde no se debe utilizar MongoDB?</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/25_cmo_se_instala_mongodb.html" class="daddy">2.5. ¿Cómo se instala MongoDB?<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/251_instalacin_y_uso_de_entornos_grficos_ide.html" class="no-ch">2.5.1. Instalación y uso de entornos gráficos (IDE)</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/26_comandos_bsicos.html" class="no-ch">2.6. Comandos básicos</a></li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/3_estructura_de_un_documento.html" class="no-ch">3. Estructura de un documento</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/4_lenguaje_de_definicin_de_datos_ddl.html" class="daddy">4. Lenguaje de definición de datos (DDL)</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/41_poblar_la_base_de_datos.html" class="no-ch">4.1. Poblar la base de datos</a></li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/5_lenguaje_de_consulta_de_datos_dql.html" class="daddy">5. Lenguaje de consulta de datos (DQL)</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/51_mongodb_trabajando_con_filtros.html" class="daddy">5.1. MongoDB. Trabajando con filtros<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/511_ejemplos.html" class="no-ch">5.1.1. Ejemplos</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/52_mongodb_trabajando_con_proyecciones.html" class="daddy">5.2. MongoDB. Trabajando con proyecciones<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/521_ejemplos.html" class="no-ch">5.2.1. Ejemplos</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/53_mongodb_trabajando_con_operaciones.html" class="daddy">5.3. MongoDB. Trabajando con operaciones<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/531_ejemplos.html" class="no-ch">5.3.1. Ejemplos</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/54_consultas_combinadas.html" class="daddy">5.4. Consultas combinadas<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/541_ejemplos.html" class="no-ch">5.4.1. Ejemplos</a></li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/6_bibliografa.html" class="no-ch">6. Bibliografía</a></li>
+</ul>
+</nav>
+<div id="topPagination">
+<nav class="pagination noprt"><a href="#" onclick="window.print();return false" title="Imprimir" class="print-page"><span>Imprimir</span></a> 
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/1_bd_no_relacionales_nosql.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main" role="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">DAW/DAM. Bases de datos (BD)</h1></header>
+<article class="iDevice_wrapper textIdevice" id="id3">
+<div class="iDevice emphasis0">
+<div id="ta3_123_2" class="block iDevice_content">
+<div class="exe-text"><h2>UD 11. BASES DE DATOS NOSQL</h2>
+<h4>Parte 1. MongoDB: DDL y DQL</h4>
+<p></p>
+<p><strong>María Elena González</strong> y <strong>Abelardo Martínez</strong><span style="color: #000000;"></span><br>Basado en y modificado de Abelardo Martínez, <strong>Pau Miñana </strong>y <strong>Sergio Badal</strong>. CEED Comunidad Valenciana<br><span style="color: #ff0000;">Curso 2025-2026 <img src="index_files/logojuandegaray.png" alt="IES Juan de Garay" width="250" height="136" style="vertical-align: text-top; margin-bottom: 50px; margin-top: 50px;"></span></p></div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id="bottomPagination">
+<nav class="pagination noprt">
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13099597/mod_resource/content/5/1_bd_no_relacionales_nosql.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+</div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><script type="text/javascript" src="index_files/_style_js.js"></script></body></html>
