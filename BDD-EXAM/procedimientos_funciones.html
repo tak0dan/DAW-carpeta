@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<link rel="stylesheet" type="text/css" href="procedimientos_funciones_files/base.css">
+<link rel="stylesheet" type="text/css" href="procedimientos_funciones_files/content.css">
+<link rel="stylesheet" type="text/css" href="procedimientos_funciones_files/nav.css">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>UD 10. Extensiones SQL. Parte 1. Procedimientos y funciones </title>
+<link rel="shortcut icon" href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/favicon.ico" type="image/x-icon">
+<meta name="author" content="María Elena González Moreno y Abelardo Martínez Serrano. Basado en y modificado de Abelardo Martínez, Pau Miñana Climent, Sergio Badal y Raquel Torres. CEED Comunidad Valenciana">
+<link rel="license" type="text/html" href="http://creativecommons.org/licenses/by-sa/4.0/">
+<meta name="generator" content="eXeLearning 2.9 - exelearning.net">
+<meta name="description" content="DAW/DAM. UD 10. Extensiones SQL. Parte 1. Procedimientos y funciones">
+<!--[if lt IE 9]><script type="text/javascript" src="exe_html5.js"></script><![endif]-->
+<script type="text/javascript" src="procedimientos_funciones_files/exe_jquery.js"></script>
+<script type="text/javascript" src="procedimientos_funciones_files/common_i18n.js"></script>
+<script type="text/javascript" src="procedimientos_funciones_files/common.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+<body class="exe-web-site js" id="exe-node-0"><script type="text/javascript">document.body.className+=" js"</script>
+<div id="content">
+<p id="skipNav"><a href="#main" class="sr-av">Saltar la navegación</a></p>
+<header id="header" style="background-image: url(logojuandegaray_exe.png); background-repeat: no-repeat;" role="banner"><div id="headerContent">UD 10. Extensiones SQL. Parte 1. Procedimientos y funciones</div></header>
+<p id="nav-toggler"><a href="#" onclick="myTheme.toggleMenu(this);return false" class="hide-nav" id="toggle-nav" title="Ocultar"><span>Menú</span></a></p><nav id="siteNav" role="navigation" style="padding-bottom: 0px; margin-bottom: 15px;">
+<ul>
+   <li id="active"><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/index.html" class="active daddy main-node">DAW/DAM. Bases de datos (BD)</a></li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/1_lenguaje_de_programacin_en_mysql.html" class="daddy">1. Lenguaje de programación en MySQL</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/11_crear_y_modificar_programas.html" class="no-ch">1.1. Crear y modificar programas</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/12_comentarios.html" class="no-ch">1.2. Comentarios</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/13_delimitadores.html" class="no-ch">1.3. Delimitadores</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/14_variables_y_parmetros.html" class="no-ch">1.4. Variables y parámetros</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/15_estructuras_de_control.html" class="daddy">1.5. Estructuras de control<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/151_alternativas_o_condicionales.html" class="no-ch">1.5.1. Alternativas o condicionales</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/152_repetitivas_o_iterativas.html" class="no-ch">1.5.2. Repetitivas o iterativas</a></li>
+      </ul>
+      </li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/16_operadores.html" class="no-ch">1.6. Operadores</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/17_control_de_errores.html" class="no-ch">1.7. Control de errores</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/18_libreras.html" class="no-ch">1.8. Librerías</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/19_bd_a_utilizar.html" class="no-ch">1.9. BD a utilizar</a></li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/2_procedimientos_almacenados.html" class="daddy">2. Procedimientos almacenados</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/21_sintaxis.html" class="no-ch">2.1. Sintaxis</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/22_parmetros.html" class="no-ch">2.2. Parámetros</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/23_ejemplos.html" class="daddy">2.3. Ejemplos<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/231_procedimientos_con_parmetros_de_entrada_in.html" class="no-ch">2.3.1. Procedimientos con parámetros de entrada IN</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/232_procedimientos_con_parmetros_de_salida_out.html" class="no-ch">2.3.2. Procedimientos con parámetros de salida OUT</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/233_procedimientos_con_parmetros_de_entradasalida_inout.html" class="no-ch">2.3.3. Procedimientos con parámetros de entrada/salida IN/OUT</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/234_procedimientos_que_modifican_datos.html" class="no-ch">2.3.4. Procedimientos que modifican datos</a></li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/3_funciones.html" class="daddy">3. Funciones</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/31_sintaxis.html" class="no-ch">3.1. Sintaxis</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/32_ejemplos.html" class="daddy">3.2. Ejemplos<span> ►</span></a>
+      <ul class="other-section">
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/321_funcin_calcularbeneficio.html" class="no-ch">3.2.1. Función "calcularBeneficio"</a></li>
+         <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/322_funcin_cuentaproductosporestado.html" class="no-ch">3.2.2. Función "cuentaProductosPorEstado"</a></li>
+      </ul>
+      </li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/4_ejemplos_prcticos_procedimientos_y_funciones_genricas.html" class="daddy">4. Ejemplos prácticos. Procedimientos y funciones genéricas</a>
+   <ul class="other-section">
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/41_funcin_sumadosnumeros.html" class="no-ch">4.1. Función "sumaDosNumeros"</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/42_procedimiento_esparimpar.html" class="no-ch">4.2. Procedimiento "esParImpar"</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/43_funcin_notacalificacion.html" class="no-ch">4.3. Función "notaCalificacion"</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/44_funcin_notarealcalificacion.html" class="no-ch">4.4. Función "notaRealCalificacion"</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/45_procedimiento_mostrar1_n.html" class="no-ch">4.5. Procedimiento "mostrar1_N"</a></li>
+      <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/46_procedimiento_mostrarimpares1_n.html" class="no-ch">4.6. Procedimiento "mostrarImpares1_N"</a></li>
+   </ul>
+   </li>
+   <li><a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/5_bibliografa.html" class="no-ch">5. Bibliografía</a></li>
+</ul>
+</nav>
+<div id="topPagination">
+<nav class="pagination noprt"><a href="#" onclick="window.print();return false" title="Imprimir" class="print-page"><span>Imprimir</span></a> 
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/1_lenguaje_de_programacin_en_mysql.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+<div id="main-wrapper">
+<section id="main" role="main">
+<header id="nodeDecoration"><h1 id="nodeTitle">DAW/DAM. Bases de datos (BD)</h1></header>
+<article class="iDevice_wrapper textIdevice" id="id3">
+<div class="iDevice emphasis0">
+<div id="ta3_123_2" class="block iDevice_content">
+<div class="exe-text"><h2>UD 10. EXTENSIONES SQL</h2>
+<h4>Parte 1. Procedimientos y funciones</h4>
+<p></p>
+<p><strong>María Elena González</strong> y <strong>Abelardo Martínez</strong><span style="color: #000000;"></span><br>Basado en y modificado de Abelardo Martínez, <strong>Pau Miñana</strong>, <strong>Sergio Badal</strong> y <strong>Raquel Torres</strong>. CEED Comunidad Valenciana<br><span style="color: #ff0000;">Curso 2025-2026 <img src="procedimientos_funciones_files/logojuandegaray.png" alt="IES Juan de Garay" width="250" height="136" style="vertical-align: text-top; margin-bottom: 50px; margin-top: 50px;"></span></p></div>
+</div>
+</div>
+</article>
+<div id="packageLicense" class="cc cc-by-sa">
+<p><span>Obra publicada con</span> <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Licencia Creative Commons Reconocimiento Compartir igual 4.0</a></p>
+</div>
+</section>
+</div>
+<div id="bottomPagination">
+<nav class="pagination noprt">
+<a href="https://aules.edu.gva.es/fp/pluginfile.php/13023578/mod_resource/content/1/1_lenguaje_de_programacin_en_mysql.html" class="next"><span>Siguiente<span> »</span></span></a>
+</nav>
+</div>
+</div>
+<p id="made-with-eXe"><a href="https://exelearning.net/" target="_blank" rel="noopener"><span>Creado con eXeLearning<span> (Ventana nueva)</span></span></a></p><script type="text/javascript" src="procedimientos_funciones_files/_style_js.js"></script></body></html>
