@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    
+</head>
+<body>
+    
+    <h1>Diagonal</h1>
+    Tamaño: <input type="number" id="tamanyo" value="">
+    <input type="button" value="Dibujar" id="dibujar">
+    <div id="resultado"></div>
+    <script>
+        let tamanyo=document.getElementById("tamanyo")
+        let dibujar=document.getElementById("dibujar")
+        let resultado=document.getElementById("resultado")
+
+        //eventos
+        dibujar.addEventListener("click", function() {
+            let cuadrado=""
+            let n = tamanyo.value
+            let dia = 1
+            for (let i = 1; i <= n; i++) {
+                for (let j = 1; j <= n; j++) {
+
+                    if (j == dia) {
+                        cuadrado += dia
+                    }
+                    else {
+                        cuadrado += "*"
+                    }
+                    
+                }
+                dia++
+                cuadrado += "<br>"
+            }
+
+            resultado.innerHTML=cuadrado
+            
+
+            
+        })
+
+        
+    </script>
+</body>
+</html>

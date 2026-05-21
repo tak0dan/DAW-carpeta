@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<info>
+    <asignaturas>
+        <asignatura>
+            <titulo>Lenguajes de Marcas</titulo>
+            <abreviatura>LM</abreviatura>
+            <id>D1</id>
+            <profesor>Pascual</profesor>
+            <horas>96</horas>
+            <notaMinima>&gt;4.5</notaMinima>
+        </asignatura>
+
+        <asignatura>
+            <titulo>Bases de datos</titulo>
+            <abreviatura>BD</abreviatura>
+            <id>D2</id>
+            <profesor>Elena</profesor>
+            <horas>165</horas>
+            <notaMinima>&gt;5</notaMinima>
+        </asignatura>
+
+        <asignatura>
+            <titulo>Programación</titulo>
+            <abreviatura>PRG</abreviatura>
+            <id>D3</id>
+            <profesor>Santa Mila</profesor>
+            <horas>200</horas>
+            <notaMinima>&gt;4.9</notaMinima>
+        </asignatura>
+
+        <asignatura>
+            <titulo>Entornos</titulo>
+            <abreviatura>EIDE</abreviatura>
+            <id>D4</id>
+            <profesor>Javier</profesor>
+            <horas>96</horas>
+            <notaMinima>&gt;6</notaMinima>
+        </asignatura>
+
+        <asignatura>
+            <titulo>Hardware</titulo>
+            <abreviatura>ISO</abreviatura>
+            <id>D5</id>
+            <profesor>Marcos</profesor>
+            <horas>165</horas>
+            <notaMinima>&gt;7</notaMinima>
+        </asignatura>
+    </asignaturas>
+
+    <alumnos> 
+        <alumno> 
+            <nombres>
+                <nombre>María</nombre>
+                <nombre>Pilar</nombre>
+            </nombres>
+            <dni>111</dni>
+            <telefonos>
+                <numero>2323</numero>
+                <numero>121</numero>
+            </telefonos>
+            <asignaturas>
+                <asignatura>
+                    <id>D1</id>
+                    <nota>4</nota>
+                </asignatura>
+                <asignatura>
+                    <id>D3</id>
+                    <nota>6</nota>
+                </asignatura>
+            </asignaturas>
+        </alumno>
+
+        <alumno> 
+            <nombres>
+                <nombre>Jose</nombre>
+                <nombre>María</nombre>
+            </nombres>
+            <dni>222</dni>
+            <telefonos>
+                <numero>32322</numero>
+            </telefonos>
+            <asignaturas>
+                <asignatura>
+                    <id>D2</id>
+                    <nota>8</nota>
+                </asignatura>
+            </asignaturas>
+        </alumno>
+
+        <alumno> 
+            <nombres>
+                <nombre>Adriana</nombre>
+            </nombres>
+            <dni>333</dni>
+            <telefonos>
+                <numero>32324</numero>
+            </telefonos>
+            <asignaturas>
+                <asignatura>
+                    <id>D4</id>
+                    <nota>6</nota>
+                </asignatura>
+                <asignatura>
+                    <id>D5</id>
+                    <nota>5</nota>
+                </asignatura>
+            </asignaturas>
+        </alumno>
+
+    </alumnos>
+</info>
+
+
