@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB fundamentos</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">01. Nivel 0</span>
+      <h1 class="hero-title">MongoDB fundamentos: desde cero hasta filtros basicos</h1>
+      <p>Si estas empezando, esta es tu pagina. Aqui se construye la base: shell, documentos, colecciones, <code>find()</code>, comparadores, proyeccion, orden y lectura paso a paso.</p>
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="mongodb-paso-a-paso.html">Construir consultas</a>
+      <a href="mongodb-updates-arrays.html">Updates y arrays</a>
+      <a href="plantillas-listas.html">Biblioteca de recetas</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Que es cada cosa</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Termino</th>
+            <th>Idea rapida</th>
+            <th>Ejemplo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Base de datos</td>
+            <td>Contenedor general de colecciones</td>
+            <td><code>comidas</code></td>
+          </tr>
+          <tr>
+            <td>Coleccion</td>
+            <td>Grupo de documentos parecidos</td>
+            <td><code>comidas</code></td>
+          </tr>
+          <tr>
+            <td>Documento</td>
+            <td>Objeto JSON/BSON con campos</td>
+            <td><code>{nombre: "Pizza", precio: 12}</code></td>
+          </tr>
+          <tr>
+            <td>Campo</td>
+            <td>Clave dentro del documento</td>
+            <td><code>precio</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="grid-2">
+      <article class="panel">
+        <h2>Inicio minimo en shell</h2>
+        <pre>show dbs
+use comidas
+show collections
+db.createCollection("comidas")
+db.comidas.find()</pre>
+        <p class="small">Si la coleccion no existe, primero inserta documentos y luego consulta.</p>
+      </article>
+
+      <article class="panel">
+        <h2>Documento de ejemplo</h2>
+        <pre>{
+  nombre: "Pizza Vegana Verde",
+  categoria: "Pizza",
+  precio: 14,
+  vegano: true,
+  disponible: true,
+  ingredientes: ["tomate", "aceitunas", "albahaca"],
+  origen: {pais: "Italia", ciudad: "Roma"},
+  fecha_alta: ISODate("2026-03-10")
+}</pre>
+        <p class="small">En MongoDB es normal tener arrays y objetos anidados dentro del mismo documento.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Cargar datos</h2>
+      <pre>use comidas
+
+db.comidas.insertMany([
+  {
+    nombre: "Pizza Cuatro Quesos",
+    categoria: "Pizza",
+    precio: 12,
+    vegano: false,
+    disponible: true,
+    ingredientes: ["mozzarella", "parmesano"],
+    valoracion: 4.7,
+    fecha_alta: ISODate("2026-05-01")
+  },
+  {
+    nombre: "Arroz Blanco",
+    categoria: "Principal",
+    precio: 3,
+    vegano: true,
+    disponible: true,
+    ingredientes: ["arroz"],
+    valoracion: 4.9,
+    fecha_alta: ISODate("2026-04-01")
+  },
+  {
+    nombre: "Brownie",
+    categoria: "Postre",
+    precio: 5,
+    vegano: false,
+    disponible: false,
+    ingredientes: ["chocolate", "huevo"],
+    valoracion: 4.3,
+    fecha_alta: ISODate("2026-02-18")
+  }
+])</pre>
+      <div class="tip">
+        <p>La forma mas estable de practicar es trabajar siempre con un dataset pequeno y nombres de campo constantes.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Primeros 20 comandos que debes dominar</h2>
+      <pre>01. show dbs
+02. use comidas
+03. show collections
+04. db.comidas.find()
+05. db.comidas.find().pretty()
+06. db.comidas.findOne()
+07. db.comidas.find({categoria: "Pizza"})
+08. db.comidas.find({vegano: true})
+09. db.comidas.find({disponible: true})
+10. db.comidas.find({precio: 12})
+11. db.comidas.find({precio: {$gt: 10}})
+12. db.comidas.find({precio: {$gte: 10}})
+13. db.comidas.find({precio: {$lt: 10}})
+14. db.comidas.find({precio: {$lte: 10}})
+15. db.comidas.find({precio: {$gte: 5, $lte: 15}})
+16. db.comidas.find({categoria: {$ne: "Pizza"}})
+17. db.comidas.find({}, {nombre: 1})
+18. db.comidas.find({}, {nombre: 1, precio: 1, _id: 0})
+19. db.comidas.find().sort({precio: 1})
+20. db.comidas.find().limit(5)</pre>
+    </section>
+
+    <section class="panel">
+      <h2>De cero a 3 filtros</h2>
+      <div class="code-grid">
+        <article class="code-card">
+          <h3>Paso 1: leer todo</h3>
+          <pre>db.comidas.find()</pre>
+        </article>
+        <article class="code-card">
+          <h3>Paso 2: 1 filtro</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza"
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Paso 3: 2 filtros</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true
+})</pre>
+        </article>
+      </div>
+      <div class="code-grid" style="margin-top:18px;">
+        <article class="code-card">
+          <h3>Paso 4: 3 filtros</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true,
+  precio: {$lt: 20}
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Lectura mental</h3>
+          <p>Pizzas AND veganas AND con precio menor que 20.</p>
+        </article>
+        <article class="code-card">
+          <h3>Idea clave</h3>
+          <p>Campos hermanos dentro del mismo objeto = AND implicito.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Comparadores basicos</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Mayor que</h3>
+          <pre>db.comidas.find({
+  precio: {$gt: 10}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Menor o igual</h3>
+          <pre>db.comidas.find({
+  precio: {$lte: 10}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Entre dos valores</h3>
+          <pre>db.comidas.find({
+  precio: {$gte: 5, $lte: 15}
+})</pre>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-top:18px;">
+        <div class="code-card">
+          <h3>No igual</h3>
+          <pre>db.comidas.find({
+  categoria: {$ne: "Postre"}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Uno de varios</h3>
+          <pre>db.comidas.find({
+  categoria: {$in: ["Pizza", "Postre"]}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Ninguno de varios</h3>
+          <pre>db.comidas.find({
+  categoria: {$nin: ["Postre", "Principal"]}
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Proyeccion: devolver solo algunos campos</h2>
+      <p>Cuando dices "quiero ver solo nombre y precio" no estas filtrando documentos: estas filtrando campos.</p>
+      <div class="code-grid">
+        <article class="code-card">
+          <h3>Solo nombre</h3>
+          <pre>db.comidas.find(
+  {},
+  {nombre: 1}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Nombre y precio</h3>
+          <pre>db.comidas.find(
+  {},
+  {nombre: 1, precio: 1, _id: 0}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Ocultar un campo</h3>
+          <pre>db.comidas.find(
+  {},
+  {ingredientes: 0}
+)</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Orden y paginacion</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Orden ascendente</h3>
+          <pre>db.comidas.find().sort({
+  precio: 1
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Orden descendente</h3>
+          <pre>db.comidas.find().sort({
+  precio: -1
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Varias claves</h3>
+          <pre>db.comidas.find().sort({
+  categoria: 1,
+  precio: -1
+})</pre>
+        </div>
+      </div>
+      <div class="code-grid" style="margin-top:18px;">
+        <article class="code-card">
+          <h3>Primeros 5</h3>
+          <pre>db.comidas.find().limit(5)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Pagina 3 de 10</h3>
+          <pre>db.comidas.find()
+.sort({nombre: 1})
+.skip(20)
+.limit(10)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Consejo</h3>
+          <p>Normalmente primero ordenas y despues paginas.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Arrays, regex y fechas en nivel basico</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Array contiene valor</h3>
+          <pre>db.comidas.find({
+  ingredientes: "arroz"
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Empieza por</h3>
+          <pre>db.comidas.find({
+  nombre: /^Pizza/
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Rango de fechas</h3>
+          <pre>db.comidas.find({
+  fecha_alta: {
+    $gte: ISODate("2026-01-01"),
+    $lte: ISODate("2026-12-31")
+  }
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Checklist minimo antes de pasar al siguiente nivel</h2>
+      <ul>
+        <li>Sabes la diferencia entre filtrar documentos y proyectar campos.</li>
+        <li>Sabes usar <code>$gt</code>, <code>$lt</code>, <code>$in</code> y <code>$ne</code>.</li>
+        <li>Sabes ordenar y limitar resultados.</li>
+        <li>Sabes leer una consulta con 2 o 3 filtros seguidos.</li>
+      </ul>
+    </section>
+
+    <p class="footer">Cuando esto te salga natural, pasa a la pagina de construccion de consultas complejas.</p>
+  </main>
+</body>
+</html>

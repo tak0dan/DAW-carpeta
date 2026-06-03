@@ -1,0 +1,846 @@
+What you're asking for is essentially a MongoDB cookbook/reference manual with progressively harder examples.
+
+A good way to learn MongoDB is not by memorizing commands, but by understanding the three major layers:
+
+1. **CRUD** (Create, Read, Update, Delete)
+2. **Advanced Queries** (logical operators, arrays, dates, regex, projections)
+3. **Aggregation Framework** (MongoDB's equivalent of SQL GROUP BY + analytics + transformations)
+
+Most university exams never get beyond layer 2. Most real-world MongoDB work is layer 3.
+
+---
+
+# 0. Sample Dataset
+
+Let's assume:
+
+```javascript
+use comidas
+
+db.comidas.insertMany([
+{
+    nombre: "Pizza Cuatro Quesos",
+    categoria: "Pizza",
+    precio: 12,
+    vegano: false,
+    ingredientes: ["mozzarella","parmesano"],
+    valoracion: 4.7,
+    fecha_alta: ISODate("2026-05-01")
+},
+{
+    nombre: "Arroz Blanco",
+    categoria: "Principal",
+    precio: 3,
+    vegano: true,
+    ingredientes: ["arroz"],
+    valoracion: 4.9,
+    fecha_alta: ISODate("2026-04-01")
+}
+])
+```
+
+---
+
+# PART 1 - FINDING DOCUMENTS
+
+---
+
+## All documents
+
+```javascript
+db.comidas.find()
+```
+
+Equivalent:
+
+```sql
+SELECT * FROM comidas
+```
+
+---
+
+## Pretty output
+
+```javascript
+db.comidas.find().pretty()
+```
+
+---
+
+## Find one document
+
+```javascript
+db.comidas.findOne()
+```
+
+---
+
+## Filter by exact value
+
+```javascript
+db.comidas.find({
+    categoria: "Pizza"
+})
+```
+
+---
+
+## Two filters (AND)
+
+```javascript
+db.comidas.find({
+    categoria: "Pizza",
+    vegano: false
+})
+```
+
+Equivalent:
+
+```sql
+WHERE categoria='Pizza'
+AND vegano=false
+```
+
+---
+
+## Three filters
+
+```javascript
+db.comidas.find({
+    categoria: "Pizza",
+    vegano: false,
+    precio: 12
+})
+```
+
+MongoDB automatically ANDs fields.
+
+---
+
+# PART 2 - COMPARISON OPERATORS
+
+---
+
+## Greater than
+
+```javascript
+db.comidas.find({
+    precio: {$gt: 10}
+})
+```
+
+---
+
+## Greater or equal
+
+```javascript
+db.comidas.find({
+    precio: {$gte: 10}
+})
+```
+
+---
+
+## Less than
+
+```javascript
+db.comidas.find({
+    precio: {$lt: 10}
+})
+```
+
+---
+
+## Between values
+
+```javascript
+db.comidas.find({
+    precio: {
+        $gte: 5,
+        $lte: 15
+    }
+})
+```
+
+Equivalent:
+
+```sql
+WHERE precio BETWEEN 5 AND 15
+```
+
+---
+
+## Not equal
+
+```javascript
+db.comidas.find({
+    categoria: {$ne: "Pizza"}
+})
+```
+
+---
+
+# PART 3 - LOGICAL OPERATORS
+
+---
+
+## OR
+
+```javascript
+db.comidas.find({
+    $or: [
+        {categoria: "Pizza"},
+        {categoria: "Postre"}
+    ]
+})
+```
+
+---
+
+## AND explicitly
+
+```javascript
+db.comidas.find({
+    $and: [
+        {precio: {$gt: 10}},
+        {valoracion: {$gt: 4}}
+    ]
+})
+```
+
+Normally unnecessary.
+
+---
+
+## NOT
+
+```javascript
+db.comidas.find({
+    precio: {
+        $not: {$gt: 10}
+    }
+})
+```
+
+---
+
+## NOR
+
+Neither condition true.
+
+```javascript
+db.comidas.find({
+    $nor: [
+        {categoria:"Pizza"},
+        {vegano:true}
+    ]
+})
+```
+
+---
+
+# PART 4 - ARRAYS
+
+---
+
+## Contains value
+
+```javascript
+db.comidas.find({
+    ingredientes: "arroz"
+})
+```
+
+---
+
+## Contains all values
+
+```javascript
+db.comidas.find({
+    ingredientes: {
+        $all: ["mozzarella","parmesano"]
+    }
+})
+```
+
+---
+
+## Array size
+
+```javascript
+db.comidas.find({
+    ingredientes: {
+        $size: 2
+    }
+})
+```
+
+---
+
+## Contains any of
+
+```javascript
+db.comidas.find({
+    ingredientes: {
+        $in: ["arroz","parmesano"]
+    }
+})
+```
+
+---
+
+## Contains none of
+
+```javascript
+db.comidas.find({
+    ingredientes: {
+        $nin: ["gluten","huevo"]
+    }
+})
+```
+
+---
+
+# PART 5 - PROJECTIONS
+
+Return only certain fields.
+
+---
+
+## Only name
+
+```javascript
+db.comidas.find(
+    {},
+    {nombre:1}
+)
+```
+
+---
+
+## Name and price
+
+```javascript
+db.comidas.find(
+    {},
+    {
+        nombre:1,
+        precio:1,
+        _id:0
+    }
+)
+```
+
+---
+
+## Hide field
+
+```javascript
+db.comidas.find(
+    {},
+    {
+        ingredientes:0
+    }
+)
+```
+
+---
+
+# PART 6 - SORTING
+
+---
+
+## Ascending
+
+```javascript
+db.comidas.find().sort({
+    precio:1
+})
+```
+
+---
+
+## Descending
+
+```javascript
+db.comidas.find().sort({
+    precio:-1
+})
+```
+
+---
+
+## Multiple sorts
+
+```javascript
+db.comidas.find().sort({
+    categoria:1,
+    precio:-1
+})
+```
+
+---
+
+# PART 7 - LIMIT AND SKIP
+
+---
+
+## First 5
+
+```javascript
+db.comidas.find().limit(5)
+```
+
+---
+
+## Pagination
+
+```javascript
+db.comidas.find()
+.limit(10)
+.skip(20)
+```
+
+Page 3 if page size = 10.
+
+---
+
+# PART 8 - UPDATES
+
+---
+
+## Set field
+
+```javascript
+db.comidas.updateOne(
+    {nombre:"Pizza Cuatro Quesos"},
+    {
+        $set:{
+            precio:15
+        }
+    }
+)
+```
+
+---
+
+## Set multiple
+
+```javascript
+db.comidas.updateMany(
+    {categoria:"Pizza"},
+    {
+        $set:{
+            disponible:true
+        }
+    }
+)
+```
+
+---
+
+## Rename field
+
+```javascript
+db.comidas.updateMany(
+    {},
+    {
+        $rename:{
+            valoracion:"rating"
+        }
+    }
+)
+```
+
+---
+
+## Remove field
+
+```javascript
+db.comidas.updateMany(
+    {},
+    {
+        $unset:{
+            rating:""
+        }
+    }
+)
+```
+
+---
+
+# PART 9 - NUMBERS
+
+---
+
+## Increment
+
+```javascript
+db.comidas.updateOne(
+    {nombre:"Pizza Cuatro Quesos"},
+    {
+        $inc:{
+            precio:2
+        }
+    }
+)
+```
+
+---
+
+## Decrement
+
+```javascript
+db.comidas.updateOne(
+    {nombre:"Pizza Cuatro Quesos"},
+    {
+        $inc:{
+            precio:-2
+        }
+    }
+)
+```
+
+---
+
+## Multiply
+
+```javascript
+db.comidas.updateMany(
+    {},
+    {
+        $mul:{
+            precio:1.10
+        }
+    }
+)
+```
+
+---
+
+# PART 10 - ARRAY MODIFICATION
+
+---
+
+## Add value
+
+```javascript
+db.comidas.updateOne(
+    {nombre:"Pizza Cuatro Quesos"},
+    {
+        $push:{
+            ingredientes:"oregano"
+        }
+    }
+)
+```
+
+---
+
+## Add many
+
+```javascript
+db.comidas.updateOne(
+    {nombre:"Pizza Cuatro Quesos"},
+    {
+        $push:{
+            ingredientes:{
+                $each:[
+                    "oregano",
+                    "aceitunas"
+                ]
+            }
+        }
+    }
+)
+```
+
+---
+
+## Add only if not exists
+
+```javascript
+db.comidas.updateOne(
+    {},
+    {
+        $addToSet:{
+            ingredientes:"oregano"
+        }
+    }
+)
+```
+
+---
+
+## Remove value
+
+```javascript
+db.comidas.updateOne(
+    {},
+    {
+        $pull:{
+            ingredientes:"oregano"
+        }
+    }
+)
+```
+
+---
+
+## Remove many
+
+```javascript
+db.comidas.updateOne(
+    {},
+    {
+        $pull:{
+            ingredientes:{
+                $in:[
+                    "oregano",
+                    "aceitunas"
+                ]
+            }
+        }
+    }
+)
+```
+
+---
+
+# PART 11 - COMPLEX FILTERS
+
+---
+
+## Vegan pizzas
+
+```javascript
+db.comidas.find({
+    categoria:"Pizza",
+    vegano:true
+})
+```
+
+---
+
+## Expensive vegan pizzas
+
+```javascript
+db.comidas.find({
+    categoria:"Pizza",
+    vegano:true,
+    precio:{
+        $gt:10
+    }
+})
+```
+
+---
+
+## Pizza OR dessert with rating > 4
+
+```javascript
+db.comidas.find({
+    $and:[
+        {
+            $or:[
+                {categoria:"Pizza"},
+                {categoria:"Postre"}
+            ]
+        },
+        {
+            valoracion:{
+                $gt:4
+            }
+        }
+    ]
+})
+```
+
+---
+
+## Added during date range
+
+```javascript
+db.comidas.find({
+    fecha_alta:{
+        $gte:ISODate("2026-01-01"),
+        $lte:ISODate("2026-12-31")
+    }
+})
+```
+
+---
+
+## One of multiple categories
+
+```javascript
+db.comidas.find({
+    categoria:{
+        $in:[
+            "Pizza",
+            "Postre",
+            "Ensalada"
+        ]
+    }
+})
+```
+
+---
+
+# PART 12 - REGEX
+
+---
+
+## Starts with Pizza
+
+```javascript
+db.comidas.find({
+    nombre:/^Pizza/
+})
+```
+
+---
+
+## Ends with Quesos
+
+```javascript
+db.comidas.find({
+    nombre:/Quesos$/
+})
+```
+
+---
+
+## Contains arroz
+
+```javascript
+db.comidas.find({
+    nombre:/arroz/i
+})
+```
+
+`i` = case-insensitive
+
+---
+
+# PART 13 - DELETES
+
+---
+
+## Delete one
+
+```javascript
+db.comidas.deleteOne({
+    nombre:"Arroz Blanco"
+})
+```
+
+---
+
+## Delete many
+
+```javascript
+db.comidas.deleteMany({
+    categoria:"Postre"
+})
+```
+
+---
+
+# PART 14 - ADVANCED QUERIES
+
+Find:
+
+> Vegan pizzas added between Jan and May, rating above 4.5, price below 20, containing tomato but not garlic.
+
+```javascript
+db.comidas.find({
+    categoria:"Pizza",
+    vegano:true,
+    valoracion:{
+        $gt:4.5
+    },
+    precio:{
+        $lt:20
+    },
+    ingredientes:{
+        $all:["tomate"],
+        $nin:["ajo"]
+    },
+    fecha_alta:{
+        $gte:ISODate("2026-01-01"),
+        $lte:ISODate("2026-05-31")
+    }
+})
+```
+
+---
+
+# PART 15 - AGGREGATION (REAL POWER)
+
+Count dishes per category:
+
+```javascript
+db.comidas.aggregate([
+{
+    $group:{
+        _id:"$categoria",
+        total:{
+            $sum:1
+        }
+    }
+}
+])
+```
+
+---
+
+Average price per category:
+
+```javascript
+db.comidas.aggregate([
+{
+    $group:{
+        _id:"$categoria",
+        avgPrecio:{
+            $avg:"$precio"
+        }
+    }
+}
+])
+```
+
+---
+
+Most expensive dish per category:
+
+```javascript
+db.comidas.aggregate([
+{
+    $group:{
+        _id:"$categoria",
+        maxPrecio:{
+            $max:"$precio"
+        }
+    }
+}
+])
+```
+
+---
+
+If you truly want to go from "I passed a university MongoDB exam" to "I can design MongoDB schemas and write production queries", the next major topics after this are:
+
+1. Embedded documents
+2. Nested array updates
+3. Positional operators (`$`, `$[]`, `$[elem]`)
+4. Aggregation Pipeline
+5. `$lookup` (MongoDB JOIN)
+6. Text indexes
+7. Compound indexes
+8. Geospatial queries
+9. Transactions
+10. Atlas Search
+11. Query optimization and explain plans
+
+Those topics easily add another 200-300 practical examples on top of the ones above.

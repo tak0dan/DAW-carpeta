@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca de recetas MongoDB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">05. Biblioteca</span>
+      <h1 class="hero-title">Biblioteca de recetas MongoDB listas para copiar</h1>
+      <p>Esta pagina es una chuleta grande. La idea no es leerla linealmente: busca el patron que necesitas, copia la receta y cambia valores, nombres de campos o fechas.</p>
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="mongodb-basico.html">Fundamentos</a>
+      <a href="mongodb-paso-a-paso.html">Construir consultas</a>
+      <a href="mongodb-updates-arrays.html">Updates y arrays</a>
+      <a href="mongodb-avanzado.html">Aggregation y avanzado</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Recetas 001-030: lectura basica y filtros simples</h2>
+      <pre>001. db.comidas.find()
+002. db.comidas.find().pretty()
+003. db.comidas.findOne()
+004. db.comidas.find({_id: 1})
+005. db.comidas.find({categoria: "Pizza"})
+006. db.comidas.find({vegano: true})
+007. db.comidas.find({disponible: false})
+008. db.comidas.find({precio: 12})
+009. db.comidas.find({valoracion: 4.9})
+010. db.comidas.find({categoria: "Postre"})
+011. db.comidas.find({precio: {$gt: 10}})
+012. db.comidas.find({precio: {$gte: 10}})
+013. db.comidas.find({precio: {$lt: 10}})
+014. db.comidas.find({precio: {$lte: 10}})
+015. db.comidas.find({precio: {$gte: 5, $lte: 15}})
+016. db.comidas.find({precio: {$ne: 12}})
+017. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}})
+018. db.comidas.find({categoria: {$nin: ["Postre", "Principal"]}})
+019. db.comidas.find({valoracion: {$gt: 4}})
+020. db.comidas.find({valoracion: {$gte: 4.5}})
+021. db.comidas.find({fecha_alta: {$gte: ISODate("2026-01-01")}})
+022. db.comidas.find({fecha_alta: {$lte: ISODate("2026-05-31")}})
+023. db.comidas.find({nombre: /^Pizza/})
+024. db.comidas.find({nombre: /Blanco$/})
+025. db.comidas.find({nombre: /pizza/i})
+026. db.comidas.find({}, {nombre: 1, _id: 0})
+027. db.comidas.find({}, {nombre: 1, precio: 1, _id: 0})
+028. db.comidas.find({}, {ingredientes: 0})
+029. db.comidas.find().sort({precio: 1})
+030. db.comidas.find().sort({precio: -1})</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Recetas 031-060: de 2 a 5 filtros</h2>
+      <pre>031. db.comidas.find({categoria: "Pizza", vegano: true})
+032. db.comidas.find({categoria: "Pizza", vegano: false})
+033. db.comidas.find({categoria: "Pizza", precio: {$lt: 15}})
+034. db.comidas.find({categoria: "Postre", disponible: true})
+035. db.comidas.find({vegano: true, disponible: true})
+036. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}})
+037. db.comidas.find({categoria: "Pizza", vegano: true, valoracion: {$gt: 4.5}})
+038. db.comidas.find({categoria: "Pizza", precio: {$gt: 10}, disponible: true})
+039. db.comidas.find({categoria: "Postre", precio: {$lte: 6}, disponible: false})
+040. db.comidas.find({vegano: true, precio: {$lt: 10}, valoracion: {$gte: 4}})
+041. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}})
+042. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}, disponible: true})
+043. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}, fecha_alta: {$gte: ISODate("2026-01-01")}})
+044. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}, fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-06-01")}})
+045. db.comidas.find({categoria: "Pizza", disponible: true, ingredientes: "tomate"})
+046. db.comidas.find({categoria: "Pizza", disponible: true, ingredientes: {$all: ["tomate", "albahaca"]}})
+047. db.comidas.find({categoria: "Pizza", disponible: true, ingredientes: {$nin: ["ajo"]}})
+048. db.comidas.find({categoria: "Pizza", "origen.pais": "Italia"})
+049. db.comidas.find({categoria: "Pizza", "proveedor.zona": "Centro"})
+050. db.comidas.find({categoria: "Pizza", "proveedor.zona": "Centro", precio: {$lt: 15}})
+051. db.comidas.find({vegano: true, "origen.ciudad": "Roma"})
+052. db.comidas.find({vegano: true, "origen.ciudad": "Roma", disponible: true})
+053. db.comidas.find({vegano: true, "origen.ciudad": "Roma", disponible: true, valoracion: {$gt: 4.5}})
+054. db.comidas.find({categoria: "Postre", nombre: /Brownie/i, precio: {$lte: 6}})
+055. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}, precio: {$lt: 10}})
+056. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}, precio: {$lt: 10}, disponible: true})
+057. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}, precio: {$lt: 10}, disponible: true, valoracion: {$gte: 4}})
+058. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}, precio: {$lt: 10}, disponible: true, valoracion: {$gte: 4}, fecha_alta: {$gte: ISODate("2026-01-01")}})
+059. db.comidas.find({categoria: {$in: ["Pizza", "Postre"]}, precio: {$lt: 10}, disponible: true, valoracion: {$gte: 4}, fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-12-31")}})
+060. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}, ingredientes: {$all: ["tomate"], $nin: ["ajo"]}})</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Recetas 061-090: filtros dependientes, OR, AND y fechas</h2>
+      <pre>061. db.comidas.find({$or: [{categoria: "Pizza"}, {categoria: "Postre"}]})
+062. db.comidas.find({$or: [{vegano: true}, {disponible: false}]})
+063. db.comidas.find({$and: [{precio: {$gt: 10}}, {valoracion: {$gt: 4}}]})
+064. db.comidas.find({$and: [{$or: [{categoria: "Pizza"}, {categoria: "Postre"}]}, {valoracion: {$gt: 4}}]})
+065. db.comidas.find({$and: [{$or: [{categoria: "Pizza"}, {categoria: "Postre"}]}, {precio: {$lt: 20}}]})
+066. db.comidas.find({$and: [{$or: [{categoria: "Pizza"}, {categoria: "Postre"}]}, {precio: {$lt: 20}}, {disponible: true}]})
+067. db.comidas.find({$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]})
+068. db.comidas.find({$or: [{categoria: "Pizza", precio: {$lt: 15}}, {categoria: "Principal", precio: {$lt: 8}}]})
+069. db.comidas.find({$or: [{categoria: "Pizza", "proveedor.zona": "Centro"}, {categoria: "Postre", "proveedor.zona": "Norte"}]})
+070. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-06-30")}}]})
+071. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", precio: {$lt: 6}}]}, {valoracion: {$gte: 4}}]})
+072. db.comidas.find({$and: [{$or: [{categoria: "Pizza", ingredientes: "tomate"}, {categoria: "Principal", ingredientes: "arroz"}]}, {disponible: true}]})
+073. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {ingredientes: {$nin: ["ajo"]}}]})
+074. db.comidas.find({$and: [{$or: [{categoria: "Pizza", "origen.pais": "Italia"}, {categoria: "Principal", "origen.pais": "Espana"}]}, {precio: {$lt: 20}}]})
+075. db.comidas.find({$nor: [{categoria: "Pizza"}, {vegano: true}]})
+076. db.comidas.find({precio: {$not: {$gt: 10}}})
+077. db.comidas.find({fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-03-31")}})
+078. db.comidas.find({fecha_alta: {$gte: ISODate("2026-04-01"), $lte: ISODate("2026-06-30")}})
+079. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {categoria: "Pizza"}]})
+080. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {categoria: "Pizza"}, {vegano: true}]})
+081. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}]})
+082. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {$or: [{categoria: "Pizza", vegano: true}, {categoria: "Principal", ingredientes: "arroz"}]}, {precio: {$lt: 20}}]})
+083. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {$or: [{categoria: "Pizza", vegano: true}, {categoria: "Principal", ingredientes: "arroz"}]}, {precio: {$lt: 20}}, {valoracion: {$gte: 4.5}}]})
+084. db.comidas.find({$and: [{fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {$or: [{categoria: "Pizza", vegano: true}, {categoria: "Principal", ingredientes: "arroz"}]}, {precio: {$lt: 20}}, {valoracion: {$gte: 4.5}}, {disponible: true}]})
+085. db.comidas.find({$or: [{"origen.pais": "Italia", precio: {$lt: 20}}, {"origen.pais": "Espana", precio: {$lt: 10}}]})
+086. db.comidas.find({$or: [{"proveedor.zona": "Centro", valoracion: {$gt: 4}}, {"proveedor.zona": "Norte", vegano: true}]})
+087. db.comidas.find({$and: [{$or: [{"proveedor.zona": "Centro", valoracion: {$gt: 4}}, {"proveedor.zona": "Norte", vegano: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01")}}]})
+088. db.comidas.find({$and: [{$or: [{categoria: "Pizza", precio: {$lt: 15}}, {categoria: "Postre", precio: {$lt: 6}}]}, {ingredientes: {$nin: ["ajo"]}}, {disponible: true}]})
+089. db.comidas.find({$and: [{$or: [{categoria: "Pizza", ingredientes: {$all: ["tomate"]}}, {categoria: "Principal", ingredientes: {$all: ["arroz"]}}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-12-31")}}]})
+090. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-12-31")}}, {ingredientes: {$nin: ["ajo"]}}, {valoracion: {$gte: 4}}]})</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Recetas 091-120: arrays, updates y borrados</h2>
+      <pre>091. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$set: {precio: 15}})
+092. db.comidas.updateMany({categoria: "Pizza"}, {$set: {disponible: true}})
+093. db.comidas.updateMany({}, {$rename: {valoracion: "rating"}})
+094. db.comidas.updateMany({}, {$unset: {rating: ""}})
+095. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$inc: {precio: 2}})
+096. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$inc: {precio: -2}})
+097. db.comidas.updateMany({}, {$mul: {precio: 1.10}})
+098. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$push: {ingredientes: "oregano"}})
+099. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$push: {ingredientes: {$each: ["oregano", "aceitunas"]}}})
+100. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$addToSet: {ingredientes: "oregano"}})
+101. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$pull: {ingredientes: "oregano"}})
+102. db.comidas.updateOne({nombre: "Pizza Cuatro Quesos"}, {$pull: {ingredientes: {$in: ["oregano", "aceitunas"]}}})
+103. db.comidas.updateOne({_id: 1}, {$set: {"origen.ciudad": "Milan"}})
+104. db.comidas.updateOne({_id: 1}, {$set: {"proveedor.zona": "Sur"}})
+105. db.comidas.updateOne({_id: 1}, {$set: {"stock.0.cantidad": 20}})
+106. db.comidas.updateOne({_id: 1, "stock.sede": "Valencia"}, {$set: {"stock.$.cantidad": 25}})
+107. db.comidas.updateOne({_id: 1}, {$inc: {"stock.0.cantidad": 2}})
+108. db.comidas.updateOne({_id: 1}, {$push: {stock: {sede: "Benimaclet", cantidad: 4}}})
+109. db.comidas.updateOne({_id: 1}, {$pull: {stock: {sede: "Paterna", cantidad: 5}}})
+110. db.comidas.updateOne({_id: 1}, {$pull: {stock: {sede: "Paterna"}}})
+111. db.comidas.updateOne({_id: 1}, {$set: {etiquetas: ["horno", "italiana"]}})
+112. db.comidas.updateOne({_id: 1}, {$push: {etiquetas: {$each: ["premium", "top"], $position: 0}}})
+113. db.comidas.updateOne({_id: 1}, {$push: {etiquetas: {$each: ["ultima"], $slice: 3}}})
+114. db.comidas.updateOne({_id: 1}, {$pop: {ingredientes: 1}})
+115. db.comidas.updateOne({_id: 1}, {$pop: {ingredientes: -1}})
+116. db.comidas.updateOne({_id: 1}, {$currentDate: {fecha_mod: true}})
+117. db.comidas.updateOne({nombre: "Lasana"}, {$set: {categoria: "Principal", precio: 11}}, {upsert: true})
+118. db.comidas.deleteOne({nombre: "Arroz Blanco"})
+119. db.comidas.deleteMany({categoria: "Postre"})
+120. db.comidas.replaceOne({_id: 2}, {_id: 2, nombre: "Pizza Vegana Verde", categoria: "Pizza", precio: 15, vegano: true, disponible: true})</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Recetas 121-145: nested arrays, arrayFilters y aggregation</h2>
+      <pre>121. db.comidas.find({stock: {$elemMatch: {sede: "Valencia", cantidad: {$lt: 10}}}})
+122. db.comidas.find({"stock.sede": "Valencia"})
+123. db.comidas.find({"stock.cantidad": {$gt: 10}})
+124. db.comidas.updateMany({}, {$set: {"stock.$[].revisado": true}})
+125. db.comidas.updateMany({}, {$inc: {"stock.$[].cantidad": 1}})
+126. db.comidas.updateMany({}, {$set: {"stock.$[elem].alerta": true}}, {arrayFilters: [{"elem.cantidad": {$lt: 5}}]})
+127. db.comidas.updateMany({}, {$inc: {"stock.$[elem].cantidad": 2}}, {arrayFilters: [{"elem.sede": "Valencia"}]})
+128. db.comidas.updateMany({}, {$unset: {"stock.$[elem].alerta": ""}}, {arrayFilters: [{"elem.alerta": true}]})
+129. db.comidas.aggregate([{$group: {_id: "$categoria", total: {$sum: 1}}}])
+130. db.comidas.aggregate([{$group: {_id: "$categoria", media: {$avg: "$precio"}}}])
+131. db.comidas.aggregate([{$group: {_id: "$categoria", maximo: {$max: "$precio"}}}])
+132. db.comidas.aggregate([{$match: {vegano: true}}, {$group: {_id: "$categoria", total: {$sum: 1}}}])
+133. db.comidas.aggregate([{$match: {categoria: "Pizza"}}, {$sort: {precio: -1}}, {$limit: 3}])
+134. db.comidas.aggregate([{$project: {_id: 0, plato: "$nombre", coste: "$precio"}}])
+135. db.comidas.aggregate([{$addFields: {precioConIVA: {$multiply: ["$precio", 1.10]}}}])
+136. db.comidas.aggregate([{$unwind: "$ingredientes"}, {$group: {_id: "$ingredientes", total: {$sum: 1}}}])
+137. db.comidas.aggregate([{$match: {fecha_alta: {$gte: ISODate("2026-01-01")}}}, {$group: {_id: "$categoria", total: {$sum: 1}}}])
+138. db.pedidos.aggregate([{$lookup: {from: "clientes", localField: "clienteId", foreignField: "_id", as: "cliente"}}])
+139. db.pedidos.aggregate([{$lookup: {from: "clientes", localField: "clienteId", foreignField: "_id", as: "cliente"}}, {$unwind: "$cliente"}])
+140. db.pedidos.aggregate([{$lookup: {from: "clientes", localField: "clienteId", foreignField: "_id", as: "cliente"}}, {$unwind: "$cliente"}, {$project: {_id: 0, pedido: "$_id", cliente: "$cliente.nombre", total: 1}}])
+141. db.comidas.countDocuments({disponible: true})
+142. db.comidas.distinct("categoria")
+143. db.comidas.createIndex({categoria: 1})
+144. db.comidas.createIndex({categoria: 1, precio: -1})
+145. db.comidas.find({categoria: "Pizza", precio: {$lt: 20}}).explain("executionStats")</pre>
+      <div class="tip">
+        <p>Estas ultimas recetas ya pisan nivel alto: arrays internos, pipelines y analisis de rendimiento.</p>
+      </div>
+    </section>
+
+    <p class="footer">La biblioteca cubre desde lecturas basicas hasta pipelines e indices. Si no sabes por donde empezar, busca una receta parecida a tu enunciado y adaptala.</p>
+  </main>
+</body>
+</html>
