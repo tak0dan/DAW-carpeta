@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej8 - Filtrar por rango de ID</title>
+</head>
+<body>
+    <h1>Preguntas por rango de ID</h1>
+    ID mínimo: <input type="number" id="inputMin" value="1">
+    ID máximo: <input type="number" id="inputMax" value="10">
+    <input type="button" id="boton" value="Mostrar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputMin = document.getElementById("inputMin")
+        let inputMax = document.getElementById("inputMax")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let min = parseInt(inputMin.value)
+            let max = parseInt(inputMax.value)
+            let filtradas = preguntas.filter(p => p.id >= min && p.id <= max)
+            if (filtradas.length === 0) {
+                resultado.innerHTML = "No hay preguntas en ese rango"
+                return
+            }
+            let html = "<p>Mostrando <strong>" + filtradas.length + "</strong> preguntas (ID " + min + " a " + max + "):</p>"
+            filtradas.forEach((p, i) => {
+                html += `
+                    <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                        <strong>${i + 1}.</strong> ${p.pregunta} <em>(ID: ${p.id})</em><br>
+                        A) ${p.opcion_a}<br>
+                        B) ${p.opcion_b}<br>
+                        C) ${p.opcion_c}<br>
+                        D) ${p.opcion_d}
+                    </div>
+                `
+            })
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej22-2 - Opción más larga sin repetir</title>
+</head>
+<body>
+    <h1>Pregunta aleatoria: opción más larga (sin repetir)</h1>
+    <input type="button" id="boton" value="Mostrar pregunta">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+        let usadas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            if (usadas.length >= preguntas.length) {
+                resultado.innerHTML = "Ya se han mostrado todas las preguntas"
+                return
+            }
+            let disponibles = preguntas.filter((_, i) => !usadas.includes(i))
+            let idx = Math.floor(Math.random() * disponibles.length)
+            let p = disponibles[idx]
+            usadas.push(preguntas.indexOf(p))
+            let opciones = [
+                { letra: "A", texto: p.opcion_a },
+                { letra: "B", texto: p.opcion_b },
+                { letra: "C", texto: p.opcion_c },
+                { letra: "D", texto: p.opcion_d }
+            ]
+            let masLarga = opciones.reduce((a, b) => a.texto.length > b.texto.length ? a : b)
+            resultado.innerHTML = `
+                <p><strong>${p.pregunta}</strong> <em>(ID: ${p.id})</em></p>
+                <p>A) ${p.opcion_a} <em>(${p.opcion_a.length} caracteres)</em></p>
+                <p>B) ${p.opcion_b} <em>(${p.opcion_b.length} caracteres)</em></p>
+                <p>C) ${p.opcion_c} <em>(${p.opcion_c.length} caracteres)</em></p>
+                <p>D) ${p.opcion_d} <em>(${p.opcion_d.length} caracteres)</em></p>
+                <p style="margin-top:10px;color:green;font-weight:bold">
+                    La opción más larga es la <span style="font-size:1.3em">${masLarga.letra}</span>
+                    (${masLarga.texto.length} caracteres)
+                </p>
+                <p style="color:gray">Quedan ${preguntas.length - usadas.length} sin mostrar</p>
+            `
+        })
+    </script>
+</body>
+</html>

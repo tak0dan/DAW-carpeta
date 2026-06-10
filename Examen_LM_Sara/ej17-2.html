@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej17-2 - Solo texto pregunta aleatoria sin repetir</title>
+</head>
+<body>
+    <h1>Mostrar solo texto de pregunta aleatoria (sin repetir)</h1>
+    <input type="button" id="boton" value="Dame una pregunta">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+        let usadas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            if (usadas.length >= preguntas.length) {
+                resultado.innerHTML = "Ya se han mostrado todas las preguntas"
+                return
+            }
+            let disponibles = preguntas.filter((_, i) => !usadas.includes(i))
+            let idx = Math.floor(Math.random() * disponibles.length)
+            let p = disponibles[idx]
+            usadas.push(preguntas.indexOf(p))
+            resultado.innerHTML = `
+                <p style="font-size:1.3em"><strong>${p.pregunta}</strong></p>
+                <p style="color:gray">ID: ${p.id} (quedan ${preguntas.length - usadas.length} sin mostrar)</p>
+            `
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej29 - Contar palabras numéricamente</title>
+</head>
+<body>
+    <h1>Contar palabras en todas las preguntas</h1>
+    <input type="button" id="boton" value="Contar palabras">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let totalPalabras = 0
+            let maxPalabras = 0
+            let pMax = null
+            preguntas.forEach(p => {
+                let palabras = p.pregunta.split(/\s+/).length
+                totalPalabras += palabras
+                if (palabras > maxPalabras) {
+                    maxPalabras = palabras
+                    pMax = p
+                }
+            })
+            let media = (totalPalabras / preguntas.length).toFixed(2)
+            resultado.innerHTML = `
+                <p>Total de palabras en todas las preguntas: <strong>${totalPalabras}</strong></p>
+                <p>Media de palabras por pregunta: <strong>${media}</strong></p>
+                <p>Pregunta con más palabras (${maxPalabras}):<br><em>${pMax.pregunta}</em></p>
+                <hr>
+                <p><strong>Distribución de palabras:</strong></p>
+            `
+            let rangos = { "0-5": 0, "6-10": 0, "11-15": 0, "16+": 0 }
+            preguntas.forEach(p => {
+                let n = p.pregunta.split(/\s+/).length
+                if (n <= 5) rangos["0-5"]++
+                else if (n <= 10) rangos["6-10"]++
+                else if (n <= 15) rangos["11-15"]++
+                else rangos["16+"]++
+            })
+            let tabla = "<table border='1' style='border-collapse:collapse'><tr><th>Rango</th><th>Preguntas</th></tr>"
+            for (let r in rangos) {
+                let barra = "█".repeat(rangos[r])
+                tabla += `<tr><td>${r}</td><td>${rangos[r]} ${barra}</td></tr>`
+            }
+            tabla += "</table>"
+            resultado.innerHTML += tabla
+        })
+    </script>
+</body>
+</html>
