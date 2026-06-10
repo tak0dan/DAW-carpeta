@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej28 - Diferencia de longitud entre opciones</title>
+</head>
+<body>
+    <h1>Diferencia de longitud entre opción A y B (pregunta aleatoria)</h1>
+    <input type="button" id="boton" value="Generar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let n = numeroAleatorio(0, preguntas.length - 1)
+            let p = preguntas[n]
+            let difAB = Math.abs(p.opcion_a.length - p.opcion_b.length)
+            let difCD = Math.abs(p.opcion_c.length - p.opcion_d.length)
+            resultado.innerHTML = `
+                <p><strong>${p.pregunta}</strong> <em>(ID: ${p.id})</em></p>
+                <p>A (${p.opcion_a.length} caracteres): ${p.opcion_a}</p>
+                <p>B (${p.opcion_b.length} caracteres): ${p.opcion_b}</p>
+                <p>C (${p.opcion_c.length} caracteres): ${p.opcion_c}</p>
+                <p>D (${p.opcion_d.length} caracteres): ${p.opcion_d}</p>
+                <hr>
+                <p>Diferencia absoluta A vs B: <strong>${difAB}</strong> caracteres</p>
+                <p>Diferencia absoluta C vs D: <strong>${difCD}</strong> caracteres</p>
+                <p>Opción más larga: <strong>${Math.max(p.opcion_a.length, p.opcion_b.length, p.opcion_c.length, p.opcion_d.length)}</strong> caracteres</p>
+                <p>Opción más corta: <strong>${Math.min(p.opcion_a.length, p.opcion_b.length, p.opcion_c.length, p.opcion_d.length)}</strong> caracteres</p>
+            `
+        })
+    </script>
+</body>
+</html>

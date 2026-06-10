@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej25 - Sumar longitudes de opciones</title>
+</head>
+<body>
+    <h1>Sumar caracteres de todas las opciones</h1>
+    <input type="button" id="boton" value="Calcular">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let total = 0
+            let porOpcion = { A: 0, B: 0, C: 0, D: 0 }
+            preguntas.forEach(p => {
+                total += p.opcion_a.length + p.opcion_b.length + p.opcion_c.length + p.opcion_d.length
+                porOpcion.A += p.opcion_a.length
+                porOpcion.B += p.opcion_b.length
+                porOpcion.C += p.opcion_c.length
+                porOpcion.D += p.opcion_d.length
+            })
+            let html = `<p>Total de caracteres en todas las opciones: <strong style="font-size:1.4em">${total}</strong></p>`
+            html += "<table border='1' style='border-collapse:collapse;margin-top:10px'>"
+            html += "<tr><th>Opción</th><th>Total caracteres</th><th>Media</th></tr>"
+            for (let letra of ["A", "B", "C", "D"]) {
+                let media = (porOpcion[letra] / preguntas.length).toFixed(2)
+                html += `<tr><td>${letra}</td><td>${porOpcion[letra]}</td><td>${media}</td></tr>`
+            }
+            html += "</table>"
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

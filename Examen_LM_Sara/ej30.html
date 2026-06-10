@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej30 - ID más cercano a un número</title>
+</head>
+<body>
+    <h1>Encontrar la pregunta con ID más cercano a un número</h1>
+    Número: <input type="number" id="inputNum" value="50">
+    <input type="button" id="boton" value="Buscar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputNum = document.getElementById("inputNum")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let num = parseInt(inputNum.value)
+            let pCercana = preguntas[0]
+            let difMin = Math.abs(pCercana.id - num)
+            preguntas.forEach(p => {
+                let dif = Math.abs(p.id - num)
+                if (dif < difMin) {
+                    difMin = dif
+                    pCercana = p
+                }
+            })
+            let ids = preguntas.map(p => p.id)
+            let suma = ids.reduce((a, b) => a + b, 0)
+            let media = (suma / ids.length).toFixed(2)
+            resultado.innerHTML = `
+                <p>Buscando ID más cercano a <strong>${num}</strong>...</p>
+                <p>Pregunta encontrada (ID ${pCercana.id}):<br><em>${pCercana.pregunta}</em></p>
+                <p>Diferencia: <strong>${difMin}</strong></p>
+                <hr>
+                <p>ID mínimo: ${Math.min(...ids)}</p>
+                <p>ID máximo: ${Math.max(...ids)}</p>
+                <p>Media de IDs: ${media}</p>
+                <p>${num > media ? "El número está por encima de la media" : num < media ? "El número está por debajo de la media" : "¡El número coincide exactamente con la media!"}</p>
+            `
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej15-2 - N preguntas aleatorias sin repetir</title>
+</head>
+<body>
+    <h1>Mostrar N preguntas aleatorias (sin repetir entre pulsaciones)</h1>
+    Cantidad: <input type="number" id="inputCant" value="3">
+    <input type="button" id="boton" value="Mostrar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputCant = document.getElementById("inputCant")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+        let usadas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let cant = parseInt(inputCant.value)
+            if (cant <= 0) {
+                resultado.innerHTML = "Cantidad inválida"
+                return
+            }
+            let disponibles = preguntas.filter((_, i) => !usadas.includes(i))
+            if (disponibles.length < cant) {
+                resultado.innerHTML = "Solo quedan " + disponibles.length + " preguntas sin mostrar (pediste " + cant + ")"
+                return
+            }
+            let seleccion = []
+            let copia = [...disponibles]
+            for (let i = 0; i < cant; i++) {
+                let idx = Math.floor(Math.random() * copia.length)
+                seleccion.push(copia[idx])
+                copia.splice(idx, 1)
+            }
+            seleccion.forEach(p => {
+                usadas.push(preguntas.indexOf(p))
+            })
+            let html = ""
+            seleccion.forEach((p, i) => {
+                html += `
+                    <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                        <strong>${i + 1}.</strong> ${p.pregunta} <em>(ID: ${p.id})</em><br>
+                        A) ${p.opcion_a}<br>
+                        B) ${p.opcion_b}<br>
+                        C) ${p.opcion_c}<br>
+                        D) ${p.opcion_d}
+                    </div>
+                `
+            })
+            html += "<p style='color:gray'>Quedan " + (preguntas.length - usadas.length) + " sin mostrar</p>"
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej13 - Opciones como botones</title>
+</head>
+<body>
+    <h1>Pregunta con opciones clickeables</h1>
+    ID: <input type="number" id="inputId" value="1">
+    <input type="button" id="boton" value="Mostrar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputId = document.getElementById("inputId")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let id = parseInt(inputId.value)
+            let p = preguntas.find(q => q.id === id)
+            if (!p) {
+                resultado.innerHTML = "No se encontró pregunta con ID " + id
+                return
+            }
+            resultado.innerHTML = `
+                <p><strong>${p.pregunta}</strong></p>
+                <p><input type="button" value="A) ${p.opcion_a}" style="display:block;margin:3px"></p>
+                <p><input type="button" value="B) ${p.opcion_b}" style="display:block;margin:3px"></p>
+                <p><input type="button" value="C) ${p.opcion_c}" style="display:block;margin:3px"></p>
+                <p><input type="button" value="D) ${p.opcion_d}" style="display:block;margin:3px"></p>
+            `
+            let btns = resultado.querySelectorAll("input[type=button]")
+            btns.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    alert("Has pulsado: " + btn.value)
+                })
+            })
+        })
+    </script>
+</body>
+</html>
