@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="EDD_Tests/src"/>
+	<classpathentry kind="src" path="Empleado_EDD/src"/>
+	<classpathentry kind="src" path="Exam_Solver/src"/>
+	<classpathentry kind="src" path="JAVA_with_DB/src"/>
+	<classpathentry kind="src" path="mi-app-maven/src/main/java"/>
+	<classpathentry kind="src" path="Networking/src"/>
+	<classpathentry kind="src" path="Networking-1/src"/>
+	<classpathentry excluding="Tema5_1/|Some_Array_Shit/|Ev_3/|Examen_2/" kind="src" path="Q_1/src"/>
+	<classpathentry kind="src" path="Q_1/src/Ev_3"/>
+	<classpathentry kind="src" path="Q_1/src/Examen_2"/>
+	<classpathentry kind="src" path="Q_1/src/Some_Array_Shit"/>
+	<classpathentry kind="src" path="Q_1/src/Tema5_1"/>
+	<classpathentry kind="src" path="Tareas_EV/src"/>
+	<classpathentry kind="src" path="Tema_7_material/Chuletas examen polimorfismo/los javas/Examen B"/>
+	<classpathentry kind="lib" path="JAVA_with_DB/lib/mysql-connector-j-9.6.0.jar"/>
+	<classpathentry kind="lib" path="JAVA_with_DB/mysql-connector-j-9.6.0.jar"/>
+	<classpathentry kind="output" path="Exam_Solver/bin"/>
+</classpath>
