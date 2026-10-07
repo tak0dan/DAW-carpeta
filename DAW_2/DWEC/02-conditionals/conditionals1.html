@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>conditionals1</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let season = 'summer';
+    let response;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+
+	//console.log("current season: " + season);
+    if (season === 'summer') {
+      response = 'It\'s summer time!';
+	  //response = 'Summer is here';
+    }
+    else if (season === 'winter') {
+      response = 'It\'s winter time!';
+	  //response = 'Winter is cold';
+    }
+    else {
+      response = 'We don\'t know what season it is.';
+	  //response = 'Unknown season';
+    }
+
+	//console.log("response: " + response);
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    let para1 = document.createElement('p');
+    para1.textContent = response;
+    body.appendChild(para1);
+  </script>
+</html>

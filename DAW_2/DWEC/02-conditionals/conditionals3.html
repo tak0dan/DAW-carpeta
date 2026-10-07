@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>conditionals3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let machineActive = true;
+    let pwd = "cheese";
+    let machineResult;
+    let pwdResult;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+
+	//console.log("machineActive: " + machineActive);
+	//console.log("pwd: " + pwd);
+
+    if (machineActive) {
+      machineResult = 'Machine is on.';
+	  //machineResult = 'The machine is powered on';
+
+      pwdResult = pwd === 'cheese' ? 'Login successful.' : 'Login attempt was not successful.';
+	  //pwdResult = pwd === 'cheese' ? 'Welcome' : 'Access denied';
+    }
+    else {
+      machineResult = 'Machine is off.';
+	  //machineResult = 'Power is off';
+    }
+
+	//console.log("machineResult: " + machineResult);
+	//console.log("pwdResult: " + pwdResult);
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector("body");
+    let para1 = document.createElement("p");
+    let para2 = document.createElement("p");
+    para1.textContent = machineResult;
+    para2.textContent = pwdResult;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>
