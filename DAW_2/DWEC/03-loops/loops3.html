@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>loops3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let i = 500;
+    let text = '';
+
+    function isPrime(num) {
+      for(let i = 2; i < num; i++) {
+        if(num % i === 0) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // Add your code here
+    //{{-------------------------------------------------------
+
+    let result1 = '';
+    let result2 = '';
+    let result3 = '';
+	//let resultado1 = '';
+	//let resultado2 = '';
+	//let resultado3 = '';
+
+    let separator = ', ';
+	//let separator = ' - ';
+
+    // Loop 1: for loop (backwards from 500 to 2)
+    for (let j = 500; j >= 2; j--) {
+      if (isPrime(j)) {
+        result1 += j + separator;
+      }
+    }
+	//console.log("for loop result1 length: " + result1.length);
+
+    // Loop 2: while loop (backwards from 500 to 2)
+    let k = 500;
+    while (k >= 2) {
+      if (isPrime(k)) {
+        result2 += k + separator;
+      }
+      k--;
+	  //console.log("k: " + k);
+    }
+	//console.log("while loop result2 length: " + result2.length);
+
+
+    // Loop 3: do...while loop (backwards from 500 to 2)
+    let m = 500;
+    do {
+      if (isPrime(m)) {
+        result3 += m + separator;
+      }
+      m--;
+	  //console.log("m: " + m);
+    } while (m >= 2);
+	//console.log("do...while loop result3 length: " + result3.length);
+
+    // Combine results with newlines as separator between loops
+    text = result1 + '\n' + result2 + '\n' + result3;
+	//console.log("final text length: " + text.length);
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const para = document.createElement('p');
+    para.textContent = text;
+    const body = document.querySelector('body');
+    body.appendChild(para);
+  </script>
+</html>
