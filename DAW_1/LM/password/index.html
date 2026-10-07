@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Hash Composer</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f4efe7;
+            --panel: #fffaf2;
+            --text: #1f2933;
+            --muted: #5f6b7a;
+            --accent: #0f766e;
+            --accent-dark: #115e59;
+            --border: #d8d2c5;
+            --shadow: 0 20px 50px rgba(31, 41, 51, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 34%),
+                radial-gradient(circle at bottom right, rgba(180, 83, 9, 0.12), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            padding: 24px;
+        }
+
+        main {
+            width: min(100%, 560px);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 242, 0.98));
+            border: 1px solid rgba(216, 210, 197, 0.9);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 32px;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            letter-spacing: -0.04em;
+        }
+
+        p {
+            margin: 0 0 24px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+        }
+
+        label {
+            display: grid;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .slider-wrap {
+            display: grid;
+            gap: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: transparent;
+        }
+
+        .slider-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px 16px;
+            font: inherit;
+            background: rgba(255, 255, 255, 0.92);
+            color: var(--text);
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.15);
+        }
+
+        textarea {
+            min-height: 92px;
+            resize: vertical;
+        }
+
+        button {
+            border: 0;
+            border-radius: 14px;
+            padding: 14px 18px;
+            font: inherit;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            cursor: pointer;
+            transition: transform 0.15s ease, filter 0.15s ease;
+        }
+
+        button:hover {
+            filter: brightness(1.02);
+            transform: translateY(-1px);
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button-row button[type="button"] {
+            background: linear-gradient(135deg, #334155, #1f2937);
+        }
+
+        .button-row button[type="button"]:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none;
+        }
+
+        .result {
+            display: grid;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .hint {
+            font-size: 0.95rem;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Domain Hash Composer</h1>
+        <p>Enter a domain and a word, then combine them into a simple deterministic hash.</p>
+
+        <form id="composerForm">
+            <label>
+                Domain
+                <input id="domainInput" name="domain" type="text" placeholder="example.com" autocomplete="off" required>
+            </label>
+
+            <label>
+                Word
+                <input id="wordInput" name="word" type="text" placeholder="secret-word" autocomplete="off" required>
+            </label>
+
+            <label>
+                Hash method
+                <select id="methodSelect" name="method">
+                    <option value="primitive">Primitive positions</option>
+                    <option value="char-sum">Character code sum</option>
+                    <option value="djb2">DJB2</option>
+                    <option value="fnv1a">FNV-1a</option>
+                    <option value="sha256">SHA-256</option>
+                </select>
+            </label>
+
+            <label class="slider-wrap">
+                Hash length
+                <input id="lengthInput" type="range" min="8" max="64" value="16" step="1">
+                <div class="slider-meta">
+                    <span>Short</span>
+                    <span id="lengthValue">16 chars</span>
+                    <span>Long</span>
+                </div>
+            </label>
+
+            <div class="button-row">
+                <button type="submit">Compose hash</button>
+                <button id="copyButton" type="button" disabled>Copy result</button>
+            </div>
+
+            <div class="result">
+                <label>
+                    Result
+                    <textarea id="resultOutput" readonly placeholder="Your hash will appear here"></textarea>
+                </label>
+                <div class="hint">Uses a basic 32-bit FNV-1a style hash over the normalized domain and word.</div>
+            </div>
+        </form>
+    </main>
+
+    <script>
+        const form = document.getElementById('composerForm');
+        const domainInput = document.getElementById('domainInput');
+        const wordInput = document.getElementById('wordInput');
+        const methodSelect = document.getElementById('methodSelect');
+        const lengthInput = document.getElementById('lengthInput');
+        const lengthValue = document.getElementById('lengthValue');
+        const resultOutput = document.getElementById('resultOutput');
+        const copyButton = document.getElementById('copyButton');
+
+        function normalizeInput() {
+            const domain = domainInput.value.trim().toLowerCase();
+            const word = wordInput.value.trim();
+            return `${domain}::${word}`;
+        }
+
+        function primitivePositionsHash(input) {
+            const normalized = input.toLowerCase();
+            const values = [];
+
+            for (let index = 0; index < normalized.length; index += 1) {
+                const char = normalized[index];
+                const code = char.charCodeAt(0);
+
+                if (code >= 97 && code <= 122) {
+                    values.push(code - 96);
+                } else {
+                    values.push(code);
+                }
+            }
+
+            return values.join('-');
+        }
+
+        function hashChunk(input) {
+            let hash = 2166136261;
+
+            for (let index = 0; index < input.length; index += 1) {
+                hash ^= input.charCodeAt(index);
+                hash = Math.imul(hash, 16777619);
+            }
+
+            return (hash >>> 0).toString(16).padStart(8, '0');
+        }
+
+        function fitHashToLength(baseValue, targetLength, seed) {
+            let output = baseValue.replace(/\s+/g, '');
+
+            if (!output) {
+                output = '0';
+            }
+
+            while (output.length < targetLength) {
+                output += hashChunk(`${output}|${seed}|${targetLength}`);
+            }
+
+            return output.slice(0, targetLength);
+        }
+
+        function characterSumHash(input) {
+            let sum = 0;
+
+            for (let index = 0; index < input.length; index += 1) {
+                sum = (sum + input.charCodeAt(index)) >>> 0;
+            }
+
+            return sum.toString(16).padStart(8, '0');
+        }
+
+        function djb2Hash(input) {
+            let hash = 5381;
+
+            for (let index = 0; index < input.length; index += 1) {
+                hash = ((hash << 5) + hash + input.charCodeAt(index)) >>> 0;
+            }
+
+            return hash.toString(16).padStart(8, '0');
+        }
+
+        function fnv1aHash(input) {
+            let hash = 2166136261;
+
+            for (let index = 0; index < input.length; index += 1) {
+                hash ^= input.charCodeAt(index);
+                hash = Math.imul(hash, 16777619);
+            }
+
+            return (hash >>> 0).toString(16).padStart(8, '0');
+        }
+
+        async function sha256Hash(input) {
+            const buffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(input));
+            const bytes = Array.from(new Uint8Array(buffer));
+            return bytes.map((byte) => byte.toString(16).padStart(2, '0')).join('');
+        }
+
+        async function composeHash() {
+            const composed = normalizeInput();
+            const method = methodSelect.value;
+            const targetLength = Number(lengthInput.value);
+            let baseValue;
+
+            switch (method) {
+                case 'primitive':
+                    baseValue = primitivePositionsHash(composed);
+                    break;
+                case 'char-sum':
+                    baseValue = characterSumHash(composed);
+                    break;
+                case 'djb2':
+                    baseValue = djb2Hash(composed);
+                    break;
+                case 'fnv1a':
+                    baseValue = fnv1aHash(composed);
+                    break;
+                case 'sha256':
+                    baseValue = await sha256Hash(composed);
+                    break;
+                default:
+                    baseValue = fnv1aHash(composed);
+                    break;
+            }
+
+            return fitHashToLength(baseValue, targetLength, composed + method);
+        }
+
+        async function renderHash() {
+            lengthValue.textContent = `${lengthInput.value} chars`;
+            resultOutput.value = await composeHash();
+            copyButton.disabled = !resultOutput.value;
+        }
+
+        lengthInput.addEventListener('input', () => {
+            lengthValue.textContent = `${lengthInput.value} chars`;
+        });
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            await renderHash();
+        });
+
+        copyButton.addEventListener('click', async () => {
+            if (!resultOutput.value) {
+                return;
+            }
+
+            await navigator.clipboard.writeText(resultOutput.value);
+            copyButton.textContent = 'Copied';
+            window.setTimeout(() => {
+                copyButton.textContent = 'Copy result';
+            }, 1200);
+        });
+    </script>
+</body>
+</html>

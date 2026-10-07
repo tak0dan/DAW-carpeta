@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Generador de contraseña</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --text: #1d2633;
+            --text-soft: #5f6c7d;
+            --border: rgba(29, 38, 51, 0.12);
+            --accent: #4f46e5;
+            --accent-strong: #3730a3;
+            --shadow: 0 20px 60px rgba(15, 23, 42, 0.08);
+        }
+
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --surface: #111827;
+            --text: #e2e8f0;
+            --text-soft: #94a3b8;
+            --border: rgba(148, 163, 184, 0.18);
+            --accent: #8b5cf6;
+            --accent-strong: #7c3aed;
+            --shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, rgba(79, 70, 229, 0.14), transparent 24%),
+                        var(--bg);
+            color: var(--text);
+        }
+
+        .page {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1rem 3rem;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 2.5vw, 2.7rem);
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-soft);
+        }
+
+        input[type="text"],
+        input[type="range"] {
+            width: 100%;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text);
+            padding: 0.95rem 1rem;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        [data-theme="dark"] input[type="text"],
+        [data-theme="dark"] input[type="range"] {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        input[type="text"]:focus,
+        input[type="range"]:focus {
+            border-color: var(--accent);
+        }
+
+        .field {
+            margin-bottom: 1.2rem;
+        }
+
+        .range-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .range-row span {
+            font-weight: 700;
+            color: var(--text);
+            min-width: 2.5rem;
+            text-align: right;
+        }
+
+        button,
+        .theme-button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            padding: 0.9rem 1.4rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        button:hover,
+        .theme-button:hover {
+            transform: translateY(-1px);
+            background: var(--accent-strong);
+        }
+
+        .result {
+            margin-top: 1rem;
+            padding: 1.4rem 1.5rem;
+            border-radius: 20px;
+            background: rgba(79, 70, 229, 0.08);
+            color: var(--text);
+            word-break: break-all;
+        }
+
+        .history {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .history-item {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 1rem 1.2rem;
+            background: var(--surface);
+        }
+
+        .history-item small {
+            color: var(--text-soft);
+        }
+    </style>
+</head>
+<body>
+    <div class="page" id="app">
+        <header>
+            <div>
+                <h1>Generador de contraseña</h1>
+                <p style="margin:0; color: var(--text-soft);">
+                    Usa dominio y palabra para crear una contraseña fija y guardarla en tu navegador.
+                </p>
+            </div>
+            <button type="button" class="theme-button" id="themeToggle">Tema oscuro</button>
+        </header>
+
+        <section class="card">
+            <form id="passwordForm">
+                <div class="field">
+                    <label for="dominio">Dominio</label>
+                    <input type="text" id="dominio" name="dominio" placeholder="ej. ejemplo.com" required />
+                </div>
+
+                <div class="field">
+                    <label for="palabra">Palabra</label>
+                    <input type="text" id="palabra" name="palabra" placeholder="tu palabra secreta" required />
+                </div>
+
+                <div class="field">
+                    <label for="length">Longitud</label>
+                    <div class="range-row">
+                        <input type="range" id="length" name="length" min="8" max="32" value="20" />
+                        <span id="lengthValue">20</span>
+                    </div>
+                </div>
+
+                <button type="submit">Generar contraseña</button>
+            </form>
+        </section>
+
+        <section class="card">
+            <div id="resultado" class="result">Aquí aparecerá tu contraseña.</div>
+        </section>
+
+        <section class="card">
+            <h2 style="margin-top: 0; margin-bottom: 1rem;">Historial guardado</h2>
+            <div id="history" class="history"></div>
+        </section>
+    </div>
+
+    <script>
+        const charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_+=";
+        const storageKey = "passwordGeneratorHistory";
+        const themeKey = "passwordGeneratorTheme";
+
+        const lengthInput = document.getElementById("length");
+        const lengthValue = document.getElementById("lengthValue");
+        const resultado = document.getElementById("resultado");
+        const historyContainer = document.getElementById("history");
+        const themeToggle = document.getElementById("themeToggle");
+        const app = document.getElementById("app");
+
+        lengthInput.addEventListener("input", () => {
+            lengthValue.textContent = lengthInput.value;
+        });
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem(themeKey) || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+            themeToggle.textContent = savedTheme === "dark" ? "Tema claro" : "Tema oscuro";
+        }
+
+        themeToggle.addEventListener("click", () => {
+            const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+            const next = current === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", next);
+            localStorage.setItem(themeKey, next);
+            themeToggle.textContent = next === "dark" ? "Tema claro" : "Tema oscuro";
+        });
+
+        function saveHistory(entries) {
+            localStorage.setItem(storageKey, JSON.stringify(entries));
+        }
+
+        function getHistory() {
+            const saved = localStorage.getItem(storageKey);
+            return saved ? JSON.parse(saved) : [];
+        }
+
+        function renderHistory() {
+            const entries = getHistory();
+            if (!entries.length) {
+                historyContainer.innerHTML = "<p style='color: var(--text-soft); margin:0;'>No hay contraseñas guardadas aún.</p>";
+                return;
+            }
+
+            historyContainer.innerHTML = entries
+                .slice()
+                .reverse()
+                .map(item => `
+                    <div class="history-item">
+                        <div><strong>${item.domain}</strong></div>
+                        <div>${item.password}</div>
+                        <small>${item.length} caracteres · ${new Date(item.date).toLocaleString()}</small>
+                    </div>
+                `)
+                .join("");
+        }
+
+        async function generatePassword(domain, palabra, length = 20) {
+            const encoder = new TextEncoder();
+            const input = encoder.encode(`${domain}:${palabra}`);
+            const salt = encoder.encode("fixed-salt-password-gen-v1");
+            const keyMaterial = await crypto.subtle.importKey(
+                "raw",
+                input,
+                { name: "PBKDF2" },
+                false,
+                ["deriveBits"]
+            );
+
+            const derivedBits = await crypto.subtle.deriveBits(
+                {
+                    name: "PBKDF2",
+                    salt,
+                    iterations: 150000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                length * 8
+            );
+
+            const hashArray = new Uint8Array(derivedBits);
+            return Array.from(hashArray, byte => charset[byte % charset.length]).join("");
+        }
+
+        document.getElementById("passwordForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            const domain = document.getElementById("dominio").value.trim();
+            const palabra = document.getElementById("palabra").value.trim();
+            const length = parseInt(lengthInput.value, 10);
+
+            if (!domain || !palabra) return;
+
+            const password = await generatePassword(domain, palabra, length);
+            resultado.textContent = `Contraseña: ${password}`;
+
+            const entries = getHistory();
+            entries.push({
+                domain,
+                password,
+                length,
+                date: new Date().toISOString()
+            });
+
+            saveHistory(entries);
+            renderHistory();
+        });
+
+        loadTheme();
+        renderHistory();
+    </script>
+</body>
+</html>
