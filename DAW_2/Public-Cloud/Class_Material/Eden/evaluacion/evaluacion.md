@@ -1,0 +1,30 @@
+
+
+1) Nos ha dicho que habrá 2 entregas por tema.
+
+
+2) Además nos ha dicho que los exámenes serán tipo test. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

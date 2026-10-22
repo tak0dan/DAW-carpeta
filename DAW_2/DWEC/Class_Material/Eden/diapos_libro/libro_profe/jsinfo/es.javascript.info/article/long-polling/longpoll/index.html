@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<script src="https://es.javascript.info/article/long-polling/longpoll/browser.js"></script>
+
+Todos los visitantes de esta página verán mensajes entre ellos.
+
+<form name="publish">
+  <input type="text" name="message" />
+  <input type="submit" value="Enviar" />
+</form>
+
+<div id="subscribe">
+</div>
+
+<script>
+  new PublishForm(document.forms.publish, 'publish');
+  // parámetro de url aleatorio para evitar problemas de almacenamiento en caché
+  new SubscribePane(document.getElementById('subscribe'), 'subscribe?random=' + Math.random());
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

@@ -1,0 +1,575 @@
+<!DOCTYPE html><html lang="en" data-theme-enabled="1">
+<!-- Mirrored from javascript.info/weakref-finalizationregistry by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 10:53:21 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">WeakRef and FinalizationRegistry</title><link href="pack/styles.3790a4dbad19cf846dfa.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="weakref-finalizationregistry.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="WeakRef and FinalizationRegistry"><meta property="og:image" content="https://javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="WeakRef and FinalizationRegistry"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="unicode.html"><link rel="next" href="ui.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.d8942f19e25c8b74ccca.js"></script><script src="pack/head.92a610c69869cf90dce2.js" defer></script><meta property="og:title" content="WeakRef and FinalizationRegistry"><meta property="og:type" content="article"><script src="pack/tutorial.4b5752675459006b4b6e.js" defer></script><script src="pack/footer.d85b74e999a90f5a009c.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Sorry, Internet Explorer is not supported, please use a newer browser.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "en";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>EN</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="weakref-finalizationregistry.html"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://es.javascript.info/weakref-finalizationregistry"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/weakref-finalizationregistry"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/weakref-finalizationregistry"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>We want to make this open-source project available for people all around the world.</p> <p><a href="translate.html">Help to translate</a> the content of this tutorial to your language!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Buy</span>EPUB/PDF</a></div><div class="sitetoolbar__login-wrap"><button class="sitetoolbar__login sitetoolbar__login_unready" data-action-login></button></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Search on Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Search</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Search in the tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Search</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Tutorial map</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Share</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/">عربي</option><option value="https://javascript.info/weakref-finalizationregistry" selected>English</option><option value="https://es.javascript.info/weakref-finalizationregistry">Español</option><option value="https://fa.javascript.info/">فارسی</option><option value="https://fr.javascript.info/">Français</option><option value="https://id.javascript.info/">Indonesia</option><option value="https://it.javascript.info/">Italiano</option><option value="https://ja.javascript.info/">日本語</option><option value="https://ko.javascript.info/">한국어</option><option value="https://learn.javascript.ru/weakref-finalizationregistry">Русский</option><option value="https://tr.javascript.info/">Türkçe</option><option value="https://uk.javascript.info/weakref-finalizationregistry">Українська</option><option value="https://uz.javascript.info/">Oʻzbek</option><option value="https://zh.javascript.info/">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="94" max="94" data-tooltip="Lesson 94 of 94"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="js.html"><span>The JavaScript language</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="js-misc.html"><span>Miscellaneous</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://javascript.info/"},{"@type":"ListItem","position":2,"name":"The JavaScript language","item":"https://javascript.info/js"},{"@type":"ListItem","position":3,"name":"Miscellaneous","item":"https://javascript.info/js-misc"}]}</script></ol><div class="updated-at" data-tooltip="Last updated on November 4, 2023"><div class="updated-at__content">November 4, 2023</div></div></div><h1 class="main__header-title">WeakRef and FinalizationRegistry</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="WeakRef and FinalizationRegistry"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><div class="important important_warn">
+            <div class="important__header"><span class="important__type">“Hidden” features of the language</span></div>
+            <div class="important__content"><p>This article covers a very narrowly focused topic, that most developers extremely rarely encounter in practice (and may not even be aware of its existence).</p>
+<p>We recommend skipping this chapter if you have just started learning JavaScript.</p>
+</div></div>
+<p>Recalling the basic concept of the <em>reachability principle</em> from the <a href="garbage-collection.html">Garbage collection</a> chapter,
+we can note that the JavaScript engine is guaranteed to keep values in memory that are accessible or in use.</p>
+<p>For example:</p>
+<div id="zpvearmise" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  the user variable holds a strong reference to the object
+let user = { name: &quot;John&quot; };
+
+// let's overwrite the value of the user variable
+user = null;
+
+// the reference is lost and the object will be deleted from memory</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Or a similar, but slightly more complicated code with two strong references:</p>
+<div id="h3m6d2i2sj" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:4,&quot;end&quot;:4}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  the user variable holds a strong reference to the object
+let user = { name: &quot;John&quot; };
+
+// copied the strong reference to the object into the admin variable
+let admin = user;
+
+// let's overwrite the value of the user variable
+user = null;
+
+// the object is still reachable through the admin variable</code></pre>
+        </div>
+      </div>
+      
+      </div><p>The object <code>{ name: &quot;John&quot; }</code> would only be deleted from memory if there were no strong references to it (if we also overwrote the value of the <code>admin</code> variable).</p>
+<p>In JavaScript, there is a concept called <code>WeakRef</code>, which behaves slightly differently in this case.</p>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type">Terms: “Strong reference”, “Weak reference”</span></div>
+            <div class="important__content"><p><strong>Strong reference</strong> – is a reference to an object or value, that prevents them from being deleted by the garbage collector. Thereby, keeping the object or value in memory, to which it points.</p>
+<p>This means, that the object or value remains in memory and is not collected by the garbage collector as long, as there are active strong references to it.</p>
+<p>In JavaScript, ordinary references to objects are strong references. For example:</p>
+<div id="qizql1bixn" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// the user variable holds a strong reference to this object
+let user = { name: &quot;John&quot; };</code></pre>
+        </div>
+      </div>
+      
+      </div><p><strong>Weak reference</strong> – is a reference to an object or value, that does <em>not</em> prevent them from being deleted by the garbage collector.
+An object or value can be deleted by the garbage collector if, the only remaining references to them are weak references.</p>
+</div></div>
+<h2><a class="main__anchor" name="weakref" href="#weakref">WeakRef</a></h2><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Note of caution</span></div>
+            <div class="important__content"><p>Before we dive into it, it is worth noting that the correct use of the structures discussed in this article requires very careful thought, and they are best avoided if possible.</p>
+</div></div>
+<p><code>WeakRef</code> – is an object, that contains a weak reference to another object, called <code>target</code> or <code>referent</code>.</p>
+<p>The peculiarity of <code>WeakRef</code> is that it does not prevent the garbage collector from deleting its referent-object. In other words, a <code>WeakRef</code> object does not keep the <code>referent</code> object alive.</p>
+<p>Now let’s take the <code>user</code> variable as the “referent” and create a weak reference from it to the <code>admin</code> variable.
+To create a weak reference, you need to use the <code>WeakRef</code> constructor, passing in the target object (the object you want a weak reference to).</p>
+<p>In our case — this is the <code>user</code> variable:</p>
+<div id="zvtiqh1fj8" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:4,&quot;end&quot;:4}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  the user variable holds a strong reference to the object
+let user = { name: &quot;John&quot; };
+
+//  the admin variable holds a weak reference to the object
+let admin = new WeakRef(user);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>The diagram below depicts two types of references: a strong reference using the <code>user</code> variable and a weak reference using the <code>admin</code> variable:</p>
+<figure><div class="image" style="width:191px">
+      <div class="image__ratio" style="padding-top:147.64397905759162%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-01.svg" width="191" height="282" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-01.svg" alt="" width="191" height="282">
+      </object>
+      </div></figure><p>Then, at some point, we stop using the <code>user</code> variable – it gets overwritten, goes out of scope, etc., while keeping the <code>WeakRef</code> instance in the <code>admin</code> variable:</p>
+<div id="xzn4z0fori" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// let's overwrite the value of the user variable
+user = null;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>A weak reference to an object is not enough to keep it “alive”. When the only remaining references to a referent-object are weak references, the garbage collector is free to destroy this object and use its memory for something else.</p>
+<p>However, until the object is actually destroyed, the weak reference may return it, even if there are no more strong references to this object.
+That is, our object becomes a kind of “<a href="https://en.wikipedia.org/wiki/Schrödinger%27s_cat">Schrödinger’s cat</a>” – we cannot know for sure whether it’s “alive” or “dead”:</p>
+<figure><div class="image" style="width:178px">
+      <div class="image__ratio" style="padding-top:152.80898876404493%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-02.svg" width="178" height="272" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-02.svg" alt="" width="178" height="272">
+      </object>
+      </div></figure><p>At this point, to get the object from the <code>WeakRef</code> instance, we will use its <code>deref()</code> method.</p>
+<p>The <code>deref()</code> method returns the referent-object that the <code>WeakRef</code> points to, if the object is still in memory. If the object has been deleted by the garbage collector, then the <code>deref()</code> method will return <code>undefined</code>:</p>
+<div id="zht0e7up4o" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>let ref = admin.deref();
+
+if (ref) {
+  // the object is still accessible: we can perform any manipulations with it
+} else {
+  // the object has been collected by the garbage collector
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="weakref-use-cases" href="#weakref-use-cases">WeakRef use cases</a></h2><p><code>WeakRef</code> is typically used to create caches or <a href="https://en.wikipedia.org/wiki/Associative_array">associative arrays</a> that store resource-intensive objects.
+This allows one to avoid preventing these objects from being collected by the garbage collector solely based on their presence in the cache or associative array.</p>
+<p>One of the primary examples – is a situation when we have numerous binary image objects (for instance, represented as <code>ArrayBuffer</code> or <code>Blob</code>), and we want to associate a name or path with each image.
+Existing data structures are not quite suitable for these purposes:</p>
+<ul>
+<li>Using <code>Map</code> to create associations between names and images, or vice versa, will keep the image objects in memory since they are present in the <code>Map</code> as keys or values.</li>
+<li><code>WeakMap</code> is ineligible for this goal either: because the objects represented as <code>WeakMap</code> keys use weak references, and are not protected from deletion by the garbage collector.</li>
+</ul>
+<p>But, in this situation, we need a data structure that would use weak references in its values.</p>
+<p>For this purpose, we can use a <code>Map</code> collection, whose values are <code>WeakRef</code> instances referring to the large objects we need.
+Consequently, we will not keep these large and unnecessary objects in memory longer than they should be.</p>
+<p>Otherwise, this is a way to get the image object from the cache if it is still reachable.
+If it has been garbage collected, we will re-generate or re-download it again.</p>
+<p>This way, less memory is used in some situations.</p>
+<h2><a class="main__anchor" name="example-1-using-weakref-for-caching" href="#example-1-using-weakref-for-caching">Example №1: using WeakRef for caching</a></h2><p>Below is a code snippet that demonstrates the technique of using <code>WeakRef</code>.</p>
+<p>In short, we use a <code>Map</code> with string keys and <code>WeakRef</code> objects as their values.
+If the <code>WeakRef</code> object has not been collected by the garbage collector, we get it from the cache.
+Otherwise, we re-download it again and put it in the cache for further possible reuse:</p>
+<div id="1mniqn9cyd" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function fetchImg() {
+    // abstract function for downloading images...
+}
+
+function weakRefCache(fetchImg) { // (1)
+    const imgCache = new Map(); // (2)
+
+    return (imgName) =&gt; { // (3)
+        const cachedImg = imgCache.get(imgName); // (4)
+
+        if (cachedImg?.deref()) { // (5)
+            return cachedImg?.deref();
+        }
+
+        const newImg = fetchImg(imgName); // (6)
+        imgCache.set(imgName, new WeakRef(newImg)); // (7)
+
+        return newImg;
+    };
+}
+
+const getCachedImg = weakRefCache(fetchImg);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Let’s delve into the details of what happened here:</p>
+<ol>
+<li><code>weakRefCache</code> – is a higher-order function that takes another function, <code>fetchImg</code>, as an argument. In this example, we can neglect a detailed description of the <code>fetchImg</code> function, since it can be any logic for downloading images.</li>
+<li><code>imgCache</code> – is a cache of images, that stores cached results of the <code>fetchImg</code> function, in the form of string keys (image name) and <code>WeakRef</code> objects as their values.</li>
+<li>Return an anonymous function that takes the image name as an argument. This argument will be used as a key for the cached image.</li>
+<li>Trying to get the cached result from the cache, using the provided key (image name).</li>
+<li>If the cache contains a value for the specified key, and the <code>WeakRef</code> object has not been deleted by the garbage collector, return the cached result.</li>
+<li>If there is no entry in the cache with the requested key, or <code>deref()</code> method returns <code>undefined</code> (meaning that the <code>WeakRef</code> object has been garbage collected), the <code>fetchImg</code> function downloads the image again.</li>
+<li>Put the downloaded image into the cache as a <code>WeakRef</code> object.</li>
+</ol>
+<p>Now we have a <code>Map</code> collection, where the keys – are image names as strings, and values – are <code>WeakRef</code> objects containing the images themselves.</p>
+<p>This technique helps to avoid allocating a large amount of memory for resource-intensive objects, that nobody uses anymore.
+It also saves memory and time in case of reusing cached objects.</p>
+<p>Here is a visual representation of what this code looks like:</p>
+<figure><div class="image" style="width:540px">
+      <div class="image__ratio" style="padding-top:47.592592592592595%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-03.svg" width="540" height="257" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-03.svg" alt="" width="540" height="257">
+      </object>
+      </div></figure><p>But, this implementation has its drawbacks: over time, <code>Map</code> will be filled with strings as keys, that point to a <code>WeakRef</code>, whose referent-object has already been garbage collected:</p>
+<figure><div class="image" style="width:540px">
+      <div class="image__ratio" style="padding-top:47.592592592592595%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-04.svg" width="540" height="257" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-04.svg" alt="" width="540" height="257">
+      </object>
+      </div></figure><p>One way to handle this problem – is to periodically scavenge the cache and clear out “dead” entries.
+Another way – is to use finalizers, which we will explore next.</p>
+<h2><a class="main__anchor" name="example-2-using-weakref-to-track-dom-objects" href="#example-2-using-weakref-to-track-dom-objects">Example №2: Using WeakRef to track DOM objects</a></h2><p>Another use case for <code>WeakRef</code> – is tracking DOM objects.</p>
+<p>Let’s imagine a scenario where some third-party code or library interacts with elements on our page as long as they exist in the DOM.
+For example, it could be an external utility for monitoring and notifying about the system’s state (commonly so-called “logger” – a program that sends informational messages called “logs”).</p>
+<p>Interactive example:</p>
+<div class="code-tabs code-tabs_result_on"><div class="code-tabs__tools"><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_left" title="&amp;larr;" data-code-tabs-left="data-code-tabs-left"></button></div><div class="code-tabs__switches-wrap"><div class="code-tabs__switches" data-code-tabs-switches="data-code-tabs-switches"><div class="code-tabs__switches-items"><div class="code-tabs__switch code-tabs__switch_current">Result</div><div class="code-tabs__switch">index.js</div><div class="code-tabs__switch">index.css</div><div class="code-tabs__switch">index.html</div></div></div></div><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_right" title="&amp;rarr;" data-code-tabs-right="data-code-tabs-right"></button></div><div class="code-tabs__buttons"><a class="code-tabs__button code-tabs__button_external" target="_blank" title="open in a new window" href="article/weakref-finalizationregistry/weakref-dom/index.html"></a><a class="code-tabs__button code-tabs__button_edit" target="_blank" title="edit in the sandbox" href="https://plnkr.co/edit/csSodP4QRVO61BUd?p=preview"></a></div></div><div class="code-tabs__content" data-code-tabs-content="data-code-tabs-content" style="height:420px"><div class="code-tabs__section code-tabs__section_current"><iframe class="code-tabs__result" src="article/weakref-finalizationregistry/weakref-dom/index.html"></iframe></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>const startMessagesBtn = document.querySelector('.start-messages'); // (1)
+const closeWindowBtn = document.querySelector('.window__button'); // (2)
+const windowElementRef = new WeakRef(document.querySelector(&quot;.window__body&quot;)); // (3)
+
+startMessagesBtn.addEventListener('click', () =&gt; { // (4)
+    startMessages(windowElementRef);
+    startMessagesBtn.disabled = true;
+});
+
+closeWindowBtn.addEventListener('click', () =&gt;  document.querySelector(&quot;.window__body&quot;).remove()); // (5)
+
+
+const startMessages = (element) =&gt; {
+    const timerId = setInterval(() =&gt; { // (6)
+        if (element.deref()) { // (7)
+            const payload = document.createElement(&quot;p&quot;);
+            payload.textContent = `Message: System status OK: ${new Date().toLocaleTimeString()}`;
+            element.deref().append(payload);
+        } else { // (8)
+            alert(&quot;The element has been deleted.&quot;); // (9)
+            clearInterval(timerId);
+        }
+    }, 1000);
+};</code></pre></div><div class="code-tabs__section"><pre class="language-css line-numbers"><code>.app {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.start-messages {
+    width: fit-content;
+}
+
+.window {
+    width: 100%;
+    border: 2px solid #464154;
+    overflow: hidden;
+}
+
+.window__header {
+    position: sticky;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #736e7e;
+}
+
+.window__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.window__button {
+    padding: 4px;
+    background: #4f495c;
+    outline: none;
+    border: 2px solid #464154;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.window__body {
+    height: 250px;
+    padding: 16px;
+    overflow: scroll;
+    background-color: #736e7e33;
+}</code></pre></div><div class="code-tabs__section"><pre class="language-markup line-numbers"><code>&lt;!DOCTYPE HTML&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;index.css&quot;&gt;
+  &lt;title&gt;WeakRef DOM Logger&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class=&quot;app&quot;&gt;
+  &lt;button class=&quot;start-messages&quot;&gt;Start sending messages&lt;/button&gt;
+  &lt;div class=&quot;window&quot;&gt;
+    &lt;div class=&quot;window__header&quot;&gt;
+      &lt;p class=&quot;window__title&quot;&gt;Messages:&lt;/p&gt;
+      &lt;button class=&quot;window__button&quot;&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;window__body&quot;&gt;
+      No messages.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;script type=&quot;module&quot; src=&quot;index.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div></div><p>When the “Start sending messages” button is clicked, in the so-called “logs display window” (an element with the <code>.window__body</code> class), messages (logs) start to appear.</p>
+<p>But, as soon as this element is deleted from the DOM, the logger should stop sending messages.
+To reproduce the removal of this element, just click the “Close” button in the top right corner.</p>
+<p>In order not to complicate our work, and not to notify third-party code every time our DOM-element is available, and when it is not, it will be enough to create a weak reference to it using <code>WeakRef</code>.</p>
+<p>Once the element is removed from the DOM, the logger will notice it and stop sending messages.</p>
+<p>Now let’s take a closer look at the source code (<em>tab <code>index.js</code></em>):</p>
+<ol>
+<li>
+<p>Get the DOM-element of the “Start sending messages” button.</p>
+</li>
+<li>
+<p>Get the DOM-element of the “Close” button.</p>
+</li>
+<li>
+<p>Get the DOM-element of the logs display window using the <code>new WeakRef()</code> constructor. This way, the <code>windowElementRef</code> variable holds a weak reference to the DOM-element.</p>
+</li>
+<li>
+<p>Add an event listener on the “Start sending messages” button, responsible for starting the logger when clicked.</p>
+</li>
+<li>
+<p>Add an event listener on the “Close” button, responsible for closing the logs display window when clicked.</p>
+</li>
+<li>
+<p>Use <code>setInterval</code> to start displaying a new message every second.</p>
+</li>
+<li>
+<p>If the DOM-element of the logs display window is still accessible and kept in memory, create and send a new message.</p>
+</li>
+<li>
+<p>If the <code>deref()</code> method returns <code>undefined</code>, it means that the DOM-element has been deleted from memory. In this case, the logger stops displaying messages and clears the timer.</p>
+</li>
+<li>
+<p><code>alert</code>, which will be called, after the DOM-element of the logs display window is deleted from memory (i.e. after clicking the “Close” button). <strong>Note, that deletion from memory may not happen immediately, as it depends only on the internal mechanisms of the garbage collector.</strong></p>
+<p>We cannot control this process directly from the code. However, despite this, we still have the option to force garbage collection from the browser.</p>
+<p>In Google Chrome, for example, to do this, you need to open the developer tools (<kbd class="shortcut">Ctrl</kbd> + <kbd class="shortcut">Shift</kbd> + <kbd class="shortcut">J</kbd> on Windows/Linux or <kbd class="shortcut">Option</kbd> + <kbd class="shortcut">⌘</kbd> + <kbd class="shortcut">J</kbd> on macOS), go to the “Performance” tab, and click on the bin icon button – “Collect garbage”:</p>
+<figure><div class="image" style="width:1594px">
+      <div class="image__ratio" style="padding-top:20.70263488080301%"></div>
+      <img src="article/weakref-finalizationregistry/google-chrome-developer-tools.png" alt="" width="1594" height="330" class="image__image">
+      </div></figure> <br>
+ This functionality is supported in most modern browsers. After the actions are taken, the <code>alert</code> will trigger immediately.
+</li>
+</ol>
+<h2><a class="main__anchor" name="finalizationregistry" href="#finalizationregistry">FinalizationRegistry</a></h2><p>Now it is time to talk about finalizers. Before we move on, let’s clarify the terminology:</p>
+<p><strong>Cleanup callback (finalizer)</strong> – is a function that is executed, when an object, registered in the <code>FinalizationRegistry</code>, is deleted from memory by the garbage collector.</p>
+<p>Its purpose – is to provide the ability to perform additional operations, related to the object, after it has been finally deleted from memory.</p>
+<p><strong>Registry</strong> (or <code>FinalizationRegistry</code>) – is a special object in JavaScript that manages the registration and unregistration of objects and their cleanup callbacks.</p>
+<p>This mechanism allows registering an object to track and associate a cleanup callback with it.
+Essentially it is a structure that stores information about registered objects and their cleanup callbacks, and then automatically invokes those callbacks when the objects are deleted from memory.</p>
+<p>To create an instance of the <code>FinalizationRegistry</code>, it needs to call its constructor, which takes a single argument – the cleanup callback (finalizer).</p>
+<p>Syntax:</p>
+<div id="b5o7bipdfj" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function cleanupCallback(heldValue) {
+  // cleanup callback code
+}
+
+const registry = new FinalizationRegistry(cleanupCallback);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Here:</p>
+<ul>
+<li><code>cleanupCallback</code> – a cleanup callback that will be automatically called when a registered object is deleted from memory.</li>
+<li><code>heldValue</code> – the value that is passed as an argument to the cleanup callback. If <code>heldValue</code> is an object, the registry keeps a strong reference to it.</li>
+<li><code>registry</code> – an instance of <code>FinalizationRegistry</code>.</li>
+</ul>
+<p><code>FinalizationRegistry</code> methods:</p>
+<ul>
+<li>
+<p><code>register(target, heldValue [, unregisterToken])</code> – used to register objects in the registry.</p>
+<p><code>target</code> – the object being registered for tracking. If the <code>target</code> is garbage collected, the cleanup callback will be called with <code>heldValue</code> as its argument.</p>
+<p>Optional <code>unregisterToken</code> – an unregistration token. It can be passed to unregister an object before the garbage collector deletes it. Typically, the <code>target</code> object is used as <code>unregisterToken</code>, which is the standard practice.</p>
+</li>
+<li>
+<p><code>unregister(unregisterToken)</code> – the <code>unregister</code> method is used to unregister an object from the registry. It takes one argument – <code>unregisterToken</code> (the unregister token that was obtained when registering the object).</p>
+</li>
+</ul>
+<p>Now let’s move on to a simple example. Let’s use the already-known <code>user</code> object and create an instance of <code>FinalizationRegistry</code>:</p>
+<div id="3amc23uy0p" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>let user = { name: &quot;John&quot; };
+
+const registry = new FinalizationRegistry((heldValue) =&gt; {
+  console.log(`${heldValue} has been collected by the garbage collector.`);
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Then, we will register the object, that requires a cleanup callback by calling the <code>register</code> method:</p>
+<div id="2ostr6lvk9" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>registry.register(user, user.name);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>The registry does not keep a strong reference to the object being registered, as this would defeat its purpose. If the registry kept a strong reference, then the object would never be garbage collected.</p>
+<p>If the object is deleted by the garbage collector, our cleanup callback may be called at some point in the future, with the <code>heldValue</code> passed to it:</p>
+<div id="us8eid5yiq" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// When the user object is deleted by the garbage collector, the following message will be printed in the console:
+&quot;John has been collected by the garbage collector.&quot;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>There are also situations where, even in implementations that use a cleanup callback, there is a chance that it will not be called.</p>
+<p>For example:</p>
+<ul>
+<li>When the program fully terminates its operation (for example, when closing a tab in a browser).</li>
+<li>When the <code>FinalizationRegistry</code> instance itself is no longer reachable to JavaScript code.
+If the object that creates the <code>FinalizationRegistry</code> instance goes out of scope or is deleted, the cleanup callbacks registered in that registry might also not be invoked.</li>
+</ul>
+<h2><a class="main__anchor" name="caching-with-finalizationregistry" href="#caching-with-finalizationregistry">Caching with FinalizationRegistry</a></h2><p>Returning to our <em>weak</em> cache example, we can notice the following:</p>
+<ul>
+<li>Even though the values wrapped in the <code>WeakRef</code> have been collected by the garbage collector, there is still an issue of “memory leakage” in the form of the remaining keys, whose values have been collected by the garbage collector.</li>
+</ul>
+<p>Here is an improved caching example using <code>FinalizationRegistry</code>:</p>
+<div id="chf2n3ebqc" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:21,&quot;end&quot;:21},{&quot;start&quot;:7,&quot;end&quot;:10}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function fetchImg() {
+  // abstract function for downloading images...
+}
+
+function weakRefCache(fetchImg) {
+  const imgCache = new Map();
+
+  const registry = new FinalizationRegistry((imgName) =&gt; { // (1)
+    const cachedImg = imgCache.get(imgName);
+    if (cachedImg &amp;&amp; !cachedImg.deref()) imgCache.delete(imgName);
+  });
+
+  return (imgName) =&gt; {
+    const cachedImg = imgCache.get(imgName);
+
+    if (cachedImg?.deref()) {
+      return cachedImg?.deref();
+    }
+
+    const newImg = fetchImg(imgName);
+    imgCache.set(imgName, new WeakRef(newImg));
+    registry.register(newImg, imgName); // (2)
+
+    return newImg;
+  };
+}
+
+const getCachedImg = weakRefCache(fetchImg);</code></pre>
+        </div>
+      </div>
+      
+      </div><ol>
+<li>
+<p>To manage the cleanup of “dead” cache entries, when the associated <code>WeakRef</code> objects are collected by the garbage collector, we create a <code>FinalizationRegistry</code> cleanup registry.</p>
+<p>The important point here is, that in the cleanup callback, it should be checked, if the entry was deleted by the garbage collector and not re-added, in order not to delete a “live” entry.</p>
+</li>
+<li>
+<p>Once the new value (image) is downloaded and put into the cache, we register it in the finalizer registry to track the <code>WeakRef</code> object.</p>
+</li>
+</ol>
+<p>This implementation contains only actual or “live” key/value pairs.
+In this case, each <code>WeakRef</code> object is registered in the <code>FinalizationRegistry</code>.
+And after the objects are cleaned up by the garbage collector, the cleanup callback will delete all <code>undefined</code> values.</p>
+<p>Here is a visual representation of the updated code:</p>
+<figure><div class="image" style="width:420px">
+      <div class="image__ratio" style="padding-top:71.66666666666667%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-05.svg" width="420" height="301" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-05.svg" alt="" width="420" height="301">
+      </object>
+      </div></figure><p>A key aspect of the updated implementation is that finalizers allow parallel processes to be created between the “main” program and cleanup callbacks.
+In the context of JavaScript, the “main” program – is our JavaScript-code, that runs and executes in our application or web page.</p>
+<p>Hence, from the moment an object is marked for deletion by the garbage collector, and to the actual execution of the cleanup callback, there may be a certain time gap.
+It is important to understand that during this time gap, the main program can make any changes to the object or even bring it back to memory.</p>
+<p>That’s why, in the cleanup callback, we must check to see if an entry has been added back to the cache by the main program to avoid deleting “live” entries.
+Similarly, when searching for a key in the cache, there is a chance that the value has been deleted by the garbage collector, but the cleanup callback has not been executed yet.</p>
+<p>Such situations require special attention if you are working with <code>FinalizationRegistry</code>.</p>
+<h2><a class="main__anchor" name="using-weakref-and-finalizationregistry-in-practice" href="#using-weakref-and-finalizationregistry-in-practice">Using WeakRef and FinalizationRegistry in practice</a></h2><p>Moving from theory to practice, imagine a real-life scenario, where a user synchronizes their photos on a mobile device with some cloud service
+(such as <a href="https://en.wikipedia.org/wiki/ICloud">iCloud</a> or <a href="https://en.wikipedia.org/wiki/Google_Photos">Google Photos</a>),
+and wants to view them from other devices. In addition to the basic functionality of viewing photos, such services offer a lot of additional features, for example:</p>
+<ul>
+<li>Photo editing and video effects.</li>
+<li>Creating “memories” and albums.</li>
+<li>Video montage from a series of photos.</li>
+<li>…and much more.</li>
+</ul>
+<p>Here, as an example, we will use a fairly primitive implementation of such a service.
+The main point – is to show a possible scenario of using <code>WeakRef</code> and <code>FinalizationRegistry</code> together in real life.</p>
+<p>Here is what it looks like:</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:57.49999999999999%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-01.png" alt="" width="1600" height="920" class="image__image">
+      </div></figure><br>
+On the left side, there is a cloud library of photos (they are displayed as thumbnails).
+We can select the images we need and create a collage, by clicking the "Create collage" button on the right side of the page.
+Then, the resulting collage can be downloaded as an image.
+</br><br>
+<p>To increase page loading speed, it would be reasonable to download and display photo thumbnails in <em>compressed</em> quality.
+But, to create a collage from selected photos, download and use them in <em>full-size</em> quality.</p>
+<p>Below, we can see, that the intrinsic size of the thumbnails is 240x240 pixels.
+The size was chosen on purpose to increase loading speed.
+Moreover, we do not need full-size photos in preview mode.</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:62.5%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-02.png" alt="" width="1600" height="1000" class="image__image">
+      </div></figure><br>
+Let's assume, that we need to create a collage of 4 photos: we select them, and then click the "Create collage" button.
+At this stage, the already known to us <code>weakRefCache</code> function checks whether the required image is in the cache.
+If not, it downloads it from the cloud and puts it in the cache for further use.
+This happens for each selected image:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-03.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure></br>
+<p>Paying attention to the output in the console, you can see, which of the photos were downloaded from the cloud – this is indicated by <span style="background-color:#133159;color:white;font-weight:500">FETCHED_IMAGE</span>.
+Since this is the first attempt to create a collage, this means, that at this stage the “weak cache” was still empty, and all the photos were downloaded from the cloud and put in it.</p>
+<p>But, along with the process of downloading images, there is also a process of memory cleanup by the garbage collector.
+This means, that the object stored in the cache, which we refer to, using a weak reference, is deleted by the garbage collector.
+And our finalizer executes successfully, thereby deleting the key, by which the image was stored in the cache.
+<span style="background-color:#901e30;color:white;font-weight:500;">CLEANED_IMAGE</span> notifies us about it:</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-04.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Next, we realize that we do not like the resulting collage, and decide to change one of the images and create a new one.
+To do this, just deselect the unnecessary image, select another one, and click the "Create collage" button again:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-05.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+But this time not all images were downloaded from the network, and one of them was taken from the weak cache: the <span style="background-color:#385950;color:white;font-weight:500;">CACHED_IMAGE</span> message tells us about it.
+This means that at the time of collage creation, the garbage collector had not yet deleted our image, and we boldly took it from the cache,
+thereby reducing the number of network requests and speeding up the overall time of the collage creation process:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-06.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Let's "play around" a little more, by replacing one of the images again and creating a new collage:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-07.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+This time the result is even more impressive. Of the 4 images selected, 3 of them were taken from the weak cache, and only one had to be downloaded from the network.
+The reduction in network load was about 75%. Impressive, isn't it?
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-08.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure></br>
+<p>Of course, it is important to remember, that such behavior is not guaranteed, and depends on the specific implementation and operation of the garbage collector.</p>
+<p>Based on this, a completely logical question immediately arises: why do not we use an ordinary cache, where we can manage its entities ourselves, instead of relying on the garbage collector?
+That’s right, in the vast majority of cases there is no need to use <code>WeakRef</code> and <code>FinalizationRegistry</code>.</p>
+<p>Here, we simply demonstrated an alternative implementation of similar functionality, using a non-trivial approach with interesting language features.
+Still, we cannot rely on this example, if we need a constant and predictable result.</p>
+<p>You can <a href="https://plnkr.co/edit/tFgkfPkNPQhGOTYu?p=preview">open this example in the sandbox</a>.</p>
+<h2><a class="main__anchor" name="summary" href="#summary">Summary</a></h2><p><code>WeakRef</code> – designed to create weak references to objects, allowing them to be deleted from memory by the garbage collector if there are no longer strong references to them.
+This is beneficial for addressing excessive memory usage and optimizing the utilization of system resources in applications.</p>
+<p><code>FinalizationRegistry</code> – is a tool for registering callbacks, that are executed when objects that are no longer strongly referenced, are destroyed.
+This allows releasing resources associated with the object or performing other necessary operations before deleting the object from memory.</p>
+</div></article></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="unicode.html" data-tooltip="Unicode, String internals"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Previous lesson</span></a><a class="page__nav page__nav_next" href="ui.html" data-tooltip="Browser: Document, Events, Interfaces"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Next lesson</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Share</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Tutorial map</span></a></div></div></div><div class="banner-bottom-carbon"><div id="javascriptinfo_iconbar"></div></div><script src="../m.servedby-buysellads.com/monetization.custom.js" id="javascriptinfo_script" async></script><script>document.getElementById("javascriptinfo_script").onload=function(){_bsa.init("custom","CKYDEK3U","placement:javascriptinfo_iconbar",{target:"#javascriptinfo_iconbar",template:'\n        <div class="iconBarFlex">\n          <a href="##statlink##" class="iconBarLink" rel="sponsored noopener" target="_blank" title="##company## — ##tagline##">\n            <div class="iconBarImage" style="background-color: ##backgroundColor##;">\n              <img height="30" width="30" src="##image##" alt="##company## logo">\n            </div>\n            <div class="iconBarText">\n              <div class="iconBarTagline">##companyTagline##</div>\n              <div class="iconBarDescription">##description##</div>\n            </div>\n          </a>\n          <a href="##ad_via_link##" class="iconBarVia" rel="sponsored noopener" target="_blank">ads via BuySellAds</a>\n        </div>\n      '})};</script><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comments</a></h2><div class="comments__read-before"><span class="comments__read-before-link">read this before commenting…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>If you have suggestions what to improve - please <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">submit a GitHub issue</a> or a pull request instead of commenting.</li><li>If you can't understand something in the article – please elaborate.</li><li>To insert few words of code, use the <code>&lt;code&gt;</code> tag, for several lines – wrap them in <code>&lt;pre&gt;</code> tag, for more than 10 lines – use a sandbox (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/javascript.info\/weakref-finalizationregistry","identifier":"\/weakref-finalizationregistry"}); };</script><script>var disqus_shortname = "javascriptinfo";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Tutorial map"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Chapter</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="js-misc.html">Miscellaneous</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Lesson navigation</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#weakref">WeakRef</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#weakref-use-cases">WeakRef use cases</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#example-1-using-weakref-for-caching">Example №1: using WeakRef for caching</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#example-2-using-weakref-to-track-dom-objects">Example №2: Using WeakRef to track DOM objects</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#finalizationregistry">FinalizationRegistry</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#caching-with-finalizationregistry">Caching with FinalizationRegistry</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#using-weakref-and-finalizationregistry-in-practice">Using WeakRef and FinalizationRegistry in practice</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#summary">Summary</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comments</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Share</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fjavascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/en.javascript.info/blob/master/1-js/99-js-misc/07-weakref-finalizationregistry" rel="nofollow">Edit on GitHub</a></div><div class="sidebar__section" id="sponsorBar"><div class="sidebar__section-title" id="sponsorBarTitle"></div><div id="sponsorBarContent"></div></div><script>window.initSponsorBar()</script></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">about the project</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contact us</a></li><li class="page-footer__item page-footer__item_terms"><a class="page-footer__link" href="terms.html">terms of usage</a></li><li class="page-footer__item page-footer__item_privacy"><a class="page-footer__link" href="privacy.html">privacy policy</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from javascript.info/weakref-finalizationregistry by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 10:53:35 GMT -->
+</html>

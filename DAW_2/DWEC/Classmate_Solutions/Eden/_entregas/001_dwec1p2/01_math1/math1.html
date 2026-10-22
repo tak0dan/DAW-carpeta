@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>math1</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let finalResult;
+    let evenOddResult;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    let number1 = 3;
+    let number2 = 5; 
+    let number3 = 10;
+    let number4 = 4;     // Dani: "cuando creas 4 variables numeradas seguramente deberías estar usando un array."
+
+    let add = number1 + number2;
+    let substract = number3 - number4;   // nombres descriptivos -> solo con el nombre ya sabes que es la resta. 
+
+    finalResult = add * substract;
+
+    evenOddResult = finalResult % 2;      // "isEven es un mejor nombre", aunque no estoy de acuerdo porque no es una variable boolean. 
+                                          // si quisiera un boolean pondríamos:
+                                                // evenOddResult = ((finalResult % 2) === 0)   // Esto devuelve un boolean. 
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    const para1 = document.createElement('p');
+    const finalResultCheck = finalResult === 48 ?
+      `Yes, well done!` : `No, it is ${ finalResult }`;
+    para1.textContent = `Is the finalResult 48? ${ finalResultCheck }`;
+    const para2 = document.createElement('p');
+    const evenOddResultCheck = evenOddResult === 0 ?
+      'The final result is even!' : 'The final result is odd. Hrm.'
+    para2.textContent = evenOddResultCheck;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>

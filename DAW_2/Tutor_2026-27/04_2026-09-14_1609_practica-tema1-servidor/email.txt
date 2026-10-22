@@ -1,0 +1,18 @@
+Subject: pràctica tema 1 servidor
+Date: Mon, 14 Sep 2026 16:09:24 +0200
+From: "I.E.S. Juan de Garay - Dpto. Informática"
+
+Fer un document PDF que compare i valore amb un resum breu els següents
+elements:
+
+Servidors web
+
+Llenguatges de Servidor
+
+Navegadors
+
+És necessari afegir gràfics de fonts fiables que mostren l'evolució en l'ús
+dels diferents elements estudiats.
+
+salut i una abraçada
+jesús mª timoneda

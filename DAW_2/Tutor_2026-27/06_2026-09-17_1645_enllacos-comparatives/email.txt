@@ -1,0 +1,21 @@
+Subject: Fwd: Us envie enllaços gràfiques i taules comparatives de llenguatges, servidors web i navegadors
+Date: Thu, 17 Sep 2026 16:45:15 +0200
+From: "I.E.S. Juan de Garay - Dpto. Informática"
+
+Llenguatge de programació
+
+http://www.lextrait.com/vincent/implementations.html
+
+https://en.wikipedia.org/wiki/Programming_languages_used_in_most_popular_websites
+
+https://www.tiobe.com/tiobe-index/
+
+Navegadors més usats
+
+http://www.w3schools.com/browsers/browsers_stats.asp
+
+Servidors webs més usats
+http://w3techs.com/technologies/history_overview/web_server/ms/y
+
+Comparison of web application frameworks
+http://en.wikipedia.org/wiki/Comparison_of_web_application_frameworks#Comparison_of_Features

@@ -1,0 +1,11 @@
+Subject: Vídeo de deepseek última versió i enllaç a partxe sobre php
+Date: Thu, 22 Oct 2026 15:11:44 +0200
+From: "I.E.S. Juan de Garay - Dpto. Informática"
+
+Vídeo deepseek
+
+https://www.youtube.com/watch?v=R-ai5ngQNoM
+
+Partxe php
+
+https://www.xataka.com/seguridad/como-saber-web-esta-afectada-vulnerabilidad-php-herramienta-que-openai-ha-publicado

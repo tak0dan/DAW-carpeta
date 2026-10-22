@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+
+<script src="https://javascript.info/article/resume-upload/upload-resume/uploader.js"></script>
+
+<form name="upload" method="POST" enctype="multipart/form-data" action="https://javascript.info/upload">
+  <input type="file" name="myfile">
+  <input type="submit" name="submit" value="Upload (Resumes automatically)">
+</form>
+
+<button onclick="uploader.stop()">Stop upload</button>
+
+
+<div id="log">Progress indication</div>
+
+<script>
+  function log(html) {
+    document.getElementById('log').innerHTML = html;
+    console.log(html);
+  }
+
+  function onProgress(loaded, total) {
+    log("progress " + loaded + ' / ' + total);
+  }
+
+  let uploader;
+
+  document.forms.upload.onsubmit = async function(e) {
+    e.preventDefault();
+
+    let file = this.elements.myfile.files[0];
+    if (!file) return;
+
+    uploader = new Uploader({file, onProgress});
+
+    try {
+      let uploaded = await uploader.upload();
+
+      if (uploaded) {
+        log('success');
+      } else {
+        log('stopped');
+      }
+
+    } catch(err) {
+      console.error(err);
+      log('error');
+    }
+  };
+
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

@@ -1,0 +1,33 @@
+EJERCICIO 4 - Preguntas de Comprobación
+=====================================
+
+Pregunta 1: Anota el selector que gana para el h2, el primer p y #urgente.
+
+Respuestas:
+
+h2.destacado:
+- El selector que gana originalmente es: .panel .destacado (especificidad 0,2,0)
+- Color que se aplicaba: #7030a0 (morado)
+
+
+Primer p.destacado:
+- El selector que gana originalmente es: .panel .destacado (especificidad 0,2,0)
+- Color que se aplicaba: #7030a0 (morado)
+
+
+#urgente.destacado:
+- El selector que gana originalmente es: #urgente (especificidad 1,0,0)
+- Color que se aplicaba: #c00000 (rojo) ✓
+
+
+Pregunta 2: Explicar por qué nuestras reglas ganan
+
+Para que el h2 sea azul, usamos: #panel h2
+- Especificidad: 1,0,1 (ID + elemento)
+- Gana sobre .panel .destacado (0,2,0) porque los IDs tienen más peso
+
+Para que el primer p sea verde, usamos: #panel p:not(#urgente)
+- Especificidad: 1,1,1 (ID + clase + elemento)
+- Gana sobre .panel .destacado (0,2,0) porque incluye un ID
+
+El #urgente ya era rojo, así que no necesitaba cambios.

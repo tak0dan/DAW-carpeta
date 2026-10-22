@@ -1,0 +1,34 @@
+/* Menú */
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    display: inline;
+}
+
+.menu a {
+    display: inline-block;
+    padding: 10px 14px;
+    background-color: #17365d;
+    color: white;
+    text-decoration: none;
+    margin-right: 6px;
+}
+
+/* Aviso */
+.aviso {
+    width: 180px;
+    background-color: #fff2cc;
+    padding: 4px;
+    display: inline-block;
+}
+
+/*
+   Con display: inline, el width no se aprecia porque los elementos inline
+   no respetan ancho ni alto, solo ocupan el espacio necesario del texto.
+
+   Con display: inline-block, el elemento se trata como bloque dentro de
+   una línea, por lo que sí respeta el width y el height.
+*/

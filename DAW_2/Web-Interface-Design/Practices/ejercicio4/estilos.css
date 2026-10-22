@@ -1,0 +1,33 @@
+p { color: #333333; }
+.destacado { color: #2f75b5; }
+.panel p { color: #548235; }
+#urgente { color: #c00000; }
+.panel .destacado { color: #7030a0; }
+p { color: #b45f06; }
+
+/*
+   ANÁLISIS DE ESPECIFICIDAD:
+
+   h2.destacado dentro de .panel:
+   - Ganador original: .panel .destacado (0,2,0) = MORADO
+
+   p.destacado (primer párrafo) dentro de .panel:
+   - Ganador original: .panel .destacado (0,2,0) = MORADO
+
+   p#urgente.destacado dentro de .panel:
+   - Ganador original: #urgente (1,0,0) = ROJO ✓
+*/
+
+/* Soluciones para que ganen nuestros colores */
+
+/* h2 debe ser azul */
+#panel h2 {
+    color: #2f75b5;
+}
+
+/* Primer p debe ser verde */
+#panel p:not(#urgente) {
+    color: #548235;
+}
+
+/* #urgente ya es rojo, así que no necesita cambio */

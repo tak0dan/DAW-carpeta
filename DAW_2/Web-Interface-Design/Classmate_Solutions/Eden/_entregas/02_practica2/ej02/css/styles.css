@@ -1,0 +1,51 @@
+
+
+body {
+    background-color: #eef3f8;
+    font-family: Arial, sans-serif;
+}
+
+
+
+.tarjeta {
+    width: 360px;
+    background-color: white;
+    border: 1px solid #c9d6e2;
+    padding: 24px;
+    margin: 40px auto;
+}
+
+
+
+.etiqueta {
+    color: #2f75b5;
+    font-weight: bold;
+}
+
+
+
+
+#plazas {
+    color: #b45f06;
+}
+
+
+
+
+.boton {
+    background-color: #2f75b5;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+
+
+
+
+
+
+
+
+

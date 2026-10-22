@@ -1,0 +1,167 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "WordPress en Amazon Linux 2023 con Apache, PHP 8.1 y MariaDB 10.5",
+  "Parameters": {
+    "KeyName": {
+      "Description": "EC2 KeyPair para acceso SSH",
+      "Type": "AWS::EC2::KeyPair::KeyName"
+    },
+    "InstanceType": {
+      "Description": "Tipo de instancia EC2",
+      "Type": "String",
+      "Default": "t3.small"
+    },
+    "SSHLocation": {
+      "Description": "Rango CIDR permitido para SSH",
+      "Type": "String",
+      "Default": "0.0.0.0/0"
+    },
+    "DBName": {
+      "Default": "wordpressdb",
+      "Description": "Nombre de la base de datos",
+      "Type": "String"
+    },
+    "DBUser": {
+      "NoEcho": "true",
+      "Description": "Usuario de la base de datos",
+      "Type": "String"
+    },
+    "DBPassword": {
+      "NoEcho": "true",
+      "Description": "Contraseña de la base de datos",
+      "Type": "String"
+    },
+    "DBRootPassword": {
+      "NoEcho": "true",
+      "Description": "Contraseña root de la base de datos",
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "WebServerSecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "Permite HTTP y SSH",
+        "SecurityGroupIngress": [
+          { "IpProtocol": "tcp", "FromPort": 80, "ToPort": 80, "CidrIp": "0.0.0.0/0" },
+          { "IpProtocol": "tcp", "FromPort": 22, "ToPort": 22, "CidrIp": { "Ref": "SSHLocation" } }
+        ]
+      }
+    },
+    "WebServer": {
+      "Type": "AWS::EC2::Instance",
+      "Metadata": {
+        "AWS::CloudFormation::Init": {
+          "configSets": {
+            "wordpress_install": ["install_packages", "configure_wordpress"]
+          },
+          "install_packages": {
+            "commands": {
+              "00_install_packages": {
+                "command": "dnf install -y httpd php php-mysqlnd mariadb105 mariadb105-server"
+              },
+              "01_start_services": {
+                "command": "systemctl enable --now mariadb httpd"
+              }
+            }
+          },
+          "configure_wordpress": {
+            "sources": {
+              "/var/www/html": "http://wordpress.org/latest.tar.gz"
+            },
+            "files": {
+              "/tmp/setup.mysql": {
+                "content": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "CREATE DATABASE ", { "Ref": "DBName" }, ";\n",
+                      "CREATE USER '", { "Ref": "DBUser" }, "'@'localhost' IDENTIFIED BY '",
+                      { "Ref": "DBPassword" }, "';\n",
+                      "GRANT ALL ON ", { "Ref": "DBName" }, ".* TO '",
+                      { "Ref": "DBUser" }, "'@'localhost';\nFLUSH PRIVILEGES;\n"
+                    ]
+                  ]
+                },
+                "mode": "000400",
+                "owner": "root",
+                "group": "root"
+              },
+              "/tmp/create-wp-config": {
+                "content": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "#!/bin/bash -xe\n",
+                      "cp /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php\n",
+                      "sed -i \"s/'database_name_here'/'", { "Ref": "DBName" }, "'/g\" /var/www/html/wordpress/wp-config.php\n",
+                      "sed -i \"s/'username_here'/'", { "Ref": "DBUser" }, "'/g\" /var/www/html/wordpress/wp-config.php\n",
+                      "sed -i \"s/'password_here'/'", { "Ref": "DBPassword" }, "'/g\" /var/www/html/wordpress/wp-config.php\n"
+                    ]
+                  ]
+                },
+                "mode": "000500",
+                "owner": "root",
+                "group": "root"
+              }
+            },
+            "commands": {
+              "01_set_root_password": {
+                "command": {
+                  "Fn::Join": [
+                    "",
+                    ["mysqladmin -u root password '", { "Ref": "DBRootPassword" }, "'"]
+                  ]
+                }
+              },
+              "02_create_database": {
+                "command": {
+                  "Fn::Join": [
+                    "",
+                    ["mysql -u root --password='", { "Ref": "DBRootPassword" }, "' < /tmp/setup.mysql"]
+                  ]
+                }
+              },
+              "03_configure_wordpress": {
+                "command": "/tmp/create-wp-config",
+                "cwd": "/var/www/html/wordpress"
+              }
+            }
+          }
+        }
+      },
+      "Properties": {
+        "ImageId": {
+          "Fn::Sub": "{{resolve:ssm:/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-6.1-x86_64}}"
+        },
+        "InstanceType": { "Ref": "InstanceType" },
+        "SecurityGroups": [{ "Ref": "WebServerSecurityGroup" }],
+        "KeyName": { "Ref": "KeyName" },
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Join": [
+              "",
+              [
+                "#!/bin/bash -xe\n",
+                "dnf update -y aws-cfn-bootstrap\n",
+                "/opt/aws/bin/cfn-init -v --stack ", { "Ref": "AWS::StackName" },
+                " --resource WebServer --configsets wordpress_install --region ", { "Ref": "AWS::Region" }, "\n",
+                "/opt/aws/bin/cfn-signal -e $? --stack ", { "Ref": "AWS::StackName" },
+                " --resource WebServer --region ", { "Ref": "AWS::Region" }, "\n"
+              ]
+            ]
+          }
+        }
+      },
+      "CreationPolicy": { "ResourceSignal": { "Timeout": "PT30M" } }
+    }
+  },
+  "Outputs": {
+    "WebsiteURL": {
+      "Value": {
+        "Fn::Join": ["", ["http://", { "Fn::GetAtt": ["WebServer", "PublicDnsName"] }, "/wordpress"]]
+      },
+      "Description": "URL del sitio WordPress"
+    }
+  }
+}

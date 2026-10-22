@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>loops3</title>
+</head>
+
+<body>
+</body>
+<script>
+  let i = 500;
+  let text = '';
+
+  function isPrime(num) {
+    for (let i = 2; i < num; i++) {
+      if (num % i === 0) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // Add your code here
+  //{{-------------------------------------------------------
+
+
+  // Con for:
+  for (i = 500; i >= 2; i--) {
+    if (isPrime(i)) {
+      text += i + " ";
+    }
+  }
+
+  text += "<br><br>";  // los saltos de línea "\n\n" no tenían efecto en cómo el navegador muestra el resultado. Para lograrlo he tenido que modificar la línea 67. Estaba fuera de los límites que podíamos editar, pero no se me ha ocurrido otra manera de hacerlo. El curso pasado Pascual nos enseñó a usar innerHTML para conseguir que los <br><br> surtieran efecto dentro de <script>. 
+  
+
+  // Con while:
+  i = 500;
+  while (i >= 2) {
+    if (isPrime(i)) {
+      text += i + " ";
+    }
+    i--;
+  }
+
+  text += "<br><br>";
+
+
+  
+  // Con do - while: 
+  i = 500;
+
+  do {
+    if (isPrime(i)) {
+      text += i + " ";
+    }
+    i--;
+  } while (i >= 2);
+
+
+
+  //}}-------------------------------------------------------
+  // Don't edit the code below here!
+
+  const para = document.createElement('p');
+  // para.textContent = text;
+  para.innerHTML = text;
+  const body = document.querySelector('body');
+  body.appendChild(para);
+</script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
