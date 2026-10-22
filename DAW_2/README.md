@@ -10,10 +10,7 @@ Courses for group 2CFSD (from the course portal, 'Resum dels cursos').
 | Introducció al núvol públic | `Public-Cloud/` |
 | Itinerari personal per a l'ocupabilitat | `IPE/` |
 | Sostenibilitat aplicada al sistema productiu | `Sustainability/` |
-| DWES — Desenvolupament web en entorn servidor | `DWES/` |
-| Desplegament d'aplicacions web | `Desplegament/` |
-| Projecte intermodular 2º DAW | `Projecte-Intermodular/` |
 
-Tutor's emails, attachments and analysis (with dates): [Tutor_2026-27/](Tutor_2026-27/README.md). Classmate's course material: [Classmate_Eden/](Classmate_Eden/README.md), also copied into each module's `Class_Material/Eden/` and `Classmate_Solutions/Eden/`.
+Tutor's emails, attachments and analysis (with dates): [Tutor_2026-27/](Tutor_2026-27/README.md). Classmate's material: [Classmate_Eden/](Classmate_Eden/README.md), including her DWES, Desplegament and Projecte-Intermodular folders (not on the portal, so not course folders here).
 
 Each course folder has the same skeleton — see its `README.md`.

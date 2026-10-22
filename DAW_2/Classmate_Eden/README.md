@@ -2,21 +2,21 @@
 
 Copies of the second-year course material from a classmate's notes repository (`~/Eden_Apuntes/_fp_daw/2o_curso`). Copied, not moved: the source repo is unchanged.
 
-Each module has the material in two places:
+Each course has the material in two places, under this folder for the three non-portal courses and in the course folder for the rest:
 - `<Module>/Class_Material/Eden/` — slides, topic lists, evaluation notes, contacts, and the copied course book (DWEC).
 - `<Module>/Classmate_Solutions/Eden/` — her own exercises, deliveries, summaries and lab work.
 
 | Module folder | Her source folder |
 |---|---|
 | `DWEC/` | `dwc/` (includes `diapos_libro/`, a ~40 MB copy of javascript.info) |
-| `DWES/` | `dws/` |
-| `Desplegament/` | `daw/` |
+| `DWES/` | `dws/` (not on the portal; kept here) |
+| `Desplegament/` | `daw/` (not on the portal; kept here) |
 | `Digitalization/` | `dig/` |
 | `Web-Interface-Design/` | `diw/` |
 | `Public-Cloud/` | `cloud/` (`usuario_aws/` not copied: login details) |
 | `IPE/` | `ipe2/` (`_acceso_libro.md` not copied: account details) |
 | `Sustainability/` | `sost/` |
-| `Projecte-Intermodular/` | `a_proy_intermod/` |
+| `Projecte-Intermodular/` | `a_proy_intermod/` (not on the portal; kept here) |
 
 Not copied, on purpose:
 - Personal files: work log (`_registro_trabajo`), to-do list (`_tareas_lista`), internship folder with CV and personal email (`practicas_empresa`), AWS and book account notes, the Windows shortcut.
