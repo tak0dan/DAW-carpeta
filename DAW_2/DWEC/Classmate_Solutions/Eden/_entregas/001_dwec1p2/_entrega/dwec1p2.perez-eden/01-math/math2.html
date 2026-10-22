@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>math3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let result = 7 + 13 / 9 + 7;
+    let result2 = 100 / 2 * 6;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    result *= result2;
+    
+    let finalResult = result.toFixed(2);     // el método toFixed() lo obtuve de w3schools (explicado en el comentario de más abajo).
+
+    let finalNumber;
+
+    if (typeof finalResult === 'string') {
+        finalNumber = Number(finalResult);
+    }
+
+
+    // Para resolver este ejercicio tuve que buscar en w3schools una herramienta que me permitiera reducir el número de decimales de un número a la cantidad deseada, porque en los capítulos de javascript.info que hemos leído hasta ahora no encontré nada que me permitirera hacer eso (los repasé por si se me había olvidado, pero no encontré nada). 
+    // Finalmente en w3schools encontré el método toFixed(). La única pega es que te devuelve el resultado en forma de String. Esta es la referencia que he usado: https://www.w3schools.com/JSREF/jsref_tofixed.asp
+
+
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    const para1 = document.createElement('p');
+    para1.textContent = `Your finalResult is ${ finalResult }`;
+    const para2 = document.createElement('p');
+    const finalNumberCheck = isNaN(finalNumber) === false ?
+      'finalNumber is a number type. Well done!'
+      : `Ooops! finalNumber is not a number.`;
+    para2.textContent = finalNumberCheck;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

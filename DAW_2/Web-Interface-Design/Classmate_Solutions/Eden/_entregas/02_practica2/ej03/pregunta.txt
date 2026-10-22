@@ -1,0 +1,17 @@
+
+
+Explicar en dos frases por qué width no se aprecia con inline, pero sí con inline-block:
+
+    - Con display: inline, la propiedad width no tiene efecto porque estos elementos ocupan solo el espacio necesario para su contenido.
+
+    - Con display: inline-block, el elemento sigue en la misma línea, pero permite establecer un ancho y un alto.
+
+
+
+
+
+
+
+
+
+

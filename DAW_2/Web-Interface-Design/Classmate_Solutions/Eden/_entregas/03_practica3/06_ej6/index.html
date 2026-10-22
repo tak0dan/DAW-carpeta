@@ -1,0 +1,104 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio de cambio de apariencia a tablas con CSS</title>
+    
+    <style type="text/css">
+        caption {
+            color: blue;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+
+        table {
+            width: max-content;
+            margin: 20px 20px;
+            border-collapse: collapse;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        th {
+            background-color: #4682B4;
+            color: white;
+            font-weight: bold;
+        }
+
+        td, th {
+            padding: 10px;
+            border: 1px solid black;
+        }
+
+        tbody tr:nth-child(odd) {
+            background-color: #90EE90;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #3CB371;
+        }
+
+        tbody tr:hover {
+            background-color: yellow;
+        }
+
+        tfoot td {         
+            background-color: #4682B4;
+            color: white;
+            font-weight: normal;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <table>
+        <caption>Distancias planetarias</caption>
+        <thead>
+            <tr>
+                <th>Planeta</th>
+                <th>Distancia desde la Tierra</th>
+                <th>Web</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="3">Astronomía Gobierno de España</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr>
+                <td>Venus</td>
+                <td>108 Millones de Kilómetros</td>
+                <td>
+                    <a href="https://es.wikipedia.org/wiki/Venus_(planeta)">Web Venus</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Saturno</td>
+                <td>1.281 Millones de Kilómetros</td>
+                <td>
+                    <a href="https://es.wikipedia.org/wiki/Saturno_(planeta)">Web Saturno</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Urano</td>
+                <td>2.720 Millones de Kilómetros</td>
+                <td>
+                    <a href="https://es.wikipedia.org/wiki/Urano_(planeta)">Web Urano</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Neptuno</td>
+                <td>4.504 Millones de Kilómetros</td>
+                <td>
+                    <a href="https://es.wikipedia.org/wiki/Neptuno_(planeta)">Web Neptuno</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

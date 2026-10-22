@@ -1,0 +1,42 @@
+
+
+p { color: #333333; }
+
+.destacado { color: #2f75b5; }
+
+.panel p { color: #548235; }
+
+#urgente { color: #c00000; }
+
+.panel .destacado { color: #7030a0; }
+
+p { color: #b45f06; }
+
+.panel h2.destacado { color:#2f43b5} /* consigue que el h2 sea azul. */
+
+.panel p.destacado { color:#00c016} /* que el primer <p> sea verde. */ 
+
+
+
+/* 
+
+Explicación de por qué las reglas añadidas ganan: 
+
+    .panel h2.destacado gana porque tiene 2 clases y 1 elemento.
+
+    .panel p.destacado gana porque tiene 2 clases y 1 elemento.
+
+    #urgente gana porque un ID tiene mayor especificidad que las clases y los elementos.
+
+*/
+
+
+
+
+
+
+
+
+
+
+

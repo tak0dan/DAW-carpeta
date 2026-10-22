@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  
+    <p>
+        1<u>2</u>Da<b>n</b>i
+    </p>
+  <script>
+    const p = document.querySelector('p');
+    p.textContent += ' 3';
+
+
+//        const p = document.querySelector('p');
+//        p.innerHTML = '1' + p.innerHTML;
+//        p.textContent = 'Da<b>n</b>i';
+
+function isPrime(num) {
+    if (num <= 1) return false;
+    for (let i = 2; i <= Math.sqrt(num); i++) {
+        if (num % i === 0) return false;
+    }
+    return true;
+}
+
+let i;
+i = 100;
+
+for (;;) {
+    if (i < 1) {
+        break;
+    }
+
+    if (isPrime(i)) {
+        console.log(i);
+    }
+
+    i--;
+}
+
+let result = "";
+
+for (let i = 2; i <= 100; i++) {
+    if (isPrime(i)) {
+        if (result !== "") {
+            result += ":";
+        }
+        result += i;
+    }
+}
+
+console.log(result);
+
+
+let result1 = "";
+let i1 = 2;
+
+do {
+    if (isPrime(i1)) {
+        result1 += i1 + ":";
+    }
+
+    i1++;
+} while (i1 <= 100);
+
+if (result1.endsWith(":")) {
+    result1 = result1.slice(0, -1);
+}
+
+console.log(result);
+
+let i2 = 100;
+let result2 = `The prime numbers between 1 and ${i2} are (in reverse order): `;
+
+for (;;) {
+    if (i2 < 2) {
+        break;
+    }
+
+    if (isPrime(i2)) {
+        if (i2 === 2) {
+            result2 += "and " + i2;
+        } else {
+            result2 += i2 + ", ";
+        }
+    }
+
+    i2--;
+}
+
+result2 = result2.replace(/, and /, " and ");
+
+console.log(result2);
+
+</script>
+</body>
+</html>
+

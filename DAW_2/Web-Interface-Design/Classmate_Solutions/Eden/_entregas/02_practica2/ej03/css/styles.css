@@ -1,0 +1,59 @@
+
+
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+
+.menu li {
+    display: inline;
+    margin-right: 6px;
+
+}
+
+
+
+
+.menu a {
+    display: inline-block;
+    padding: 10px 14px;          /*   El padding junto con el color de fondo me permite darle al enlace la apariencia de un botón  */
+    background-color: #17365d;
+    color: white;
+    text-decoration: none;      /*  Esto elimina el subrayado de los enlaces. */
+}
+
+
+
+
+
+.aviso {
+    display: inline;
+    width: 180px;           /* al ser inline y no inline-block la width especificada no le afecta */
+    background-color: #fff2cc;
+    padding: 4px;
+}
+
+
+
+/*
+
+Explicar en dos frases por qué width no se aprecia con inline, pero sí con inline-block:
+
+    - Con display: inline, la propiedad width no tiene efecto porque estos elementos ocupan solo el espacio necesario para su contenido.
+
+    - Con display: inline-block, el elemento sigue en la misma línea, pero permite establecer un ancho y un alto.
+
+    
+*/
+
+
+
+
+
+
+
+
+

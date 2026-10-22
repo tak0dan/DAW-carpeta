@@ -1,0 +1,29 @@
+
+"Si me entregais vuestro examen y yo lo abro con Firefox y no va eso os penalizará en la nota por mucho que vosotros lo hubierais abierto con Chrome y fuera todo perfecto". 
+
+"Aunque Pascual insista en instalar Chrome en vuestros PCs de clase vosotros vais a trabajar con Firefox en mi asignatura". 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

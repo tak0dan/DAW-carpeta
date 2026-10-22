@@ -1,0 +1,128 @@
+
+
+
+1) Anota el selector que gana para el h2, el primer p y #urgente.
+
+
+# Elemento h2 ---------------------------------------------------------------------------------------
+
+1. "Ir uno por uno con todos los selectores":
+
+    1. p {...} (el primero) -> no le afecta porque porque <p> es un nivel inferior (por debajo).
+
+    2. .destacado {...} *sí* le afecta porque "<h2 class="destacado">"
+
+    3. . panel p {...} no le afecta porque <p> es un nivel inferior (por debajo).
+
+    4. #urgente {...} no le afecta porque es un <p> ubicado por debajo (nivel inferior).
+
+    5. .panel .destacado {...} *sí* le afecta porque:
+                                                <section id="panel" class="panel">
+                                                    <h2 class="destacado">Avisos</h2>
+    
+    6. p {...} (el segundo) -> no le afecta. 
+
+
+2. Por ello los candidatos son: 
+
+    1. .destacado {...} 
+
+    2. .panel .destacado {...}  -> tiene un mayor grado de especificidad y por lo tanto es el que prevalece. 
+
+
+3. RESPUESTA: ------------------------------------------------------------------------------
+
+    ".panel .destacado {...}" tiene un mayor grado de especificidad y por lo tanto es el que prevalece. 
+
+
+
+
+
+
+
+
+
+# Elemento: primer "p" ------------------------------------------------------------------
+
+
+1. "Ir uno por uno con todos los selectores":
+
+    1. p {...} (el primero) -> *sí* le afecta porque afecta a todos los <p>
+
+    2. .destacado {...} -> *sí* le afecta porque el class "destacado" le incluye.
+                                                <section id="panel" class="panel">
+                                                    <h2 class="destacado">Avisos</h2>
+                                                    <p class="destacado">Entrega el viernes.</p> 
+
+    3. .panel p {...} -> *sí* le afecta porque es un <p> incluído dentro del id "panel".
+
+    4. #urgente {...} -> *no* le afecta porque el id "urgente" incluye al segundo <p> pero no al primero. 
+
+    5. .panel .destacado {...} -> *sí* le afecta porque el class "destacado" le incluye.
+
+        - *Las clases tienen mayor especificidad que los selectores de elemento y por ello este es el selector que prevalece (mayor especificidad).*
+
+    6. p {...} (el segundo) -> *sí* le afecta porque afecta a todos los <p>.
+
+
+2. RESPUESTA: -----------------------------------------------------------------------------------------
+
+    1. .panel .destacado {...} 
+
+        - Las clases tienen mayor especificidad que los selectores de elemento y por ello este es el selector que prevalece (mayor especificidad).
+
+
+
+
+
+
+
+
+
+
+# Elemento: "#urgente" -------------------------------------------------------------------------------
+
+1. "Ir uno por uno con todos los selectores":
+
+    1. p {...} (el primero) -> *sí* le afecta porque afecta a todos los <p>
+
+    2. .destacado {...} -> *sí* le afecta porque el segundo <p> es id "urgente" y class "destacado".
+
+    3. .panel p {...} -> *sí* le afecta porque está dentro de panel y es un <p>.
+
+    4. #urgente {...} -> *sí* le afecta porque es literalmente él: id "urgente". 
+
+        - Un selector por *ID* tiene mayor especificidad que cualquier selector formado únicamente por clases o elementos. Por tanto, un solo ID puede prevalecer sobre varias clases o varios selectores de elemento. 
+
+            - Y por lo tanto este es el selector que prevalece. 
+
+    5. .panel .destacado {...} -> *sí* le afecta porque el segundo <p> es id "urgente" y class "destacado" y está dentro del class "panel". 
+
+    6. p {...} (el segundo) -> *sí* le afecta porque afecta a todos los <p>
+
+
+
+2. RESPUESTA: -----------------------------------------------------------------------------------------
+
+    1. #urgente {...} 
+
+        - Un selector por *ID* tiene mayor especificidad que cualquier selector formado únicamente por clases o elementos. Por tanto, un solo ID puede prevalecer sobre varias clases o varios selectores de elemento. 
+            
+            - Y por lo tanto este es el selector que prevalece. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

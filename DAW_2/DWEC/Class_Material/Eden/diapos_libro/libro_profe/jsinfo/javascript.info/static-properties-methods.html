@@ -1,0 +1,492 @@
+<!DOCTYPE html><html lang="en" data-theme-enabled="1">
+<!-- Mirrored from javascript.info/static-properties-methods by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 10:52:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">Static properties and methods</title><link href="pack/styles.3790a4dbad19cf846dfa.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="static-properties-methods.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="Static properties and methods"><meta property="og:image" content="https://javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Static properties and methods"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="class-inheritance.html"><link rel="next" href="private-protected-properties-methods.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.d8942f19e25c8b74ccca.js"></script><script src="pack/head.92a610c69869cf90dce2.js" defer></script><meta property="og:title" content="Static properties and methods"><meta property="og:type" content="article"><script src="pack/tutorial.4b5752675459006b4b6e.js" defer></script><script src="pack/footer.d85b74e999a90f5a009c.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Sorry, Internet Explorer is not supported, please use a newer browser.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "en";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>EN</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/static-properties-methods"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="static-properties-methods.html"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://es.javascript.info/static-properties-methods"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/static-properties-methods"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/static-properties-methods"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/static-properties-methods"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/static-properties-methods"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/static-properties-methods"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/static-properties-methods"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/static-properties-methods"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/static-properties-methods"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/static-properties-methods"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/static-properties-methods"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/static-properties-methods"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>We want to make this open-source project available for people all around the world.</p> <p><a href="translate.html">Help to translate</a> the content of this tutorial to your language!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Buy</span>EPUB/PDF</a></div><div class="sitetoolbar__login-wrap"><button class="sitetoolbar__login sitetoolbar__login_unready" data-action-login></button></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Search on Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Search</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Search in the tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Search</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Tutorial map</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Share</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/static-properties-methods">عربي</option><option value="https://javascript.info/static-properties-methods" selected>English</option><option value="https://es.javascript.info/static-properties-methods">Español</option><option value="https://fa.javascript.info/static-properties-methods">فارسی</option><option value="https://fr.javascript.info/static-properties-methods">Français</option><option value="https://id.javascript.info/static-properties-methods">Indonesia</option><option value="https://it.javascript.info/static-properties-methods">Italiano</option><option value="https://ja.javascript.info/static-properties-methods">日本語</option><option value="https://ko.javascript.info/static-properties-methods">한국어</option><option value="https://learn.javascript.ru/static-properties-methods">Русский</option><option value="https://tr.javascript.info/static-properties-methods">Türkçe</option><option value="https://uk.javascript.info/static-properties-methods">Українська</option><option value="https://uz.javascript.info/static-properties-methods">Oʻzbek</option><option value="https://zh.javascript.info/static-properties-methods">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="68" max="94" data-tooltip="Lesson 68 of 94"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="js.html"><span>The JavaScript language</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="classes.html"><span>Classes</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://javascript.info/"},{"@type":"ListItem","position":2,"name":"The JavaScript language","item":"https://javascript.info/js"},{"@type":"ListItem","position":3,"name":"Classes","item":"https://javascript.info/classes"}]}</script></ol><div class="updated-at" data-tooltip="Last updated on May 3, 2022"><div class="updated-at__content">May 3, 2022</div></div></div><h1 class="main__header-title">Static properties and methods</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="Static properties and methods"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><p>We can also assign a method to the class as a whole. Such methods are called <em>static</em>.</p>
+<p>In a class declaration, they are prepended by <code>static</code> keyword, like this:</p>
+<div id="ndn6tj4qgs" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:1,&quot;end&quot;:1}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class User {
+  static staticMethod() {
+    alert(this === User);
+  }
+}
+
+User.staticMethod(); // true</code></pre>
+        </div>
+      </div>
+      
+      </div><p>That actually does the same as assigning it as a property directly:</p>
+<div id="weuqznhd0j" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class User { }
+
+User.staticMethod = function() {
+  alert(this === User);
+};
+
+User.staticMethod(); // true</code></pre>
+        </div>
+      </div>
+      
+      </div><p>The value of <code>this</code> in <code>User.staticMethod()</code> call is the class constructor <code>User</code> itself (the “object before dot” rule).</p>
+<p>Usually, static methods are used to implement functions that belong to the class as a whole, but not to any particular object of it.</p>
+<p>For instance, we have <code>Article</code> objects and need a function to compare them.</p>
+<p>A natural solution would be to add <code>Article.compare</code> static method:</p>
+<div id="igb1dz4to6" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:18,&quot;end&quot;:18},{&quot;start&quot;:6,&quot;end&quot;:8}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Article {
+  constructor(title, date) {
+    this.title = title;
+    this.date = date;
+  }
+
+  static compare(articleA, articleB) {
+    return articleA.date - articleB.date;
+  }
+}
+
+// usage
+let articles = [
+  new Article(&quot;HTML&quot;, new Date(2019, 1, 1)),
+  new Article(&quot;CSS&quot;, new Date(2019, 0, 1)),
+  new Article(&quot;JavaScript&quot;, new Date(2019, 11, 1))
+];
+
+articles.sort(Article.compare);
+
+alert( articles[0].title ); // CSS</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Here <code>Article.compare</code> method stands “above” articles, as a means to compare them. It’s not a method of an article, but rather of the whole class.</p>
+<p>Another example would be a so-called “factory” method.</p>
+<p>Let’s say, we need multiple ways to create an article:</p>
+<ol>
+<li>Create by given parameters (<code>title</code>, <code>date</code> etc).</li>
+<li>Create an empty article with today’s date.</li>
+<li>…or else somehow.</li>
+</ol>
+<p>The first way can be implemented by the constructor. And for the second one we can make a static method of the class.</p>
+<p>Such as <code>Article.createTodays()</code> here:</p>
+<div id="h5t7aoeezd" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:6,&quot;end&quot;:9}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Article {
+  constructor(title, date) {
+    this.title = title;
+    this.date = date;
+  }
+
+  static createTodays() {
+    // remember, this = Article
+    return new this(&quot;Today's digest&quot;, new Date());
+  }
+}
+
+let article = Article.createTodays();
+
+alert( article.title ); // Today's digest</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Now every time we need to create a today’s digest, we can call <code>Article.createTodays()</code>. Once again, that’s not a method of an article, but a method of the whole class.</p>
+<p>Static methods are also used in database-related classes to search/save/remove entries from the database, like this:</p>
+<div id="i5lsvyk995" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// assuming Article is a special class for managing articles
+// static method to remove the article by id:
+Article.remove({id: 12345});</code></pre>
+        </div>
+      </div>
+      
+      </div><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Static methods aren’t available for individual objects</span></div>
+            <div class="important__content"><p>Static methods are callable on classes, not on individual objects.</p>
+<p>E.g. such code won’t work:</p>
+<div id="hxvytdys38" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// ...
+article.createTodays(); /// Error: article.createTodays is not a function</code></pre>
+        </div>
+      </div>
+      
+      </div></div></div>
+<h2><a class="main__anchor" name="static-properties" href="#static-properties">Static properties</a></h2><div class="important important_warn">
+            <div class="important__header"><span class="important__type">A recent addition</span></div>
+            <div class="important__content">
+            This is a recent addition to the language.
+            Examples work in the recent Chrome.
+            </div></div>
+<p>Static properties are also possible, they look like regular class properties, but prepended by <code>static</code>:</p>
+<div id="h9d9z4iv5s" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Article {
+  static publisher = &quot;Ilya Kantor&quot;;
+}
+
+alert( Article.publisher ); // Ilya Kantor</code></pre>
+        </div>
+      </div>
+      
+      </div><p>That is the same as a direct assignment to <code>Article</code>:</p>
+<div id="stu0dxwa23" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>Article.publisher = &quot;Ilya Kantor&quot;;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="statics-and-inheritance" href="#statics-and-inheritance">Inheritance of static properties and methods</a></h2><p>Static properties and methods are inherited.</p>
+<p>For instance, <code>Animal.compare</code> and <code>Animal.planet</code> in the code below are inherited and accessible as <code>Rabbit.compare</code> and <code>Rabbit.planet</code>:</p>
+<div id="vsdkmvevnx" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:31,&quot;end&quot;:31},{&quot;start&quot;:13,&quot;end&quot;:15}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Animal {
+  static planet = &quot;Earth&quot;;
+
+  constructor(name, speed) {
+    this.speed = speed;
+    this.name = name;
+  }
+
+  run(speed = 0) {
+    this.speed += speed;
+    alert(`${this.name} runs with speed ${this.speed}.`);
+  }
+
+  static compare(animalA, animalB) {
+    return animalA.speed - animalB.speed;
+  }
+
+}
+
+// Inherit from Animal
+class Rabbit extends Animal {
+  hide() {
+    alert(`${this.name} hides!`);
+  }
+}
+
+let rabbits = [
+  new Rabbit(&quot;White Rabbit&quot;, 10),
+  new Rabbit(&quot;Black Rabbit&quot;, 5)
+];
+
+rabbits.sort(Rabbit.compare);
+
+rabbits[0].run(); // Black Rabbit runs with speed 5.
+
+alert(Rabbit.planet); // Earth</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Now when we call <code>Rabbit.compare</code>, the inherited <code>Animal.compare</code> will be called.</p>
+<p>How does it work? Again, using prototypes. As you might have already guessed, <code>extends</code> gives <code>Rabbit</code> the <code>[[Prototype]]</code> reference to <code>Animal</code>.</p>
+<figure><div class="image" style="width:461px">
+      <div class="image__ratio" style="padding-top:68.54663774403471%"></div>
+      <object type="image/svg+xml" data="article/static-properties-methods/animal-rabbit-static.svg" width="461" height="316" class="image__image" data-use-theme>
+        <img src="article/static-properties-methods/animal-rabbit-static.svg" alt="" width="461" height="316">
+      </object>
+      </div></figure><p>So, <code>Rabbit extends Animal</code> creates two <code>[[Prototype]]</code> references:</p>
+<ol>
+<li><code>Rabbit</code> function prototypally inherits from <code>Animal</code> function.</li>
+<li><code>Rabbit.prototype</code> prototypally inherits from <code>Animal.prototype</code>.</li>
+</ol>
+<p>As a result, inheritance works both for regular and static methods.</p>
+<p>Here, let’s check that by code:</p>
+<div id="a6002n2mqr" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Animal {}
+class Rabbit extends Animal {}
+
+// for statics
+alert(Rabbit.__proto__ === Animal); // true
+
+// for regular methods
+alert(Rabbit.prototype.__proto__ === Animal.prototype); // true</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="summary" href="#summary">Summary</a></h2><p>Static methods are used for the functionality that belongs to the class “as a whole”. It doesn’t relate to a concrete class instance.</p>
+<p>For example, a method for comparison <code>Article.compare(article1, article2)</code> or a factory method <code>Article.createTodays()</code>.</p>
+<p>They are labeled by the word <code>static</code> in class declaration.</p>
+<p>Static properties are used when we’d like to store class-level data, also not bound to an instance.</p>
+<p>The syntax is:</p>
+<div id="wzo7azaamv" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class MyClass {
+  static property = ...;
+
+  static method() {
+    ...
+  }
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Technically, static declaration is the same as assigning to the class itself:</p>
+<div id="r1i09ptvix" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>MyClass.property = ...
+MyClass.method = ...</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Static properties and methods are inherited.</p>
+<p>For <code>class B extends A</code> the prototype of the class <code>B</code> itself points to <code>A</code>: <code>B.[[Prototype]] = A</code>. So if a field is not found in <code>B</code>, the search continues in <code>A</code>.</p>
+</div></article><div class="tasks formatted"><h2 class="tasks__title" id="tasks"><a class="tasks__title-anchor main__anchor main__anchor main__anchor_noicon" href="#tasks">Tasks</a></h2><div class="task tasks__task"><div class="task__header"><div class="task__title-wrap"><h3 class="task__title"><a class="main__anchor" href="#class-extends-object" name="class-extends-object">Class extends Object?</a></h3><a class="task__open-link" href="task/class-extend-object.html" target="_blank"></a></div><div class="task__header-note"><span class="task__importance" title="How important is the task, from 1 to 5">importance: 3</span></div><div class="task__content"><div class="task__formatted"><p>As we know, all objects normally inherit from <code>Object.prototype</code> and get access to “generic” object methods like <code>hasOwnProperty</code> etc.</p>
+<p>For instance:</p>
+<div id="vmv5vbr2qx" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:8,&quot;end&quot;:9}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+let rabbit = new Rabbit(&quot;Rab&quot;);
+
+// hasOwnProperty method is from Object.prototype
+alert( rabbit.hasOwnProperty('name') ); // true</code></pre>
+        </div>
+      </div>
+      
+      </div><p>But if we spell it out explicitly like <code>&quot;class Rabbit extends Object&quot;</code>, then the result would be different from a simple <code>&quot;class Rabbit&quot;</code>?</p>
+<p>What’s the difference?</p>
+<p>Here’s an example of such code (it doesn’t work – why? fix it?):</p>
+<div id="db6apzvzbr" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit extends Object {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+let rabbit = new Rabbit(&quot;Rab&quot;);
+
+alert( rabbit.hasOwnProperty('name') ); // Error</code></pre>
+        </div>
+      </div>
+      
+      </div></div><button class="task__solution" type="button">solution</button><div class="task__answer"><div class="task__answer-content"><div class="formatted"><p>First, let’s see why the latter code doesn’t work.</p>
+<p>The reason becomes obvious if we try to run it. An inheriting class constructor must call <code>super()</code>. Otherwise <code>&quot;this&quot;</code> won’t be “defined”.</p>
+<p>So here’s the fix:</p>
+<div id="5sh0ncwwva" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:2,&quot;end&quot;:2}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit extends Object {
+  constructor(name) {
+    super(); // need to call the parent constructor when inheriting
+    this.name = name;
+  }
+}
+
+let rabbit = new Rabbit(&quot;Rab&quot;);
+
+alert( rabbit.hasOwnProperty('name') ); // true</code></pre>
+        </div>
+      </div>
+      
+      </div><p>But that’s not all yet.</p>
+<p>Even after the fix, there’s still an important difference between <code>&quot;class Rabbit extends Object&quot;</code> and <code>class Rabbit</code>.</p>
+<p>As we know, the “extends” syntax sets up two prototypes:</p>
+<ol>
+<li>Between <code>&quot;prototype&quot;</code> of the constructor functions (for methods).</li>
+<li>Between the constructor functions themselves (for static methods).</li>
+</ol>
+<p>In the case of <code>class Rabbit extends Object</code> it means:</p>
+<div id="sqgpup5u1g" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit extends Object {}
+
+alert( Rabbit.prototype.__proto__ === Object.prototype ); // (1) true
+alert( Rabbit.__proto__ === Object ); // (2) true</code></pre>
+        </div>
+      </div>
+      
+      </div><p>So <code>Rabbit</code> now provides access to the static methods of <code>Object</code> via <code>Rabbit</code>, like this:</p>
+<div id="c7afv2lg39" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:2,&quot;end&quot;:3}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit extends Object {}
+
+// normally we call Object.getOwnPropertyNames
+alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // a,b</code></pre>
+        </div>
+      </div>
+      
+      </div><p>But if we don’t have <code>extends Object</code>, then <code>Rabbit.__proto__</code> is not set to <code>Object</code>.</p>
+<p>Here’s the demo:</p>
+<div id="cjsequp59l" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:6,&quot;end&quot;:7}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="run" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="open in sandbox" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>class Rabbit {}
+
+alert( Rabbit.prototype.__proto__ === Object.prototype ); // (1) true
+alert( Rabbit.__proto__ === Object ); // (2) false (!)
+alert( Rabbit.__proto__ === Function.prototype ); // as any function by default
+
+// error, no such function in Rabbit
+alert ( Rabbit.getOwnPropertyNames({a: 1, b: 2})); // Error</code></pre>
+        </div>
+      </div>
+      
+      </div><p>So <code>Rabbit</code> doesn’t provide access to static methods of <code>Object</code> in that case.</p>
+<p>By the way, <code>Function.prototype</code> also has “generic” function methods, like <code>call</code>, <code>bind</code> etc. They are ultimately available in both cases, because for the built-in <code>Object</code> constructor, <code>Object.__proto__ === Function.prototype</code>.</p>
+<p>Here’s the picture:</p>
+<figure><div class="image" style="width:458px">
+      <div class="image__ratio" style="padding-top:75.10917030567686%"></div>
+      <object type="image/svg+xml" data="task/class-extend-object/rabbit-extends-object.svg" width="458" height="344" class="image__image" data-use-theme>
+        <img src="task/class-extend-object/rabbit-extends-object.svg" alt="" width="458" height="344">
+      </object>
+      </div></figure><p>So, to put it short, there are two differences:</p>
+<table>
+<thead>
+<tr>
+<th>class Rabbit</th>
+<th>class Rabbit extends Object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>–</td>
+<td>needs to call <code>super()</code> in constructor</td>
+</tr>
+<tr>
+<td><code>Rabbit.__proto__ === Function.prototype</code></td>
+<td><code>Rabbit.__proto__ === Object</code></td>
+</tr>
+</tbody>
+</table>
+</div></div><button class="close-button task__answer-close" type="button" title="close"></button></div></div></div></div></div></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="class-inheritance.html" data-tooltip="Class inheritance"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Previous lesson</span></a><a class="page__nav page__nav_next" href="private-protected-properties-methods.html" data-tooltip="Private and protected properties and methods"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Next lesson</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Share</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Tutorial map</span></a></div></div></div><div class="banner-bottom-carbon"><div id="javascriptinfo_iconbar"></div></div><script src="../m.servedby-buysellads.com/monetization.custom.js" id="javascriptinfo_script" async></script><script>document.getElementById("javascriptinfo_script").onload=function(){_bsa.init("custom","CKYDEK3U","placement:javascriptinfo_iconbar",{target:"#javascriptinfo_iconbar",template:'\n        <div class="iconBarFlex">\n          <a href="##statlink##" class="iconBarLink" rel="sponsored noopener" target="_blank" title="##company## — ##tagline##">\n            <div class="iconBarImage" style="background-color: ##backgroundColor##;">\n              <img height="30" width="30" src="##image##" alt="##company## logo">\n            </div>\n            <div class="iconBarText">\n              <div class="iconBarTagline">##companyTagline##</div>\n              <div class="iconBarDescription">##description##</div>\n            </div>\n          </a>\n          <a href="##ad_via_link##" class="iconBarVia" rel="sponsored noopener" target="_blank">ads via BuySellAds</a>\n        </div>\n      '})};</script><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comments</a></h2><div class="comments__read-before"><span class="comments__read-before-link">read this before commenting…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>If you have suggestions what to improve - please <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">submit a GitHub issue</a> or a pull request instead of commenting.</li><li>If you can't understand something in the article – please elaborate.</li><li>To insert few words of code, use the <code>&lt;code&gt;</code> tag, for several lines – wrap them in <code>&lt;pre&gt;</code> tag, for more than 10 lines – use a sandbox (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/javascript.info\/static-properties-methods","identifier":"\/static-properties-methods"}); };</script><script>var disqus_shortname = "javascriptinfo";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Tutorial map"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Chapter</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="classes.html">Classes</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Lesson navigation</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#static-properties">Static properties</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#statics-and-inheritance">Inheritance of static properties and methods</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#summary">Summary</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#tasks">Tasks (1)</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comments</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Share</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fjavascript.info%2Fstatic-properties-methods" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/en.javascript.info/blob/master/1-js/09-classes/03-static-properties-methods" rel="nofollow">Edit on GitHub</a></div><div class="sidebar__section" id="sponsorBar"><div class="sidebar__section-title" id="sponsorBarTitle"></div><div id="sponsorBarContent"></div></div><script>window.initSponsorBar()</script></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">about the project</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contact us</a></li><li class="page-footer__item page-footer__item_terms"><a class="page-footer__link" href="terms.html">terms of usage</a></li><li class="page-footer__item page-footer__item_privacy"><a class="page-footer__link" href="privacy.html">privacy policy</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from javascript.info/static-properties-methods by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 10:52:58 GMT -->
+</html>

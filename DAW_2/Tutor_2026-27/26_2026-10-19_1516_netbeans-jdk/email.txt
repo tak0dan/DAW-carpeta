@@ -1,0 +1,17 @@
+Subject: us passe enllaços per a descarregar Netbeans i JDK (Java Developer Kit, traductor de Java)
+Date: Mon, 19 Oct 2026 15:16:56 +0200
+From: "I.E.S. Juan de Garay - Dpto. Informática"
+
+Les versions que van bé als ordinadors de classe són la 11.3 per a Netbeans
+i la 11 per a JDK:
+
+Netbeans 11.3
+
+https://netbeans.apache.org/front/main/download/archive/
+
+JDK 11.032
+
+https://www.oracle.com/es/java/technologies/javase/jdk11-archive-downloads.html
+
+salut i una abraçada
+jesús mª timoneda

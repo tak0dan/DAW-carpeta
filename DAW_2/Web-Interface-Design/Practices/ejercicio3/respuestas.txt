@@ -1,0 +1,15 @@
+EJERCICIO 3 - Preguntas de Comprobación
+=====================================
+
+Pregunta: Explicar en dos frases por qué width no se aprecia con inline,
+pero sí con inline-block.
+
+Respuesta:
+
+Con display: inline, el elemento no respeta el ancho (width) porque los
+elementos inline solo ocupan el espacio necesario del contenido de texto,
+sin permitir cambiar sus dimensiones.
+
+Con display: inline-block, el elemento se comporta como un bloque dentro
+de una línea, permitiendo establecer ancho y alto mientras mantiene el
+flujo de línea.

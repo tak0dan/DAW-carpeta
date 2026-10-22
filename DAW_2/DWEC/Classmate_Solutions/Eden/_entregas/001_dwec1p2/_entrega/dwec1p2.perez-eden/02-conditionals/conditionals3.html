@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>conditionals3</title>
+</head>
+
+<body>
+</body>
+<script>
+    let machineActive = true;
+    let pwd = "cheese";
+    let machineResult;
+    let pwdResult;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    if (machineActive) {
+        machineResult = "The machine is switched on.";
+
+        pwdResult = pwd === "cheese" ? "Login successful." : "Login unsuccessful.";
+    } else {
+        machineResult = "The machine is switched off.";
+    }
+
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector("body");
+    let para1 = document.createElement("p");
+    let para2 = document.createElement("p");
+    para1.textContent = machineResult;
+    para2.textContent = pwdResult;
+    body.appendChild(para1);
+    body.appendChild(para2);
+</script>
+
+</html>

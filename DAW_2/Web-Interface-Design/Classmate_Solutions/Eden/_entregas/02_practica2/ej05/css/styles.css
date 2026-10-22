@@ -1,0 +1,103 @@
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+body {
+    margin: 0;
+    font-family: Arial;
+    color: #263238;
+    background-color: #f4f7fb;
+}
+
+
+
+
+.cabecera {
+    background-color: #17365d;
+    color: white;
+    padding: 28px;
+}
+
+
+
+.menu {
+    background-color: #d9eaf7;
+    padding: 12px 28px;
+}
+
+
+.menu a {
+    display: inline-block;
+}
+
+
+
+
+
+#contenido {
+    width: 80%;
+    max-width: 900px;
+    margin: 28px auto;
+}
+
+
+
+
+.bloque {
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+
+
+
+.aviso {
+    background-color: #d9eaf7;
+}
+
+
+
+
+
+.aviso.urgente {
+    background-color: #fff3cd;
+    border-left: 4px solid red;
+}
+
+
+
+
+
+.boton {
+    display: inline-block;
+    background-color: #17365d;
+    color: white;
+    padding: 10px 16px;
+    text-decoration: none;
+    border-radius: 4px;       /* para redondear las esquinas */
+}
+
+
+
+
+#contacto {
+    text-align: center;
+    background-color: #17365d;
+    color: white;
+    padding: 18px;
+}
+
+
+
+
+
+
+
+
