@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Manage the DWEC folder: sync the teacher's dwec-shared and control its timer.
+# Run ./dwec help for the list of commands.
+set -euo pipefail
+DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
+SYNC="$DIR/sync-dwec-shared.sh"
+SHARED="$DIR/dwec-shared"
+UNIT="dwec-shared-sync"
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") <command>
+
+  sync [flags]   Pull dwec-shared now (extra flags go to onedrive, e.g. --resync --resync-auth)
+  dry-run        Show what a sync would download, without changing anything
+  status         Timer state, next/last run, result of the last run, local file count
+  next           When the timer runs next
+  logs [-f]      Logs of the timer-driven runs (-f to follow)
+  enable         Turn the 5-hourly timer on
+  disable        Turn the 5-hourly timer off
+  ls             List the synced files
+  help           Show this help
+EOF
+}
+
+cmd="${1:-help}"
+[ $# -gt 0 ] && shift
+case "$cmd" in
+  sync)     exec "$SYNC" "$@" ;;
+  dry-run)  exec "$SYNC" --dry-run "$@" ;;
+  status)
+    echo "Timer:    $(systemctl --user is-enabled "$UNIT.timer" 2>/dev/null || true), $(systemctl --user is-active "$UNIT.timer" 2>/dev/null || true)"
+    echo "Last run: $(systemctl --user show "$UNIT.service" -p Result --value) at $(systemctl --user show "$UNIT.service" -p ExecMainExitTimestamp --value)"
+    systemctl --user list-timers "$UNIT.timer" --no-pager | head -n 2
+    echo "Local:    $(find -L "$SHARED" -type f 2>/dev/null | wc -l) files, $(du -shL "$SHARED" 2>/dev/null | cut -f1) in $SHARED"
+    ;;
+  next)     systemctl --user list-timers "$UNIT.timer" --no-pager | head -n 2 ;;
+  logs)     exec journalctl --user -u "$UNIT.service" "$@" ;;
+  enable)   systemctl --user enable --now "$UNIT.timer" ;;
+  disable)  systemctl --user disable --now "$UNIT.timer" ;;
+  ls)       cd -P "$SHARED" && find . -type f | sort ;;
+  help|-h|--help) usage ;;
+  *)        echo "Unknown command: $cmd" >&2; usage >&2; exit 2 ;;
+esac

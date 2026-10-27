@@ -1,0 +1,331 @@
+Ej1:
+INSTRUCCIONES
+
+Responde a cada afirmacion con un valor del 1 al 5:
+Valor  Significado
+1      Nada identificado
+2      Poco identificado
+3      Algo identificado
+4      Bastante identificado
+5      Totalmente identificado
+
+BLOQUE 1: INTERESES PROFESIONALES (max. 25 puntos)
+
+    Me gusta disenar interfaces visuales atractivas
+    Disfruto organizando datos o logica interna
+    Me interesa como funcionan las aplicaciones por dentro
+    Prefiero ver resultados visuales rapidos
+    Me gusta resolver problemas complejos
+
+Puntuacion: 16 / 25
+
+BLOQUE 2: HABILIDADES TECNICAS (max. 25 puntos)
+
+    Se usar HTML/CSS con soltura
+    Entiendo bien la logica de programacion
+    Me manejo con JavaScript u otro lenguaje
+    Se buscar soluciones en documentacion tecnica
+    Puedo aprender herramientas nuevas sin ayuda
+
+Puntuacion: 17 / 25
+
+BLOQUE 3: COMPETENCIAS PERSONALES (max. 25 puntos)
+
+    Soy constante aunque algo no me salga
+    Me organizo bien el tiempo
+    Me adapto facilmente a cambios
+    Trabajo bien de forma autonoma
+    Me gusta aprender cosas nuevas
+
+Puntuacion: 25 / 25
+
+BLOQUE 4: ORIENTACION PROFESIONAL (max. 25 puntos)
+
+    Me veo trabajando como frontend
+    Me veo trabajando como backend
+    Me gustaria ser fullstack
+    Me interesa el trabajo en remoto
+    Me gustaria seguir formandome tras el ciclo
+
+Puntuacion: 19 / 25
+
+RESULTADO TOTAL
+
+Total: 77 / 100 puntos
+
+INTERPRETACION
+
+Nivel general: Perfil en desarrollo.
+
+Interpretacion personal:
+Mi perfil tecnico es relativamente solido a nivel de actitud, autonomia y capacidad de aprendizaje. No parto de cero: ya tengo interes real por la programacion, experiencia en entornos open source y una base tecnica que me permite seguir creciendo. Aun asi, considero que mi perfil todavia esta en fase de consolidacion para el mercado laboral, sobre todo en lo relacionado con experiencia profesional demostrable, portfolio enfocado y profundidad en stacks concretos que suelen pedir las empresas.
+
+Orientacion profesional:
+Por mis intereses, mi capacidad tecnica y mi afinidad con sistemas, software de bajo nivel, Linux, NixOS y FOSS, creo que mi perfil encaja mejor con una orientacion fullstack con sesgo tecnico hacia backend, infraestructura y sistemas. Tambien me interesa la parte visual, pero pienso que mi diferencial mas fuerte esta en entender como funcionan las cosas por dentro y en aprender de forma autonoma.
+
+PARTE EVALUABLE OBLIGATORIA
+
+Mi perfil profesional actual:
+Soy estudiante de IT y colaborador en proyectos FOSS relacionados con Linux, entornos de escritorio y arquitectura de sistemas basados en NixOS. Me apasiona estudiar programacion y seguir aprendiendo de forma constante. Mi perfil actual combina curiosidad tecnica, autonomia y experiencia real en comunidades open source, aunque todavia necesito convertir esa base en un perfil mas claro para el mercado laboral y en proyectos mas orientados a puestos junior.
+
+Tres fortalezas:
+1. Capacidad de aprendizaje autonoma y constancia muy altas.
+2. Experiencia tecnica variada: Linux, FOSS, sistemas, varios lenguajes y distintos entornos.
+3. Perfil internacional y adaptable: idiomas, diversidad de herramientas y facilidad para moverte entre tecnologias.
+
+Tres aspectos a mejorar:
+1. Profundizar mas en un stack profesional concreto orientado a empleo junior.
+2. Ganar experiencia demostrable en proyectos cerrados y portfolio orientado a empresa.
+3. Acercarme al mercado laboral con practicas, networking y una mejor comunicacion profesional de mi perfil.
+
+Analisis DAFO
+
+Fortalezas:
+- Alta motivacion por aprender y mejorar.
+- Experiencia colaborando en proyectos open source.
+- Buena autonomia para investigar documentacion y resolver problemas.
+- Interes real por sistemas, desarrollo y tecnologia en general.
+- Capacidad de adaptacion a herramientas y entornos nuevos.
+
+Debilidades:
+- Poca experiencia laboral directa en empresa.
+- Perfil tecnico amplio pero todavia poco especializado para una primera candidatura.
+- Necesidad de reforzar stack web demandado por el mercado (framework, testing, CI/CD).
+- Falta de portfolio centrado en proyectos terminados y bien presentados.
+
+Oportunidades:
+- El mercado sigue demandando perfiles junior con buena base tecnica y capacidad de aprendizaje.
+- Mi experiencia en FOSS puede diferenciarme frente a otros candidatos sin colaboracion real.
+- Puedo usar GitHub, LinkedIn y proyectos personales para mostrar valor aunque no tenga experiencia laboral formal.
+- Un perfil fullstack de entrada me abre mas puertas que uno demasiado cerrado.
+
+Amenazas:
+- Alta competencia en puestos junior.
+- Muchas ofertas piden experiencia o dominio de herramientas concretas desde el primer momento.
+- Si no enfoco mi perfil, puedo transmitir una imagen demasiado dispersa.
+- El uso superficial de IA puede hacer que otros candidatos parezcan mas preparados de lo que realmente estan.
+
+Acciones concretas para mejorar:
+1. Completar una ruta clara de formacion en TypeScript, framework frontend y testing.
+2. Crear 2 o 3 proyectos web terminados y desplegados con buen README y capturas.
+3. Mejorar GitHub y LinkedIn para presentar un perfil junior claro y profesional.
+4. Buscar practicas, colaboraciones o primeras experiencias freelance/controladas para ganar experiencia aplicada.
+5. Aprovechar certificaciones o cursos reconocibles para reforzar mi candidatura inicial.
+
+
+Ej2:
+
+1. Analisis del mercado laboral
+
+Oferta 1
+Fuente:
+https://www.linkedin.com/jobs/search-results/?currentJobId=4417672330&eBP=NOT_ELIGIBLE_FOR_CHARGING&refId=KLq582zh6pP3E6KJWRTV7A%3D%3D&trackingId=TdkjDXUudf%2FNhrYhhI%2Bp%2FA%3D%3D&keywords=junior%20frontend%20developer&origin=SEMANTIC_SEARCH_LANDING_PAGE
+
+Puesto:
+Desarrollador/a Frontend Junior con Angular.
+
+Tecnologias que piden:
+- Angular 17+
+- TypeScript
+- HTML5
+- CSS3 / SCSS
+- PrimeNG o equivalentes
+- Ionic y Capacitor
+- Cypress
+- GitLab CI/CD
+
+Experiencia requerida:
+- Buena base en Angular moderno.
+- Experiencia demostrable en testing.
+- Capacidad de escribir codigo limpio, modular y mantenible.
+- Portfolio propio que demuestre dedicacion y practica real.
+
+Competencias personales:
+- Orientacion a la mejora continua.
+- Ganas de aprender.
+- Cuidado por la calidad del codigo.
+
+Oferta 2
+Fuente:
+https://www.whatjobs.com/empresas-ofertas-empleo/Full-stack-junior/España
+
+Puesto:
+Desarrollador/a Fullstack Junior.
+
+Tecnologias que piden:
+- Vue.js
+- Node.js
+
+Experiencia requerida:
+- Conocimientos basicos y capacidad para trabajar en un puesto junior.
+- Participacion en desarrollo y mantenimiento de aplicaciones.
+
+Competencias personales:
+- Trabajo en equipo.
+- Ganas de aprender.
+- Capacidad de colaborar con perfiles mas experimentados.
+- Disposicion para adaptarse a tareas variadas.
+
+Conclusion del analisis del mercado:
+Las ofertas junior piden una combinacion de base tecnica real, portfolio visible, capacidad de aprender rapido y herramientas modernas de desarrollo. No basta con saber programar: tambien valoran testing, calidad de codigo, trabajo en equipo y demostrar proyectos reales en GitHub. Esto encaja bien con un perfil junior fullstack que quiera entrar al mercado y seguir especializandose con el tiempo.
+
+2. Definicion de perfil profesional
+
+Tipo de desarrollador/a que quiero ser:
+Fullstack.
+
+Justificacion:
+Elegir fullstack es la opcion mas coherente con mi perfil actual y con el mercado. Por un lado, me interesa construir productos completos y entender tanto la parte visual como la logica interna. Por otro, mi inclinacion tecnica hacia sistemas, backend e infraestructura hace que no quiera limitarme solo al frontend. Ademas, para entrar al mercado laboral, el perfil fullstack me abre mas puertas como junior. A largo plazo, esta base tambien me ayudara a moverme hacia desarrollo de sistemas, software de bajo nivel, videojuegos o incluso ciberseguridad.
+
+3. Objetivo profesional
+
+Mi objetivo profesional es conseguir una primera oportunidad de entrada al mercado como desarrollador fullstack junior, idealmente en un puesto donde pueda aprender trabajando con frontend, backend y buenas practicas de desarrollo. En un horizonte de aproximadamente 7 anos quiero haber consolidado experiencia suficiente para orientar mi carrera hacia areas mas tecnicas y especializadas, como desarrollo de sistemas, software de bajo nivel, videojuegos o ciberseguridad.
+
+4. Requisitos del mercado vs mi perfil
+
+| Requisitos del mercado | Lo que tengo | Lo que me falta |
+| --- | --- | --- |
+| Base solida en HTML, CSS, JavaScript/TypeScript | Logica de programacion, autonomia y manejo de distintos lenguajes | Profundizar en TypeScript y dominar un framework concreto |
+| Uso de frameworks modernos (Angular, Vue, React) | Capacidad de aprender herramientas nuevas rapidamente | Mas practica demostrable con frameworks usados por empresas |
+| Testing y calidad de codigo | Mentalidad tecnica y experiencia colaborativa en FOSS | Cypress, Jest/Vitest y mas experiencia en CI/CD |
+| Portfolio visible y proyectos terminados | GitHub y experiencia real en contribuciones | 2 o 3 proyectos propios bien presentados y desplegados |
+| Trabajo en equipo y adaptacion | Open source, idiomas, autonomia y adaptabilidad | Experiencia profesional en contexto de empresa |
+| Perfil claro para recruiters | Intereses tecnicos fuertes y discurso honesto | Mejorar LinkedIn, CV y mensaje profesional |
+
+5. Primer plan de mejora
+
+3 cosas que necesito aprender:
+1. TypeScript y un framework moderno a nivel profesional.
+2. Testing automatizado y flujo de calidad (Cypress, Vitest/Jest, CI/CD).
+3. Desarrollo backend aplicado: APIs, bases de datos, autenticacion y despliegue.
+
+3 acciones concretas:
+1. Hacer un proyecto fullstack completo y desplegado con frontend, API y base de datos.
+2. Completar un curso estructurado de TypeScript + Angular o React y publicar los ejercicios finales en GitHub.
+3. Preparar un portfolio profesional con README claros, capturas, demos y una descripcion de mi papel en cada proyecto.
+
+
+Ej3:
+
+Objetivo
+
+Disenar un entorno personal de aprendizaje (PLE) y construir una identidad digital coherente con el objetivo profesional definido.
+
+1. Diseno del entorno personal de aprendizaje (PLE)
+
+Esquema visual en texto:
+
+[OBJETIVO PROFESIONAL]
+Entrar al mercado como desarrollador fullstack junior y evolucionar hacia sistemas / bajo nivel / videojuegos / ciberseguridad.
+
+|
++-- FORMACION
+|   +-- Cursos:
+|   |   - freeCodeCamp
+|   |   - Full Stack Open
+|   |   - Cursos de TypeScript / Angular / Node.js
+|   +-- Documentacion:
+|       - MDN Web Docs
+|       - Angular Docs
+|       - Node.js Docs
+|       - Git Documentation
+|
++-- PRACTICA
+|   +-- GitHub personal
+|   +-- Proyectos propios fullstack
+|   +-- Contribuciones FOSS
+|   +-- Retos tecnicos y ejercicios pequenos
+|
++-- INFORMACION
+|   +-- Blogs:
+|   |   - MDN Blog
+|   |   - CSS-Tricks
+|   |   - dev.to
+|   +-- Foros / comunidades:
+|   |   - Stack Overflow
+|   |   - GitHub Discussions
+|   |   - Reddit / comunidades tecnicas
+|   +-- Canales:
+|       - YouTube tecnico
+|       - newsletters de desarrollo
+|
++-- ORGANIZACION
+    +-- GitHub Projects
+    +-- Notion o Trello
+    +-- Calendario semanal
+    +-- IA como apoyo (Copilot / ChatGPT)
+
+2. Justificacion del PLE
+
+He elegido estas herramientas porque cubren las cuatro necesidades clave de mi crecimiento profesional: aprender, practicar, mantenerme informado y organizarme. freeCodeCamp y Full Stack Open me dan una ruta estructurada; la documentacion oficial me ayuda a aprender bien las bases; GitHub y los proyectos personales me permiten demostrar lo que se; los blogs y comunidades me mantienen actualizado; y herramientas como Notion, Trello o GitHub Projects me ayudan a convertir objetivos grandes en tareas concretas.
+
+Este PLE me ayuda a conseguir mi objetivo profesional porque combina teoria y practica. No solo estudio contenidos: tambien los convierto en proyectos visibles, habitos semanales y evidencias publicas de progreso. Eso es exactamente lo que necesita un perfil junior para acercarse al mercado con mas credibilidad.
+
+3. Identidad digital profesional
+
+Analisis de mi situacion actual:
+Mi perfil tiene una base tecnica interesante y diferente por mi relacion con Linux, FOSS y sistemas, pero necesito comunicar mejor esa experiencia para que recruiters y empresas entiendan rapidamente que tambien puedo aportar valor en puestos junior de desarrollo. Mi reto no es solo aprender mas, sino presentar mejor lo que ya se hacer.
+
+LinkedIn
+Enlace:
+Pendiente de anadir mi URL final de LinkedIn.
+
+Que anadiria o modificaria:
+- Titular profesional claro: "Desarrollador Fullstack Junior | Open Source | Linux | Aprendizaje continuo".
+- Extracto breve centrado en mi perfil tecnico, mis contribuciones FOSS y mi objetivo de entrada al mercado.
+- Seccion de proyectos destacados con enlaces a GitHub.
+- Apartado de aptitudes con tecnologias concretas: JavaScript, TypeScript, Git, Linux, HTML, CSS, APIs, testing.
+- Foto profesional y banner simple relacionado con tecnologia.
+
+Texto base para mi extracto:
+"Soy estudiante de IT y colaborador en proyectos open source relacionados con Linux y sistemas. Me interesa el desarrollo fullstack y disfruto aprendiendo como funcionan las aplicaciones por dentro. Busco mi primera oportunidad profesional para seguir creciendo en desarrollo web y consolidar una base tecnica solida con proyeccion futura hacia sistemas, software de bajo nivel y otras areas tecnicas especializadas."
+
+GitHub
+Enlace:
+https://github.com/tak0dan
+
+Que anadiria o modificaria:
+- Crear o mejorar el README del perfil.
+- Fijar repositorios que representen mejor mis capacidades.
+- Mejorar README de proyectos con descripcion, stack, capturas y como ejecutarlos.
+- Mostrar mejor mis contribuciones FOSS.
+- Mantener actividad constante y visible.
+
+Imagen profesional que quiero transmitir:
+Quiero transmitir la imagen de un perfil junior serio, autodidacta, tecnico y con iniciativa; alguien que no solo estudia, sino que ya participa en proyectos reales, aprende por su cuenta y tiene una base fuerte para crecer en desarrollo fullstack y areas tecnicas mas exigentes.
+
+4. Coherencia perfil - aprendizaje
+
+Mi PLE y mi identidad digital estan alineados con mi objetivo profesional porque ambos refuerzan la misma idea: construir un perfil junior fullstack con base tecnica fuerte, aprendizaje constante y evidencia publica del progreso. El PLE me ayuda a mejorar de forma organizada; mi identidad digital convierte ese esfuerzo en una presentacion profesional visible para recruiters y empresas.
+
+Tambien estan alineados con las demandas del mercado porque las ofertas valoran proyectos reales, aprendizaje continuo, dominio de herramientas actuales, capacidad de adaptacion y una presencia profesional clara. Si estudio con metodo, practico en GitHub y comunico bien mi perfil, aumentan mucho mis posibilidades de entrar al sector.
+
+5. Plan de accion
+
+Plan realista a corto plazo (1-3 meses):
+
+3 acciones concretas:
+1. Subir un proyecto fullstack terminado con demo, README y capturas.
+2. Completar una ruta de aprendizaje de TypeScript + framework frontend + testing.
+3. Mejorar LinkedIn y GitHub para que reflejen un perfil profesional claro y coherente.
+
+1 habito de aprendizaje semanal:
+Reservar al menos 5 horas semanales divididas entre estudio tecnico, practica en proyecto propio y actualizacion del portfolio/GitHub.
+
+6. Inteligencia Artificial y empleabilidad en el sector DAW
+
+Objetivo
+
+Reflexionar sobre el impacto de la inteligencia artificial en el aprendizaje y la empleabilidad en el sector del desarrollo web.
+
+a) Uso de la IA a favor
+
+La IA puede ayudarme mucho como desarrollador en formacion si la uso como herramienta de apoyo y no como sustituto del aprendizaje. Me sirve para entender conceptos complicados, pedir explicaciones alternativas, generar ejemplos de codigo, revisar errores, comparar soluciones, resumir documentacion y practicar entrevistas tecnicas. Tambien puede acelerar tareas repetitivas y ayudarme a estructurar proyectos, documentacion o planes de estudio.
+
+Bien utilizada, la IA me permite aprender mas rapido y con mas autonomia. En mi caso, puede ser especialmente util para avanzar en frameworks nuevos, testing, buenas practicas y preparacion para procesos de seleccion.
+
+b) Riesgos o uso en contra
+
+El principal riesgo es depender demasiado de la IA y dejar de pensar por uno mismo. Si copio codigo sin entenderlo, puedo aparentar conocimientos que en realidad no tengo. Tambien existe el riesgo de introducir errores, soluciones inseguras o malas practicas porque la IA no siempre acierta. Otro problema es que muchos candidatos pueden usarla para inflar perfiles o hacer proyectos superficiales, lo que hace mas importante demostrar comprension real.
+
+Por eso, la IA debe usarse como asistente, no como sustituto. Lo importante es entender, verificar, adaptar y aprender de lo que propone. En empleabilidad, destacara quien sepa apoyarse en IA sin perder criterio tecnico ni autonomia real.

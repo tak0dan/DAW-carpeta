@@ -1,0 +1,87 @@
+* {
+    padding: 0%;
+    margin: 0%;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+    background-image: url ("images/home.jpeg");
+    background-size: 90%;
+    margin: 20px;
+}
+
+
+#menu {
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+#menu li {
+    display: inline;
+    list-style: none;
+    border-bottom: black 5px;
+}
+
+
+table {
+    border-spacing: 0;
+    width: 100% background-color: white;
+    /* la siguiente linea es correcta!*/
+    min-height: 85vh;
+}
+
+td,
+td {
+    width: 85%;
+    padding: 20px;
+}
+
+td {
+    vertical-align: top;
+}
+
+td>li {}
+
+.header {
+    padding: 20px;
+    border-bottom: 1px solid black;
+    text-align: left;
+}
+
+
+
+a {
+    color: green;
+    font-size: 1.5em;
+}
+
+img {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 10px;
+    width: 20%;
+}
+
+#footer {
+    background-color: white;
+    border-top: 1px solid black;
+    text-align: right;
+    padding-right: 20px;
+    margin-left: 90% auto;
+}
+
+#container {
+    text-align: left;
+    margin-right: 90% auto;
+    display: block;
+}
+
+#datos {
+    text-align: left;
+    margin-right: 90% auto;
+}
+
+ul {
+    text-align: left;
+    margin-right: 90% auto;
+}

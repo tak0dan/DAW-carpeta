@@ -1,0 +1,10 @@
+1. La version de archivo YAML (para el docker compose mas moderno)
+2. La lista de contenedores, sus configuraciones y su relacion
+3. Es el mongoDB, se usa para el manejo de base de datos
+4. Usa la imagen oficial de mongoDB de version 6.0
+5. Guarda los datos de mongoDB en un volumen persistente.
+6. Pierdes usuarios, base de datos y colleciones.
+7. El orden y dependencia a la hora de ejecucion
+8. Son variables de entorno, evita hardcoding
+9. Abre el puerto 3000 para el contenedor y lo usas para redireccion
+10. Arranca el app con el Node

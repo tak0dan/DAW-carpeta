@@ -1,0 +1,288 @@
+PROGRAMACIÓN CURSO 2026-27
+C.F.G.S.: Desarrollo de Aplicaciones Web
+Módulo: Despliegue de Aplicaciones Web
+
+IES JUAN DE GARAY - VALENCIA
+
+Profesor: Jesús Mª Timoneda i Timoneda
+
+ÍNDICE
+Introducción................................................................... 3
+2. Contenidos................................................................... 5
+3. Resultados de aprendizaje................................................... 5
+4. Temporalización............................................................. 6
+5. Metodología................................................................. 6
+6. Criterios de evaluación..................................................... 7
+7. Actividades extraescolares.................................................. 7
+8. Temas transversales......................................................... 7
+9. Materiales y recursos didácticos.......................................... 9
+10. Medidas de atención a la diversidad..................................... 10
+
+Ciclo de Grado Superior Desarrollo de Aplicaciones Web
+Despliegue de Aplicaciones Web                              -3-
+
+INTRODUCCIÓN
+El módulo Despliegue de Aplicaciones Web, que se imparte en el segundo curso del Ciclo
+Superior de Desarrollo de Aplicaciones Web, tiene como objetivo que los alumnos alcancen las
+siguientes capacidades terminales:
+    a) Implantar arquitecturas web analizando y aplicando criterios de funcionalidad.
+    b) Gestionar servidores de aplicaciones adaptando su configuración en cada caso para
+        permitir el despliegue de aplicaciones web.
+    c) Implantar aplicaciones web en servidores de aplicaciones, evaluando y aplicando
+        criterios de configuración para su funcionamiento seguro.
+    d) Elaborar y mantener la documentación de los procesos de desarrollo, utilizando
+        herramientas de generación de documentación y control de versiones.
+    e) Desplegar y distribuir aplicaciones web en diferentes ámbitos de implantación,
+        verificando su comportamiento y realizando modificaciones.
+    f) Gestionar y/o realizar el mantenimiento de los recursos de su área en función de las
+        cargas de trabajo y del plan de mantenimiento.
+    g) Administrar servidores de transferencia de archivos, evaluando y aplicando criterios de
+        configuración que garanticen la disponibilidad del servicio.
+
+2. CONTENIDOS
+Las unidades de trabajo a impartir son:
+
+UT1: Implantación de arquitecturas web
+UT2: Administración de servidores web
+UT3: Administración de servidores de aplicaciones
+UT4: Instalación y administración de servidores de transferencia de archivos
+UT5: Servicios de red implicados en el despliegue de una aplicación web
+UT6: Documentación y sistemas de control de versiones
+UT7: CMS
+UT8: Clouding (nube)
+
+A continuación se detalla el desglose de los contenidos que constituirán cada una de las
+unidades de trabajo.
+
+UT 1: Implantación de arquitecturas web
+
+- Arquitecturas web. Modelos.
+- Servidores web y de aplicaciones. Instalación y configuración básica.
+- Estructura y recursos que componen una aplicación web. Descriptor de despliegue.
+
+UT 2: Administración de servidores web
+
+- Configuración avanzada del servidor web.
+- Módulos: instalación, configuración y uso.
+- Hosts virtuales. Creación, configuración y utilización.
+- Autenticación y control de acceso.
+- El protocolo HTTPS.
+- Certificados. Servidores de certificados.
+- Despliegue de aplicaciones sobre servidores web.
+
+UT 3: Administración de servidores de aplicaciones
+
+- Arquitectura y configuración básica del servidor de aplicaciones.
+- Administrar aplicaciones web.
+- Autenticación de usuarios. Dominios de seguridad para la autenticación.
+- Administración de sesiones. Sesiones persistentes.
+- Archivos de registro de acceso y filtro de solicitudes.
+- Configuración del servidor de aplicaciones para cooperar con servidores web.
+- Despliegue de aplicaciones en el servidor de aplicaciones.
+- Seguridad en el servidor de aplicaciones. Configuración del servidor con soporte SSL/T.
+
+UT 4: Instalación y administración de servidores de transferencia de archivos
+
+- Configuración del servicio de transferencia de archivos. Permisos y cuotas.
+- Tipos de usuarios y accesos al servicio.
+- Modos de conexión del cliente.
+- Protocolo seguro de transferencia de archivos.
+- Utilización de herramientas gráficas.
+- Utilización del servicio de transferencia de archivos desde el navegador.
+- Utilización del servicio de transferencia de archivos en el proceso de despliegue de la
+  aplicación web.
+
+UT 5: Servicios de red implicados en el despliegue de una aplicación web
+
+- Resolvedores de nombres. Proceso de resolución de un nombre de dominio.
+- Parámetros de configuración y registros del servidor de nombres afectados en el despliegue.
+- Servicio de directorios: características y funcionalidad.
+- Archivos básicos de configuración. Interpretación y uso.
+- Autenticación de usuarios en el servicio de directorios.
+- Adaptación de la configuración del servidor de directorios para el despliegue de la
+  aplicación.
+
+UT 6: Documentación y sistemas de control de versiones
+
+- Herramientas externas para la generación de documentación. Instalación, configuración y
+  uso.
+- Creación y utilización de plantillas.
+- Instalación, configuración y uso de sistemas de control de versiones.
+- Operaciones avanzadas.
+- Seguridad de los sistemas de control de versiones.
+- Historia de un repositorio.
+
+UT 7: CMS
+
+- WordPress.
+- MediaWiki.
+- Moodle.
+- Joomla.
+- Prestashop.
+- Drupal.
+
+UT 8: Clouding (nube)
+
+Uso de sistemas de clouding comerciales para el despliegue de aplicaciones web.
+
+3. RESULTADOS DE APRENDIZAJE
+
+● RA1. Implanta arquitecturas web analizando y aplicando criterios de funcionalidad.
+● RA2. Gestiona servidores web, evaluando y aplicando criterios de configuración para el
+   acceso seguro a los servicios.
+● RA3. Implanta aplicaciones web en servidores de aplicaciones, evaluando y aplicando
+   criterios de configuración para el funcionamiento seguro.
+● RA4. Administra servidores de transferencia de archivos, evaluando y aplicando criterios
+   de configuración que garanticen la disponibilidad del servicio.
+● RA5. Verifica la ejecución de aplicaciones web comprobando los parámetros de
+   configuración de servicios de red.
+● RA6. Elabora la documentación de la aplicación web evaluando y seleccionando
+   herramientas de generación de documentación y control de versiones.
+
+4. TEMPORALIZACIÓN
+La distribución temporal de las diferentes unidades es:
+
+    1ª Evaluación:
+
+      UT1: Implantación de arquitecturas web
+      UT2: Administración de servidores web
+      UT3: Administración de servidores de aplicaciones
+      UT4: Instalación y administración de servidores de transferencia de archivos
+      UT5: Servicios de red implicados en el despliegue de una aplicación web
+      UT6: Documentación y sistemas de control de versiones
+      UT7: CMS
+
+    2ª Evaluación:
+
+      UT8: Clouding (nube)
+
+5. METODOLOGÍA
+La metodología a seguir consistirá en presentar un conjunto de conceptos de la materia objeto
+de aprendizaje en la pizarra o mediante el proyector. Posteriormente se plantearán problemas
+o actividades relacionadas, con el objetivo de ayudar al alumno a asimilar mejor los
+contenidos. Se utilizará como material complementario: selección de ejercicios o teoría que
+complementen las explicaciones y bibliografía recomendada en aquellos puntos que el profesor
+considere convenientes, en formato papel o electrónico.
+
+Dado el carácter eminentemente procedimental de la asignatura, se plantearán y resolverán en
+clase diversos ejercicios y prácticas asociados a cada una de las unidades. Mientras los alumnos
+realizan los ejercicios, el profesor atenderá las dudas que puedan surgir y explicará conceptos
+suplementarios que puedan ser de ayuda. En cada una de las unidades temáticas se propondrán
+actividades adicionales a aquellos alumnos que lo requieran.
+
+Consideraciones en caso de suspensión de la actividad docente presencial o división del grupo
+
+En caso de suspensión de la actividad docente presencial, los alumnos y alumnas realizarán las
+actividades de enseñanza-aprendizaje de la lección/asignatura de forma telemática.
+
+Para ello se utilizarán las siguientes herramientas proporcionadas por la Conselleria de
+Educación para poder llevar a cabo el proceso de aprendizaje a distancia y el seguimiento del
+alumnado:
+
+• Plataforma Aules: nos permite crear aulas virtuales para complementar las clases presenciales
+  y llevar un seguimiento del proceso de aprendizaje a distancia, así como cumplir con la
+  normativa de protección de datos, ya que la información reside en todo momento en servidores
+  propios de la Generalitat.
+
+• Plataforma WebEx: es la herramienta oficial para realizar videoconferencias de la Conselleria
+  de Educación. Se propone esta herramienta para impartir docencia en directo. Se accederá
+  mediante un enlace URL permanente y único para cada docente.
+
+• Correo electrónico: se utilizará preferentemente el correo electrónico para la comunicación
+  con el alumnado.
+
+En caso de no suspender la actividad docente presencial, pero sí tener que dividir el grupo en
+dos para garantizar las medidas de higiene y seguridad, se realizará una parte del trabajo a
+distancia utilizando las herramientas mencionadas anteriormente.
+
+En ambos casos se priorizarán los contenidos fundamentales de la lección, con el fin de alcanzar
+los objetivos mínimos de la misma.
+
+6. CRITERIOS DE EVALUACIÓN
+El alumno superará la asignatura cuando obtenga una calificación de apto tanto en las pruebas
+teóricas como prácticas que se realizarán cada trimestre y que servirán para evaluar los
+conocimientos adquiridos durante ese período lectivo. Los ejercicios teóricos y prácticos deben
+ser superados y entregados en las fechas dispuestas por el profesor. Se considera
+"compensable" en 4 entre prácticas y teoría.
+
+Será necesario haber entregado y aprobado el proyecto de módulo de la asignatura.
+
+7. ACTIVIDADES EXTRAESCOLARES
+A lo largo del curso se informará a los alumnos con la antelación suficiente de las actividades
+extraescolares que puedan ofertarse y que sean de interés académico para el alumnado.
+
+8. TEMAS TRANSVERSALES
+Los reales decretos que han establecido los currículos de las diferentes etapas educativas
+definen una serie de enseñanzas que deben estar presentes en las diferentes áreas. Para el
+Ministerio de Educación y Ciencia, hablar de enseñanzas transversales no es introducir
+contenidos nuevos que no estén ya reflejados en el currículo de las áreas, sino organizar algunos
+de esos contenidos alrededor de un eje educativo determinado. La razón de la presencia de los
+temas transversales en el currículo tiene una justificación importante tanto para el desarrollo
+personal e integral de los alumnos como para un proyecto de sociedad más libre y respetuosa
+con las personas y con el entorno de la sociedad humana.
+
+La presencia de las actitudes y valores ha sido estructurada en los siguientes temas
+transversales:
+  • Educación para la igualdad de oportunidades de ambos sexos.
+  • Educación para la paz.
+  • Educación ambiental.
+
+La presencia de los temas transversales en el desarrollo curricular es responsabilidad de toda la
+comunidad educativa, especialmente del equipo docente, por lo que deben estar presentes en el
+proyecto educativo de centro, en el proyecto curricular de etapa y en las programaciones
+didácticas.
+
+En el caso que nos ocupa, al tratarse de un módulo de formación profesional, la transversalidad
+de sus contenidos afecta de manera diferente a la de los alumnos y alumnas que cursan
+enseñanzas comunes. Al tratarse de formación profesional, resulta muy difícil incorporar al
+currículo temas transversales como educación para la salud, la paz, el consumo, etc. Pensamos
+que es en el desarrollo en el aula donde hay que hablar de valores y comportamientos, así como
+de su aprendizaje; este tipo de elementos forma parte de lo que se conoce como currículo
+oculto.
+
+El papel que juega el profesor o profesora en el campo de los valores es determinante, tanto en
+lo que respecta a su actitud personal como en la organización y dirección de las actuaciones de
+los alumnos y alumnas dentro del centro educativo. Aunque en los decretos que establecen el
+currículo de los ciclos formativos no se han incorporado los temas transversales, desde el ciclo
+formativo que nos ocupa y, más concretamente, desde el módulo que se está programando, el
+objetivo es el desarrollo de la personalidad integral, utilizando un método de globalización que
+pone en práctica las capacidades y actitudes que queremos para nuestro alumnado: relación con
+el medio como marco, recurso y objetivo; participación activa; cooperación; aceptación de
+responsabilidades; análisis crítico; compromiso y acción; resolución de problemas.
+
+9. MATERIALES Y RECURSOS DIDÁCTICOS
+MATERIALES
+   • Bibliografía de referencia técnica.
+   • Apuntes elaborados por el profesor.
+   • Documentación técnica obtenida en medios de comunicación.
+RECURSOS
+   • Medio de transmisión de información y evaluación.
+     o Exposiciones teórico-prácticas.
+     o Proyección de temas.
+     o Supuestos prácticos.
+     o Ejercicios prácticos.
+     o Exposición de trabajos.
+   • Medios físicos.
+     o Pizarra.
+     o Ordenadores.
+     o Proyector.
+     o Otros dispositivos y periféricos.
+   • Otros medios técnicos.
+     o Red de área local.
+     o Internet.
+
+10. MEDIDAS DE ATENCIÓN A LA DIVERSIDAD
+A los alumnos que, por su capacidad o por su experiencia, tengan un nivel claramente superior
+al resto de la clase se les propondrán actividades específicas que permitan desarrollar su
+intelecto de la forma más adecuada, recomendándoles lecturas de temas específicos tomadas de
+internet, de revistas o de libros sobre la materia, y dándoles ejercicios más complejos que al
+resto de la clase.
+
+A los que tengan un nivel claramente inferior a la media de la clase se les orientará hacia la
+realización de las actividades más básicas que cumplan los objetivos marcados para el módulo.
+Se les proporcionará información de apoyo adecuada a su nivel y se les orientará para que
+instalen y puedan utilizar el mismo material didáctico que se les da en el centro.
+
+A los alumnos que padezcan algún tipo de minusvalía que les impida el adecuado desarrollo de
+los conceptos vistos en clase, se les proporcionará todo tipo de medidas destinadas a que el
+alumno alcance los objetivos mínimos del módulo.

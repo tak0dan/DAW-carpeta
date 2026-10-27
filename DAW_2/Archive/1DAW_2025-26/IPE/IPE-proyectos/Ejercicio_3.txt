@@ -1,0 +1,123 @@
+
+Objetivo
+
+Disenar un entorno personal de aprendizaje (PLE) y construir una identidad digital coherente con el objetivo profesional definido.
+
+1. Diseno del entorno personal de aprendizaje (PLE)
+
+Esquema visual en texto:
+
+[OBJETIVO PROFESIONAL]
+Entrar al mercado como desarrollador fullstack junior y evolucionar hacia sistemas / bajo nivel / videojuegos / ciberseguridad.
+
+|
++-- FORMACION
+|   +-- Cursos:
+|   |   - freeCodeCamp
+|   |   - Full Stack Open
+|   |   - Cursos de TypeScript / Angular / Node.js
+|   +-- Documentacion:
+|       - MDN Web Docs
+|       - Angular Docs
+|       - Node.js Docs
+|       - Git Documentation
+|
++-- PRACTICA
+|   +-- GitHub personal
+|   +-- Proyectos propios fullstack
+|   +-- Contribuciones FOSS
+|   +-- Retos tecnicos y ejercicios pequenos
+|
++-- INFORMACION
+|   +-- Blogs:
+|   |   - MDN Blog
+|   |   - CSS-Tricks
+|   |   - dev.to
+|   +-- Foros / comunidades:
+|   |   - Stack Overflow
+|   |   - GitHub Discussions
+|   |   - Reddit / comunidades tecnicas
+|   +-- Canales:
+|       - YouTube tecnico
+|       - newsletters de desarrollo
+|
++-- ORGANIZACION
+    +-- GitHub Projects
+    +-- Notion o Trello
+    +-- Calendario semanal
+    +-- IA como apoyo (Copilot / ChatGPT)
+
+2. Justificacion del PLE
+
+He elegido estas herramientas porque cubren las cuatro necesidades clave de mi crecimiento profesional: aprender, practicar, mantenerme informado y organizarme. freeCodeCamp y Full Stack Open me dan una ruta estructurada; la documentacion oficial me ayuda a aprender bien las bases; GitHub y los proyectos personales me permiten demostrar lo que se; los blogs y comunidades me mantienen actualizado; y herramientas como Notion, Trello o GitHub Projects me ayudan a convertir objetivos grandes en tareas concretas.
+
+Este PLE me ayuda a conseguir mi objetivo profesional porque combina teoria y practica. No solo estudio contenidos: tambien los convierto en proyectos visibles, habitos semanales y evidencias publicas de progreso. Eso es exactamente lo que necesita un perfil junior para acercarse al mercado con mas credibilidad.
+
+3. Identidad digital profesional
+
+Analisis de mi situacion actual:
+Mi perfil tiene una base tecnica interesante y diferente por mi relacion con Linux, FOSS y sistemas, pero necesito comunicar mejor esa experiencia para que recruiters y empresas entiendan rapidamente que tambien puedo aportar valor en puestos junior de desarrollo. Mi reto no es solo aprender mas, sino presentar mejor lo que ya se hacer.
+
+LinkedIn
+Enlace:
+Pendiente de anadir mi URL final de LinkedIn.
+
+Que anadiria o modificaria:
+- Titular profesional claro: "Desarrollador Fullstack Junior | Open Source | Linux | Aprendizaje continuo".
+- Extracto breve centrado en mi perfil tecnico, mis contribuciones FOSS y mi objetivo de entrada al mercado.
+- Seccion de proyectos destacados con enlaces a GitHub.
+- Apartado de aptitudes con tecnologias concretas: JavaScript, TypeScript, Git, Linux, HTML, CSS, APIs, testing.
+- Foto profesional y banner simple relacionado con tecnologia.
+
+Texto base para mi extracto:
+"Soy estudiante de IT y colaborador en proyectos open source relacionados con Linux y sistemas. Me interesa el desarrollo fullstack y disfruto aprendiendo como funcionan las aplicaciones por dentro. Busco mi primera oportunidad profesional para seguir creciendo en desarrollo web y consolidar una base tecnica solida con proyeccion futura hacia sistemas, software de bajo nivel y otras areas tecnicas especializadas."
+
+GitHub
+Enlace:
+https://github.com/tak0dan
+
+Que anadiria o modificaria:
+- Crear o mejorar el README del perfil.
+- Fijar repositorios que representen mejor mis capacidades.
+- Mejorar README de proyectos con descripcion, stack, capturas y como ejecutarlos.
+- Mostrar mejor mis contribuciones FOSS.
+- Mantener actividad constante y visible.
+
+Imagen profesional que quiero transmitir:
+Quiero transmitir la imagen de un perfil junior serio, autodidacta, tecnico y con iniciativa; alguien que no solo estudia, sino que ya participa en proyectos reales, aprende por su cuenta y tiene una base fuerte para crecer en desarrollo fullstack y areas tecnicas mas exigentes.
+
+4. Coherencia perfil - aprendizaje
+
+Mi PLE y mi identidad digital estan alineados con mi objetivo profesional porque ambos refuerzan la misma idea: construir un perfil junior fullstack con base tecnica fuerte, aprendizaje constante y evidencia publica del progreso. El PLE me ayuda a mejorar de forma organizada; mi identidad digital convierte ese esfuerzo en una presentacion profesional visible para recruiters y empresas.
+
+Tambien estan alineados con las demandas del mercado porque las ofertas valoran proyectos reales, aprendizaje continuo, dominio de herramientas actuales, capacidad de adaptacion y una presencia profesional clara. Si estudio con metodo, practico en GitHub y comunico bien mi perfil, aumentan mucho mis posibilidades de entrar al sector.
+
+5. Plan de accion
+
+Plan realista a corto plazo (1-3 meses):
+
+3 acciones concretas:
+1. Subir un proyecto fullstack terminado con demo, README y capturas.
+2. Completar una ruta de aprendizaje de TypeScript + framework frontend + testing.
+3. Mejorar LinkedIn y GitHub para que reflejen un perfil profesional claro y coherente.
+
+1 habito de aprendizaje semanal:
+Reservar al menos 5 horas semanales divididas entre estudio tecnico, practica en proyecto propio y actualizacion del portfolio/GitHub.
+
+6. Inteligencia Artificial y empleabilidad en el sector DAW
+
+Objetivo
+
+Reflexionar sobre el impacto de la inteligencia artificial en el aprendizaje y la empleabilidad en el sector del desarrollo web.
+
+a) Uso de la IA a favor
+
+La IA puede ayudarme mucho como desarrollador en formacion si la uso como herramienta de apoyo y no como sustituto del aprendizaje. Me sirve para entender conceptos complicados, pedir explicaciones alternativas, generar ejemplos de codigo, revisar errores, comparar soluciones, resumir documentacion y practicar entrevistas tecnicas. Tambien puede acelerar tareas repetitivas y ayudarme a estructurar proyectos, documentacion o planes de estudio.
+
+Bien utilizada, la IA me permite aprender mas rapido y con mas autonomia. En mi caso, puede ser especialmente util para avanzar en frameworks nuevos, testing, buenas practicas y preparacion para procesos de seleccion.
+
+b) Riesgos o uso en contra
+
+El principal riesgo es depender demasiado de la IA y dejar de pensar por uno mismo. Si copio codigo sin entenderlo, puedo aparentar conocimientos que en realidad no tengo. Tambien existe el riesgo de introducir errores, soluciones inseguras o malas practicas porque la IA no siempre acierta. Otro problema es que muchos candidatos pueden usarla para inflar perfiles o hacer proyectos superficiales, lo que hace mas importante demostrar comprension real.
+
+Por eso, la IA debe usarse como asistente, no como sustituto. Lo importante es entender, verificar, adaptar y aprender de lo que propone. En empleabilidad, destacara quien sepa apoyarse en IA sin perder criterio tecnico ni autonomia real.

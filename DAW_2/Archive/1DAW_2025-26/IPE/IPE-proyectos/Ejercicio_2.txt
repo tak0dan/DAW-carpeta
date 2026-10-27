@@ -1,0 +1,88 @@
+1. Analisis del mercado laboral
+
+Oferta 1
+Fuente:
+https://www.linkedin.com/jobs/search-results/?currentJobId=4417672330&eBP=NOT_ELIGIBLE_FOR_CHARGING&refId=KLq582zh6pP3E6KJWRTV7A%3D%3D&trackingId=TdkjDXUudf%2FNhrYhhI%2Bp%2FA%3D%3D&keywords=junior%20frontend%20developer&origin=SEMANTIC_SEARCH_LANDING_PAGE
+
+Puesto:
+Desarrollador/a Frontend Junior con Angular.
+
+Tecnologias que piden:
+- Angular 17+
+- TypeScript
+- HTML5
+- CSS3 / SCSS
+- PrimeNG o equivalentes
+- Ionic y Capacitor
+- Cypress
+- GitLab CI/CD
+
+Experiencia requerida:
+- Buena base en Angular moderno.
+- Experiencia demostrable en testing.
+- Capacidad de escribir codigo limpio, modular y mantenible.
+- Portfolio propio que demuestre dedicacion y practica real.
+
+Competencias personales:
+- Orientacion a la mejora continua.
+- Ganas de aprender.
+- Cuidado por la calidad del codigo.
+
+Oferta 2
+Fuente:
+https://www.whatjobs.com/empresas-ofertas-empleo/Full-stack-junior/España
+
+Puesto:
+Desarrollador/a Fullstack Junior.
+
+Tecnologias que piden:
+- Vue.js
+- Node.js
+
+Experiencia requerida:
+- Conocimientos basicos y capacidad para trabajar en un puesto junior.
+- Participacion en desarrollo y mantenimiento de aplicaciones.
+
+Competencias personales:
+- Trabajo en equipo.
+- Ganas de aprender.
+- Capacidad de colaborar con perfiles mas experimentados.
+- Disposicion para adaptarse a tareas variadas.
+
+Conclusion del analisis del mercado:
+Las ofertas junior piden una combinacion de base tecnica real, portfolio visible, capacidad de aprender rapido y herramientas modernas de desarrollo. No basta con saber programar: tambien valoran testing, calidad de codigo, trabajo en equipo y demostrar proyectos reales en GitHub. Esto encaja bien con un perfil junior fullstack que quiera entrar al mercado y seguir especializandose con el tiempo.
+
+2. Definicion de perfil profesional
+
+Tipo de desarrollador/a que quiero ser:
+Fullstack.
+
+Justificacion:
+Elegir fullstack es la opcion mas coherente con mi perfil actual y con el mercado. Por un lado, me interesa construir productos completos y entender tanto la parte visual como la logica interna. Por otro, mi inclinacion tecnica hacia sistemas, backend e infraestructura hace que no quiera limitarme solo al frontend. Ademas, para entrar al mercado laboral, el perfil fullstack me abre mas puertas como junior. A largo plazo, esta base tambien me ayudara a moverme hacia desarrollo de sistemas, software de bajo nivel, videojuegos o incluso ciberseguridad.
+
+3. Objetivo profesional
+
+Mi objetivo profesional es conseguir una primera oportunidad de entrada al mercado como desarrollador fullstack junior, idealmente en un puesto donde pueda aprender trabajando con frontend, backend y buenas practicas de desarrollo. En un horizonte de aproximadamente 7 anos quiero haber consolidado experiencia suficiente para orientar mi carrera hacia areas mas tecnicas y especializadas, como desarrollo de sistemas, software de bajo nivel, videojuegos o ciberseguridad.
+
+4. Requisitos del mercado vs mi perfil
+
+| Requisitos del mercado | Lo que tengo | Lo que me falta |
+| --- | --- | --- |
+| Base solida en HTML, CSS, JavaScript/TypeScript | Logica de programacion, autonomia y manejo de distintos lenguajes | Profundizar en TypeScript y dominar un framework concreto |
+| Uso de frameworks modernos (Angular, Vue, React) | Capacidad de aprender herramientas nuevas rapidamente | Mas practica demostrable con frameworks usados por empresas |
+| Testing y calidad de codigo | Mentalidad tecnica y experiencia colaborativa en FOSS | Cypress, Jest/Vitest y mas experiencia en CI/CD |
+| Portfolio visible y proyectos terminados | GitHub y experiencia real en contribuciones | 2 o 3 proyectos propios bien presentados y desplegados |
+| Trabajo en equipo y adaptacion | Open source, idiomas, autonomia y adaptabilidad | Experiencia profesional en contexto de empresa |
+| Perfil claro para recruiters | Intereses tecnicos fuertes y discurso honesto | Mejorar LinkedIn, CV y mensaje profesional |
+
+5. Primer plan de mejora
+
+3 cosas que necesito aprender:
+1. TypeScript y un framework moderno a nivel profesional.
+2. Testing automatizado y flujo de calidad (Cypress, Vitest/Jest, CI/CD).
+3. Desarrollo backend aplicado: APIs, bases de datos, autenticacion y despliegue.
+
+3 acciones concretas:
+1. Hacer un proyecto fullstack completo y desplegado con frontend, API y base de datos.
+2. Completar un curso estructurado de TypeScript + Angular o React y publicar los ejercicios finales en GitHub.
+3. Preparar un portfolio profesional con README claros, capturas, demos y una descripcion de mi papel en cada proyecto.

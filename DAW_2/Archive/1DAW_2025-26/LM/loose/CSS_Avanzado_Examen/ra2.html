@@ -1,0 +1,1673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RA2 · CSS/HTML5 · Ordinaria Extraordinaria</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.ej-demo { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:16px; margin:12px 0; }
+.ej-demo h5 { font-size:13px; margin-bottom:8px; color:var(--accent); }
+.ej-demo .demo-output { background:var(--bg); border:1px solid var(--cborder); border-radius:6px; padding:12px; margin:8px 0; min-height:40px; font-size:13px; }
+.ej-demo .demo-output.bg-white { background:#fff; color:#222; }
+.demo-box { display:inline-block; background:var(--accent); color:#fff; padding:8px 16px; border-radius:4px; margin:4px; }
+.demo-box.rel { background:var(--green); position:relative; top:10px; left:10px; }
+.demo-box.abs { background:var(--red); position:absolute; top:0; right:0; }
+.demo-box.fix { background:var(--yellow); color:#222; position:sticky; top:0; }
+.demo-btn { background:var(--accent); color:#fff; border:none; padding:6px 14px; border-radius:4px; cursor:pointer; font-size:12px; }
+.demo-btn:hover { filter:brightness(1.2); }
+.demo-btn.green { background:var(--green); color:#000; }
+.demo-btn.red { background:var(--red); }
+.demo-btn.yellow { background:var(--yellow); color:#000; }
+.float-container { border:1px solid var(--border); border-radius:6px; padding:8px; margin:8px 0; overflow:hidden; }
+.float-box { width:80px; height:60px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; border-radius:4px; margin:4px; }
+.float-l { float:left; background:var(--accent); }
+.float-r { float:right; background:var(--red); }
+.pos-demo { position:relative; height:120px; border:1px solid var(--border); border-radius:6px; margin:8px 0; overflow:hidden; }
+.pos-abs { position:absolute; padding:8px 12px; border-radius:4px; font-size:11px; color:#fff; }
+.z-layer { width:100px; height:80px; display:flex; align-items:center; justify-content:center; font-size:11px; color:#fff; border-radius:4px; position:absolute; }
+.form-demo input { font-size:12px; }
+.form-demo input:valid { border:2px solid var(--green); }
+.form-demo input:invalid { border:2px solid var(--red); }
+.form-demo .obligatorio:after { content:' *'; color:var(--red); }
+/* ===== Índice interactivo mejorado ===== */
+.toc { position: relative; }
+.toc-header {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  user-select: none; padding: 6px 0;
+}
+.toc-header:hover { opacity: 0.8; }
+.toc-badge {
+  font-size: 11px; background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 99px; font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.toc-arrow {
+  margin-left: auto; font-size: 14px; transition: transform 0.25s;
+  color: var(--text3);
+}
+.toc-body {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px; margin: 10px 0 18px; transition: max-height 0.35s ease, opacity 0.25s;
+  max-height: 2000px; opacity: 1; overflow: hidden;
+}
+.toc-body.collapsed { max-height: 0; opacity: 0; margin: 0; }
+.toc-group {
+  display: flex; gap: 10px; padding: 10px 12px;
+  background: rgba(91, 143, 249, 0.05); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-radius: 8px; border-left: 3px solid var(--accent);
+  transition: background 0.2s, transform 0.15s;
+}
+.toc-group:hover {
+  background: rgba(91, 143, 249, 0.10); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateX(2px);
+}
+.toc-num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.toc-group:nth-child(2) .toc-num { background: var(--green); }
+.toc-group:nth-child(3) .toc-num { background: var(--yellow); }
+.toc-group:nth-child(4) .toc-num { background: var(--red); }
+.toc-group:nth-child(5) .toc-num { background: var(--purple); }
+.toc-group:nth-child(6) .toc-num { background: var(--green); }
+.toc-group-content { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.toc-main {
+  font-weight: 600; font-size: 13px; color: var(--text); text-decoration: none;
+  padding: 2px 0; transition: color 0.2s; position: relative;
+}
+.toc-main::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--accent); transition: width 0.25s;
+}
+.toc-main:hover { color: var(--accent); }
+.toc-main:hover::after { width: 100%; }
+.toc-main.active { color: var(--accent); }
+.toc-main.active::after { width: 100%; }
+.toc-sub { display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+.toc-sub a {
+  font-size: 11.5px; color: var(--text3); text-decoration: none;
+  padding: 1px 0 1px 12px; position: relative; transition: color 0.2s;
+  line-height: 1.5;
+}
+.toc-sub a::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--text3);
+  transition: background 0.2s;
+}
+.toc-sub a:hover { color: var(--text); }
+.toc-sub a:hover::before { background: var(--accent); }
+
+/* ===== Barra de progreso ===== */
+#progressBar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), #6c5ce7);
+  z-index: 10000; width: 0; transition: width 0.1s linear;
+  box-shadow: 0 0 6px rgba(108,92,231,0.4);
+}
+
+/* ===== Stats row ===== */
+.stats-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px;
+}
+.stat {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text3); background: rgba(91, 143, 249, 0.06); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  padding: 4px 10px; border-radius: 6px; font-weight: 500;
+}
+.stat-num {
+  font-weight: 700; font-size: 13px; color: var(--accent);
+}
+.stat-search-hint {
+  margin-left: auto; background: rgba(255, 209, 102, 0.10); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--yellow) 10%, transparent);
+  color: var(--text3);
+}
+.stat-search-hint kbd {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+@media (max-width: 640px) {
+  .toc-body { grid-template-columns: 1fr; }
+}
+
+/* ===== Botón volver arriba (siempre visible) ===== */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 22px; cursor: pointer; box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, opacity 0.25s; opacity: 0.85; line-height: 1;
+}
+.back-to-top:hover { transform: scale(1.1); opacity: 1; }
+
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <span class="topbar-logo">LM 📘</span>
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="buscar" placeholder='Busca en toda la página: "header", "position", "formulario"…' autocomplete="off">
+    <div id="searchResults"></div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="ra2.html" style="font-weight:700">RA2 · CSS/HTML5</a>
+    <a href="ra1.html">RA1 · JS/DOM/JSON</a>
+    <a href="ra3.html">RA3 · Fetch/APIs</a>
+    <a href="ra456.html">RA4-5-6 · XML</a>
+    <a href="css-extra.html">CSS+</a>
+    <a href="index.html" style="color:var(--text3)">🏠</a>
+  </nav>
+</nav>
+
+<div class="main">
+
+<h1>RA2 — <span>CSS y HTML5</span></h1>
+<p class="sub">📌 UD4 (HTML5 semántico + formularios) + UD5 (posicionamiento CSS)</p>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-num">7</span> Secciones</div>
+  <div class="stat"><span class="stat-num">17</span> Bloques código</div>
+  <div class="stat"><span class="stat-num">8</span> Demos interactivos</div>
+  <div class="stat"><span class="stat-num">6</span> Patrones JS</div>
+  <div class="stat stat-search-hint">🔍 <kbd>Ctrl+K</kbd> buscar</div>
+</div>
+
+<div class="toc" id="mainToc">
+  <div class="toc-header" onclick="toggleToc()">
+    <strong>📑 Índice de contenidos</strong>
+    <span class="toc-badge">7 secciones · 17 code blocks · 8 demos</span>
+    <span class="toc-arrow" id="tocArrow">▾</span>
+  </div>
+  <div class="toc-body" id="tocBody">
+    <div class="toc-group">
+      <span class="toc-num">1</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud41" class="toc-main">UD4.1 — HTML5 Semántico</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud41-etiquetas">Etiquetas: header · nav · main · section · article · aside · footer</a>
+          <a href="#ra2-ud41-etiquetas">figure · figcaption · address</a>
+          <a href="#ra2-ud41-multimedia">Elementos multimedia: video · audio · source · canvas</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">2</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud41p" class="toc-main">UD4.1 Práctica — YouTubers</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud41p">Estructura semántica completa</a>
+          <a href="#ra2-ud41p">Fotos circulares · flex · grid</a>
+          <a href="#ra2-ud41p">Diferencia section vs aside vs article</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">3</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud42" class="toc-main">UD4.2 — Formularios HTML5</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud42-tipos">Tipos: email · tel · url · number · date · color · range · search</a>
+          <a href="#ra2-ud42-validacion">Validación: required · pattern · min/max · step</a>
+          <a href="#ra2-ud42-demo">CSS :valid / :invalid · Demo interactivo</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">4</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud42b" class="toc-main">UD4.2B — Interactividad JS + Formularios</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud42b">Sumar números · Botones · Input events</a>
+          <a href="#ra2-ud42b">Validación JS · Select · Checkbox · Radio · Color</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">5</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud51" class="toc-main">UD5.1 — Posicionamiento CSS</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud51-position">position: static · relative · absolute · fixed · sticky</a>
+          <a href="#ra2-ud51-float">Float · Clear · Overflow</a>
+          <a href="#ra2-ud51-display">Display: block · inline · inline-block · none</a>
+          <a href="#ra2-ud51-zindex">Visibility vs display · Z-index</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">6</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud51p" class="toc-main">UD5.1 — Práctica 7 pasos</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud51p-pasos">Menú fixed · display:none vs visibility:hidden</a>
+          <a href="#ra2-ud51p-pasos">Capa trampa absolute · overflow · clear · @media</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">7</span>
+      <div class="toc-group-content">
+        <a href="#ra2-ud51b" class="toc-main">UD5.1B — Float Extra (8 pasos)</a>
+        <div class="toc-sub">
+          <a href="#ra2-ud51b-pasos">Menú fixed · parallax · cookies</a>
+          <a href="#ra2-ud51b-pasos">Float imágenes · menú lateral · clear · hover · responsive</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="progressBar"></div>
+
+<section class="section" id="ra2">
+  <h2>RA2 — CSS y HTML5: Maquetación y Multimedia <span class="t t-green">UD4 + UD5</span></h2>
+
+  <div class="box green">
+    <span>📁</span>
+    <span>Archivos en <code>RA2/</code>: UD4_1.pdf, UD4_2.pdf, UD_5.1.pdf, UD_5.1_practica.pdf, UD_5.1B_practica.pdf, img_pdf/</span>
+  </div>
+
+  <div class="box blue">
+    <span>📌</span>
+    <span><strong>RA2</strong> — HTML5 semántico (UD4.1), formularios HTML5 (UD4.2), posicionamiento CSS (UD5.1: static, relative, absolute, fixed, float, overflow, z-index), y práctica Float Extra (UD5.1B).</span>
+  </div>
+
+  <!-- ============================================================
+       UD4.1 — HTML5 SEMÁNTICO
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud41">
+  <h3 style="color:var(--accent)">1. UD4.1 — HTML5 Semántico</h3>
+
+  <div class="card">
+    <p>HTML5 introdujo etiquetas <strong>semánticas</strong> que describen el significado del contenido, no solo su apariencia. Esto mejora la accesibilidad, el SEO y la mantenibilidad del código. Las etiquetas semánticas principales son: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;figure&gt;</code>, <code>&lt;figcaption&gt;</code> y <code>&lt;address&gt;</code>.</p>
+  </div>
+
+  <h4 id="ra2-ud41-etiquetas" style="font-size:13px;color:var(--text);margin:14px 0 4px">Etiquetas semánticas HTML5</h4>
+  <table>
+    <tr><th>Etiqueta</th><th>Uso</th><th>Ejemplo</th></tr>
+    <tr><td><code>&lt;header&gt;</code></td><td>Cabecera de la página o de una sección. Puede haber varios.</td><td><code>&lt;header&gt;&lt;h1&gt;Título&lt;/h1&gt;&lt;/header&gt;</code></td></tr>
+    <tr><td><code>&lt;nav&gt;</code></td><td>Menú de navegación principal.</td><td><code>&lt;nav&gt;&lt;a href="#"&gt;Inicio&lt;/a&gt;&lt;/nav&gt;</code></td></tr>
+    <tr><td><code>&lt;main&gt;</code></td><td>Contenido principal de la página (único por página).</td><td><code>&lt;main&gt;&lt;article&gt;...&lt;/article&gt;&lt;/main&gt;</code></td></tr>
+    <tr><td><code>&lt;section&gt;</code></td><td>Agrupa contenido relacionado temáticamente. Con heading.</td><td><code>&lt;section&gt;&lt;h2&gt;Noticias&lt;/h2&gt;...&lt;/section&gt;</code></td></tr>
+    <tr><td><code>&lt;article&gt;</code></td><td>Contenido independiente (post, noticia, comentario). Tiene sentido por sí mismo.</td><td><code>&lt;article&gt;&lt;h2&gt;Artículo&lt;/h2&gt;&lt;p&gt;...&lt;/p&gt;&lt;/article&gt;</code></td></tr>
+    <tr><td><code>&lt;aside&gt;</code></td><td>Contenido tangencial: barra lateral, widgets, publicidad.</td><td><code>&lt;aside&gt;&lt;p&gt;Anuncio&lt;/p&gt;&lt;/aside&gt;</code></td></tr>
+    <tr><td><code>&lt;footer&gt;</code></td><td>Pie de página o de sección. Copyright, enlaces legales.</td><td><code>&lt;footer&gt;&lt;p&gt;© 2025&lt;/p&gt;&lt;/footer&gt;</code></td></tr>
+    <tr><td><code>&lt;figure&gt;</code></td><td>Contenedor para imágenes, diagramas, fotos, etc.</td><td><code>&lt;figure&gt;&lt;img src="foto.jpg"&gt;&lt;/figure&gt;</code></td></tr>
+    <tr><td><code>&lt;figcaption&gt;</code></td><td>Pie o leyenda de la figure.</td><td><code>&lt;figcaption&gt;Foto de la playa&lt;/figcaption&gt;</code></td></tr>
+    <tr><td><code>&lt;address&gt;</code></td><td>Información de contacto del autor.</td><td><code>&lt;address&gt;info@iesjuan.com&lt;/address&gt;</code></td></tr>
+  </table>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Diferencia clave:</strong> <code>&lt;section&gt;</code> tiene significado semántico, <code>&lt;div&gt;</code> no significa nada. Un <code>&lt;div&gt;</code> es un contenedor genérico sin valor semántico. <code>&lt;article&gt;</code> es para contenido que podría reutilizarse fuera del contexto de la página (como un post de un blog).</span>
+  </div>
+
+  <details class="vm">
+    <summary>📖 Estructura completa HTML5 semántico</summary>
+    <div class="vm-c">
+      <p><strong>Estructura típica de una página HTML5:</strong></p>
+      <div class="cd">&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Mi Web Semántica&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Logo / Título&lt;/h1&gt;
+    &lt;nav&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Inicio&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Blog&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="#"&gt;Contacto&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/header&gt;
+
+  &lt;main&gt;
+    &lt;section&gt;
+      &lt;h2&gt;Últimos artículos&lt;/h2&gt;
+      &lt;article&gt;
+        &lt;h3&gt;Título del artículo&lt;/h3&gt;
+        &lt;p&gt;Contenido del artículo...&lt;/p&gt;
+        &lt;footer&gt;Publicado el 10/03/2025&lt;/footer&gt;
+      &lt;/article&gt;
+    &lt;/section&gt;
+
+    &lt;aside&gt;
+      &lt;h3&gt;Publicidad&lt;/h3&gt;
+      &lt;p&gt;Widget de anuncios...&lt;/p&gt;
+    &lt;/aside&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;© 2025 IES Juan de Garay&lt;/p&gt;
+    &lt;address&gt;contacto@iesjuandegaray.es&lt;/address&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+      <p><strong>Notas importantes:</strong></p>
+      <ul>
+        <li>Puede haber <strong>varios</strong> <code>&lt;header&gt;</code> y <code>&lt;footer&gt;</code> en una página (uno por sección).</li>
+        <li><code>&lt;main&gt;</code> debe ser <strong>único</strong> por página.</li>
+        <li><code>&lt;nav&gt;</code> se usa para el menú principal, no para cualquier conjunto de enlaces.</li>
+        <li>La declaración <code>&lt;!DOCTYPE html&gt;</code> es la forma simplificada de HTML5.</li>
+        <li><code>&lt;meta charset="UTF-8"&gt;</code> es obligatorio para evitar problemas con caracteres especiales (ñ, acentos).</li>
+      </ul>
+    </div>
+  </details>
+
+  <h4 id="ra2-ud41-multimedia" style="font-size:13px;color:var(--text);margin:14px 0 4px">Elementos multimedia HTML5</h4>
+  <table>
+    <tr><th>Elemento</th><th>Descripción</th><th>Atributos clave</th></tr>
+    <tr><td><code>&lt;video&gt;</code></td><td>Insertar vídeos con controles nativos</td><td><code>src</code>, <code>controls</code>, <code>poster</code>, <code>autoplay</code>, <code>loop</code>, <code>width</code>, <code>height</code></td></tr>
+    <tr><td><code>&lt;audio&gt;</code></td><td>Insertar audio/música</td><td><code>src</code>, <code>controls</code>, <code>autoplay</code>, <code>loop</code></td></tr>
+    <tr><td><code>&lt;source&gt;</code></td><td>Múltiples formatos para fallback</td><td><code>src</code>, <code>type</code> (video/mp4, video/webm, audio/mpeg)</td></tr>
+    <tr><td><code>&lt;canvas&gt;</code></td><td>Lienzo para dibujar gráficos con JS</td><td><code>id</code>, <code>width</code>, <code>height</code></td></tr>
+    <tr><td><code>&lt;track&gt;</code></td><td>Subtítulos para video</td><td><code>src</code>, <code>kind="subtitles"</code>, <code>srclang="es"</code></td></tr>
+  </table>
+
+  <div class="cb">
+    <div class="ch"><span>HTML5 — Video, Audio y Source con fallback</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">&lt;!-- Video con poster y múltiples formatos --&gt;</span>
+<span class="tc">&lt;video</span> <span class="at">controls</span> <span class="at">width</span>=<span class="st">"400"</span> <span class="at">poster</span>=<span class="st">"preview.jpg"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;source</span> <span class="at">src</span>=<span class="st">"video.mp4"</span> <span class="at">type</span>=<span class="st">"video/mp4"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;source</span> <span class="at">src</span>=<span class="st">"video.webm"</span> <span class="at">type</span>=<span class="st">"video/webm"</span><span class="tc">&gt;</span>
+  Tu navegador no soporta video HTML5.
+<span class="tc">&lt;/video&gt;</span>
+
+<span class="cmt">&lt;!-- Audio con formatos de respaldo --&gt;</span>
+<span class="tc">&lt;audio</span> <span class="at">controls</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;source</span> <span class="at">src</span>=<span class="st">"musica.mp3"</span> <span class="at">type</span>=<span class="st">"audio/mpeg"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;source</span> <span class="at">src</span>=<span class="st">"musica.ogg"</span> <span class="at">type</span>=<span class="st">"audio/ogg"</span><span class="tc">&gt;</span>
+  Tu navegador no soporta audio HTML5.
+<span class="tc">&lt;/audio&gt;</span>
+
+<span class="cmt">&lt;!-- Canvas: se dibuja con JavaScript --&gt;</span>
+<span class="tc">&lt;canvas</span> <span class="at">id</span>=<span class="st">"lienzo"</span> <span class="at">width</span>=<span class="st">"200"</span> <span class="at">height</span>=<span class="st">"100"</span><span class="tc">&gt;&lt;/canvas&gt;</span>
+<span class="tc">&lt;script&gt;</span>
+  <span class="kw">const</span> ctx = <span class="kw">document</span>.getElementById(<span class="st">"lienzo"</span>).getContext(<span class="st">"2d"</span>);
+  ctx.fillStyle = <span class="st">"blue"</span>;
+  ctx.fillRect(<span class="st">10</span>, <span class="st">10</span>, <span class="st">100</span>, <span class="st">50</span>);
+<span class="tc">&lt;/script&gt;</span></pre>
+  </div>
+
+  <div class="box blue">
+    <span>💡</span>
+    <span><strong>Poster en video:</strong> El atributo <code>poster</code> muestra una imagen de previsualización antes de reproducir el video. Es muy útil para que el usuario vea de qué va antes de darle al play.</span>
+  </div>
+  <div class="cb">
+    <div class="ch"><span>HTML5 — Estructura semántica completa de una página</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;!DOCTYPE html&gt;</span>
+<span class="tc">&lt;html</span> <span class="at">lang</span>=<span class="st">"es"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">name</span>=<span class="st">"viewport"</span> <span class="at">content</span>=<span class="st">"width=device-width, initial-scale=1.0"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;title&gt;</span>Página Semántica HTML5<span class="tc">&lt;/title&gt;</span>
+<span class="tc">&lt;/head&gt;</span>
+<span class="tc">&lt;body&gt;</span>
+  <span class="tc">&lt;header&gt;</span>
+    <span class="tc">&lt;h1&gt;</span>Mi Sitio Web<span class="tc">&lt;/h1&gt;</span>
+    <span class="tc">&lt;nav&gt;</span>
+      <span class="tc">&lt;ul&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Inicio<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Blog<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Contacto<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="tc">&lt;/ul&gt;</span>
+    <span class="tc">&lt;/nav&gt;</span>
+  <span class="tc">&lt;/header&gt;</span>
+  <span class="tc">&lt;main&gt;</span>
+    <span class="tc">&lt;section&gt;</span>
+      <span class="tc">&lt;h2&gt;</span>Últimos Artículos<span class="tc">&lt;/h2&gt;</span>
+      <span class="tc">&lt;article&gt;</span>
+        <span class="tc">&lt;h3&gt;</span>Título del Artículo<span class="tc">&lt;/h3&gt;</span>
+        <span class="tc">&lt;p&gt;</span>Contenido del artículo...<span class="tc">&lt;/p&gt;</span>
+        <span class="tc">&lt;figure&gt;</span>
+          <span class="tc">&lt;img</span> <span class="at">src</span>=<span class="st">"imagen.jpg"</span> <span class="at">alt</span>=<span class="st">"Descripción"</span><span class="tc">&gt;</span>
+          <span class="tc">&lt;figcaption&gt;</span>Pie de foto explicativo<span class="tc">&lt;/figcaption&gt;</span>
+        <span class="tc">&lt;/figure&gt;</span>
+        <span class="tc">&lt;footer&gt;</span>Publicado el 15/03/2025<span class="tc">&lt;/footer&gt;</span>
+      <span class="tc">&lt;/article&gt;</span>
+    <span class="tc">&lt;/section&gt;</span>
+    <span class="tc">&lt;aside&gt;</span>
+      <span class="tc">&lt;h3&gt;</span>Widget Lateral<span class="tc">&lt;/h3&gt;</span>
+      <span class="tc">&lt;p&gt;</span>Contenido tangencial, publicidad...<span class="tc">&lt;/p&gt;</span>
+    <span class="tc">&lt;/aside&gt;</span>
+  <span class="tc">&lt;/main&gt;</span>
+  <span class="tc">&lt;footer&gt;</span>
+    <span class="tc">&lt;p&gt;</span>© 2025 IES Juan de Garay<span class="tc">&lt;/p&gt;</span>
+    <span class="tc">&lt;address&gt;</span>contacto@iesjuandegaray.es<span class="tc">&lt;/address&gt;</span>
+  <span class="tc">&lt;/footer&gt;</span>
+<span class="tc">&lt;/body&gt;</span>
+<span class="tc">&lt;/html&gt;</span></pre>
+  </div>
+
+  <div class="box green">
+    <span>📌</span>
+    <span><strong>Regla de oro semántica:</strong> Usa <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;nav&gt;</code> para estructura. <code>&lt;section&gt;</code> agrupa contenido relacionado (con su propio heading). <code>&lt;article&gt;</code> para contenido independiente que podría reutilizarse (post, noticia). <code>&lt;aside&gt;</code> para contenido tangencial. <code>&lt;figure&gt;</code> + <code>&lt;figcaption&gt;</code> para multimedia con pie. <code>&lt;main&gt;</code> es único por página.</span>
+  </div>
+
+  <!-- ============================================================
+       UD4.1 PRÁCTICA — YOUTUBERS
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud41p">
+  <h3 style="color:var(--green)">2. UD4.1 Práctica — YouTubers</h3>
+
+  <div class="card">
+    <p><strong>Enunciado:</strong> Crear una página web de YouTubers usando HTML5 semántico + CSS. La página debe tener: cabecera con título, menú de navegación, sección principal con fichas de YouTubers (foto circular, nombre, descripción, enlace al canal), barra lateral con lista de categorías, y pie de página. Cada ficha de YouTuber debe ser un <code>&lt;article&gt;</code>.</p>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>index.html — Estructura semántica YouTubers</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;!DOCTYPE html&gt;</span>
+<span class="tc">&lt;html</span> <span class="at">lang</span>=<span class="st">"es"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">name</span>=<span class="st">"viewport"</span> <span class="at">content</span>=<span class="st">"width=device-width, initial-scale=1.0"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;title&gt;</span>YouTubers<span class="tc">&lt;/title&gt;</span>
+  <span class="tc">&lt;link</span> <span class="at">rel</span>=<span class="st">"stylesheet"</span> <span class="at">href</span>=<span class="st">"css/style.css"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;/head&gt;</span>
+<span class="tc">&lt;body&gt;</span>
+  <span class="tc">&lt;header&gt;</span>
+    <span class="tc">&lt;h1&gt;</span>Top YouTubers<span class="tc">&lt;/h1&gt;</span>
+    <span class="tc">&lt;nav&gt;</span>
+      <span class="tc">&lt;ul&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Inicio<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Gaming<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Tecnología<span class="tc">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="tc">&lt;/ul&gt;</span>
+    <span class="tc">&lt;/nav&gt;</span>
+  <span class="tc">&lt;/header&gt;</span>
+
+  <span class="tc">&lt;main&gt;</span>
+    <span class="tc">&lt;section</span> <span class="at">class</span>=<span class="st">"youtubers"</span><span class="tc">&gt;</span>
+      <span class="tc">&lt;h2&gt;</span>YouTubers destacados<span class="tc">&lt;/h2&gt;</span>
+
+      <span class="tc">&lt;article</span> <span class="at">class</span>=<span class="st">"youtuber"</span><span class="tc">&gt;</span>
+        <span class="tc">&lt;figure&gt;</span>
+          <span class="tc">&lt;img</span> <span class="at">src</span>=<span class="st">"img/mikecrack.jpg"</span> <span class="at">alt</span>=<span class="st">"Mikecrack"</span><span class="tc">&gt;</span>
+          <span class="tc">&lt;figcaption&gt;</span>Mikecrack<span class="tc">&lt;/figcaption&gt;</span>
+        <span class="tc">&lt;/figure&gt;</span>
+        <span class="tc">&lt;p&gt;</span>YouTuber de gaming y entretenimiento.<span class="tc">&lt;/p&gt;</span>
+        <span class="tc">&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Visitar canal<span class="tc">&lt;/a&gt;</span>
+      <span class="tc">&lt;/article&gt;</span>
+
+      <span class="tc">&lt;article</span> <span class="at">class</span>=<span class="st">"youtuber"</span><span class="tc">&gt;</span>
+        <span class="tc">&lt;figure&gt;</span>
+          <span class="tc">&lt;img</span> <span class="at">src</span>=<span class="st">"img/braismoure.jpg"</span> <span class="at">alt</span>=<span class="st">"Brais Moure"</span><span class="tc">&gt;</span>
+          <span class="tc">&lt;figcaption&gt;</span>Brais Moure<span class="tc">&lt;/figcaption&gt;</span>
+        <span class="tc">&lt;/figure&gt;</span>
+        <span class="tc">&lt;p&gt;</span>Desarrollador y divulgador tech.<span class="tc">&lt;/p&gt;</span>
+        <span class="tc">&lt;a</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Visitar canal<span class="tc">&lt;/a&gt;</span>
+      <span class="tc">&lt;/article&gt;</span>
+    <span class="tc">&lt;/section&gt;</span>
+
+    <span class="tc">&lt;aside&gt;</span>
+      <span class="tc">&lt;h3&gt;</span>Categorías<span class="tc">&lt;/h3&gt;</span>
+      <span class="tc">&lt;ul&gt;</span>
+        <span class="tc">&lt;li&gt;</span>Gaming<span class="tc">&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;</span>Tecnología<span class="tc">&lt;/li&gt;</span>
+        <span class="tc">&lt;li&gt;</span>Educación<span class="tc">&lt;/li&gt;</span>
+      <span class="tc">&lt;/ul&gt;</span>
+    <span class="tc">&lt;/aside&gt;</span>
+  <span class="tc">&lt;/main&gt;</span>
+
+  <span class="tc">&lt;footer&gt;</span>
+    <span class="tc">&lt;p&gt;</span>© 2025 - Proyecto YouTubers<span class="tc">&lt;/p&gt;</span>
+    <span class="tc">&lt;address&gt;</span>contacto@youtubers.es<span class="tc">&lt;/address&gt;</span>
+  <span class="tc">&lt;/footer&gt;</span>
+<span class="tc">&lt;/body&gt;</span>
+<span class="tc">&lt;/html&gt;</span></pre>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>css/style.css — Estilos YouTubers (fotos circulares, flex, grid)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* Reset básico */</span>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+<span class="cmt">/* Header con flexbox */</span>
+header { background: <span class="tc">#1a1a2e</span>; color: <span class="tc">#fff</span>; padding: 1rem; }
+header h1 { margin-bottom: 0.5rem; }
+nav ul { list-style: none; display: flex; gap: 1rem; }
+nav a { color: <span class="tc">#e94560</span>; text-decoration: none; }
+
+<span class="cmt">/* Main con flexbox: section + aside */</span>
+main { display: flex; gap: 2rem; padding: 1rem; max-width: 1200px; margin: 0 auto; }
+section.youtubers { flex: 2; }
+aside { flex: 1; background: <span class="tc">#f0f0f0</span>; padding: 1rem; border-radius: 8px; }
+
+<span class="cmt">/* Grid de youtubers */</span>
+.youtubers { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+
+<span class="cmt">/* Artículo youtuber */</span>
+article.youtuber { border: 1px solid <span class="tc">#ddd</span>; border-radius: 8px; padding: 1rem; text-align: center; }
+article.youtuber img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; }
+article.youtuber a { display: inline-block; margin-top: 0.5rem; padding: 0.4rem 1rem; background: <span class="tc">#e94560</span>; color: <span class="tc">#fff</span>; border-radius: 4px; text-decoration: none; }
+
+<span class="cmt">/* Footer */</span>
+footer { background: <span class="tc">#1a1a2e</span>; color: <span class="tc">#fff</span>; text-align: center; padding: 1rem; margin-top: 2rem; }
+
+<span class="cmt">/* Responsive */</span>
+@<span class="kw">media</span> (max-width: 768px) {
+  main { flex-direction: column; }
+}</pre>
+  </div>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Detalles importantes para examen:</strong> (1) Las fotos circulares se hacen con <code>border-radius: 50%</code> + <code>width</code> y <code>height</code> iguales + <code>object-fit: cover</code>. (2) El menú horizontal se hace con <code>list-style: none</code> + <code>display: flex</code> o <code>display: inline</code> en los <code>&lt;li&gt;</code>. (3) El <code>&lt;aside&gt;</code> es semánticamente correcto para contenido tangencial como categorías.</span>
+  </div>
+  <div class="cb">
+    <div class="ch"><span>CSS — Grid de youtubers con flexbox y fotos circulares</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* Flexbox: aside a la derecha, main content a la izquierda */</span>
+main { display: flex; gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 1rem; }
+section.youtubers { flex: 2; }
+aside.categorias { flex: 1; background: <span class="tc">#f5f5f5</span>; padding: 1rem; border-radius: 8px; }
+
+<span class="cmt">/* Grid de tarjetas youtuber: auto-fill responsive */</span>
+.youtubers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+
+<span class="cmt">/* Tarjeta individual */</span>
+article.youtuber {
+  border: 1px solid <span class="tc">#ddd</span>; border-radius: 10px; padding: 1.5rem 1rem;
+  text-align: center; transition: transform 0.2s, box-shadow 0.2s;
+}
+article.youtuber:hover { transform: translateY(-4px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+
+<span class="cmt">/* Foto circular */</span>
+article.youtuber img {
+  width: 100px; height: 100px; border-radius: 50%; object-fit: cover;
+  border: 3px solid <span class="tc">#e94560</span>;
+}
+
+<span class="cmt">/* Diferencia semántica clave */</span>
+<span class="cmt">/* &lt;section&gt; = agrupa contenido relacionado (varios articles) */</span>
+<span class="cmt">/* &lt;article&gt; = contenido independiente (un youtuber) */</span>
+<span class="cmt">/* &lt;aside&gt; = contenido tangencial (categorías) */</span>
+
+<span class="cmt">/* Responsive: en móvil el aside va debajo */</span>
+@<span class="kw">media</span> (max-width: 768px) {
+  main { flex-direction: column; }
+  .youtubers-grid { grid-template-columns: 1fr; }
+}</pre>
+  </div>
+
+  <!-- ============================================================
+       UD4.2 — FORMULARIOS HTML5
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud42">
+  <h3 style="color:var(--yellow)">3. UD4.2 — Formularios HTML5</h3>
+
+  <div class="card">
+    <p>HTML5 introdujo nuevos tipos de <code>&lt;input&gt;</code> que proporcionan <strong>validación nativa</strong> en el navegador, sin necesidad de JavaScript. También introdujo atributos como <code>required</code>, <code>pattern</code>, <code>placeholder</code> y pseudo-clases CSS como <code>:valid</code>, <code>:invalid</code> para feedback visual.</p>
+  </div>
+
+  <h4 id="ra2-ud42-tipos" style="font-size:13px;color:var(--text);margin:14px 0 4px">Tipos de input HTML5</h4>
+  <table>
+    <tr><th>Tipo</th><th>HTML</th><th>Validación nativa</th></tr>
+    <tr><td>Email</td><td><code>&lt;input type="email"&gt;</code></td><td>Requiere formato email (user@domain)</td></tr>
+    <tr><td>Teléfono</td><td><code>&lt;input type="tel"&gt;</code></td><td>No valida automáticamente (usar pattern)</td></tr>
+    <tr><td>URL</td><td><code>&lt;input type="url"&gt;</code></td><td>Requiere formato URL (http://...)</td></tr>
+    <tr><td>Número</td><td><code>&lt;input type="number"&gt;</code></td><td>Solo números, con min/max/step</td></tr>
+    <tr><td>Rango</td><td><code>&lt;input type="range"&gt;</code></td><td>Slider con min=0 max=100 por defecto</td></tr>
+    <tr><td>Fecha</td><td><code>&lt;input type="date"&gt;</code></td><td>Selector de fecha nativo</td></tr>
+    <tr><td>Color</td><td><code>&lt;input type="color"&gt;</code></td><td>Selector de color nativo</td></tr>
+    <tr><td>Búsqueda</td><td><code>&lt;input type="search"&gt;</code></td><td>Campo con diseño consistente</td></tr>
+    <tr><td>Contraseña</td><td><code>&lt;input type="password"&gt;</code></td><td>Oculta los caracteres</td></tr>
+    <tr><td>Archivo</td><td><code>&lt;input type="file"&gt;</code></td><td>Selector de archivos</td></tr>
+  </table>
+
+  <h4 id="ra2-ud42-validacion" style="font-size:13px;color:var(--text);margin:14px 0 4px">Validación nativa HTML5</h4>
+  <table>
+    <tr><th>Atributo</th><th>Descripción</th><th>Ejemplo</th></tr>
+    <tr><td><code>required</code></td><td>Campo obligatorio. No envía si está vacío.</td><td><code>&lt;input required&gt;</code></td></tr>
+    <tr><td><code>pattern</code></td><td>Expresión regular para validar el valor.</td><td><code>pattern="\d{9}"</code> (9 dígitos)</td></tr>
+    <tr><td><code>min / max</code></td><td>Valores mínimo y máximo para number/date/range.</td><td><code>min="0" max="100"</code></td></tr>
+    <tr><td><code>step</code></td><td>Incremento permitido (number/range).</td><td><code>step="5"</code></td></tr>
+    <tr><td><code>placeholder</code></td><td>Texto de ayuda dentro del input.</td><td><code>placeholder="Escribe aquí"</code></td></tr>
+    <tr><td><code>autofocus</code></td><td>El campo recibe el foco automáticamente.</td><td><code>autofocus</code></td></tr>
+    <tr><td><code>disabled</code></td><td>Deshabilita el campo (no se envía).</td><td><code>disabled</code></td></tr>
+    <tr><td><code>readonly</code></td><td>Solo lectura (se envía, no se edita).</td><td><code>readonly</code></td></tr>
+  </table>
+
+  <details class="vm">
+    <summary>📖 Validación con pseudo-clases :valid :invalid</summary>
+    <div class="vm-c">
+      <p><strong>CSS para feedback visual en formularios:</strong></p>
+      <div class="cd"><span class="cmt">/* Campo obligatorio válido → borde verde */</span>
+input:required:valid { border: 2px solid green; }
+
+<span class="cmt">/* Campo con error al hacer focus → borde rojo */</span>
+input:focus:invalid { border: 2px solid red; }
+
+<span class="cmt">/* Asterisco rojo para campos obligatorios (con class="obligatorio") */</span>
+.obligatorio:after { content: ' *'; color: red; }
+
+<span class="cmt">/* Estilo para el botón de enviar deshabilitado si hay inválidos */</span>
+input:invalid ~ button[type="submit"] { opacity: 0.5; pointer-events: none; }</div>
+<button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+      <p><strong>Cómo funciona:</strong> Cuando el navegador valida un formulario, añade automáticamente las pseudo-clases <code>:valid</code> a los campos correctos y <code>:invalid</code> a los incorrectos. El formulario NO se envía si hay campos inválidos.</p>
+    </div>
+  </details>
+
+  <!-- Demo interactivo de formulario -->
+  <h4 id="ra2-ud42-demo" style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Demo interactivo — Formulario HTML5 con validación</h4>
+  <div class="ej-demo form-demo">
+    <h5>Formulario de registro (prueba los campos)</h5>
+    <form onsubmit="alert('Formulario válido. Enviado correctamente.'); return false;">
+      <div style="margin-bottom:8px">
+        <label class="obligatorio">Nombre:</label>
+        <input type="text" required placeholder="Tu nombre" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label class="obligatorio">Email:</label>
+        <input type="email" required placeholder="email@dominio.com" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label class="obligatorio">Teléfono (9 dígitos):</label>
+        <input type="tel" required pattern="\d{9}" placeholder="612345678" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Web:</label>
+        <input type="url" placeholder="https://ejemplo.com" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Edad:</label>
+        <input type="number" min="0" max="120" placeholder="25" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Fecha de nacimiento:</label>
+        <input type="date" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Color favorito:</label>
+        <input type="color" value="#5b8ff9" style="width:60px;height:30px;border:none;cursor:pointer">
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Valoración:</label>
+        <input type="range" min="0" max="10" value="5" oninput="this.nextElementSibling.textContent=this.value" style="width:100%">
+        <span style="color:var(--accent);font-size:13px">5</span>
+      </div>
+      <div style="margin-bottom:8px">
+        <label>Búsqueda:</label>
+        <input type="search" placeholder="Buscar..." style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      </div>
+      <button type="submit" style="background:var(--green);color:#000;border:none;padding:8px 20px;border-radius:4px;cursor:pointer">Enviar formulario</button>
+      <button type="reset" style="background:var(--red);color:#fff;border:none;padding:8px 20px;border-radius:4px;cursor:pointer;margin-left:8px">Reset</button>
+    </form>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML5 — Formulario completo con todos los tipos</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;form</span> <span class="at">action</span>=<span class="st">"procesar.php"</span> <span class="at">method</span>=<span class="st">"post"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;label</span> <span class="at">class</span>=<span class="st">"obligatorio"</span><span class="tc">&gt;</span>Nombre:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">name</span>=<span class="st">"nombre"</span> <span class="at">required</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span> <span class="at">class</span>=<span class="st">"obligatorio"</span><span class="tc">&gt;</span>Email:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"email"</span> <span class="at">name</span>=<span class="st">"email"</span> <span class="at">required</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Teléfono (9 dígitos):<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"tel"</span> <span class="at">name</span>=<span class="st">"telefono"</span> <span class="at">pattern</span>=<span class="st">"\d{9}"</span> <span class="at">placeholder</span>=<span class="st">"612345678"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Web:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"url"</span> <span class="at">name</span>=<span class="st">"web"</span> <span class="at">placeholder</span>=<span class="st">"https://ejemplo.com"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Edad:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"number"</span> <span class="at">name</span>=<span class="st">"edad"</span> <span class="at">min</span>=<span class="st">"0"</span> <span class="at">max</span>=<span class="st">"120"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Fecha:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"date"</span> <span class="at">name</span>=<span class="st">"fecha"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Color:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"color"</span> <span class="at">name</span>=<span class="st">"color"</span> <span class="at">value</span>=<span class="st">"#5b8ff9"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Valoración:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"range"</span> <span class="at">name</span>=<span class="st">"valoracion"</span> <span class="at">min</span>=<span class="st">"0"</span> <span class="at">max</span>=<span class="st">"10"</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;label</span><span class="tc">&gt;</span>Búsqueda:<span class="tc">&lt;/label&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"search"</span> <span class="at">name</span>=<span class="st">"busqueda"</span> <span class="at">placeholder</span>=<span class="st">"Buscar..."</span><span class="tc">&gt;</span>
+
+  <span class="tc">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span><span class="tc">&gt;</span>Enviar<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;/form&gt;</span></pre>
+  </div>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Errores típicos del examen:</strong> (1) <code>type="tel"</code> NO valida automáticamente, hay que usar <code>pattern</code>. (2) <code>type="email"</code> valida que tenga @ y dominio. (3) Los campos con <code>required</code> no se envían vacíos. (4) Las pseudo-clases <code>:valid</code>/<code>:invalid</code> se aplican automáticamente. (5) El asterisco obligatorio se hace con CSS <code>.obligatorio:after { content: ' *'; color: red; }</code>.</span>
+  </div>
+  <div class="cb">
+    <div class="ch"><span>CSS — Validación visual de formularios con :valid / :invalid</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* Campos obligatorios: validación visual automática */</span>
+input:required { border-left: 4px solid <span class="tc">#e94560</span>; }
+input:focus:invalid { border-color: <span class="tc">#ff0000</span>; box-shadow: 0 0 5px rgba(255,0,0,0.3); }
+input:valid { border-color: <span class="tc">#00c853</span>; }
+input:out-of-range { border-color: <span class="tc">#ff6b6b</span>; }
+
+<span class="cmt">/* Asterisco rojo para obligatorios con CSS */</span>
+.obligatorio::after { content: ' *'; color: <span class="tc">red</span>; font-weight: bold; }
+
+<span class="cmt">/* Pattern: validación con expresión regular */</span>
+<span class="cmt">/* &lt;input type="text" pattern="[A-Z]{3}[0-9]{4}" title="3 mayúsculas + 4 dígitos"&gt; */</span>
+
+<span class="cmt">/* Tipos de input HTML5 con autovalidación: */</span>
+<span class="cmt">/* email → requiere @ y dominio */</span>
+<span class="cmt">/* url → requiere http:// o https:// */</span>
+<span class="cmt">/* number → solo dígitos, acepta min/max/step */</span>
+<span class="cmt">/* tel → NO valida solo, necesita pattern */</span>
+
+<span class="cmt">/* Deshabilitar submit si hay inválidos */</span>
+input:invalid ~ button[type="submit"] { opacity: 0.4; pointer-events: none; }
+
+<span class="cmt">/* Rango personalizado */</span>
+input[type="range"] { width: 100%; accent-color: <span class="tc">var(--accent)</span>; }</pre>
+  </div>
+
+  <div class="box blue">
+    <span>💡</span>
+    <span><strong>Pseudo-clases de validación:</strong> <code>:valid</code> y <code>:invalid</code> se activan automáticamente según el tipo de input y sus atributos (required, pattern, min, max). <code>:in-range</code> y <code>:out-of-range</code> para number/range. <code>:optional</code> para campos sin required. Todo esto sin una línea de JavaScript.</span>
+  </div>
+
+  <!-- ============================================================
+       UD4.2B — INTERACTIVIDAD: FORMULARIOS + JAVASCRIPT
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud42b">
+  <h3 style="color:var(--cyan)">3B. Interactividad — Formularios + JavaScript</h3>
+
+  <div class="card">
+    <p>En el examen te pedirán <strong>hacer webs que hagan cosas</strong>: sumar números, validar formularios, mostrar/ocultar elementos, cambiar estilos, etc. Aquí tienes todos los patrones que necesitas con JavaScript para conectar formularios, botones e inputs a acciones reales.</p>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 1: Formulario que suma dos números (onsubmit + función)</h4>
+  <div class="ej-demo" style="text-align:center">
+    <form onsubmit="sumarNumeros(event)">
+      <input type="number" id="num1" value="5" style="width:80px;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      <span style="font-size:20px;color:var(--text2)">+</span>
+      <input type="number" id="num2" value="3" style="width:80px;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+      <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:6px 16px;border-radius:4px;cursor:pointer;margin:0 8px">=</button>
+      <span id="resultado-suma" style="font-size:24px;font-weight:bold;color:var(--green)">8</span>
+    </form>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Sumar dos números con formulario</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">&lt;!-- onsubmit captura el evento, event.preventDefault() evita recargar --&gt;</span>
+<span class="tc">&lt;form</span> <span class="at">onsubmit</span>=<span class="st">"sumarNumeros(event)"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"number"</span> <span class="at">id</span>=<span class="st">"num1"</span> <span class="at">value</span>=<span class="st">"5"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"number"</span> <span class="at">id</span>=<span class="st">"num2"</span> <span class="at">value</span>=<span class="st">"3"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span><span class="tc">&gt;</span>=<span class="tc">&lt;/button&gt;</span>
+  <span class="tc">&lt;span</span> <span class="at">id</span>=<span class="st">"resultado-suma"</span><span class="tc">&gt;</span>8<span class="tc">&lt;/span&gt;</span>
+<span class="tc">&lt;/form&gt;</span>
+
+<span class="tc">&lt;script&gt;</span>
+<span class="kw">function</span> sumarNumeros(event) {
+  event.preventDefault(); <span class="cmt">// ← EVITA que el formulario recargue la página</span>
+  <span class="kw">const</span> a = <span class="kw">parseFloat</span>(document.getElementById(<span class="st">'num1'</span>).value);
+  <span class="kw">const</span> b = <span class="kw">parseFloat</span>(document.getElementById(<span class="st">'num2'</span>).value);
+  <span class="kw">const</span> suma = a + b;
+  document.getElementById(<span class="st">'resultado-suma'</span>).textContent = suma;
+}
+<span class="tc">&lt;/script&gt;</span></pre>
+  </div>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Clave examen:</strong> Siempre usa <code>event.preventDefault()</code> en el <code>onsubmit</code> si NO quieres que la página se recargue. Sin esto, el formulario envía los datos y la página se refresca, perdiendo todo. <code>parseFloat()</code> convierte string a número (o <code>parseInt()</code> para enteros).</span>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 2: Botón que hace cosas (onclick)</h4>
+  <div class="ej-demo" style="text-align:center">
+    <p id="texto-cambia" style="font-size:18px;color:var(--text);margin-bottom:10px">Este texto va a cambiar</p>
+    <button class="demo-btn" onclick="cambiarTexto()">Cambiar texto</button>
+    <button class="demo-btn green" onclick="cambiarColor('green')">Verde</button>
+    <button class="demo-btn red" onclick="cambiarColor('red')">Rojo</button>
+    <button class="demo-btn yellow" onclick="cambiarColor('var(--accent)')">Azul</button>
+    <button class="demo-btn" onclick="toggleVisibilidad()">Mostrar/Ocultar</button>
+    <div id="caja-oculta" style="margin-top:10px;padding:10px;background:var(--bg2);border-radius:6px;display:block">🔵 Esta caja se puede ocultar y mostrar</div>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Click de botón: cambiar texto, color, mostrar/ocultar</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">&lt;!-- Botones con onclick llaman a funciones JS --&gt;</span>
+<span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"cambiarTexto()"</span><span class="tc">&gt;</span>Cambiar texto<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"cambiarColor('green')"</span><span class="tc">&gt;</span>Verde<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"toggleVisibilidad()"</span><span class="tc">&gt;</span>Mostrar/Ocultar<span class="tc">&lt;/button&gt;</span>
+
+<span class="tc">&lt;p</span> <span class="at">id</span>=<span class="st">"texto-cambia"</span><span class="tc">&gt;</span>Texto inicial<span class="tc">&lt;/p&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"caja-oculta"</span><span class="tc">&gt;</span>Caja visible/oculta<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;script&gt;</span>
+<span class="kw">function</span> cambiarTexto() {
+  document.getElementById(<span class="st">'texto-cambia'</span>).textContent = <span class="st">'¡Has hecho clic!'</span>;
+}
+<span class="kw">function</span> cambiarColor(color) {
+  document.getElementById(<span class="st">'texto-cambia'</span>).style.color = color;
+}
+<span class="kw">function</span> toggleVisibilidad() {
+  <span class="kw">const</span> caja = document.getElementById(<span class="st">'caja-oculta'</span>);
+  <span class="kw">if</span> (caja.style.display === <span class="st">'none'</span>) {
+    caja.style.display = <span class="st">'block'</span>;
+  } <span class="kw">else</span> {
+    caja.style.display = <span class="st">'none'</span>;
+  }
+}
+<span class="tc">&lt;/script&gt;</span></pre>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 3: Input events — oninput, onchange, onfocus, onblur</h4>
+  <div class="ej-demo">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <label>oninput (en cada tecla):</label>
+        <input type="text" id="input-oninput" oninput="actualizarPreview(this.value)" placeholder="Escribe aquí..." style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+        <p style="font-size:12px;color:var(--text2);margin-top:4px">Preview: <span id="preview-text" style="color:var(--accent)"></span></p>
+      </div>
+      <div>
+        <label>onchange (al salir del campo):</label>
+        <input type="text" id="input-onchange" onchange="cambioHecho(this.value)" placeholder="Escribe y sal..." style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+        <p style="font-size:12px;color:var(--text2);margin-top:4px">Último valor: <span id="change-value" style="color:var(--accent)"></span></p>
+      </div>
+      <div>
+        <label>onfocus (al entrar):</label>
+        <input type="text" id="input-focus" onfocus="this.style.borderColor='var(--green)'; document.getElementById('focus-msg').textContent='✅ Tiene el foco'" onblur="this.style.borderColor='var(--border)'; document.getElementById('focus-msg').textContent='❌ Perdió el foco'" placeholder="Haz clic aquí..." style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+        <p style="font-size:12px;color:var(--text2);margin-top:4px"><span id="focus-msg">❌ Sin foco</span></p>
+      </div>
+      <div>
+        <label>Range + oninput (en vivo):</label>
+        <input type="range" min="0" max="100" value="50" oninput="actualizarBarra(this.value)" style="width:100%">
+        <div style="margin-top:6px;background:var(--bg3);border-radius:4px;height:20px;overflow:hidden">
+          <div id="barra-progreso" style="height:100%;width:50%;background:var(--accent);border-radius:4px;transition:width 0.15s"></div>
+        </div>
+        <p style="font-size:12px;color:var(--text2);margin-top:4px">Valor: <span id="range-value" style="color:var(--accent);font-weight:bold">50</span>%</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Todos los eventos de input: oninput, onchange, onfocus, onblur</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* oninput → cada vez que el usuario escribe (tiempo real) */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">oninput</span>=<span class="st">"actualizarPreview(this.value)"</span><span class="tc">&gt;</span>
+&lt;p&gt;Preview: &lt;span id="preview"&gt;&lt;/span&gt;&lt;/p&gt;
+
+<span class="kw">function</span> actualizarPreview(valor) {
+  document.getElementById(<span class="st">'preview'</span>).textContent = valor;
+}
+
+<span class="cmt">/* onchange → cuando el usuario TERMINA y sale del campo */</span>
+<span class="tc">&lt;input</span> <span class="at">onchange</span>=<span class="st">"cambioHecho(this.value)"</span><span class="tc">&gt;</span>
+
+<span class="cmt">/* onfocus / onblur → cuando el campo GANA o PIERDE el foco */</span>
+<span class="tc">&lt;input</span> <span class="at">onfocus</span>=<span class="st">"this.style.borderColor='green'"</span>
+       <span class="at">onblur</span>=<span class="st">"this.style.borderColor='red'"</span><span class="tc">&gt;</span>
+
+<span class="cmt">/* Range con barra de progreso visual */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"range"</span> <span class="at">oninput</span>=<span class="st">"actualizarBarra(this.value)"</span><span class="tc">&gt;</span>
+&lt;div id="barra" style="width:50%;background:blue"&gt;&lt;/div&gt;
+
+<span class="kw">function</span> actualizarBarra(val) {
+  document.getElementById(<span class="st">'barra'</span>).style.width = val + <span class="st">'%'</span>;
+}</pre>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 4: Formulario completo con validación JS + feedback visual</h4>
+  <div class="ej-demo">
+    <form id="form-registro" onsubmit="return validarFormulario(event)">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div>
+          <label class="obligatorio">Nombre completo:</label>
+          <input type="text" id="f-nombre" required placeholder="Ej: Ana García" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+          <span id="err-nombre" style="font-size:11px;color:var(--red)"></span>
+        </div>
+        <div>
+          <label class="obligatorio">Email:</label>
+          <input type="email" id="f-email" required placeholder="ana@email.com" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+          <span id="err-email" style="font-size:11px;color:var(--red)"></span>
+        </div>
+        <div>
+          <label class="obligatorio">Contraseña (6+ caracteres):</label>
+          <input type="password" id="f-pass" required minlength="6" placeholder="••••••" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+          <span id="err-pass" style="font-size:11px;color:var(--red)"></span>
+        </div>
+        <div>
+          <label>Edad:</label>
+          <input type="number" id="f-edad" min="0" max="120" placeholder="25" style="width:100%;padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+        </div>
+      </div>
+      <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+        <button type="submit" style="background:var(--green);color:#000;border:none;padding:8px 20px;border-radius:4px;cursor:pointer">Registrarse</button>
+        <button type="reset" style="background:var(--red);color:#fff;border:none;padding:8px 20px;border-radius:4px;cursor:pointer" onclick="limpiarErrores()">Limpiar</button>
+        <span id="form-mensaje" style="font-size:13px"></span>
+      </div>
+    </form>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Validación manual con JavaScript (no solo HTML5)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;form</span> <span class="at">onsubmit</span>=<span class="st">"return validarFormulario(event)"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">id</span>=<span class="st">"f-nombre"</span> <span class="at">required</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;span</span> <span class="at">id</span>=<span class="st">"err-nombre"</span><span class="tc">&gt;&lt;/span&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"password"</span> <span class="at">id</span>=<span class="st">"f-pass"</span> <span class="at">minlength</span>=<span class="st">"6"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;span</span> <span class="at">id</span>=<span class="st">"err-pass"</span><span class="tc">&gt;&lt;/span&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span><span class="tc">&gt;</span>Enviar<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;/form&gt;</span>
+
+<span class="tc">&lt;script&gt;</span>
+<span class="kw">function</span> validarFormulario(event) {
+  event.preventDefault();
+  <span class="kw">let</span> valido = <span class="kw">true</span>;
+
+  <span class="kw">const</span> nombre = document.getElementById(<span class="st">'f-nombre'</span>).value.trim();
+  <span class="kw">if</span> (nombre.length &lt; 2) {
+    document.getElementById(<span class="st">'err-nombre'</span>).textContent = <span class="st">'❌ Mínimo 2 caracteres'</span>;
+    valido = <span class="kw">false</span>;
+  } <span class="kw">else</span> {
+    document.getElementById(<span class="st">'err-nombre'</span>).textContent = <span class="st">'✅ Correcto'</span>;
+  }
+
+  <span class="kw">const</span> pass = document.getElementById(<span class="st">'f-pass'</span>).value;
+  <span class="kw">if</span> (pass.length &lt; 6) {
+    document.getElementById(<span class="st">'err-pass'</span>).textContent = <span class="st">'❌ Mínimo 6 caracteres'</span>;
+    valido = <span class="kw">false</span>;
+  } <span class="kw">else</span> {
+    document.getElementById(<span class="st">'err-pass'</span>).textContent = <span class="st">'✅ Correcto'</span>;
+  }
+
+  <span class="kw">if</span> (valido) {
+    alert(<span class="st">'✅ Formulario válido. ¡Registrado!'</span>);
+  }
+  <span class="kw">return</span> <span class="kw">false</span>; <span class="cmt">// ← EVITA el envío real</span>
+}
+<span class="tc">&lt;/script&gt;</span></pre>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 5: Select desplegable que cambia contenido</h4>
+  <div class="ej-demo">
+    <label>Elige un tema:</label>
+    <select id="selector-tema" onchange="cambiarTema(this.value)" style="padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text);margin:0 8px">
+      <option value="light">Claro</option>
+      <option value="dark" selected>Oscuro</option>
+      <option value="blue">Azul</option>
+      <option value="custom">Personalizado</option>
+    </select>
+    <div id="caja-tema" style="margin-top:10px;padding:16px;border-radius:8px;background:var(--bg2);border:1px solid var(--border);transition:0.3s">
+      <p id="tema-texto" style="color:var(--text)">🎨 Esta caja cambia de estilo según la opción seleccionada</p>
+    </div>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Select con onchange que modifica estilos</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;select</span> <span class="at">id</span>=<span class="st">"selector"</span> <span class="at">onchange</span>=<span class="st">"cambiarTema(this.value)"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;option</span> <span class="at">value</span>=<span class="st">"dark"</span><span class="tc">&gt;</span>Oscuro<span class="tc">&lt;/option&gt;</span>
+  <span class="tc">&lt;option</span> <span class="at">value</span>=<span class="st">"light"</span><span class="tc">&gt;</span>Claro<span class="tc">&lt;/option&gt;</span>
+<span class="tc">&lt;/select&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"caja"</span><span class="tc">&gt;</span>Contenido que cambia<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;script&gt;</span>
+<span class="kw">function</span> cambiarTema(valor) {
+  <span class="kw">const</span> caja = document.getElementById(<span class="st">'caja'</span>);
+  <span class="kw">if</span> (valor === <span class="st">'dark'</span>) {
+    caja.style.background = <span class="st">'#333'</span>;
+    caja.style.color = <span class="st">'#fff'</span>;
+  } <span class="kw">else</span> <span class="kw">if</span> (valor === <span class="st">'light'</span>) {
+    caja.style.background = <span class="st">'#fff'</span>;
+    caja.style.color = <span class="st">'#333'</span>;
+  }
+}
+<span class="tc">&lt;/script&gt;</span></pre>
+  </div>
+
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Patrón 6: Checkbox, Radio y eventos varios</h4>
+  <div class="ej-demo">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+      <div>
+        <p style="font-weight:600;margin-bottom:6px">✅ Checkbox:</p>
+        <label><input type="checkbox" onchange="toggleTerminos(this.checked)"> Acepto los términos</label>
+        <p id="check-msg" style="font-size:12px;color:var(--red);margin-top:4px">❌ No aceptado</p>
+      </div>
+      <div>
+        <p style="font-weight:600;margin-bottom:6px">🔘 Radio buttons:</p>
+        <label><input type="radio" name="opcion" value="HTML" onchange="radioSeleccion(this.value)" checked> HTML</label><br>
+        <label><input type="radio" name="opcion" value="CSS" onchange="radioSeleccion(this.value)"> CSS</label><br>
+        <label><input type="radio" name="opcion" value="JS" onchange="radioSeleccion(this.value)"> JavaScript</label>
+        <p style="font-size:12px;color:var(--text2);margin-top:4px">Seleccionado: <span id="radio-valor" style="color:var(--accent)">HTML</span></p>
+      </div>
+      <div>
+        <p style="font-weight:600;margin-bottom:6px">📅 Date + evento:</p>
+        <input type="date" id="fecha-evento" onchange="mostrarFecha(this.value)" style="padding:6px;border:1px solid var(--border);border-radius:4px;background:var(--bg);color:var(--text)">
+        <p id="fecha-msg" style="font-size:12px;color:var(--text2);margin-top:4px">Selecciona una fecha</p>
+      </div>
+      <div>
+        <p style="font-weight:600;margin-bottom:6px">🎨 Color picker:</p>
+        <input type="color" id="color-picker" oninput="cambiarFondoColor(this.value)" value="#5b8ff9" style="width:50px;height:30px;border:none;cursor:pointer">
+        <div id="color-muestra" style="margin-top:6px;width:100%;height:40px;border-radius:6px;background:#5b8ff9;border:1px solid var(--border)"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>HTML + JS — Checkbox, Radio, Date y Color picker con eventos</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* Checkbox: onchange con this.checked (true/false) */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"checkbox"</span> <span class="at">onchange</span>=<span class="st">"toggleTerminos(this.checked)"</span><span class="tc">&gt;</span>
+<span class="kw">function</span> toggleTerminos(checked) {
+  document.getElementById(<span class="st">'msg'</span>).textContent = checked ? <span class="st">'✅ Aceptado'</span> : <span class="st">'❌ No aceptado'</span>;
+}
+
+<span class="cmt">/* Radio: onchange con this.value (el value del radio seleccionado) */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"radio"</span> <span class="at">name</span>=<span class="st">"grupo"</span> <span class="at">value</span>=<span class="st">"CSS"</span> <span class="at">onchange</span>=<span class="st">"radioSeleccion(this.value)"</span><span class="tc">&gt;</span>
+<span class="kw">function</span> radioSeleccion(val) {
+  document.getElementById(<span class="st">'output'</span>).textContent = val;
+}
+
+<span class="cmt">/* Date: onchange con this.value (formato YYYY-MM-DD) */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"date"</span> <span class="at">onchange</span>=<span class="st">"mostrarFecha(this.value)"</span><span class="tc">&gt;</span>
+
+<span class="cmt">/* Color: oninput con this.value (formato #RRGGBB) */</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"color"</span> <span class="at">oninput</span>=<span class="st">"cambiarFondo(this.value)"</span><span class="tc">&gt;</span>
+<span class="kw">function</span> cambiarFondo(color) {
+  document.getElementById(<span class="st">'muestra'</span>).style.background = color;
+}</pre>
+  </div>
+
+  <div class="box red">
+    <span>⚠️</span>
+    <span><strong>Resumen para el examen — lo que tienes que saber:</strong> (1) <code>document.getElementById('id')</code> para buscar elementos. (2) <code>.value</code> para leer inputs. (3) <code>.textContent</code> para cambiar texto. (4) <code>.style</code> para CSS en línea. (5) <code>.display = 'none'/'block'</code> para ocultar/mostrar. (6) <code>event.preventDefault()</code> en formularios. (7) <code>parseInt()/parseFloat()</code> para convertir strings a números. (8) <code>this.value</code> y <code>this.checked</code> en eventos para obtener el valor actual.</span>
+  </div>
+
+  <!-- ============================================================
+       UD5.1 — POSICIONAMIENTO CSS
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud51">
+  <h3 style="color:var(--red)">4. UD5.1 — Posicionamiento CSS</h3>
+
+  <div class="card">
+    <p>CSS permite posicionar elementos de distintas formas con la propiedad <code>position</code>. También controla la <strong>visualización</strong> (<code>display</code>: block, inline, inline-block, none), la <strong>visibilidad</strong> (<code>visibility</code>: visible, hidden) y el <strong>desbordamiento</strong> (<code>overflow</code>: visible, hidden, scroll, auto).</p>
+  </div>
+
+  <h4 id="ra2-ud51-position" style="font-size:13px;color:var(--text);margin:14px 0 4px">Propiedad position</h4>
+  <table>
+    <tr><th>Valor</th><th>Comportamiento</th><th>top/left</th><th>Hueco original</th></tr>
+    <tr><td><code>static</code></td><td>Flujo normal (valor por defecto)</td><td>Se ignoran</td><td>Sí</td></tr>
+    <tr><td><code>relative</code></td><td>Se desplaza desde su posición original</td><td>Funcionan</td><td><strong>Sí</strong> (se mantiene el hueco)</td></tr>
+    <tr><td><code>absolute</code></td><td>Sale del flujo. Respecto al padre posicionado o la ventana</td><td>Funcionan</td><td><strong>No</strong></td></tr>
+    <tr><td><code>fixed</code></td><td>Fijo en la ventana. No se mueve al hacer scroll</td><td>Funcionan</td><td><strong>No</strong></td></tr>
+    <tr><td><code>sticky</code></td><td>Híbrido: fluye hasta que llega a un tope, luego se fija</td><td>Funcionan (top, etc.)</td><td>Sí (mientras fluye)</td></tr>
+  </table>
+
+  <details class="vm">
+    <summary>📖 Explicación detallada: posicionamiento CSS</summary>
+    <div class="vm-c">
+      <p><strong>static:</strong> Es el valor por defecto. Los elementos se colocan en el flujo normal del documento. Las propiedades <code>top</code>, <code>left</code>, <code>right</code>, <code>bottom</code> y <code>z-index</code> NO tienen efecto.</p>
+
+      <p><strong>relative:</strong> El elemento se desplaza respecto a su posición original con <code>top</code>/<code>left</code>/etc. El <strong>hueco original se mantiene</strong> (los demás elementos no ocupan su lugar). Es como si el elemento tuviera un "fantasma" en su sitio.</p>
+
+      <p><strong>absolute:</strong> El elemento <strong>sale del flujo</strong> del documento. Se posiciona respecto al <strong>antecesor posicionado más cercano</strong> (con position ≠ static). Si no hay ninguno, respecto al <code>&lt;html&gt;</code> (la ventana). Los demás elementos ocupan su lugar como si no estuviera.</p>
+
+      <p><strong>fixed:</strong> Sale del flujo como absolute, pero se posiciona respecto a la <strong>ventana del navegador</strong> y NO se mueve al hacer scroll. Muy usado para menús superiores fijos y botones "volver arriba".</p>
+
+      <p><strong>Diferencia clave absolute vs fixed:</strong> <code>absolute</code> se mueve con el scroll (porque depende de su padre posicionado), <code>fixed</code> NO se mueve (siempre visible en la ventana).</p>
+    </div>
+  </details>
+
+  <!-- Demo interactivo de position -->
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Demo interactivo — Posicionamiento CSS</h4>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+    <button class="demo-btn" onclick="actualizarPos('static')">Static</button>
+    <button class="demo-btn green" onclick="actualizarPos('relative')">Relative</button>
+    <button class="demo-btn red" onclick="actualizarPos('absolute')">Absolute</button>
+    <button class="demo-btn yellow" onclick="actualizarPos('fixed')">Fixed</button>
+  </div>
+  <div class="pos-demo" id="posDemoContainer">
+    <div id="posDemoBox" style="position:static;top:20px;left:20px;padding:12px 16px;background:var(--accent);color:#fff;border-radius:6px;font-size:12px;display:inline-block">
+      Caja demo
+    </div>
+    <div style="position:absolute;bottom:8px;right:8px;font-size:10px;color:var(--text3);background:var(--bg3);padding:4px 8px;border-radius:4px">
+      Contenedor con position:relative
+    </div>
+  </div>
+
+  <div class="ej-demo">
+    <h5>Código del ejemplo interactivo</h5>
+    <pre class="code" style="font-size:11px"><span class="cmt">/* Contenedor padre con position:relative */</span>
+<span class="sel">.contenedor</span> { position: relative; height: 150px; border: 1px solid #ccc; }
+
+<span class="cmt">/* position:static — valor por defecto, top/left se ignoran */</span>
+<span class="sel">.static</span> { position: static; }
+
+<span class="cmt">/* position:relative — se desplaza, el hueco original se mantiene */</span>
+<span class="sel">.relative</span> { position: relative; top: 20px; left: 20px; }
+
+<span class="cmt">/* position:absolute — sale del flujo, respecto al padre posicionado */</span>
+<span class="sel">.absolute</span> { position: absolute; top: 0; right: 0; }
+
+<span class="cmt">/* position:fixed — fijo en ventana, NO se mueve con scroll */</span>
+<span class="sel">.fixed</span> { position: fixed; top: 80px; right: 20px; z-index: 999; }</pre>
+  </div>
+
+  <h4 id="ra2-ud51-float" style="font-size:13px;color:var(--text);margin:14px 0 4px">Float, Clear y Overflow</h4>
+  <table>
+    <tr><th>Propiedad</th><th>Valores</th><th>Descripción</th></tr>
+    <tr><td><code>float</code></td><td><code>left</code>, <code>right</code>, <code>none</code></td><td>Elemento flota, el contenido fluye alrededor</td></tr>
+    <tr><td><code>clear</code></td><td><code>left</code>, <code>right</code>, <code>both</code>, <code>none</code></td><td>Evita que un elemento se ponga al lado de flotantes</td></tr>
+    <tr><td><code>overflow</code></td><td><code>visible</code>, <code>hidden</code>, <code>scroll</code>, <code>auto</code></td><td>Controla el contenido que desborda el contenedor</td></tr>
+  </table>
+
+  <!-- Demo interactivo de float -->
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Demo interactivo — Float</h4>
+  <div class="float-container" style="height:100px">
+    <div class="float-box float-l">Float left</div>
+    <div class="float-box float-l" style="background:var(--green)">Float left</div>
+    <div class="float-box float-r">Float right</div>
+    <div style="clear:both;font-size:11px;color:var(--text2);padding:4px">Elemento con clear:both</div>
+  </div>
+
+  <div class="ej-demo">
+    <h5>Código del ejemplo float</h5>
+    <pre class="code" style="font-size:11px"><span class="sel">.float-left</span> { float: left; width: 80px; height: 60px; background: blue; }
+<span class="sel">.float-right</span> { float: right; width: 80px; height: 60px; background: red; }
+<span class="sel">.clear-both</span> { clear: both; }  <span class="cmt">/* Se coloca debajo de los flotantes */</span>
+
+<span class="cmt">/* Contenedor con hijos float: overflow:auto evita colapso de altura */</span>
+<span class="sel">.contenedor</span> { overflow: auto; border: 1px solid #ccc; }</pre>
+  </div>
+
+  <h4 id="ra2-ud51-display" style="font-size:13px;color:var(--text);margin:14px 0 4px">Display y Visibility</h4>
+  <table>
+    <tr><th>Propiedad</th><th>Valor</th><th>Efecto</th></tr>
+    <tr><td><code>display</code></td><td><code>block</code></td><td>Ocupa toda la línea. Respeta width/height.</td></tr>
+    <tr><td><code>display</code></td><td><code>inline</code></td><td>Solo el ancho del contenido. NO respeta width/height.</td></tr>
+    <tr><td><code>display</code></td><td><code>inline-block</code></td><td>Híbrido: se coloca en línea pero respeta width/height.</td></tr>
+    <tr><td><code>display</code></td><td><code>none</code></td><td><strong>Oculta SIN dejar hueco.</strong> Los demás ocupan su lugar.</td></tr>
+    <tr><td><code>visibility</code></td><td><code>hidden</code></td><td><strong>Oculta CON hueco.</strong> El espacio se mantiene.</td></tr>
+    <tr><td><code>opacity</code></td><td><code>0</code></td><td>Transparente pero ocupa su espacio y responde a eventos.</td></tr>
+  </table>
+
+  <div class="box red">
+    <span>⚠️</span>
+    <span><strong>Diferencia clave para examen:</strong> <code>display:none</code> oculta el elemento y los demás ocupan su espacio. <code>visibility:hidden</code> oculta el elemento PERO el hueco se mantiene vacío. En el examen preguntan esta diferencia.</span>
+  </div>
+
+  <h4 id="ra2-ud51-zindex" style="font-size:13px;color:var(--text);margin:14px 0 4px">Z-index y superposición de capas</h4>
+  <div class="card">
+    <p><code>z-index</code> controla qué elemento se ve encima cuando hay superposición. Solo funciona en elementos <strong>posicionados</strong> (position ≠ static). A mayor valor, más cerca del usuario. Si dos elementos tienen el mismo z-index, el último en el HTML gana.</p>
+  </div>
+
+  <!-- Demo interactivo de z-index -->
+  <h4 style="font-size:13px;color:var(--text);margin:14px 0 4px">🎮 Demo interactivo — Z-index y superposición</h4>
+  <div class="ej-demo" style="position:relative;height:130px">
+    <div class="z-layer" style="background:var(--accent);top:10px;left:10px;z-index:1">Capa 1 (z:1)</div>
+    <div class="z-layer" style="background:var(--green);top:30px;left:30px;z-index:2">Capa 2 (z:2)</div>
+    <div class="z-layer" style="background:var(--red);top:50px;left:50px;z-index:3">Capa 3 (z:3)</div>
+    <div style="position:absolute;bottom:8px;right:8px;font-size:10px;color:var(--text3)">z-index: 3 está encima de todo</div>
+  </div>
+
+  <div class="cb">
+    <div class="ch"><span>CSS — Z-index y capas superpuestas</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* El padre debe tener position:relative para que los hijos usen absolute respecto a él */</span>
+<span class="sel">.contenedor</span> { position: relative; height: 200px; }
+
+<span class="cmt">/* Capas superpuestas con z-index */</span>
+<span class="sel">.capa1</span> { position: absolute; top: 10px; left: 10px; z-index: 1; background: blue; }
+<span class="sel">.capa2</span> { position: absolute; top: 30px; left: 30px; z-index: 2; background: green; }
+<span class="sel">.capa3</span> { position: absolute; top: 50px; left: 50px; z-index: 3; background: red; }
+
+<span class="cmt">/* Reglas del z-index: */</span>
+<span class="cmt">/* 1. Solo funciona con position ≠ static */</span>
+<span class="cmt">/* 2. Mayor número → más cerca del usuario */</span>
+<span class="cmt">/* 3. Si mismo z-index, el último en HTML gana */</span></pre>
+  </div>
+
+  <div class="box blue">
+    <span>💡</span>
+    <span><strong>Truco examen:</strong> Para que un <code>position:absolute</code> se posicione respecto a un contenedor específico (y no respecto a la ventana), el contenedor debe tener <code>position:relative</code>. Esto es el "truco del padre posicionado".</span>
+  </div>
+  <div class="cb">
+    <div class="ch"><span>CSS — Todos los tipos de position con ejemplo visual</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">/* ========== POSITION: cada tipo explicado ========== */</span>
+
+<span class="cmt">/* 1. static (valor por defecto) — flujo normal, top/left se ignoran */</span>
+<span class="sel">.static</span> { position: static; }
+
+<span class="cmt">/* 2. relative — se desplaza, el HUECO ORIGINAL se mantiene */</span>
+<span class="sel">.relative</span> { position: relative; top: 20px; left: 20px; }
+<span class="cmt">/* Los demás elementos NO ocupan su lugar, el hueco queda vacío */</span>
+
+<span class="cmt">/* 3. absolute — sale del flujo, respecto al padre posicionado más cercano */</span>
+<span class="sel">.absolute</span> { position: absolute; top: 0; right: 0; }
+<span class="cmt">/* Si ningún padre tiene position ≠ static, respecto a &lt;html&gt; (ventana) */</span>
+
+<span class="cmt">/* 4. fixed — fijo en la ventana, NO se mueve con scroll */</span>
+<span class="sel">.fixed</span> { position: fixed; top: 0; width: 100%; z-index: 1000; }
+
+<span class="cmt">/* 5. sticky — híbrido: fluye hasta que llega a un tope y se fija */</span>
+<span class="sel">.sticky</span> { position: sticky; top: 60px; }
+
+<span class="cmt">/* ========== DISPLAY vs VISIBILITY ========== */</span>
+<span class="sel">.oculto-sin-hueco</span> { display: none; }    <span class="cmt">/* desaparece, no deja espacio */</span>
+<span class="sel">.oculto-con-hueco</span> { visibility: hidden; } <span class="cmt">/* invisible pero el hueco se mantiene */</span>
+
+<span class="cmt">/* ========== OVERFLOW ========== */</span>
+<span class="sel">.scroll</span> { overflow: auto; height: 100px; } <span class="cmt">/* barra si desborda */</span>
+<span class="sel">.sin-scroll</span> { overflow: hidden; }          <span class="cmt">/* recorta lo que desborda */</span>
+
+<span class="cmt">/* ========== FLOAT ========== */</span>
+<span class="sel">.img-izquierda</span> { float: left; margin: 0 10px 10px 0; }
+<span class="sel">.limpiar-float</span> { clear: both; } <span class="cmt">/* elemento debajo de los floats */</span></pre>
+  </div>
+
+  <div class="box red">
+    <span>⚠️</span>
+    <span><strong>Diferencia examen:</strong> <code>display:none</code> vs <code>visibility:hidden</code>. El primero elimina la caja por completo (los demás ocupan su lugar), el segundo la oculta pero mantiene el espacio vacío. Ambos son distintos a <code>opacity:0</code> que oculta visualmente pero el elemento sigue ocupando espacio y respondiendo a eventos.</span>
+  </div>
+
+  <!-- ============================================================
+       UD5.1 — PRÁCTICA
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud51p">
+  <h3 style="color:var(--purple)">5. UD5.1 — Práctica de posicionamiento</h3>
+
+  <div class="card">
+    <p><strong>Ejercicio práctico de 7 pasos</strong> que combina todos los conceptos de posicionamiento CSS. El objetivo es crear una página con menú fixed, capas flotantes, ocultación con JavaScript, capa absolute (trampa examen), overflow, footer con clear y responsive @media.</p>
+  </div>
+
+  <h4 id="ra2-ud51p-pasos" style="font-size:13px;color:var(--text);margin:14px 0 4px">Los 7 pasos del ejercicio</h4>
+  <ol>
+    <li><strong>Menú fixed superior</strong> — <code>position:fixed; top:0; width:100%; z-index:100</code>. Enlaces con hover azul/naranja.</li>
+    <li><strong>Capa con display:none</strong> — Botón que oculta la capa sin dejar hueco.</li>
+    <li><strong>Capa con visibility:hidden</strong> — Botón que oculta la capa pero mantiene el hueco.</li>
+    <li><strong>Capa "trampa" con absolute</strong> — Capa idéntica al menú pero con <code>position:absolute</code> en lugar de fixed (se mueve con scroll).</li>
+    <li><strong>Overflow</strong> — Contenedor con overflow auto/hidden/scroll para controlar contenido desbordado.</li>
+    <li><strong>Footer con clear:both</strong> — El pie debe estar debajo de todas las capas flotantes.</li>
+    <li><strong>@media responsive</strong> — A 600px las capas flotantes pasan a float:none y width:100%.</li>
+  </ol>
+
+  <details class="vm">
+    <summary>📖 Solución completa del ejercicio práctico</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tc">&lt;!DOCTYPE html&gt;</span>
+<span class="tc">&lt;html</span> <span class="at">lang</span>=<span class="st">"es"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;style&gt;</span>
+    <span class="cmt">/* 1. Menú fixed superior */</span>
+    nav.menu { position: fixed; top: 0; left: 0; width: 100%; background: <span class="tc">#333</span>;
+               z-index: 100; padding: 10px; color: white; }
+    nav.menu a { color: white; text-decoration: none; }
+    nav.menu a:hover { text-decoration: underline; color: blue; background: orange; }
+
+    <span class="cmt">/* 2-3. Capas flotantes */</span>
+    .capa-float { width: 45%; float: left; margin: 10px; padding: 10px; border: 1px solid <span class="tc">#ccc</span>; }
+
+    <span class="cmt">/* 4. Capa trampa (idéntica al menú pero absolute) */</span>
+    .capa-trampa { position: absolute; top: 0; left: 0; width: 100%; background: <span class="tc">#333</span>;
+                   color: white; padding: 10px; z-index: 50; }
+
+    <span class="cmt">/* 5. Overflow */</span>
+    .overflow-box { height: 60px; overflow: auto; border: 1px solid <span class="tc">#999</span>; padding: 5px; }
+
+    <span class="cmt">/* 6. Footer con clear */</span>
+    footer { clear: both; background: <span class="tc">#333</span>; color: white; text-align: center; padding: 10px; }
+
+    <span class="cmt">/* 7. Responsive */</span>
+    @<span class="kw">media</span> (max-width: 600px) {
+      .capa-float { float: none; width: 100%; margin: 5px 0; }
+    }
+  <span class="tc">&lt;/style&gt;</span>
+<span class="tc">&lt;/head&gt;</span>
+<span class="tc">&lt;body&gt;</span>
+  <span class="tc">&lt;nav</span> <span class="at">class</span>=<span class="st">"menu"</span><span class="tc">&gt;</span>
+    &lt;a href="#"&gt;Inicio&lt;/a&gt; | &lt;a href="#"&gt;Productos&lt;/a&gt; | &lt;a href="#"&gt;Contacto&lt;/a&gt;
+  <span class="tc">&lt;/nav&gt;</span>
+
+  <span class="tc">&lt;div</span> <span class="at">style</span>=<span class="st">"margin-top:50px"</span><span class="tc">&gt;</span>
+    <span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"capa1"</span> <span class="at">class</span>=<span class="st">"capa-float"</span><span class="tc">&gt;</span>
+      Capa 1 - <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa1').style.display='none'"</span><span class="tc">&gt;</span>Ocultar (sin hueco)<span class="tc">&lt;/button&gt;</span>
+    <span class="tc">&lt;/div&gt;</span>
+    <span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"capa2"</span> <span class="at">class</span>=<span class="st">"capa-float"</span><span class="tc">&gt;</span>
+      Capa 2 - <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa2').style.visibility='hidden'"</span><span class="tc">&gt;</span>Ocultar (con hueco)<span class="tc">&lt;/button&gt;</span>
+    <span class="tc">&lt;/div&gt;</span>
+    <span class="tc">&lt;br</span> <span class="at">style</span>=<span class="st">"clear:both"</span><span class="tc">&gt;</span>
+
+    <span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"capa-trampa"</span><span class="tc">&gt;</span>⚠️ Capa TRAMPA (position:absolute, se mueve con scroll)<span class="tc">&lt;/div&gt;</span>
+    <span class="tc">&lt;div</span> <span class="at">style</span>=<span class="st">"height:100px"</span><span class="tc">&gt;&lt;/div&gt;</span>
+
+    <span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"overflow-box"</span><span class="tc">&gt;</span>
+      Texto muy largo que desborda el contenedor y por eso necesita scroll.
+    <span class="tc">&lt;/div&gt;</span>
+  <span class="tc">&lt;/div&gt;</span>
+
+  <span class="tc">&lt;footer&gt;</span>Footer con clear:both<span class="tc">&lt;/footer&gt;</span>
+<span class="tc">&lt;/body&gt;</span>
+<span class="tc">&lt;/html&gt;</span></div>
+    </div>
+  </details>
+  <div class="cb">
+    <div class="ch"><span>JavaScript — Ocultar capas con display:none vs visibility:hidden</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="cmt">&lt;!-- HTML: dos capas flotantes con botones para ocultar --&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"capa1"</span> <span class="at">class</span>=<span class="st">"capa-float"</span><span class="tc">&gt;</span>
+  &lt;p&gt;Capa con display (sin hueco al ocultar)&lt;/p&gt;
+  <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa1').style.display='none'"</span><span class="tc">&gt;</span>
+    Ocultar (sin hueco)
+  <span class="tc">&lt;/button&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa1').style.display='block'"</span><span class="tc">&gt;</span>
+    Mostrar de nuevo
+  <span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"capa2"</span> <span class="at">class</span>=<span class="st">"capa-float"</span><span class="tc">&gt;</span>
+  &lt;p&gt;Capa con visibility (con hueco al ocultar)&lt;/p&gt;
+  <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa2').style.visibility='hidden'"</span><span class="tc">&gt;</span>
+    Ocultar (con hueco)
+  <span class="tc">&lt;/button&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">onclick</span>=<span class="st">"document.getElementById('capa2').style.visibility='visible'"</span><span class="tc">&gt;</span>
+    Mostrar de nuevo
+  <span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- CSS: capas flotantes con clear en footer --&gt;</span>
+<span class="sel">.capa-float</span> {
+  width: 45%; float: left; margin: 10px; padding: 15px;
+  border: 1px solid <span class="tc">#ccc</span>; border-radius: 8px; background: <span class="tc">#f9f9f9</span>;
+}
+<span class="sel">footer</span> { clear: both; } <span class="cmt">/* asegura que el footer quede debajo */</span>
+
+<span class="cmt">/* @media responsive: a 600px las capas dejan de flotar */</span>
+@<span class="kw">media</span> (max-width: 600px) {
+  <span class="sel">.capa-float</span> { float: none; width: 100%; margin: 5px 0; }
+}</pre>
+  </div>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Trampa del examen:</strong> La "capa trampa" usa <code>position:absolute</code> en lugar de <code>fixed</code>. Se ve idéntica al menú pero se mueve con el scroll. Pregunta típica: "¿Qué pasa si cambiamos fixed por absolute?" → la capa se desplaza al hacer scroll.</span>
+  </div>
+
+  <!-- ============================================================
+       UD5.1B — FLOAT EXTRA
+  ============================================================ -->
+  <div class="subsec" id="ra2-ud51b">
+  <h3 style="color:var(--green)">6. UD5.1B — Float Extra (8 pasos)</h3>
+
+  <div class="card">
+    <p><strong>Ejercicio completo Float Extra:</strong> Crear una web que integra menú fixed, efecto parallax, aviso de cookies, float de imágenes, menú lateral flotante, clear, hover y responsive. Son 8 pasos progresivos.</p>
+  </div>
+
+  <h4 id="ra2-ud51b-pasos" style="font-size:13px;color:var(--text);margin:14px 0 4px">Los 8 pasos</h4>
+  <ol>
+    <li><strong>Menú fixed superior</strong> — Barra de navegación fija con z-index alto.</li>
+    <li><strong>Fondo fijo parallax</strong> — <code>background-attachment: fixed</code> para crear efecto parallax.</li>
+    <li><strong>Aviso de cookies</strong> — Capa que desaparece con <code>display:none</code> al hacer clic en Aceptar.</li>
+    <li><strong>Float de imágenes</strong> — Imágenes con <code>float: left</code>, texto fluye alrededor.</li>
+    <li><strong>Menú lateral flotante</strong> — Barra lateral con <code>float: right</code>.</li>
+    <li><strong>Clear ambos lados</strong> — <code>clear: both</code> en el footer para que quede debajo de todo.</li>
+    <li><strong>Hover efectos</strong> — <code>:hover</code> en imágenes y botones (opacidad, zoom, color).</li>
+    <li><strong>@media responsive</strong> — Ajustar floats a 100% en móvil.</li>
+  </ol>
+
+  <details class="vm">
+    <summary>📖 Solución Float Extra — Código completo</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tc">&lt;style&gt;</span>
+  <span class="cmt">/* 1. Menú fixed */</span>
+  nav.top { position: fixed; top: 0; width: 100%; background: <span class="tc">#1a1a2e</span>; color: white;
+            padding: 12px; z-index: 1000; }
+  nav.top a { color: white; margin: 0 10px; text-decoration: none; }
+  nav.top a:hover { color: <span class="tc">#e94560</span>; }
+
+  <span class="cmt">/* 2. Fondo parallax */</span>
+  .parallax { background: <span class="tc">#16213e</span>; background-attachment: fixed; padding: 60px 20px;
+              color: white; text-align: center; margin-top: 50px; }
+
+  <span class="cmt">/* 3. Aviso cookies */</span>
+  #cookies { background: <span class="tc">#333</span>; color: white; padding: 10px; text-align: center; }
+  #cookies button { background: <span class="tc">#e94560</span>; color: white; border: none; padding: 5px 15px; cursor: pointer; }
+
+  <span class="cmt">/* 4. Float imágenes */</span>
+  .img-float { float: left; margin: 10px; width: 200px; border-radius: 8px; }
+  .img-float:hover { opacity: 0.8; transform: scale(1.05); transition: 0.3s; }
+
+  <span class="cmt">/* 5. Menú lateral float */</span>
+  .sidebar { float: right; width: 200px; background: <span class="tc">#f0f0f0</span>; padding: 10px;
+             margin: 10px; border-radius: 8px; }
+
+  <span class="cmt">/* 6. Clear footer */</span>
+  footer { clear: both; background: <span class="tc">#1a1a2e</span>; color: white; text-align: center; padding: 15px; }
+
+  <span class="cmt">/* 8. Responsive */</span>
+  @<span class="kw">media</span> (max-width: 600px) {
+    .img-float { float: none; width: 100%; margin: 5px 0; }
+    .sidebar { float: none; width: 100%; }
+  }
+<span class="tc">&lt;/style&gt;</span>
+
+<span class="tc">&lt;!-- 1. Menú fixed --&gt;</span>
+<span class="tc">&lt;nav</span> <span class="at">class</span>=<span class="st">"top"</span><span class="tc">&gt;</span>
+  &lt;strong&gt;Mi Web&lt;/strong&gt; &lt;a href="#"&gt;Inicio&lt;/a&gt; &lt;a href="#"&gt;Galería&lt;/a&gt; &lt;a href="#"&gt;Blog&lt;/a&gt;
+<span class="tc">&lt;/nav&gt;</span>
+
+<span class="tc">&lt;!-- 2. Parallax --&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"parallax"</span><span class="tc">&gt;</span>
+  &lt;h1&gt;Bienvenido a mi web&lt;/h1&gt;
+  &lt;p&gt;Fondo fijo con background-attachment: fixed&lt;/p&gt;
+<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;!-- 3. Cookies --&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"cookies"</span><span class="tc">&gt;</span>
+  Esta web usa cookies &lt;button onclick="this.parentElement.style.display='none'"&gt;Aceptar&lt;/button&gt;
+<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;!-- 4. Contenido con float --&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"contenido"</span><span class="tc">&gt;</span>
+  &lt;h2&gt;Galería de imágenes&lt;/h2&gt;
+  &lt;img src="foto1.jpg" class="img-float"&gt;
+  &lt;img src="foto2.jpg" class="img-float"&gt;
+  &lt;p&gt;Texto que fluye alrededor de las imágenes...&lt;/p&gt;
+
+  <span class="cmt">&lt;!-- 5. Sidebar --&gt;</span>
+  &lt;aside class="sidebar"&gt;
+    &lt;h3&gt;Menú lateral&lt;/h3&gt;
+    &lt;ul&gt;&lt;li&gt;Opción 1&lt;/li&gt;&lt;li&gt;Opción 2&lt;/li&gt;&lt;/ul&gt;
+  &lt;/aside&gt;
+<span class="tc">&lt;/div&gt;</span>
+
+<span class="tc">&lt;!-- 6. Footer --&gt;</span>
+<span class="tc">&lt;footer&gt;</span>© 2025 - IES Juan de Garay &amp;mdash; float:extra<span class="tc">&lt;/footer&gt;</span></div>
+    </div>
+  </details>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Claves del Float Extra para examen:</strong> (1) El menú fixed necesita <code>width: 100%</code> y <code>z-index</code> alto. (2) <code>background-attachment: fixed</code> crea el efecto parallax. (3) El aviso de cookies se oculta con <code>display:none</code> via <code>onclick</code>. (4) El footer necesita <code>clear: both</code> para estar debajo de los flotantes. (5) El <code>:hover</code> se usa para efectos visuales al pasar el ratón.</span>
+  </div>
+  <div class="cb">
+    <div class="ch"><span>HTML/CSS — Página completa Float Extra con parallax y cookies</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button>
+    </div>
+    <pre class="code"><span class="tc">&lt;!DOCTYPE html&gt;</span>
+<span class="tc">&lt;html</span> <span class="at">lang</span>=<span class="st">"es"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+<span class="tc">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;style&gt;</span>
+  <span class="cmt">/* 1. Menú fixed superior */</span>
+  nav.top { position: fixed; top: 0; width: 100%; background: <span class="tc">#1a1a2e</span>; color: white; padding: 12px; z-index: 1000; }
+  nav.top a { color: white; margin: 0 10px; text-decoration: none; }
+  nav.top a:hover { color: <span class="tc">#e94560</span>; text-decoration: underline; }
+
+  <span class="cmt">/* 2. Parallax: fondo fijo que no se desplaza */</span>
+  .parallax { background: <span class="tc">#16213e</span>; background-attachment: fixed; padding: 80px 20px; color: white; text-align: center; margin-top: 50px; }
+
+  <span class="cmt">/* 3. Aviso cookies con display:none al aceptar */</span>
+  #cookies { background: <span class="tc">#333</span>; color: white; padding: 10px; text-align: center; }
+  #cookies button { background: <span class="tc">#e94560</span>; color: white; border: none; padding: 5px 15px; cursor: pointer; }
+
+  <span class="cmt">/* 4. Float de imágenes */</span>
+  .img-float { float: left; margin: 10px; width: 200px; border-radius: 8px; transition: 0.3s; }
+  .img-float:hover { opacity: 0.8; transform: scale(1.05); }
+
+  <span class="cmt">/* 5. Menú lateral flotante a la derecha */</span>
+  .sidebar { float: right; width: 200px; background: <span class="tc">#f0f0f0</span>; padding: 10px; margin: 10px; border-radius: 8px; }
+  .sidebar a { display: block; padding: 5px; text-decoration: none; color: <span class="tc">#333</span>; }
+  .sidebar a:hover { background: <span class="tc">#ddd</span>; border-radius: 4px; }
+
+  <span class="cmt">/* 6. Clear both en footer */</span>
+  footer { clear: both; background: <span class="tc">#1a1a2e</span>; color: white; text-align: center; padding: 15px; }
+
+  <span class="cmt">/* 7. Hover en enlaces del menú */</span>
+  <span class="cmt">/* ya se aplica arriba con nav.top a:hover */</span>
+
+  <span class="cmt">/* 8. Responsive: floats a 100% en móvil */</span>
+  @<span class="kw">media</span> (max-width: 600px) {
+    .img-float { float: none; width: 100%; margin: 5px 0; }
+    .sidebar { float: none; width: 100%; }
+  }
+<span class="tc">&lt;/style&gt;</span>
+<span class="tc">&lt;/head&gt;</span>
+<span class="tc">&lt;body&gt;</span>
+  <span class="tc">&lt;nav</span> <span class="at">class</span>=<span class="st">"top"</span><span class="tc">&gt;</span>
+    &lt;a href="#"&gt;Inicio&lt;/a&gt; &lt;a href="#"&gt;Galería&lt;/a&gt; &lt;a href="#"&gt;Blog&lt;/a&gt;
+  <span class="tc">&lt;/nav&gt;</span>
+  <span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"parallax"</span><span class="tc">&gt;</span>&lt;h1&gt;Bienvenido&lt;/h1&gt;&lt;p&gt;Fondo parallax con background-attachment: fixed&lt;/p&gt;<span class="tc">&lt;/div&gt;</span>
+  <span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"cookies"</span><span class="tc">&gt;</span>🍪 Esta web usa cookies &lt;button onclick="this.parentElement.style.display='none'"&gt;Aceptar&lt;/button&gt;<span class="tc">&lt;/div&gt;</span>
+  <span class="tc">&lt;div</span> <span class="at">class</span>=<span class="st">"contenido"</span><span class="tc">&gt;</span>
+    &lt;h2&gt;Galería&lt;/h2&gt;
+    &lt;img src="foto1.jpg" class="img-float"&gt; &lt;img src="foto2.jpg" class="img-float"&gt;
+    &lt;p&gt;Texto que fluye alrededor de las imágenes flotantes...&lt;/p&gt;
+    <span class="tc">&lt;aside</span> <span class="at">class</span>=<span class="st">"sidebar"</span><span class="tc">&gt;</span>&lt;h3&gt;Menú Lateral&lt;/h3&gt;&lt;a href="#"&gt;Opción 1&lt;/a&gt;&lt;a href="#"&gt;Opción 2&lt;/a&gt;<span class="tc">&lt;/aside&gt;</span>
+  <span class="tc">&lt;/div&gt;</span>
+  <span class="tc">&lt;footer&gt;</span>© 2025 IES Juan de Garay — Float:Extra<span class="tc">&lt;/footer&gt;</span>
+<span class="tc">&lt;/body&gt;</span>
+<span class="tc">&lt;/html&gt;</span></pre>
+  </div>
+
+</section>
+
+</div>
+
+<footer class="footer">
+  LM · IES Juan de Garay · DAW
+</footer>
+
+<script>
+/* --- Funciones para formularios interactivos (UD4.2B) --- */
+function sumarNumeros(event) {
+  event.preventDefault();
+  const a = parseFloat(document.getElementById('num1').value) || 0;
+  const b = parseFloat(document.getElementById('num2').value) || 0;
+  document.getElementById('resultado-suma').textContent = a + b;
+}
+function cambiarTexto() {
+  document.getElementById('texto-cambia').textContent = '¡Has hecho clic en el botón!';
+}
+function cambiarColor(color) {
+  document.getElementById('texto-cambia').style.color = color;
+}
+function toggleVisibilidad() {
+  const caja = document.getElementById('caja-oculta');
+  caja.style.display = caja.style.display === 'none' ? 'block' : 'none';
+}
+function actualizarPreview(valor) {
+  document.getElementById('preview-text').textContent = valor;
+}
+function cambioHecho(valor) {
+  document.getElementById('change-value').textContent = valor;
+}
+function actualizarBarra(val) {
+  document.getElementById('barra-progreso').style.width = val + '%';
+  document.getElementById('range-value').textContent = val;
+}
+function validarFormulario(event) {
+  event.preventDefault();
+  let valido = true;
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const errNombre = document.getElementById('err-nombre');
+  if (nombre.length < 2) { errNombre.textContent = '❌ Mínimo 2 caracteres'; valido = false; }
+  else { errNombre.textContent = '✅ Correcto'; }
+  const email = document.getElementById('f-email').value.trim();
+  const errEmail = document.getElementById('err-email');
+  if (!email.includes('@') || !email.includes('.')) { errEmail.textContent = '❌ Email inválido'; valido = false; }
+  else { errEmail.textContent = '✅ Correcto'; }
+  const pass = document.getElementById('f-pass').value;
+  const errPass = document.getElementById('err-pass');
+  if (pass.length < 6) { errPass.textContent = '❌ Mínimo 6 caracteres'; valido = false; }
+  else { errPass.textContent = '✅ Correcto'; }
+  const msg = document.getElementById('form-mensaje');
+  if (valido) { msg.textContent = '✅ Formulario válido. ¡Registrado!'; msg.style.color = 'var(--green)'; }
+  else { msg.textContent = '❌ Corrige los errores'; msg.style.color = 'var(--red)'; }
+  return false;
+}
+function limpiarErrores() {
+  document.querySelectorAll('#form-registro span[id^="err-"]').forEach(e => e.textContent = '');
+  document.getElementById('form-mensaje').textContent = '';
+}
+function cambiarTema(valor) {
+  const caja = document.getElementById('caja-tema');
+  const texto = document.getElementById('tema-texto');
+  if (valor === 'light') { caja.style.background = '#fff'; caja.style.border = '1px solid #ccc'; texto.style.color = '#333'; texto.textContent = '☀️ Tema claro'; }
+  else if (valor === 'dark') { caja.style.background = 'var(--bg2)'; caja.style.border = '1px solid var(--border)'; texto.style.color = 'var(--text)'; texto.textContent = '🌙 Tema oscuro'; }
+  else if (valor === 'blue') { caja.style.background = '#1a237e'; caja.style.border = '1px solid #3949ab'; texto.style.color = '#fff'; texto.textContent = '🔵 Tema azul'; }
+  else { caja.style.background = 'var(--card)'; caja.style.border = '2px solid var(--accent)'; texto.style.color = 'var(--accent)'; texto.textContent = '🎨 Tema personalizado'; }
+}
+function toggleTerminos(checked) {
+  document.getElementById('check-msg').textContent = checked ? '✅ Términos aceptados' : '❌ No aceptado';
+  document.getElementById('check-msg').style.color = checked ? 'var(--green)' : 'var(--red)';
+}
+function radioSeleccion(val) {
+  document.getElementById('radio-valor').textContent = val;
+}
+function mostrarFecha(val) {
+  document.getElementById('fecha-msg').textContent = val ? '📅 Fecha seleccionada: ' + val : 'Selecciona una fecha';
+}
+function cambiarFondoColor(color) {
+  document.getElementById('color-muestra').style.background = color;
+}
+
+function actualizarPos(tipo) {
+  const caja = document.getElementById('posDemoBox');
+  const cont = document.getElementById('posDemoContainer');
+  caja.style.position = tipo;
+  caja.style.top = '20px';
+  caja.style.left = '20px';
+  if (tipo === 'static') {
+    caja.textContent = 'Caja demo (static) - top/left ignorados';
+    caja.style.background = 'var(--accent)';
+  } else if (tipo === 'relative') {
+    caja.textContent = 'Caja demo (relative) - se desplaza, hueco se mantiene';
+    caja.style.background = 'var(--green)';
+  } else if (tipo === 'absolute') {
+    caja.textContent = 'Caja demo (absolute) - sale del flujo';
+    caja.style.background = 'var(--red)';
+  } else if (tipo === 'fixed') {
+    caja.textContent = 'Caja demo (fixed) - no se mueve con scroll';
+    caja.style.background = 'var(--yellow)';
+    caja.style.color = '#222';
+  }
+}
+</script>
+
+  <script src="js/shared.js"></script>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
+</body>
+</html>

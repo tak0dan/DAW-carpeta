@@ -1,0 +1,90 @@
+insertOne
+
+db.prestamos.insertOne({
+  amigo: "Zhang Wei",
+  objeto: "1.5 sheets of paper",
+  cantidad: 1.5,
+  fecha: "2025-01-03",
+  descripcion: "He should return at least one."
+})
+
+
+
+insertMany
+
+db.prestamos.insertMany([
+  {
+    amigo: "Myroslav Petrenko",
+    objeto: "300 toolboxes for mechanical keyboard switch lubrication",
+    cantidad: 300,
+    fecha: "2024-12-21",
+    descripcion: "For some 'project'."
+  },
+  {
+    amigo: "Li Hua",
+    objeto: "custom LEGO figures (dishonored edition)",
+    cantidad: 12,
+    fecha: "2024-11-10",
+    descripcion: "This guy is a fan, he keeps it real."
+  },
+  {
+    amigo: "Anatoly Kravchenko",
+    objeto: "accums from a Nokia 3310",
+    cantidad: 7,
+    fecha: "2025-02-02",
+    descripcion: "WHY??"
+  }
+])
+
+
+
+
+
+Update Data
+
+db.prestamos.updateOne(
+  { amigo: "Miroslav Petrenko" },
+  { $set: { cantidad: 420 } }
+)
+
+db.prestamos.updateOne(
+  { amigo: "Anatoly Kravchenko" },
+  { $set: { objeto: "slightly-used accums from Nokia 3310" } },
+  { $set: { description: "This doesn't even make sense anymore..." } }
+)
+
+
+db.prestamos.updateMany(
+  {},
+  { $set: { estado: "They swore to give it all back in around 3-13 days." } }
+)
+
+
+
+FIND:
+
+db.prestamos.find(
+  { cantidad: { $gte: 10 } }
+)
+
+
+db.prestamos.find(
+  { objeto: { $regex: /nokia/i } }
+)
+
+
+db.prestamos.find({
+  descripcion: { $exists: true },
+  $or: [
+    { descripcion: { $regex: /nokia/i } },
+    { descripcion: { $regex: /paper/i } }
+  ]
+})
+
+
+
+
+db.prestamos.find(
+  { amigo: { $nin: ["Li Hua", "Zhang Wei"] } },
+  { amigo: 1, objeto: 1, cantidad: 1, _id: 0 }
+)

@@ -1,0 +1,112 @@
+INSTRUCCIONES
+
+Responde a cada afirmacion con un valor del 1 al 5:
+Valor  Significado
+1      Nada identificado
+2      Poco identificado
+3      Algo identificado
+4      Bastante identificado
+5      Totalmente identificado
+
+BLOQUE 1: INTERESES PROFESIONALES (max. 25 puntos)
+
+    Me gusta disenar interfaces visuales atractivas
+    Disfruto organizando datos o logica interna
+    Me interesa como funcionan las aplicaciones por dentro
+    Prefiero ver resultados visuales rapidos
+    Me gusta resolver problemas complejos
+
+Puntuacion: 16 / 25
+
+BLOQUE 2: HABILIDADES TECNICAS (max. 25 puntos)
+
+    Se usar HTML/CSS con soltura
+    Entiendo bien la logica de programacion
+    Me manejo con JavaScript u otro lenguaje
+    Se buscar soluciones en documentacion tecnica
+    Puedo aprender herramientas nuevas sin ayuda
+
+Puntuacion: 17 / 25
+
+BLOQUE 3: COMPETENCIAS PERSONALES (max. 25 puntos)
+
+    Soy constante aunque algo no me salga
+    Me organizo bien el tiempo
+    Me adapto facilmente a cambios
+    Trabajo bien de forma autonoma
+    Me gusta aprender cosas nuevas
+
+Puntuacion: 25 / 25
+
+BLOQUE 4: ORIENTACION PROFESIONAL (max. 25 puntos)
+
+    Me veo trabajando como frontend
+    Me veo trabajando como backend
+    Me gustaria ser fullstack
+    Me interesa el trabajo en remoto
+    Me gustaria seguir formandome tras el ciclo
+
+Puntuacion: 19 / 25
+
+RESULTADO TOTAL
+
+Total: 77 / 100 puntos
+
+INTERPRETACION
+
+Nivel general: Perfil en desarrollo.
+
+Interpretacion personal:
+Mi perfil tecnico es relativamente solido a nivel de actitud, autonomia y capacidad de aprendizaje. No parto de cero: ya tengo interes real por la programacion, experiencia en entornos open source y una base tecnica que me permite seguir creciendo. Aun asi, considero que mi perfil todavia esta en fase de consolidacion para el mercado laboral, sobre todo en lo relacionado con experiencia profesional demostrable, portfolio enfocado y profundidad en stacks concretos que suelen pedir las empresas.
+
+Orientacion profesional:
+Por mis intereses, mi capacidad tecnica y mi afinidad con sistemas, software de bajo nivel, Linux, NixOS y FOSS, creo que mi perfil encaja mejor con una orientacion fullstack con sesgo tecnico hacia backend, infraestructura y sistemas. Tambien me interesa la parte visual, pero pienso que mi diferencial mas fuerte esta en entender como funcionan las cosas por dentro y en aprender de forma autonoma.
+
+PARTE EVALUABLE OBLIGATORIA
+
+Mi perfil profesional actual:
+Soy estudiante de IT y colaborador en proyectos FOSS relacionados con Linux, entornos de escritorio y arquitectura de sistemas basados en NixOS. Me apasiona estudiar programacion y seguir aprendiendo de forma constante. Mi perfil actual combina curiosidad tecnica, autonomia y experiencia real en comunidades open source, aunque todavia necesito convertir esa base en un perfil mas claro para el mercado laboral y en proyectos mas orientados a puestos junior.
+
+Tres fortalezas:
+1. Capacidad de aprendizaje autonoma y constancia muy altas.
+2. Experiencia tecnica variada: Linux, FOSS, sistemas, varios lenguajes y distintos entornos.
+3. Perfil internacional y adaptable: idiomas, diversidad de herramientas y facilidad para moverte entre tecnologias.
+
+Tres aspectos a mejorar:
+1. Profundizar mas en un stack profesional concreto orientado a empleo junior.
+2. Ganar experiencia demostrable en proyectos cerrados y portfolio orientado a empresa.
+3. Acercarme al mercado laboral con practicas, networking y una mejor comunicacion profesional de mi perfil.
+
+Analisis DAFO
+
+Fortalezas:
+- Alta motivacion por aprender y mejorar.
+- Experiencia colaborando en proyectos open source.
+- Buena autonomia para investigar documentacion y resolver problemas.
+- Interes real por sistemas, desarrollo y tecnologia en general.
+- Capacidad de adaptacion a herramientas y entornos nuevos.
+
+Debilidades:
+- Poca experiencia laboral directa en empresa.
+- Perfil tecnico amplio pero todavia poco especializado para una primera candidatura.
+- Necesidad de reforzar stack web demandado por el mercado (framework, testing, CI/CD).
+- Falta de portfolio centrado en proyectos terminados y bien presentados.
+
+Oportunidades:
+- El mercado sigue demandando perfiles junior con buena base tecnica y capacidad de aprendizaje.
+- Mi experiencia en FOSS puede diferenciarme frente a otros candidatos sin colaboracion real.
+- Puedo usar GitHub, LinkedIn y proyectos personales para mostrar valor aunque no tenga experiencia laboral formal.
+- Un perfil fullstack de entrada me abre mas puertas que uno demasiado cerrado.
+
+Amenazas:
+- Alta competencia en puestos junior.
+- Muchas ofertas piden experiencia o dominio de herramientas concretas desde el primer momento.
+- Si no enfoco mi perfil, puedo transmitir una imagen demasiado dispersa.
+- El uso superficial de IA puede hacer que otros candidatos parezcan mas preparados de lo que realmente estan.
+
+Acciones concretas para mejorar:
+1. Completar una ruta clara de formacion en TypeScript, framework frontend y testing.
+2. Crear 2 o 3 proyectos web terminados y desplegados con buen README y capturas.
+3. Mejorar GitHub y LinkedIn para presentar un perfil junior claro y profesional.
+4. Buscar practicas, colaboraciones o primeras experiencias freelance/controladas para ganar experiencia aplicada.
+5. Aprovechar certificaciones o cursos reconocibles para reforzar mi candidatura inicial.
