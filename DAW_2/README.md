@@ -13,4 +13,6 @@ Courses for group 2CFSD (from the course portal, 'Resum dels cursos').
 
 Tutor's emails, attachments and analysis (with dates): [Tutor_2026-27/](Tutor_2026-27/README.md). Classmate's material: [Classmate_Eden/](Classmate_Eden/README.md), including her DWES, Desplegament and Projecte-Intermodular folders (not on the portal, so not course folders here).
 
+Modules that are not on the portal (Despliegue, DWES, Proyecto Intermodular) are in [Other_Modules/](Other_Modules/); last year's work is in `Archive/`.
+
 Each course folder has the same skeleton — see its `README.md`.

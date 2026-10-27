@@ -5,7 +5,7 @@ set -euo pipefail
 # Name of the shortcut in your OneDrive "My files" (OneDrive prefixed the owner).
 REMOTE_DIR="MARCELO LLACER, DANIEL's files - dwec-shared"
 SYNC_DIR="$HOME/OneDrive"       # the client's sync_dir (its default)
-LINK="$HOME/Studies/DWEC_Desarrollo_Web_en_Entorno_Cliente/dwec-shared"
+LINK="$HOME/Studies/DAW_2/DWEC/sync/dwec-shared-onedrive"
 
 # Download only this one folder; never upload or delete anything online.
 onedrive --sync --download-only --single-directory "$REMOTE_DIR" "$@"
