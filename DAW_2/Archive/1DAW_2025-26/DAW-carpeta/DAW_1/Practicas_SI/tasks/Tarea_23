@@ -1,0 +1,31 @@
+TRABAJO 23:  Mi calculadora
+
+USO: mycalc.sh x y z (usando parámetros, if, expr y $() ó ``)
+
+Elabora un Shell Script Bash llamado mycalc.sh que admita tres parámetros, el primero y el tercero admitirá valores numéricos, el segundo admitirá las siguientes palabras: mas o men o mul o div, además, si no se le mandan tres parámetros debe dar un error y terminar, seguidamente vemos unos ejemplos de funcionamiento donde se aprecian los mensajes que tiene que mostrar el script:
+
+./mycalc.sh
+
+ERROR: Este programa requiere tres parametros
+
+./mycalc.sh hola mas 5
+ERROR: Parámetro uno o tres no numérico
+
+./mycalc.sh 5 mas 7
+La suma de 5 y 7 da 12
+
+./mycalc.sh 7 men 5
+La resta de 7 y 5 da 2
+
+./mycalc.sh 5 mul 7
+La multiplicación de 5 y 7 da 35
+
+./mycalc.sh 7 div 5
+La división de 7 y 5 da 1
+
+
+RECUERDA: Todo script entregado tiene que tener al principio lo siguiente: funcionar solamente el BASH  (poned #!/bin/bash), tener dos comentarios uno diciendo de que es el script y otro con los créditos del programa, borrar la pantalla.
+
+
+Se pide entregar el archivo mycalc.sh
+

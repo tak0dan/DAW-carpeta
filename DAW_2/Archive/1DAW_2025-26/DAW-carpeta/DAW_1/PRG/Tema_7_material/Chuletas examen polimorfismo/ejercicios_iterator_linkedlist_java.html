@@ -1,0 +1,373 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1rem 0;font-family:var(--font-sans)}
+.cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}
+.cat{padding:5px 12px;border-radius:20px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:12px;cursor:pointer;transition:all .15s}
+.cat.on{background:var(--color-background-tertiary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{padding:6px 13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:12px;cursor:pointer;transition:all .15s}
+.tab.on{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary);font-weight:500}
+.tab:hover:not(.on){background:var(--color-background-secondary)}
+.ex{display:none}
+.ex.on{display:block}
+.etitle{font-size:15px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.edesc{font-size:13px;color:var(--color-text-secondary);line-height:1.6;margin-bottom:1rem}
+.code{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:1rem 1.25rem;font-family:var(--font-mono);font-size:12.5px;line-height:1.75;color:var(--color-text-primary);white-space:pre;overflow-x:auto;margin-bottom:1rem}
+.kw{color:#7F77DD;font-weight:500}
+.cm{color:var(--color-text-tertiary)}
+.str{color:#1D9E75}
+.num{color:#BA7517}
+.note{background:var(--color-background-info);border-left:3px solid #378ADD;border-radius:0;padding:.7rem 1rem;font-size:13px;color:var(--color-text-primary);line-height:1.6;margin-bottom:1rem}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:500;margin-bottom:.75rem}
+.b-purple{background:#EEEDFE;color:#3C3489}
+.b-teal{background:#E1F5EE;color:#085041}
+.b-coral{background:#FAECE7;color:#712B13}
+.b-blue{background:#E6F1FB;color:#0C447C}
+.ask{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);font-size:12px;cursor:pointer;margin-top:.25rem}
+.ask:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+</style>
+
+<div class="wrap">
+<h2 class="sr-only">Ejercicios de Iterator, List, LinkedList y ListIterator en Java</h2>
+
+<div class="cats" id="cats"></div>
+<div class="tabs" id="tabs"></div>
+<div id="exContainer"></div>
+</div>
+
+<script>
+const data = [
+  {
+    cat:"Iterator",badge:"b-purple",
+    items:[
+      {
+        title:"Recorrer una lista con Iterator",
+        desc:"Recorre todos los elementos de un ArrayList usando Iterator. Es la forma genérica compatible con cualquier Collection.",
+        code:`<span class="kw">public static void</span> recorrerConIterator(List&lt;String&gt; lista) {
+    Iterator&lt;String&gt; it = lista.iterator();
+    <span class="kw">while</span> (it.hasNext()) {
+        String elem = it.next();
+        System.out.println(elem);
+    }
+}
+
+<span class="cm">// Uso:</span>
+List&lt;String&gt; l = <span class="kw">new</span> ArrayList&lt;&gt;();
+l.add(<span class="str">"Ana"</span>); l.add(<span class="str">"Luis"</span>); l.add(<span class="str">"Marta"</span>);
+recorrerConIterator(l); <span class="cm">// Ana, Luis, Marta</span>`,
+        note:"hasNext() comprueba si quedan elementos. next() devuelve el siguiente y avanza el cursor. Nunca llames a next() sin comprobar hasNext() antes.",
+        ask:"¿Cuándo es mejor usar Iterator en vez de un for-each en Java?"
+      },
+      {
+        title:"Eliminar elementos mientras se recorre (Iterator.remove)",
+        desc:"Borra todos los elementos que cumplan una condición durante el recorrido. Esto NO se puede hacer con for-each (lanza ConcurrentModificationException).",
+        code:`<span class="kw">public static void</span> eliminarPares(List&lt;Integer&gt; lista) {
+    Iterator&lt;Integer&gt; it = lista.iterator();
+    <span class="kw">while</span> (it.hasNext()) {
+        <span class="kw">int</span> n = it.next();
+        <span class="kw">if</span> (n % <span class="num">2</span> == <span class="num">0</span>) {
+            it.remove(); <span class="cm">// seguro: elimina el último next()</span>
+        }
+    }
+}
+
+<span class="cm">// Uso:</span>
+List&lt;Integer&gt; l = <span class="kw">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>,<span class="num">6</span>));
+eliminarPares(l);
+System.out.println(l); <span class="cm">// [1, 3, 5]</span>`,
+        note:"it.remove() elimina el elemento devuelto por el último next(). Es la única forma correcta de borrar elementos al recorrer una colección.",
+        ask:"¿Por qué lanza ConcurrentModificationException si borro con lista.remove() dentro de un for-each?"
+      },
+      {
+        title:"Buscar y contar con Iterator",
+        desc:"Cuenta cuántos elementos cumplen una condición recorriendo con Iterator.",
+        code:`<span class="kw">public static int</span> contarMayoresDe(List&lt;Integer&gt; lista, <span class="kw">int</span> umbral) {
+    Iterator&lt;Integer&gt; it = lista.iterator();
+    <span class="kw">int</span> contador = <span class="num">0</span>;
+    <span class="kw">while</span> (it.hasNext()) {
+        <span class="kw">if</span> (it.next() &gt; umbral) {
+            contador++;
+        }
+    }
+    <span class="kw">return</span> contador;
+}
+
+<span class="cm">// Uso:</span>
+List&lt;Integer&gt; l = Arrays.asList(<span class="num">3</span>, <span class="num">8</span>, <span class="num">1</span>, <span class="num">15</span>, <span class="num">6</span>, <span class="num">20</span>);
+System.out.println(contarMayoresDe(l, <span class="num">7</span>)); <span class="cm">// 3</span>`,
+        note:"El patrón: obtener el iterator, while(hasNext()), llamar next() una sola vez por iteración y guardar el resultado en una variable.",
+        ask:"¿Puedo usar Stream en vez de Iterator para contar elementos en Java?"
+      }
+    ]
+  },
+  {
+    cat:"List",badge:"b-teal",
+    items:[
+      {
+        title:"Recorrer con for clásico y con for-each",
+        desc:"Las dos formas básicas de recorrer una List. El for clásico permite acceder por índice; el for-each es más limpio cuando no necesitas el índice.",
+        code:`<span class="cm">// For clásico — útil cuando necesitas el índice</span>
+<span class="kw">public static void</span> recorrerConIndice(List&lt;String&gt; lista) {
+    <span class="kw">for</span> (<span class="kw">int</span> i = <span class="num">0</span>; i &lt; lista.size(); i++) {
+        System.out.println(i + <span class="str">": "</span> + lista.get(i));
+    }
+}
+
+<span class="cm">// For-each — cuando no necesitas el índice</span>
+<span class="kw">public static void</span> recorrerForEach(List&lt;String&gt; lista) {
+    <span class="kw">for</span> (String s : lista) {
+        System.out.println(s);
+    }
+}
+
+<span class="cm">// Uso:</span>
+List&lt;String&gt; l = Arrays.asList(<span class="str">"rojo"</span>, <span class="str">"verde"</span>, <span class="str">"azul"</span>);
+recorrerConIndice(l); <span class="cm">// 0:rojo  1:verde  2:azul</span>
+recorrerForEach(l);   <span class="cm">// rojo  verde  azul</span>`,
+        note:"get(i) en ArrayList es O(1). En LinkedList es O(n), así que para LinkedList siempre usa Iterator o for-each, nunca el for clásico con índice.",
+        ask:"¿Cuándo debo usar for con índice y cuándo for-each en una List de Java?"
+      },
+      {
+        title:"Modificar elementos de una List mientras se recorre",
+        desc:"Recorre la lista con un ListIterator para poder modificar (set) o insertar (add) elementos durante el recorrido.",
+        code:`<span class="kw">public static void</span> duplicarValores(List&lt;Integer&gt; lista) {
+    ListIterator&lt;Integer&gt; it = lista.listIterator();
+    <span class="kw">while</span> (it.hasNext()) {
+        <span class="kw">int</span> val = it.next();
+        it.set(val * <span class="num">2</span>); <span class="cm">// reemplaza el elemento actual</span>
+    }
+}
+
+<span class="cm">// Uso:</span>
+List&lt;Integer&gt; l = <span class="kw">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>));
+duplicarValores(l);
+System.out.println(l); <span class="cm">// [2, 4, 6, 8]</span>`,
+        note:"ListIterator.set() sustituye el último elemento devuelto por next() o previous(). No puedes usar set() sin haber llamado antes next() o previous().",
+        ask:"¿Qué diferencia hay entre Iterator y ListIterator en Java?"
+      },
+      {
+        title:"Ordenar y buscar en una List",
+        desc:"Ordena una lista de objetos con Comparator y luego busca con binarySearch.",
+        code:`<span class="cm">// Ordenar por longitud de cadena</span>
+List&lt;String&gt; l = <span class="kw">new</span> ArrayList&lt;&gt;(Arrays.asList(
+    <span class="str">"banana"</span>, <span class="str">"kiwi"</span>, <span class="str">"manzana"</span>, <span class="str">"uva"</span>));
+
+Collections.sort(l, Comparator.comparingInt(String::length));
+System.out.println(l); <span class="cm">// [uva, kiwi, banana, manzana]</span>
+
+<span class="cm">// Buscar con binarySearch (lista debe estar ordenada)</span>
+Collections.sort(l); <span class="cm">// orden alfabético</span>
+<span class="kw">int</span> pos = Collections.binarySearch(l, <span class="str">"kiwi"</span>);
+System.out.println(<span class="str">"Encontrado en posición: "</span> + pos);
+
+<span class="cm">// También puedes usar subList para trabajar con una parte:</span>
+List&lt;String&gt; sub = l.subList(<span class="num">1</span>, <span class="num">3</span>); <span class="cm">// [índice 1 al 2]</span>
+System.out.println(sub);`,
+        note:"subList() devuelve una vista respaldada por la lista original: modificar el subList modifica la lista original también.",
+        ask:"¿Cómo funciona Collections.binarySearch y qué devuelve si no encuentra el elemento?"
+      }
+    ]
+  },
+  {
+    cat:"LinkedList",badge:"b-coral",
+    items:[
+      {
+        title:"LinkedList como cola (Queue) y como pila (Deque)",
+        desc:"LinkedList implementa Deque, por lo que puede usarse como pila (push/pop) o como cola (offer/poll) con métodos específicos.",
+        code:`<span class="cm">// Como Cola (FIFO) — offer añade al final, poll saca del inicio</span>
+LinkedList&lt;String&gt; cola = <span class="kw">new</span> LinkedList&lt;&gt;();
+cola.offer(<span class="str">"primero"</span>);
+cola.offer(<span class="str">"segundo"</span>);
+cola.offer(<span class="str">"tercero"</span>);
+System.out.println(cola.poll()); <span class="cm">// primero</span>
+System.out.println(cola.poll()); <span class="cm">// segundo</span>
+
+<span class="cm">// Como Pila (LIFO) — push añade al inicio, pop saca del inicio</span>
+LinkedList&lt;String&gt; pila = <span class="kw">new</span> LinkedList&lt;&gt;();
+pila.push(<span class="str">"A"</span>);
+pila.push(<span class="str">"B"</span>);
+pila.push(<span class="str">"C"</span>);
+System.out.println(pila.pop()); <span class="cm">// C</span>
+System.out.println(pila.pop()); <span class="cm">// B</span>`,
+        note:"offer()/poll() nunca lanzan excepción (devuelven null si está vacía). add()/remove() sí lanzan NoSuchElementException. Usa offer/poll en código seguro.",
+        ask:"¿Cuándo usar LinkedList en vez de ArrayDeque como cola o pila en Java?"
+      },
+      {
+        title:"Recorrer LinkedList en los dos sentidos con descendingIterator",
+        desc:"LinkedList permite recorrido hacia atrás con descendingIterator(), que va desde el último elemento al primero.",
+        code:`LinkedList&lt;Integer&gt; ll = <span class="kw">new</span> LinkedList&lt;&gt;(Arrays.asList(<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">4</span>,<span class="num">5</span>));
+
+<span class="cm">// Recorrido hacia delante</span>
+System.out.print(<span class="str">"Adelante: "</span>);
+<span class="kw">for</span> (Integer n : ll) {
+    System.out.print(n + <span class="str">" "</span>); <span class="cm">// 1 2 3 4 5</span>
+}
+
+<span class="cm">// Recorrido hacia atrás con descendingIterator</span>
+System.out.print(<span class="str">"\nAtrás:    "</span>);
+Iterator&lt;Integer&gt; desc = ll.descendingIterator();
+<span class="kw">while</span> (desc.hasNext()) {
+    System.out.print(desc.next() + <span class="str">" "</span>); <span class="cm">// 5 4 3 2 1</span>
+}`,
+        note:"descendingIterator() es exclusivo de LinkedList (y Deque). Con ArrayList solo puedes recorrer al revés con un for decreciente o con Collections.reverse().",
+        ask:"¿Cómo recorro un ArrayList al revés en Java sin usar LinkedList?"
+      },
+      {
+        title:"Insertar y eliminar en posiciones específicas",
+        desc:"LinkedList es eficiente para insertar y eliminar en el inicio, el final o en cualquier posición si ya tienes el iterador apuntando ahí.",
+        code:`LinkedList&lt;String&gt; ll = <span class="kw">new</span> LinkedList&lt;&gt;();
+ll.add(<span class="str">"A"</span>); ll.add(<span class="str">"C"</span>); ll.add(<span class="str">"D"</span>);
+
+<span class="cm">// Insertar al inicio y al final — O(1)</span>
+ll.addFirst(<span class="str">"inicio"</span>);
+ll.addLast(<span class="str">"fin"</span>);
+System.out.println(ll); <span class="cm">// [inicio, A, C, D, fin]</span>
+
+<span class="cm">// Insertar en medio con ListIterator — O(1) una vez posicionado</span>
+ListIterator&lt;String&gt; it = ll.listIterator();
+<span class="kw">while</span> (it.hasNext()) {
+    <span class="kw">if</span> (it.next().equals(<span class="str">"A"</span>)) {
+        it.add(<span class="str">"B"</span>); <span class="cm">// inserta después de A</span>
+        <span class="kw">break</span>;
+    }
+}
+System.out.println(ll); <span class="cm">// [inicio, A, B, C, D, fin]</span>
+
+<span class="cm">// Eliminar primero y último — O(1)</span>
+ll.removeFirst();
+ll.removeLast();
+System.out.println(ll); <span class="cm">// [A, B, C, D]</span>`,
+        note:"addFirst/addLast y removeFirst/removeLast son O(1) en LinkedList. En ArrayList, añadir al inicio es O(n) porque desplaza todos los elementos.",
+        ask:"¿En qué casos concretos es mejor usar LinkedList que ArrayList en Java?"
+      }
+    ]
+  },
+  {
+    cat:"ListIterator",badge:"b-blue",
+    items:[
+      {
+        title:"Recorrido hacia delante y hacia atrás con ListIterator",
+        desc:"ListIterator extiende Iterator añadiendo recorrido bidireccional con hasPrevious() y previous(), además de conocer el índice actual.",
+        code:`List&lt;String&gt; lista = <span class="kw">new</span> ArrayList&lt;&gt;(
+    Arrays.asList(<span class="str">"A"</span>, <span class="str">"B"</span>, <span class="str">"C"</span>, <span class="str">"D"</span>));
+
+ListIterator&lt;String&gt; it = lista.listIterator();
+
+<span class="cm">// Recorrer hacia delante</span>
+System.out.print(<span class="str">"Adelante: "</span>);
+<span class="kw">while</span> (it.hasNext()) {
+    System.out.print(it.nextIndex() + <span class="str">":"</span> + it.next() + <span class="str">" "</span>);
+}
+<span class="cm">// Adelante: 0:A 1:B 2:C 3:D</span>
+
+<span class="cm">// Al terminar el forward, el cursor está al final</span>
+<span class="cm">// Recorrer hacia atrás desde donde quedamos</span>
+System.out.print(<span class="str">"\nAtrás:    "</span>);
+<span class="kw">while</span> (it.hasPrevious()) {
+    System.out.print(it.previousIndex() + <span class="str">":"</span> + it.previous() + <span class="str">" "</span>);
+}
+<span class="cm">// Atrás: 3:D 2:C 1:B 0:A</span>`,
+        note:"El cursor de ListIterator está siempre entre dos elementos. nextIndex() es el índice que devolvería next(); previousIndex() el que devolvería previous().",
+        ask:"¿Cómo funciona exactamente el cursor de ListIterator entre los elementos?"
+      },
+      {
+        title:"Añadir y reemplazar elementos con ListIterator",
+        desc:"ListIterator.add() inserta un elemento antes de la posición actual del cursor. ListIterator.set() reemplaza el último elemento visitado.",
+        code:`List&lt;Integer&gt; lista = <span class="kw">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="num">1</span>, <span class="num">3</span>, <span class="num">5</span>));
+ListIterator&lt;Integer&gt; it = lista.listIterator();
+
+<span class="cm">// Intercalar un elemento después de cada uno</span>
+<span class="kw">while</span> (it.hasNext()) {
+    <span class="kw">int</span> val = it.next();
+    it.add(val + <span class="num">1</span>); <span class="cm">// inserta n+1 después de n</span>
+}
+System.out.println(lista); <span class="cm">// [1, 2, 3, 4, 5, 6]</span>
+
+<span class="cm">// Reemplazar todos con set()</span>
+ListIterator&lt;Integer&gt; it2 = lista.listIterator();
+<span class="kw">while</span> (it2.hasNext()) {
+    it2.set(it2.next() * <span class="num">10</span>);
+}
+System.out.println(lista); <span class="cm">// [10, 20, 30, 40, 50, 60]</span>`,
+        note:"Después de add(), el cursor avanza (el nuevo elemento queda antes del cursor). Por eso el while no procesa el elemento recién insertado, evitando bucles infinitos.",
+        ask:"¿Qué pasa si llamo a set() después de add() en un ListIterator?"
+      },
+      {
+        title:"Recorrer parcialmente desde un índice con ListIterator",
+        desc:"Puedes crear un ListIterator empezando desde cualquier posición de la lista pasando el índice inicial.",
+        code:`List&lt;String&gt; lista = Arrays.asList(<span class="str">"A"</span>,<span class="str">"B"</span>,<span class="str">"C"</span>,<span class="str">"D"</span>,<span class="str">"E"</span>);
+
+<span class="cm">// Empezar desde el índice 2 (es decir, desde "C")</span>
+ListIterator&lt;String&gt; it = lista.listIterator(<span class="num">2</span>);
+
+System.out.print(<span class="str">"Desde C hacia delante: "</span>);
+<span class="kw">while</span> (it.hasNext()) {
+    System.out.print(it.next() + <span class="str">" "</span>);
+}
+<span class="cm">// Desde C hacia delante: C D E</span>
+
+System.out.print(<span class="str">"\nDesde C hacia atrás:   "</span>);
+ListIterator&lt;String&gt; it2 = lista.listIterator(<span class="num">2</span>);
+<span class="kw">while</span> (it2.hasPrevious()) {
+    System.out.print(it2.previous() + <span class="str">" "</span>);
+}
+<span class="cm">// Desde C hacia atrás: B A</span>`,
+        note:"listIterator(int index) coloca el cursor ANTES del elemento en esa posición. Por eso recorriendo hacia atrás desde el índice 2 obtienes B y A, no C.",
+        ask:"¿Por qué listIterator(2) hacia atrás empieza en B y no en C?"
+      }
+    ]
+  }
+];
+
+const cats = document.getElementById('cats');
+const tabs = document.getElementById('tabs');
+const container = document.getElementById('exContainer');
+let currentCat = 0;
+let currentEx = 0;
+
+function renderCats() {
+  cats.innerHTML = '';
+  data.forEach((c, i) => {
+    const b = document.createElement('button');
+    b.className = 'cat' + (i === currentCat ? ' on' : '');
+    b.textContent = c.cat;
+    b.onclick = () => { currentCat = i; currentEx = 0; render(); };
+    cats.appendChild(b);
+  });
+}
+
+function renderTabs() {
+  tabs.innerHTML = '';
+  data[currentCat].items.forEach((item, i) => {
+    const b = document.createElement('button');
+    b.className = 'tab' + (i === currentEx ? ' on' : '');
+    b.textContent = (i+1) + '. ' + item.title.split(' ').slice(0,4).join(' ') + (item.title.split(' ').length > 4 ? '...' : '');
+    b.onclick = () => { currentEx = i; render(); };
+    tabs.appendChild(b);
+  });
+}
+
+function renderEx() {
+  const cat = data[currentCat];
+  const item = cat.items[currentEx];
+  container.innerHTML = `
+    <span class="badge ${cat.badge}">${cat.cat}</span>
+    <div class="etitle">${item.title}</div>
+    <div class="edesc">${item.desc}</div>
+    <div class="code">${item.code}</div>
+    <div class="note">${item.note}</div>
+    <button class="ask" onclick="sendPrompt('${item.ask.replace(/'/g,"\\'")}')">
+      ${item.ask} ↗
+    </button>
+  `;
+}
+
+function render() {
+  renderCats();
+  renderTabs();
+  renderEx();
+}
+
+render();
+</script>

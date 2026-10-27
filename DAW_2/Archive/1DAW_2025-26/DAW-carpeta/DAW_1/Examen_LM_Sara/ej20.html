@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej20 - Tabla resumen</title>
+</head>
+<body>
+    <h1>Tabla resumen de preguntas</h1>
+    <input type="button" id="boton" value="Mostrar tabla">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let html = `
+                <table border="1" style="border-collapse:collapse;width:100%">
+                    <tr style="background:#eee">
+                        <th>ID</th>
+                        <th>Pregunta</th>
+                        <th>Opción A</th>
+                        <th>Opción B</th>
+                        <th>Opción C</th>
+                        <th>Opción D</th>
+                    </tr>
+            `
+            preguntas.forEach(p => {
+                html += `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.pregunta.substring(0, 40)}${p.pregunta.length > 40 ? "..." : ""}</td>
+                        <td>${p.opcion_a.substring(0, 20)}...</td>
+                        <td>${p.opcion_b.substring(0, 20)}...</td>
+                        <td>${p.opcion_c.substring(0, 20)}...</td>
+                        <td>${p.opcion_d.substring(0, 20)}...</td>
+                    </tr>
+                `
+            })
+            html += "</table>"
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

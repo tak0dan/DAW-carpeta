@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia MongoDB completa</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">MongoDB only</span>
+      <h1 class="hero-title">Guia MongoDB desde 0 hasta avanzado</h1>
+      <p>Esta carpeta es ahora una guia centrada en MongoDB, construida a partir del material de <code>/home/tak_0/DAW-carpeta/BDD-EXAM/</code>, con recorrido progresivo, explicaciones cortas y una biblioteca grande de consultas listas para copiar.</p>
+      <div class="chips">
+        <span class="chip">Nivel 0</span>
+        <span class="chip">find()</span>
+        <span class="chip">Proyeccion</span>
+        <span class="chip">Updates</span>
+        <span class="chip">Arrays</span>
+        <span class="chip">Filtros dependientes</span>
+        <span class="chip">Aggregation</span>
+        <span class="chip">Nested fields</span>
+        <span class="chip">arrayFilters</span>
+      </div>
+    </section>
+
+    <nav class="nav">
+      <a href="mongodb-basico.html">01. Fundamentos</a>
+      <a href="mongodb-paso-a-paso.html">02. Construir consultas</a>
+      <a href="mongodb-updates-arrays.html">03. Updates y arrays</a>
+      <a href="mongodb-avanzado.html">04. Aggregation y avanzado</a>
+      <a href="plantillas-listas.html">05. Biblioteca de recetas</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Como usar esta guia</h2>
+      <div class="grid-2">
+        <div class="path">
+          <h3>Ruta de aprendizaje</h3>
+          <ol>
+            <li>Empieza por <strong>Fundamentos</strong> si todavia no dominas shell, colecciones y <code>find()</code>.</li>
+            <li>Pasa a <strong>Construir consultas</strong> para ver como una consulta simple crece hasta tener 5 filtros, ramas OR y fechas.</li>
+            <li>Despues entra en <strong>Updates y arrays</strong> para aprender a anadir, quitar, cambiar y recalcular campos.</li>
+            <li>Termina con <strong>Aggregation y avanzado</strong> para pipelines, <code>$lookup</code>, indices y <code>explain()</code>.</li>
+            <li>Usa <strong>Biblioteca de recetas</strong> como chuleta de examen o de practica.</li>
+          </ol>
+        </div>
+        <div class="tip">
+          <h3>Regla principal</h3>
+          <p>No intentes escribir la consulta final de golpe. En MongoDB funciona mejor este orden:</p>
+          <ol>
+            <li>Haz que devuelva algo.</li>
+            <li>Anade un filtro.</li>
+            <li>Anade otro filtro.</li>
+            <li>Agrupa ramas con <code>$or</code> o <code>$and</code> si hace falta.</li>
+            <li>Solo al final anade proyeccion, orden, limite o pipeline.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="cards">
+      <article class="card">
+        <h3>01. Fundamentos</h3>
+        <p>MongoDB desde cero: base de datos, coleccion, documento, JSON/BSON, <code>ISODate</code>, carga de datos y primeros <code>find()</code>.</p>
+        <a class="button primary" href="mongodb-basico.html">Abrir</a>
+      </article>
+      <article class="card">
+        <h3>02. Construir consultas</h3>
+        <p>Como pasar de 1 filtro a 2, 3 o 5 filtros y como escribir condiciones dependientes con <code>$or</code>, <code>$and</code>, fechas y arrays.</p>
+        <a class="button primary" href="mongodb-paso-a-paso.html">Abrir</a>
+      </article>
+      <article class="card">
+        <h3>03. Updates y arrays</h3>
+        <p>Como cambiar campos, devolver solo algunos campos, anadir valores a arrays, eliminar valores y actualizar elementos internos.</p>
+        <a class="button primary" href="mongodb-updates-arrays.html">Abrir</a>
+      </article>
+      <article class="card">
+        <h3>04. Aggregation y avanzado</h3>
+        <p><code>$match</code>, <code>$group</code>, <code>$project</code>, <code>$lookup</code>, nested documents, indices y lectura de planes con <code>explain()</code>.</p>
+        <a class="button primary" href="mongodb-avanzado.html">Abrir</a>
+      </article>
+      <article class="card">
+        <h3>05. Biblioteca de recetas</h3>
+        <p>Banco grande de consultas listas para copiar: filtros simples, filtros dependientes, updates, arrays, fechas, regex y pipelines.</p>
+        <a class="button primary" href="plantillas-listas.html">Abrir</a>
+      </article>
+      <article class="card">
+        <h3>Objetivo de esta carpeta</h3>
+        <p>Ir de <code>db.coleccion.find()</code> a consultas con ramas logicas, nested fields, cambios sobre arrays y pipelines de varias fases.</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <h2>Dataset de referencia comun</h2>
+      <p>Todas las paginas usan el mismo estilo de datos para que no tengas que reaprender los nombres de campo en cada ejemplo.</p>
+      <pre>use comidas
+
+db.comidas.insertMany([
+{
+  _id: 1,
+  nombre: "Pizza Cuatro Quesos",
+  categoria: "Pizza",
+  precio: 12,
+  vegano: false,
+  disponible: true,
+  valoracion: 4.7,
+  ingredientes: ["mozzarella", "parmesano"],
+  etiquetas: ["horno", "queso"],
+  origen: {pais: "Italia", ciudad: "Napoles"},
+  proveedor: {nombre: "Casa Sur", zona: "Centro"},
+  stock: [
+    {sede: "Valencia", cantidad: 12},
+    {sede: "Paterna", cantidad: 5}
+  ],
+  fecha_alta: ISODate("2026-05-01")
+},
+{
+  _id: 2,
+  nombre: "Pizza Vegana Verde",
+  categoria: "Pizza",
+  precio: 14,
+  vegano: true,
+  disponible: true,
+  valoracion: 4.9,
+  ingredientes: ["tomate", "aceitunas", "albahaca"],
+  etiquetas: ["horno", "vegano"],
+  origen: {pais: "Italia", ciudad: "Roma"},
+  proveedor: {nombre: "Bio Norte", zona: "Norte"},
+  stock: [
+    {sede: "Valencia", cantidad: 8},
+    {sede: "Torrent", cantidad: 3}
+  ],
+  fecha_alta: ISODate("2026-03-10")
+}
+])</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Mapa de capacidades</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nivel</th>
+            <th>Que aprendes</th>
+            <th>Pagina</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>0</td>
+            <td>Entrar en la BD, crear coleccion, insertar documentos, leer todo, leer uno, filtrar exacto.</td>
+            <td><a href="mongodb-basico.html">mongodb-basico.html</a></td>
+          </tr>
+          <tr>
+            <td>Basico</td>
+            <td>Comparadores, proyecciones, orden, limit, skip, regex y arrays sencillos.</td>
+            <td><a href="mongodb-basico.html">mongodb-basico.html</a></td>
+          </tr>
+          <tr>
+            <td>Intermedio</td>
+            <td>Consultas de 2, 3 y 5 filtros, ramas OR, filtros dependientes, rangos de fechas y nested fields.</td>
+            <td><a href="mongodb-paso-a-paso.html">mongodb-paso-a-paso.html</a></td>
+          </tr>
+          <tr>
+            <td>Intermedio alto</td>
+            <td><code>$set</code>, <code>$unset</code>, <code>$inc</code>, <code>$push</code>, <code>$pull</code>, <code>$addToSet</code>, <code>$[]</code>, <code>$[elem]</code>.</td>
+            <td><a href="mongodb-updates-arrays.html">mongodb-updates-arrays.html</a></td>
+          </tr>
+          <tr>
+            <td>Avanzado</td>
+            <td>Aggregation pipeline, <code>$lookup</code>, <code>$unwind</code>, <code>$project</code>, indices y <code>explain()</code>.</td>
+            <td><a href="mongodb-avanzado.html">mongodb-avanzado.html</a></td>
+          </tr>
+          <tr>
+            <td>Repaso rapido</td>
+            <td>Muchos patrones listos para copiar y adaptar.</td>
+            <td><a href="plantillas-listas.html">plantillas-listas.html</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Ideas fuerza para el examen</h2>
+      <div class="grid-3">
+        <div class="note">
+          <h3>1. AND implicito</h3>
+          <p>Si escribes varios campos dentro del mismo objeto, MongoDB los une con AND automaticamente.</p>
+        </div>
+        <div class="note">
+          <h3>2. OR necesita arrays</h3>
+          <p>Cuando una condicion puede seguir dos caminos, usa <code>$or: [ {...}, {...} ]</code>.</p>
+        </div>
+        <div class="note">
+          <h3>3. Primero match, luego detalle</h3>
+          <p>Construye el filtro principal antes de pensar en proyeccion, sort o pipeline.</p>
+        </div>
+      </div>
+    </section>
+
+    <p class="footer">Esta version esta centrada solo en MongoDB y organizada para estudiar desde cero hasta filtros y pipelines avanzados.</p>
+  </main>
+</body>
+</html>

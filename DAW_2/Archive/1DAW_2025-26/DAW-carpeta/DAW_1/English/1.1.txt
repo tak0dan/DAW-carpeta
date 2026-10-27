@@ -1,0 +1,66 @@
+A)  1 - h
+    2 - e
+    3 - d
+    4 - i
+    5 - a
+    6 - c
+    7 - g
+    8 - f
+    9 - j
+    10 - b
+
+B)  There are eight bits in a byte
+    The sway bar is usually at the top of the screen
+    The programm made a copy of all the data in the database each night
+    The developer needs to add another column
+    The new memory drive have increased the speed of the computers by 20%
+    The programers found it easier and faster to code in the new language
+
+C)  1. They are used to describe actions and states of the data.
+    2:  herz
+        link
+        compatible
+        put
+        face
+        function
+        byte
+        phone
+        put(again)
+        format
+        tract
+        transition
+        autorize
+    3.  Suffix and prefix?
+
+
+D)  1. They describe concepts related to the programming and software.
+
+
+    2: analys
+       class
+       compute
+       digit
+       load
+       load(still)
+       instruct
+       perform
+       programm
+       random
+       secure
+       soft
+       techno
+
+    3. Suffix and prefix?
+
+
+E): 1 - bug
+    2 - I believe - it was a word "root", but since Windows is a close system, and the terminal clearly shows workspace for Windows OS together with the filesystem of Windows -
+        this won't be quite correct, because in such type of system - many files, actions, etc. are not avaliable for the user EVEN with the administrator privileges, so,
+        technically, even Administrator on windows  won't be "root".
+    3 - security
+    4 - menu
+    5 - table
+    6 - chip
+    7 - bit(s)
+    8 - virus
+    9 - code

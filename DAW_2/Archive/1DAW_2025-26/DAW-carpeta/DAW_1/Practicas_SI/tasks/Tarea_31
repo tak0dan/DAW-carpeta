@@ -1,0 +1,27 @@
+
+
+----------------------------------------------------------------------------------------
+TRABAJO 31: buscapersonas.sh (grep)
+----------------------------------------------------------------------------------------
+
+Elabora un sencillo script linux que leyendo el archivo adjunto personas.dat muestre consecutivamente la siguiente salida por pantalla (al principio debe limitar su uso en el intérprete BASH, tener un comentario con tu nombre y borrar la pantalla).
+
+-Nada más ejecutar mostrará en pantalla el fichero completo y parará
+-Al pulsar una tecla mostrará las personas llamadas "Marcos" y parará
+-Al pulsar una tecla muestra las personas “casadas” y parará
+-Al pulsar otra tecla guarda (ojo no se ve nada en pantalla) en el archivo datos.txt (lo crea nuevo si no existe y borra su contenido anterior si existe) los "profesores" y las personas con "38 años", terminando el programa.
+
+
+Se pide entregar buscapersonas.sh
+
+NOTA: Lee el fichero "buscapersonas_enunciado_extendido.pdf" ya que tiene capturas de lo que se pide
+
+NOTA: Todo trabajo entregado fuera de plazo NO puede valer más de un 5
+ 
+	
+buscapersonas_enunciado_extendido.pdf buscapersonas_enunciado_extendido.pdf
+30 de març 2026, 22:16
+
+    buscapersonas_enunciado_extendido.pdf buscapersonas_enunciado_extendido.pdf
+    30 de març 2026, 22:16
+    personas.dat personas.dat 

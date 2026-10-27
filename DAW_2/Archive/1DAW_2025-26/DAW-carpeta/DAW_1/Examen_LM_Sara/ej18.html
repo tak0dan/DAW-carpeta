@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej18 - Opciones desordenadas</title>
+</head>
+<body>
+    <h1>Pregunta aleatoria con opciones desordenadas</h1>
+    <input type="button" id="boton" value="Dame una pregunta">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        function desordenar(arr) {
+            let copia = [...arr]
+            for (let i = copia.length - 1; i > 0; i--) {
+                let j = Math.floor(Math.random() * (i + 1))
+                ;[copia[i], copia[j]] = [copia[j], copia[i]]
+            }
+            return copia
+        }
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let n = numeroAleatorio(0, preguntas.length - 1)
+            let p = preguntas[n]
+            let opciones = [
+                { letra: "A", texto: p.opcion_a },
+                { letra: "B", texto: p.opcion_b },
+                { letra: "C", texto: p.opcion_c },
+                { letra: "D", texto: p.opcion_d }
+            ]
+            let desordenadas = desordenar(opciones)
+            let html = `<p><strong>${p.pregunta}</strong> <em>(ID: ${p.id})</em></p>`
+            desordenadas.forEach(o => {
+                html += `<p>${o.letra}) ${o.texto}</p>`
+            })
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

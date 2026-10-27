@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej27 - Ordenar por longitud numérica</title>
+</head>
+<body>
+    <h1>Ordenar preguntas por longitud del texto (ascendente)</h1>
+    <input type="button" id="boton" value="Ordenar por longitud">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let copia = [...preguntas]
+            copia.sort((a, b) => a.pregunta.length - b.pregunta.length)
+            let html = "<table border='1' style='border-collapse:collapse;width:100%'>"
+            html += "<tr style='background:#eee'><th>#</th><th>ID</th><th>Pregunta</th><th>Caracteres</th></tr>"
+            copia.forEach((p, i) => {
+                html += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${p.id}</td>
+                        <td>${p.pregunta}</td>
+                        <td style="text-align:center">${p.pregunta.length}</td>
+                    </tr>
+                `
+            })
+            html += "</table>"
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

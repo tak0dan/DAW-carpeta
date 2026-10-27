@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej23 - Sumar IDs</title>
+</head>
+<body>
+    <h1>Sumar todos los IDs</h1>
+    <input type="button" id="boton" value="Calcular suma">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let suma = preguntas.reduce((acc, p) => acc + p.id, 0)
+            resultado.innerHTML = `
+                <p>Hay <strong>${preguntas.length}</strong> preguntas.</p>
+                <p>La suma de todos los IDs es: <strong style="font-size:1.4em">${suma}</strong></p>
+                <p>El ID mínimo es: <strong>${Math.min(...preguntas.map(p => p.id))}</strong></p>
+                <p>El ID máximo es: <strong>${Math.max(...preguntas.map(p => p.id))}</strong></p>
+            `
+        })
+    </script>
+</body>
+</html>

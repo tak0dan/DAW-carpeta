@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej16-2 - 2 aleatorias sin repetir y contar entre ellas</title>
+</head>
+<body>
+    <h1>Dos preguntas aleatorias sin repetir y contar entre ellas</h1>
+    <input type="button" id="boton" value="Generar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+        let usadas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let disponibles = preguntas.filter((_, i) => !usadas.includes(i))
+            if (disponibles.length < 2) {
+                resultado.innerHTML = "No hay suficientes preguntas sin mostrar. Quedan " + disponibles.length
+                return
+            }
+            let idx1 = Math.floor(Math.random() * disponibles.length)
+            let p1 = disponibles[idx1]
+            let posReal1 = preguntas.indexOf(p1)
+            usadas.push(posReal1)
+            disponibles.splice(idx1, 1)
+            let idx2 = Math.floor(Math.random() * disponibles.length)
+            let p2 = disponibles[idx2]
+            let posReal2 = preguntas.indexOf(p2)
+            usadas.push(posReal2)
+            let menor = Math.min(posReal1, posReal2)
+            let mayor = Math.max(posReal1, posReal2)
+            let entre = mayor - menor - 1
+            resultado.innerHTML = `
+                <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                    <strong>Primera (posición ${posReal1}):</strong> ${p1.pregunta} <em>(ID: ${p1.id})</em>
+                </div>
+                <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                    <strong>Segunda (posición ${posReal2}):</strong> ${p2.pregunta} <em>(ID: ${p2.id})</em>
+                </div>
+                <p style="margin-top:10px">
+                    Entre la posición <strong>${menor}</strong> y <strong>${mayor}</strong>
+                    hay <strong>${entre}</strong> pregunta(s).
+                </p>
+                <p style="color:gray">Quedan ${preguntas.length - usadas.length} sin mostrar</p>
+            `
+        })
+    </script>
+</body>
+</html>

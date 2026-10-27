@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej26 - Sumar IDs en rango</title>
+</head>
+<body>
+    <h1>Sumar IDs en un rango</h1>
+    ID mínimo: <input type="number" id="inputMin" value="1">
+    ID máximo: <input type="number" id="inputMax" value="10">
+    <input type="button" id="boton" value="Calcular suma">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputMin = document.getElementById("inputMin")
+        let inputMax = document.getElementById("inputMax")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let min = parseInt(inputMin.value)
+            let max = parseInt(inputMax.value)
+            let filtradas = preguntas.filter(p => p.id >= min && p.id <= max)
+            if (filtradas.length === 0) {
+                resultado.innerHTML = "No hay preguntas en ese rango"
+                return
+            }
+            let suma = filtradas.reduce((acc, p) => acc + p.id, 0)
+            let media = (suma / filtradas.length).toFixed(2)
+            let ids = filtradas.map(p => p.id).join(", ")
+            resultado.innerHTML = `
+                <p>Preguntas en rango ID ${min} a ${max}: <strong>${filtradas.length}</strong></p>
+                <p>IDs: ${ids}</p>
+                <p>Suma de IDs: <strong style="font-size:1.4em">${suma}</strong></p>
+                <p>Media de IDs: <strong>${media}</strong></p>
+            `
+        })
+    </script>
+</body>
+</html>

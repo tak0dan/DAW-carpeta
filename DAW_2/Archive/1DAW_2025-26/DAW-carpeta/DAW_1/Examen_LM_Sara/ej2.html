@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <h1>Animales</h1>
+    <input type="button" id="boton" value="Dame un animal">
+    <br> <br>
+    <div id="resultado"></div>
+     
+    <script>
+        let boton = document.getElementById("boton")
+        let url="http://server:8888/animals.php"
+        let resultado = document.getElementById("resultado")
+        let animales
+        // devuelve un valor aleatorio entre min y max
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then (data => {  
+
+                animales = Object.values(data)    
+
+            })
+            .catch (error => console.log("ERROR: " + error + n))  
+
+        boton.addEventListener("click",(e) => {
+            
+            n=numeroAleatorio(0,139)
+            
+                   
+            console.log("Me han pulsado" + n)
+            resultado.innerHTML = animales[n].word
+            
+        }) 
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Construir consultas MongoDB</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">02. Query builder</span>
+      <h1 class="hero-title">Como construir consultas complejas desde consultas simples</h1>
+      <p>Esta pagina responde justo a la parte mas importante del encargo: no solo da consultas hechas, tambien enseña como crecer una consulta con uno, dos, tres o cinco filtros y como escribir filtros dependientes.</p>
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="mongodb-basico.html">Fundamentos</a>
+      <a href="mongodb-updates-arrays.html">Updates y arrays</a>
+      <a href="plantillas-listas.html">Biblioteca de recetas</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Metodo general</h2>
+      <ol>
+        <li>Escribe la frase del ejercicio con lenguaje claro.</li>
+        <li>Detecta la coleccion.</li>
+        <li>Saca el primer filtro obligatorio.</li>
+        <li>Anade filtros independientes como campos hermanos.</li>
+        <li>Si una parte dice "o bien", crea un <code>$or</code>.</li>
+        <li>Si una parte depende de otra rama, mete varios filtros dentro de esa rama del <code>$or</code>.</li>
+        <li>Si al final quieres pocos campos, aplica proyeccion.</li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <h2>Ejemplo 1: 1 filtro</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Enunciado</h3>
+          <p>Quiero las pizzas.</p>
+        </div>
+        <div class="code-card">
+          <h3>Consulta</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza"
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Ejemplo 2: 2 filtros</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Enunciado</h3>
+          <p>Quiero las pizzas veganas.</p>
+        </div>
+        <div class="code-card">
+          <h3>Consulta</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true
+})</pre>
+        </div>
+      </div>
+      <div class="tip">
+        <p>Como las dos condiciones son a la vez, se ponen en el mismo objeto.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Ejemplo 3: 3 filtros</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Enunciado</h3>
+          <p>Quiero las pizzas veganas por debajo de 20.</p>
+        </div>
+        <div class="code-card">
+          <h3>Consulta</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true,
+  precio: {$lt: 20}
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Ejemplo 4: 5 filtros</h2>
+      <div class="grid-2">
+        <div class="card">
+          <h3>Enunciado</h3>
+          <p>Quiero pizzas veganas, por debajo de 20, con valoracion mayor que 4.5 y dadas de alta este ano.</p>
+        </div>
+        <div class="code-card">
+          <h3>Consulta</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true,
+  precio: {$lt: 20},
+  valoracion: {$gt: 4.5},
+  fecha_alta: {
+    $gte: ISODate("2026-01-01"),
+    $lte: ISODate("2026-12-31")
+  }
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Filtros dependientes: patron clave</h2>
+      <p>Si el enunciado dice algo como:</p>
+      <div class="note">
+        <p>Si el item es A, entonces A debe cumplir B. O si el item es C, entonces C debe cumplir D. Y todo ademas debe estar entre X e Y.</p>
+      </div>
+      <p>Tu estructura mental debe ser esta:</p>
+      <pre>db.comidas.find({
+  $and: [
+    {
+      $or: [
+        {categoria: "Pizza", vegano: true},
+        {categoria: "Postre", disponible: true}
+      ]
+    },
+    {
+      fecha_alta: {
+        $gte: ISODate("2026-01-01"),
+        $lte: ISODate("2026-05-31")
+      }
+    }
+  ]
+})</pre>
+      <div class="tip">
+        <p>Cada rama del <code>$or</code> lleva sus propias condiciones internas. Luego las reglas comunes van fuera, en el <code>$and</code>.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Construccion paso a paso de una condicion dependiente</h2>
+      <div class="code-grid">
+        <article class="code-card">
+          <h3>Paso 1</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza"
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Paso 2</h3>
+          <pre>db.comidas.find({
+  categoria: "Pizza",
+  vegano: true
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Paso 3</h3>
+          <pre>db.comidas.find({
+  $or: [
+    {categoria: "Pizza", vegano: true},
+    {categoria: "Postre", disponible: true}
+  ]
+})</pre>
+        </article>
+      </div>
+      <div class="code-grid" style="margin-top:18px;">
+        <article class="code-card">
+          <h3>Paso 4</h3>
+          <pre>db.comidas.find({
+  $and: [
+    {
+      $or: [
+        {categoria: "Pizza", vegano: true},
+        {categoria: "Postre", disponible: true}
+      ]
+    },
+    {
+      precio: {$lt: 20}
+    }
+  ]
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Paso 5</h3>
+          <pre>db.comidas.find({
+  $and: [
+    {
+      $or: [
+        {categoria: "Pizza", vegano: true},
+        {categoria: "Postre", disponible: true}
+      ]
+    },
+    {
+      precio: {$lt: 20}
+    },
+    {
+      fecha_alta: {
+        $gte: ISODate("2026-01-01"),
+        $lte: ISODate("2026-05-31")
+      }
+    }
+  ]
+})</pre>
+        </article>
+        <article class="code-card">
+          <h3>Lectura</h3>
+          <p>(Pizza vegana OR postre disponible) AND precio bajo AND fecha dentro del rango.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Patrones listos para enunciados frecuentes</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Frase del enunciado</th>
+            <th>Patron</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A y B y C</td>
+            <td><code>{a: ..., b: ..., c: ...}</code></td>
+          </tr>
+          <tr>
+            <td>A o B</td>
+            <td><code>{$or: [{a: ...}, {b: ...}]}</code></td>
+          </tr>
+          <tr>
+            <td>A y (B o C)</td>
+            <td><code>{$and: [{a: ...}, {$or: [{b: ...}, {c: ...}]}]}</code></td>
+          </tr>
+          <tr>
+            <td>Si es A, entonces B; si es C, entonces D</td>
+            <td><code>{$or: [{tipo: "A", b: ...}, {tipo: "C", d: ...}]}</code></td>
+          </tr>
+          <tr>
+            <td>... y ademas entre fechas</td>
+            <td>Anade <code>fecha: {$gte: ..., $lte: ...}</code> fuera o dentro de la rama segun corresponda.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Nested fields y arrays dentro de consultas complejas</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Campo interno</h3>
+          <pre>db.comidas.find({
+  "origen.pais": "Italia",
+  precio: {$lt: 20}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Array simple</h3>
+          <pre>db.comidas.find({
+  ingredientes: {$all: ["tomate", "albahaca"]}
+})</pre>
+        </div>
+        <div class="code-card">
+          <h3>Array de objetos</h3>
+          <pre>db.comidas.find({
+  stock: {
+    $elemMatch: {
+      sede: "Valencia",
+      cantidad: {$lt: 10}
+    }
+  }
+})</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>12 consultas modelo explicadas por dificultad</h2>
+      <pre>01. db.comidas.find({categoria: "Pizza"})
+02. db.comidas.find({categoria: "Pizza", vegano: true})
+03. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}})
+04. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}})
+05. db.comidas.find({categoria: "Pizza", vegano: true, precio: {$lt: 20}, valoracion: {$gt: 4.5}, fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}})
+06. db.comidas.find({$or: [{categoria: "Pizza"}, {categoria: "Postre"}]})
+07. db.comidas.find({$and: [{$or: [{categoria: "Pizza"}, {categoria: "Postre"}]}, {valoracion: {$gt: 4}}]})
+08. db.comidas.find({$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]})
+09. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}]})
+10. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {ingredientes: {$nin: ["ajo"]}}]})
+11. db.comidas.find({$and: [{$or: [{"origen.pais": "Italia", categoria: "Pizza"}, {"origen.pais": "Espana", categoria: "Principal"}]}, {precio: {$lt: 20}}]})
+12. db.comidas.find({$and: [{$or: [{categoria: "Pizza", vegano: true}, {categoria: "Postre", disponible: true}]}, {fecha_alta: {$gte: ISODate("2026-01-01"), $lte: ISODate("2026-05-31")}}, {stock: {$elemMatch: {sede: "Valencia", cantidad: {$lt: 10}}}}]})</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Antes de pasar a aggregation</h2>
+      <ul>
+        <li>Sabes cuando basta con AND implicito y cuando necesitas <code>$and</code>.</li>
+        <li>Sabes meter varias condiciones dentro de una rama del <code>$or</code>.</li>
+        <li>Sabes colocar una condicion comun fuera de las ramas.</li>
+        <li>Sabes anadir fechas, arrays y nested fields a una consulta compleja.</li>
+      </ul>
+    </section>
+
+    <p class="footer">Cuando domines estos patrones, la pagina de recipes te servira mucho mejor porque ya sabras desmontar y reconstruir cada consulta.</p>
+  </main>
+</body>
+</html>
