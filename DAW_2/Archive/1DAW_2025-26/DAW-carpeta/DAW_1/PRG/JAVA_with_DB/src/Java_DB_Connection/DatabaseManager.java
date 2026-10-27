@@ -1,0 +1,114 @@
+package Java_DB_Connection;
+
+import java.sql.*;
+
+public class DatabaseManager {
+	String URL = "jdbc:mariadb://127.0.0.1:3306/PRG";
+	private static final String USER = "test";
+    private static final String PASSWORD = "test";
+    
+    private Connection connection;
+    
+    public DatabaseManager() throws SQLException {
+        connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        ensureTableExists();
+    }
+    
+    private void ensureTableExists() throws SQLException {
+        if (!tableExists("users")) {
+            createTable();
+        }
+    }
+    
+    private boolean tableExists(String tableName) throws SQLException {
+        DatabaseMetaData meta = connection.getMetaData();
+        ResultSet rs = meta.getTables(null, null, tableName, new String[] {"TABLE"});
+        boolean exists = rs.next();
+        rs.close();
+        return exists;
+    }
+    
+    private void createTable() throws SQLException {
+        String createTableSQL = "CREATE TABLE users (" +
+                "id INT PRIMARY KEY, " +
+                "nombre VARCHAR(100) NOT NULL, " +
+                "email VARCHAR(100)" +
+                ")";
+        
+        Statement stmt = connection.createStatement();
+        stmt.execute(createTableSQL);
+        stmt.close();
+    }
+    
+    // CREATE - Insert a new user
+    public boolean createUser(int id, String nombre, String email) throws SQLException {
+        String sql = "INSERT INTO users (id, nombre, email) VALUES (?, ?, ?)";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+        stmt.setString(2, nombre);
+        stmt.setString(3, email);
+        
+        int rowsAffected = stmt.executeUpdate();
+        stmt.close();
+        return rowsAffected > 0;
+    }
+    
+    // READ - Get a user by ID
+    public String[] readUser(int id) throws SQLException {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+        
+        ResultSet rs = stmt.executeQuery();
+        String[] userData = null;
+        
+        if (rs.next()) {
+            userData = new String[3];
+            userData[0] = String.valueOf(rs.getInt("id"));
+            userData[1] = rs.getString("nombre");
+            userData[2] = rs.getString("email");
+        }
+        
+        rs.close();
+        stmt.close();
+        return userData;
+    }
+    
+    // READ - Get all users
+    public ResultSet getAllUsers() throws SQLException {
+        String sql = "SELECT * FROM users";
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery(sql);
+    }
+    
+    // UPDATE - Update a user
+    public boolean updateUser(int id, String nombre, String email) throws SQLException {
+        String sql = "UPDATE users SET nombre = ?, email = ? WHERE id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setString(1, nombre);
+        stmt.setString(2, email);
+        stmt.setInt(3, id);
+        
+        int rowsAffected = stmt.executeUpdate();
+        stmt.close();
+        return rowsAffected > 0;
+    }
+    
+    // DELETE - Delete a user
+    public boolean deleteUser(int id) throws SQLException {
+        String sql = "DELETE FROM users WHERE id = ?";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        stmt.setInt(1, id);
+        
+        int rowsAffected = stmt.executeUpdate();
+        stmt.close();
+        return rowsAffected > 0;
+    }
+    
+    // Close connection
+    public void close() throws SQLException {
+        if (connection != null && !connection.isClosed()) {
+            connection.close();
+        }
+    }
+}

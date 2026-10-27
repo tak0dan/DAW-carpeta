@@ -1,0 +1,15 @@
+CREATE DATABASE IF NOT EXISTS BDU3Basico_3_1 CHARACTER SET utf8mb4 COLLATE utf8mb4_es_0900_ai_ci;
+USE BDU3Basico_3_1;
+
+CREATE TABLE IF NOT EXISTS pais(
+nombre_p VARCHAR(20) PRIMARY KEY,
+bandera VARCHAR(70),
+renta DECIMAL(10, 2)
+);
+
+CREATE TABLE IF NOT EXISTS ciudad(
+nombre_c VARCHAR(20) PRIMARY KEY,
+habitantes INT,
+nombre_pais VARCHAR(20),
+CONSTRAINT ciu_fk FOREIGN KEY(nombre_pais) REFERENCES pais(nombre_p)
+);

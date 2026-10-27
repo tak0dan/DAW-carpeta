@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB updates y arrays</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">03. Mutaciones</span>
+      <h1 class="hero-title">Como cambiar campos, anadir valores y trabajar con arrays</h1>
+      <p>Esta pagina cubre la parte de escritura: cambiar un campo, devolverlo, anadir nuevos valores, borrar valores, renombrar campos y tocar arrays simples o arrays de objetos.</p>
+    </section>
+
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="mongodb-paso-a-paso.html">Construir consultas</a>
+      <a href="mongodb-avanzado.html">Aggregation y avanzado</a>
+      <a href="plantillas-listas.html">Biblioteca de recetas</a>
+    </nav>
+
+    <section class="panel">
+      <h2>Regla basica de update</h2>
+      <pre>db.coleccion.updateOne(
+  {filtro},
+  {$operador: {campo: valor}}
+)</pre>
+      <p>MongoDB separa claramente la parte que selecciona documentos y la parte que cambia documentos.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Operadores de update mas usados</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Operador</th>
+            <th>Para que sirve</th>
+            <th>Ejemplo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>$set</code></td>
+            <td>Crear o cambiar un campo</td>
+            <td><code>{$set: {precio: 15}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$unset</code></td>
+            <td>Eliminar un campo</td>
+            <td><code>{$unset: {oferta: ""}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$rename</code></td>
+            <td>Renombrar un campo</td>
+            <td><code>{$rename: {valoracion: "rating"}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$inc</code></td>
+            <td>Sumar o restar numeros</td>
+            <td><code>{$inc: {precio: 2}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$mul</code></td>
+            <td>Multiplicar numeros</td>
+            <td><code>{$mul: {precio: 1.10}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$push</code></td>
+            <td>Anadir al final de un array</td>
+            <td><code>{$push: {ingredientes: "oregano"}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$addToSet</code></td>
+            <td>Anadir si no existe</td>
+            <td><code>{$addToSet: {ingredientes: "oregano"}}</code></td>
+          </tr>
+          <tr>
+            <td><code>$pull</code></td>
+            <td>Eliminar valores de un array</td>
+            <td><code>{$pull: {ingredientes: "oregano"}}</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Cambiar campos normales</h2>
+      <div class="code-grid">
+        <article class="code-card">
+          <h3>Cambiar un campo</h3>
+          <pre>db.comidas.updateOne(
+  {nombre: "Pizza Cuatro Quesos"},
+  {$set: {precio: 15}}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Cambiar varios</h3>
+          <pre>db.comidas.updateMany(
+  {categoria: "Pizza"},
+  {$set: {
+    disponible: true,
+    destacado: true
+  }}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Eliminar campo</h3>
+          <pre>db.comidas.updateMany(
+  {},
+  {$unset: {destacado: ""}}
+)</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Numeros y contadores</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Incrementar</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$inc: {precio: 2}}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Decrementar</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$inc: {precio: -2}}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Multiplicar</h3>
+          <pre>db.comidas.updateMany(
+  {categoria: "Pizza"},
+  {$mul: {precio: 1.10}}
+)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Arrays simples: anadir y quitar valores</h2>
+      <div class="code-grid">
+        <article class="code-card">
+          <h3>Anadir uno</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$push: {ingredientes: "oregano"}}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Anadir varios</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$push: {
+    ingredientes: {
+      $each: ["oregano", "aceitunas"]
+    }
+  }}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Anadir sin duplicar</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$addToSet: {ingredientes: "oregano"}}
+)</pre>
+        </article>
+      </div>
+      <div class="code-grid" style="margin-top:18px;">
+        <article class="code-card">
+          <h3>Quitar uno</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$pull: {ingredientes: "oregano"}}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Quitar varios</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$pull: {
+    ingredientes: {$in: ["oregano", "aceitunas"]}
+  }}
+)</pre>
+        </article>
+        <article class="code-card">
+          <h3>Quitar ultimo o primero</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$pop: {ingredientes: 1}}
+)</pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Ordenar o recortar arrays al insertar</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Insertar al principio</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$push: {
+    etiquetas: {
+      $each: ["premium"],
+      $position: 0
+    }
+  }}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Dejar maximo 3</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$push: {
+    etiquetas: {
+      $each: ["nueva"],
+      $slice: 3
+    }
+  }}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Orden interno</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$push: {
+    stock: {
+      $each: [{sede: "Aldaia", cantidad: 4}],
+      $sort: {cantidad: -1}
+    }
+  }}
+)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Campos anidados</h2>
+      <p>Para cambiar un campo dentro de un objeto, usa dot notation.</p>
+      <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$set: {
+    "origen.ciudad": "Milan",
+    "proveedor.zona": "Sur"
+  }}
+)</pre>
+    </section>
+
+    <section class="panel">
+      <h2>Arrays de objetos y operadores posicionales</h2>
+      <div class="grid-2">
+        <div class="code-card">
+          <h3>Primer elemento concreto</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$set: {"stock.0.cantidad": 20}}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Elemento encontrado con $</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1, "stock.sede": "Valencia"},
+  {$set: {"stock.$.cantidad": 25}}
+)</pre>
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="code-card">
+          <h3>Todos los elementos con $[]</h3>
+          <pre>db.comidas.updateMany(
+  {},
+  {$set: {"stock.$[].revisado": true}}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Solo algunos con $[elem]</h3>
+          <pre>db.comidas.updateMany(
+  {},
+  {$set: {"stock.$[elem].alerta": true}},
+  {arrayFilters: [{"elem.cantidad": {$lt: 5}}]}
+)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Upsert, replace y fecha de cambio</h2>
+      <div class="grid-3">
+        <div class="code-card">
+          <h3>Crear si no existe</h3>
+          <pre>db.comidas.updateOne(
+  {nombre: "Lasana"},
+  {$set: {
+    categoria: "Principal",
+    precio: 11
+  }},
+  {upsert: true}
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Reemplazar entero</h3>
+          <pre>db.comidas.replaceOne(
+  {_id: 2},
+  {
+    _id: 2,
+    nombre: "Pizza Vegana Verde",
+    categoria: "Pizza",
+    precio: 15,
+    vegano: true
+  }
+)</pre>
+        </div>
+        <div class="code-card">
+          <h3>Fecha de modificacion</h3>
+          <pre>db.comidas.updateOne(
+  {_id: 1},
+  {$currentDate: {fecha_mod: true}}
+)</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>35 patrones rapidos de escritura</h2>
+      <pre>01. db.comidas.updateOne({_id: 1}, {$set: {precio: 15}})
+02. db.comidas.updateMany({categoria: "Pizza"}, {$set: {disponible: true}})
+03. db.comidas.updateMany({}, {$unset: {oferta: ""}})
+04. db.comidas.updateMany({}, {$rename: {valoracion: "rating"}})
+05. db.comidas.updateMany({}, {$unset: {rating: ""}})
+06. db.comidas.updateOne({_id: 1}, {$inc: {precio: 1}})
+07. db.comidas.updateOne({_id: 1}, {$inc: {precio: -1}})
+08. db.comidas.updateMany({}, {$mul: {precio: 1.05}})
+09. db.comidas.updateOne({_id: 1}, {$min: {precio: 10}})
+10. db.comidas.updateOne({_id: 1}, {$max: {precio: 20}})
+11. db.comidas.updateOne({_id: 1}, {$set: {"origen.ciudad": "Milan"}})
+12. db.comidas.updateOne({_id: 1}, {$set: {"proveedor.nombre": "Casa Mediterranea"}})
+13. db.comidas.updateOne({_id: 1}, {$push: {ingredientes: "oregano"}})
+14. db.comidas.updateOne({_id: 1}, {$push: {ingredientes: {$each: ["oregano", "aceitunas"]}}})
+15. db.comidas.updateOne({_id: 1}, {$addToSet: {ingredientes: "oregano"}})
+16. db.comidas.updateOne({_id: 1}, {$pull: {ingredientes: "oregano"}})
+17. db.comidas.updateOne({_id: 1}, {$pull: {ingredientes: {$in: ["oregano", "aceitunas"]}}})
+18. db.comidas.updateOne({_id: 1}, {$pop: {ingredientes: 1}})
+19. db.comidas.updateOne({_id: 1}, {$pop: {ingredientes: -1}})
+20. db.comidas.updateOne({_id: 1}, {$set: {"stock.0.cantidad": 20}})
+21. db.comidas.updateOne({_id: 1, "stock.sede": "Valencia"}, {$set: {"stock.$.cantidad": 30}})
+22. db.comidas.updateOne({_id: 1}, {$push: {stock: {sede: "Benetusser", cantidad: 4}}})
+23. db.comidas.updateOne({_id: 1}, {$pull: {stock: {sede: "Paterna"}}})
+24. db.comidas.updateMany({}, {$set: {"stock.$[].revisado": true}})
+25. db.comidas.updateMany({}, {$inc: {"stock.$[].cantidad": 1}})
+26. db.comidas.updateMany({}, {$set: {"stock.$[elem].alerta": true}}, {arrayFilters: [{"elem.cantidad": {$lt: 5}}]})
+27. db.comidas.updateMany({}, {$inc: {"stock.$[elem].cantidad": 2}}, {arrayFilters: [{"elem.sede": "Valencia"}]})
+28. db.comidas.updateOne({_id: 1}, {$currentDate: {fecha_mod: true}})
+29. db.comidas.updateOne({nombre: "Lasana"}, {$set: {categoria: "Principal", precio: 11}}, {upsert: true})
+30. db.comidas.replaceOne({_id: 2}, {_id: 2, nombre: "Pizza Vegana Verde", categoria: "Pizza", precio: 15, vegano: true})
+31. db.comidas.deleteOne({_id: 3})
+32. db.comidas.deleteMany({categoria: "Postre"})
+33. db.comidas.updateOne({_id: 1}, {$set: {etiquetas: ["horno", "italiana"]}})
+34. db.comidas.updateOne({_id: 1}, {$push: {etiquetas: {$each: ["premium"], $position: 0}}})
+35. db.comidas.updateOne({_id: 1}, {$push: {etiquetas: {$each: ["ultima"], $slice: 3}}})</pre>
+    </section>
+
+    <p class="footer">La clave de los updates es separar muy bien el filtro y el operador de cambio.</p>
+  </main>
+</body>
+</html>

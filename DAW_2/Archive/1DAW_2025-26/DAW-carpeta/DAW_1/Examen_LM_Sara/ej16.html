@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej16 - 2 aleatorias y contar entre ellas</title>
+</head>
+<body>
+    <h1>Dos preguntas aleatorias y cuántas hay entre ellas</h1>
+    <input type="button" id="boton" value="Generar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let idx1 = numeroAleatorio(0, preguntas.length - 1)
+            let idx2
+            do {
+                idx2 = numeroAleatorio(0, preguntas.length - 1)
+            } while (idx2 === idx1)
+            let menor = Math.min(idx1, idx2)
+            let mayor = Math.max(idx1, idx2)
+            let entre = mayor - menor - 1
+            let p1 = preguntas[idx1]
+            let p2 = preguntas[idx2]
+            resultado.innerHTML = `
+                <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                    <strong>Primera (posición ${idx1}):</strong> ${p1.pregunta} <em>(ID: ${p1.id})</em>
+                </div>
+                <div style="border:1px solid #ccc;margin:5px;padding:5px">
+                    <strong>Segunda (posición ${idx2}):</strong> ${p2.pregunta} <em>(ID: ${p2.id})</em>
+                </div>
+                <p style="margin-top:10px">
+                    Entre la posición <strong>${menor}</strong> y <strong>${mayor}</strong>
+                    hay <strong>${entre}</strong> pregunta(s).
+                </p>
+            `
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+package Tema_2;
+import java.util.Scanner;
+public class L_Mayusculas_version_rara {
+	public static void main(String[] args) {
+		Scanner scanner = new Scanner(System.in);
+		System.out.println("Introduzca tu palabra para el analisis");
+		String texto = scanner.nextLine();
+		int i;
+		System.out.println(texto.length());
+		int mayusc_counter = 0;
+		int minusc_counter = 0;
+		for (i=0; i<=(texto.length()-1); i++) { 
+			if(texto.charAt(i)=='L') {
+				mayusc_counter++;
+			}else if(texto.charAt(i)=='l'){
+				minusc_counter ++;
+			}
+		}
+		if(mayusc_counter>0&&minusc_counter==0) {
+			System.out.println("Todas las letras L estan en mayusculas");
+		}else if(minusc_counter>0) {
+			System.out.println("No todas las letras L estan en mayusculas");
+		}else if(minusc_counter==0&&mayusc_counter==0){
+			System.out.println("¿No lo vees? No hay letras L en esa palabra!");
+		}
+	}
+}

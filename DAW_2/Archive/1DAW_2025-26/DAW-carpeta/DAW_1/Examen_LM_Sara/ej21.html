@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej21 - Destacar opción por palabra</title>
+</head>
+<body>
+    <h1>Pregunta aleatoria destacando opción con palabra clave</h1>
+    Palabra a buscar: <input type="text" id="inputPalabra" value="XML">
+    <input type="button" id="boton" value="Mostrar">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let inputPalabra = document.getElementById("inputPalabra")
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            let palabra = inputPalabra.value.toLowerCase()
+            if (!palabra) {
+                resultado.innerHTML = "Introduce una palabra"
+                return
+            }
+            let n = numeroAleatorio(0, preguntas.length - 1)
+            let p = preguntas[n]
+            let opciones = [
+                { letra: "A", texto: p.opcion_a },
+                { letra: "B", texto: p.opcion_b },
+                { letra: "C", texto: p.opcion_c },
+                { letra: "D", texto: p.opcion_d }
+            ]
+            let html = `<p><strong>${p.pregunta}</strong> <em>(ID: ${p.id})</em></p>`
+            opciones.forEach(o => {
+                let contiene = o.texto.toLowerCase().includes(palabra)
+                let estilo = contiene ? "background:yellow;font-weight:bold" : ""
+                html += `<p style="${estilo}">${o.letra}) ${o.texto}</p>`
+            })
+            resultado.innerHTML = html
+        })
+    </script>
+</body>
+</html>

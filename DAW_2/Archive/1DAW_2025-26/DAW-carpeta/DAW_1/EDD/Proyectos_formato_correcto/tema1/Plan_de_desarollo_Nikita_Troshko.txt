@@ -1,0 +1,115 @@
+📑 Propuesta para el Desarrollo de la Nueva Aplicación
+1. Fases de Desarrollo
+
+Fase de Análisis: Recopilar los requisitos de los diferentes departamentos (talleres, administración, ventas). Identificar las limitaciones actuales del sistema.
+
+Fase de Diseño: Definir la arquitectura del sistema (servidores de intranet locales + servidor central para copias de seguridad, NixOS como sistema operativo, MySQL como base de datos principal). Diseñar tanto el backend como el frontend.
+
+Fase de Desarrollo:
+
+Backend principal en C (integración a nivel de sistema).
+
+Interfaz de Usuario (TUI) primero para usabilidad directa.
+
+Interfaz de Usuario (GUI) después usando HTML, CSS, JavaScript.
+
+Fase de Pruebas: Pruebas unitarias, pruebas de integración, pruebas del sistema (usando herramientas FOSS + asistencia local de IA).
+
+Fase de Despliegue: Instalar en los servidores locales del taller, sincronizar con el servidor central y garantizar el cumplimiento de la normativa.
+
+Fase de Mantenimiento: Actualizaciones continuas, corrección de errores y ampliación de funcionalidades mediante extensiones modulares.
+
+2. Roles y Funciones
+
+Ingeniero Arquitecto (1 por equipo): Diseña la estructura del sistema y garantiza la escalabilidad y el cumplimiento normativo.
+
+Desarrolladores (2-4 por equipo): Implementan módulos principales en C, frontend en JS/HTML/CSS e integración con bases de datos.
+
+Probador (1 por equipo): Diseña y ejecuta pruebas, garantiza la calidad antes de la implementación.
+
+Analista de bases de datos (1-2 personas): Diseña el esquema, garantiza el almacenamiento de conformidad durante 5 años y optimiza las consultas.
+
+Especialistas en comunicación con el cliente (2-3 personas): Recopilan requisitos, mantienen la documentación y transmiten la retroalimentación del cliente.
+
+Administrador de sistemas (1-2 personas): Mantienen los servidores (configuraciones de NixOS, actualizaciones, reproducibilidad, planes de recuperación).
+
+3. Documentación requerida
+
+Documento de requisitos: Requisitos funcionales y no funcionales, notas de conformidad.
+
+Documento de diseño: Diagramas de arquitectura del sistema, esquema de la base de datos, estructura de red.
+
+Documentación técnica: Guías de instalación, configuraciones de módulos de NixOS, procedimientos de copia de seguridad/restauración de la base de datos.
+
+Manual de usuario: Para el uso de la interfaz de usuario (TUI) y la interfaz gráfica de usuario (GUI).
+
+Informes de pruebas: Resultados de las pruebas unitarias, de integración y a nivel de sistema.
+
+Registros de Mantenimiento: Registro de actualizaciones, parches y cambios en el servidor.
+
+4. Asignación de Tareas
+
+Análisis de BD → Analistas de BD.
+
+Desarrollo de Aplicaciones → Desarrolladores (bajo la supervisión del Arquitecto).
+
+Pruebas → Testers + Desarrolladores (pruebas unitarias).
+
+Documentación → Especialistas en Comunicación con el Cliente + Desarrolladores (parte técnica).
+
+Configuración y Mantenimiento del Servidor → Administradores de Sistemas.
+
+
+
+
+Análisis de BD (MySQL, cumplimiento de la normativa)
+
+Analista de Sistemas (1–2) → Estudia requisitos, restricciones legales (5 años de registros) y comportamiento de la BD.
+
+Diseñador de software (1) → Diseña el esquema de la BD y la estructura relacional.
+
+Analista programador (1) → Garantiza que el esquema esté codificado eficientemente y listo para la integración.
+
+Tester (1) → Valida la consistencia de los datos, las copias de seguridad/restauración y el rendimiento de las consultas.
+
+Desarrollo de Aplicaciones Principales (integración C + Nix)
+
+Arquitecto de software (1) → Selecciona los detalles de la pila tecnológica, garantiza la modularidad, la reproducibilidad y el diseño reactivo para la monitorización de eventos de hardware/software.
+
+Analista de programación (1-2) → Implementa la arquitectura en C + Nix, proporcionando abstracciones para los programadores.
+
+Programadores (1-2) → Escriben y mantienen los módulos principales (servicios del sistema, monitorización, integración con el sistema operativo).
+
+Probador (1) → Pruebas unitarias, comprobaciones en tiempo de ejecución, validación a nivel de sistema operativo.
+
+Desarrollo Frontend (TUI + GUI con HTML/CSS/JS)
+
+Diseñador de software (1) → Crea prototipos de UI/UX y define la consistencia de la interfaz.
+
+Analista de programación (1) → Conecta el backend con el frontend (API, enlaces, eventos reactivos).
+
+Programadores (2-3) → Implementan primero la TUI (usabilidad directa) y luego la capa GUI.
+
+Tester (1) → Garantiza la capacidad de respuesta, usabilidad y accesibilidad de la interfaz de usuario.
+
+Integración de sistemas e infraestructura (servidores NixOS, redes, copias de seguridad)
+
+Arquitecto de software (1) → Define las configuraciones modulares del servidor, las estrategias de copia de seguridad y la reproducibilidad.
+
+Analista de sistemas (1) → Estudia los requisitos de infraestructura para talleres y el servidor central.
+
+Analista de programación (1) → Traduce la arquitectura del sistema a módulos Nix declarativos.
+
+Programador (1-2) → Implementa scripts de automatización y gestión de la configuración.
+
+Tester (1) → Ejecuta pruebas de recuperación ante desastres, rollback y reproducibilidad.
+
+Comunicación con el cliente y validación de requisitos
+
+Jefe de proyecto (1) → Comunicación directa con el cliente y gestión de plazos.
+
+Analista de sistemas (1-2) → Recopila requisitos detallados y los traduce a lenguaje técnico.
+
+Arquitecto de software (1) → Valida la viabilidad y la asignación de recursos.
+
+(No es estrictamente necesario que sea tester, pero un especialista en control de calidad podría validar la claridad de la documentación).

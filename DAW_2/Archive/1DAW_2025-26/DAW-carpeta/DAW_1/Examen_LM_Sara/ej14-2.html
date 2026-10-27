@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ej14-2 - Pregunta aleatoria sin repetir</title>
+</head>
+<body>
+    <h1>Pregunta aleatoria (sin repetir)</h1>
+    <input type="button" id="boton" value="Dame una pregunta">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let url = "http://192.168.1.132:8787/examen2.json"
+        let boton = document.getElementById("boton")
+        let resultado = document.getElementById("resultado")
+        let preguntas = []
+        let usadas = []
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        fetch(url)
+            .then(r => r.json())
+            .then(data => preguntas = data)
+            .catch(e => console.error(e))
+
+        boton.addEventListener("click", () => {
+            if (usadas.length >= preguntas.length) {
+                resultado.innerHTML = "Ya se han mostrado todas las preguntas"
+                return
+            }
+            let disponibles = preguntas.filter((_, i) => !usadas.includes(i))
+            let idx = Math.floor(Math.random() * disponibles.length)
+            let p = disponibles[idx]
+            let posReal = preguntas.indexOf(p)
+            usadas.push(posReal)
+            resultado.innerHTML = `
+                <p><strong>${p.pregunta}</strong> <em>(ID: ${p.id})</em></p>
+                <p>A) ${p.opcion_a}</p>
+                <p>B) ${p.opcion_b}</p>
+                <p>C) ${p.opcion_c}</p>
+                <p>D) ${p.opcion_d}</p>
+                <p style="color:gray">Quedan ${preguntas.length - usadas.length} preguntas sin mostrar</p>
+            `
+        })
+    </script>
+</body>
+</html>

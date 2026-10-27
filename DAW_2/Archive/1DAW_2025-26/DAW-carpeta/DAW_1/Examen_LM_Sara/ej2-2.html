@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen</title>
+</head>
+<body>
+    <h1>Preguntas</h1>
+    <input type="button" id="boton" value="Dame una pregunta">
+    <br><br>
+    <div id="resultado"></div>
+
+    <script>
+        let boton = document.getElementById("boton")
+        let url = "http://192.168.1.132:8787/examen1.json"
+        let resultado = document.getElementById("resultado")
+        let preguntas
+
+        function numeroAleatorio(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min
+        }
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                preguntas = data
+            })
+            .catch(error => console.error("ERROR: " + error))
+
+        boton.addEventListener("click", () => {
+            let n = numeroAleatorio(0, preguntas.length - 1)
+            let p = preguntas[n]
+            resultado.innerHTML = `
+                <p><strong>${p.pregunta}</strong></p>
+                <p>A) ${p.opcion_a}</p>
+                <p>B) ${p.opcion_b}</p>
+                <p>C) ${p.opcion_c}</p>
+                <p>D) ${p.opcion_d}</p>
+            `
+        })
+    </script>
+</body>
+</html>
