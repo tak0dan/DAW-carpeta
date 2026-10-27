@@ -1,0 +1,266 @@
+PROGRAMACIÓN CURSO 2026-27
+C.F.G.S.: Desarrollo de Aplicaciones Web
+Módulo: Digitalización Aplicada al Sistema Productivo
+
+IES JUAN DE GARAY - VALENCIA
+
+Profesor: Jesús Mª Timoneda i Timoneda
+
+ÍNDICE
+Introducción................................................................... 3
+2. Contenidos................................................................... 5
+3. Resultados de aprendizaje................................................... 6
+4. Temporalización............................................................. 7
+5. Metodología................................................................. 7
+6. Criterios de evaluación..................................................... 8
+7. Actividades extraescolares.................................................. 8
+8. Temas transversales......................................................... 8
+9. Materiales y recursos didácticos.......................................... 9
+10. Medidas de atención a la diversidad..................................... 10
+
+Ciclo de Grado Superior Desarrollo de Aplicaciones Web
+Digitalización Aplicada al Sistema Productivo                        -3-
+
+INTRODUCCIÓN
+El módulo Digitalización Aplicada al Sistema Productivo se imparte en el segundo curso del
+Ciclo Superior de Desarrollo de Aplicaciones Web y es un módulo transversal que consiste en
+facilitar al estudiante herramientas de trabajo digitalizadas que faciliten las tareas habituales de
+un sistema productivo:
+     a) Desarrollar, implantar y mantener aplicaciones web, con independencia del modelo
+        empleado, utilizando tecnologías digitalizadas que automaticen el proceso.
+     b) Desarrollar aplicaciones web con acceso a bases de datos utilizando lenguajes, objetos
+        de acceso y herramientas de mapeo, usando tecnologías digitalizadas que automaticen el
+        proceso.
+     c) Aplicación de la Inteligencia Artificial.
+     d) Análisis de datos y ciberseguridad.
+     e) Plan de transformación digital aplicado a una empresa del sector del ciclo.
+
+2. CONTENIDOS
+Las unidades de trabajo a impartir son:
+
+UT1: Digitalización en los sectores productivos
+UT2: Tecnologías habilitadoras
+UT3: Cloud y sistemas conectados
+UT4: Aplicación de la Inteligencia Artificial
+UT5: Análisis de datos y ciberseguridad
+UT6: Plan de transformación digital aplicado a una empresa del sector del ciclo
+
+A continuación se detalla el desglose de los contenidos que constituirán cada una de las
+unidades de trabajo.
+
+UT 1: Digitalización en los sectores productivos
+
+        • Concepto de digitalización. Tipos. Ventajas para el sector empresarial.
+        • Entornos de tecnología de la información: definición y ubicación en la empresa.
+        • Entornos de tecnología de operación: definición y aplicación en una empresa industrial.
+        • Diferencias y similitudes entre entornos IT y OT e importancia de su convergencia.
+          TDH en cada entorno.
+
+UT 2: Tecnologías habilitadoras
+
+        • Tecnologías habilitadoras digitales (THD): concepto y relación con la transformación
+          del tejido productivo del sector del ciclo.
+        • Tecnologías habilitadoras más frecuentes de la industria 4.0. Características y mejoras
+          en la productividad y sostenibilidad derivadas de su implantación: IoT, IA (Inteligencia
+          Artificial), Big Data, tecnología 5G, robótica colaborativa, Blockchain, ciberseguridad,
+          fabricación aditiva, realidad virtual, gemelos digitales, otras.
+        • Internet de las cosas (IoT). Objetos inteligentes. Ciudades inteligentes: oportunidades
+          de negocio para el sector. Aplicaciones de la IoT.
+        • Ventajas para las empresas de la IoT. Riesgos derivados de la IoT.
+
+UT 3: Cloud y sistemas conectados
+
+        • Cloud. Definición y niveles.
+        • Posibilidades del trabajo en la nube.
+        • Cloud computing: funciones y ventajas de su uso en las empresas.
+        • Otros sistemas de tratamiento y almacenamiento de datos: Edge computing: ventajas y
+          desventajas frente al cloud computing. Optimización del rendimiento: Fog y Mist.
+
+UT 4: Aplicación de la Inteligencia Artificial
+
+        • IA en la automatización de procesos y su optimización. Lenguajes de programación
+          en IA.
+        • Inteligencia Artificial y tratamiento de datos. Minería de datos. Rentabilidad para la
+          empresa.
+        • La IA aplicada al sector del título: posibilidades de mejora en los procesos de trabajo.
+        • Importancia presente y futura de la IA. Retos para el trabajador.
+
+UT 5: Análisis de datos y ciberseguridad
+
+        • Dato: concepto y ciclo de vida del dato. Diferencia dato-información.
+        • Definición y características del Big Data. Relación entre Big Data, análisis de datos,
+          machine/deep learning e inteligencia artificial.
+        • Almacenamiento y protección de datos: aspectos básicos.
+        • Estrategias de ciberseguridad para PYMES: plan director de seguridad.
+        • Teletrabajo seguro. Cultura en ciberseguridad en la empresa.
+
+UT 6: Plan de transformación digital aplicado a una empresa del sector del ciclo
+
+        • Herramientas de diagnóstico de la situación de partida. Objetivos estratégicos.
+          Oportunidades de negocio derivadas de la transformación digital.
+        • Lienzo de transformación digital: áreas a digitalizar en la empresa.
+        • Tecnologías más idóneas a implementar en función de la empresa e integración en el
+          conjunto.
+        • Diseño del proceso de implementación: costes y beneficios. Desarrollo temporal.
+          Recursos materiales y humanos.
+
+3. RESULTADOS DE APRENDIZAJE
+RA1: Analiza el concepto de digitalización y su repercusión en los sectores productivos,
+teniendo en cuenta la actividad de la empresa e identificando entornos IT (Information
+Technology: tecnología de la información) y OT (Operation Technology: tecnología de
+operación) característicos.
+RA2: Caracteriza las tecnologías habilitadoras digitales necesarias para la adecuación/
+transformación de las empresas a entornos digitales, describiendo sus características y
+aplicaciones.
+RA3: Identifica los sistemas basados en cloud/nube y su influencia en el desarrollo de los
+sistemas digitales.
+RA4: Identifica aplicaciones de la IA (inteligencia artificial) en entornos del sector en el que se
+enmarca el título, describiendo las mejoras implícitas en su implementación.
+RA5: Evalúa la importancia de los datos, así como su protección en una economía digital
+globalizada, definiendo sistemas de seguridad y ciberseguridad tanto a nivel de
+equipo/sistema como globales.
+RA6: Desarrolla un proyecto de transformación digital de una empresa de un sector relacionado
+con el título, teniendo en cuenta los cambios que deben producirse en función de los
+objetivos de la empresa.
+
+4. TEMPORALIZACIÓN
+La distribución temporal de las diferentes unidades es:
+
+    1ª Evaluación:
+
+      UT1: Digitalización en los sectores productivos
+      UT2: Tecnologías habilitadoras
+      UT3: Cloud y sistemas conectados
+
+    2ª Evaluación:
+
+      UT4: Aplicación de la Inteligencia Artificial
+      UT5: Análisis de datos y ciberseguridad
+      UT6: Plan de transformación digital aplicado a una empresa del sector del ciclo
+
+5. METODOLOGÍA
+La metodología a seguir consistirá en presentar un conjunto de conceptos de la materia objeto
+de aprendizaje en la pizarra o mediante el proyector. Posteriormente se plantearán problemas
+o actividades relacionadas, con el objetivo de ayudar al alumno a asimilar mejor los
+contenidos. Se utilizará como material complementario: selección de ejercicios o teoría que
+complementen las explicaciones y bibliografía recomendada en aquellos puntos que el profesor
+considere convenientes, en formato papel o electrónico.
+
+Dado el carácter eminentemente procedimental de la asignatura, se plantearán y resolverán en
+clase diversos ejercicios y prácticas asociados a cada una de las unidades. Mientras los alumnos
+realizan los ejercicios, el profesor atenderá las dudas que puedan surgir y explicará conceptos
+suplementarios que puedan ser de ayuda. En cada una de las unidades temáticas se propondrán
+actividades adicionales a aquellos alumnos que lo requieran.
+
+Consideraciones en caso de suspensión de la actividad docente presencial o división del grupo
+
+En caso de suspensión de la actividad docente presencial, los alumnos y alumnas realizarán las
+actividades de enseñanza-aprendizaje de la lección/asignatura de forma telemática.
+
+Para ello se utilizarán las siguientes herramientas proporcionadas por la Conselleria de
+Educación para poder llevar a cabo el proceso de aprendizaje a distancia y el seguimiento del
+alumnado:
+
+• Plataforma Aules: nos permite crear aulas virtuales para complementar las clases presenciales
+  y llevar un seguimiento del proceso de aprendizaje a distancia, así como cumplir con la
+  normativa de protección de datos, ya que la información reside en todo momento en servidores
+  propios de la Generalitat.
+
+• Plataforma WebEx: es la herramienta oficial para realizar videoconferencias de la Conselleria
+  de Educación. Se propone esta herramienta para impartir docencia en directo. Se accederá
+  mediante un enlace URL permanente y único para cada docente.
+
+• Correo electrónico: se utilizará preferentemente el correo electrónico para la comunicación
+  con el alumnado.
+
+En caso de no suspender la actividad docente presencial, pero sí tener que dividir el grupo en
+dos para garantizar las medidas de higiene y seguridad, se realizará una parte del trabajo a
+distancia utilizando las herramientas mencionadas anteriormente.
+
+En ambos casos se priorizarán los contenidos fundamentales de la lección, con el fin de alcanzar
+los objetivos mínimos de la misma.
+
+6. CRITERIOS DE EVALUACIÓN
+El alumno superará la asignatura cuando obtenga una calificación de apto tanto en las pruebas
+teóricas como prácticas que se realizarán cada trimestre y que servirán para evaluar los
+conocimientos adquiridos durante ese período lectivo.
+
+7. ACTIVIDADES EXTRAESCOLARES
+A lo largo del curso se informará a los alumnos con la antelación suficiente de las actividades
+extraescolares que puedan ofertarse y que sean de interés académico para el alumnado.
+
+8. TEMAS TRANSVERSALES
+Los reales decretos que han establecido los currículos de las diferentes etapas educativas
+definen una serie de enseñanzas que deben estar presentes en las diferentes áreas. Para el
+Ministerio de Educación y Ciencia, hablar de enseñanzas transversales no es introducir
+contenidos nuevos que no estén ya reflejados en el currículo de las áreas, sino organizar algunos
+de esos contenidos alrededor de un eje educativo determinado. La razón de la presencia de los
+temas transversales en el currículo tiene una justificación importante tanto para el desarrollo
+personal e integral de los alumnos como para un proyecto de sociedad más libre y respetuosa
+con las personas y con el entorno de la sociedad humana.
+
+La presencia de las actitudes y valores ha sido estructurada en los siguientes temas
+transversales:
+  • Educación para la igualdad de oportunidades de ambos sexos.
+  • Educación para la paz.
+  • Educación ambiental.
+
+La presencia de los temas transversales en el desarrollo curricular es responsabilidad de toda la
+comunidad educativa, especialmente del equipo docente, por lo que deben estar presentes en el
+proyecto educativo de centro, en el proyecto curricular de etapa y en las programaciones
+didácticas.
+
+En el caso que nos ocupa, al tratarse de un módulo de formación profesional, la transversalidad
+de sus contenidos afecta de manera diferente a la de los alumnos y alumnas que cursan
+enseñanzas comunes. Al tratarse de formación profesional, resulta muy difícil incorporar al
+currículo temas transversales como educación para la salud, la paz, el consumo, etc. Pensamos
+que es en el desarrollo en el aula donde hay que hablar de valores y comportamientos, así como
+de su aprendizaje; este tipo de elementos forma parte de lo que se conoce como currículo
+oculto.
+
+El papel que juega el profesor o profesora en el campo de los valores es determinante, tanto en
+lo que respecta a su actitud personal como en la organización y dirección de las actuaciones de
+los alumnos y alumnas dentro del centro educativo. Aunque en los decretos que establecen el
+currículo de los ciclos formativos no se han incorporado los temas transversales, desde el ciclo
+formativo que nos ocupa y, más concretamente, desde el módulo que se está programando, el
+objetivo es el desarrollo de la personalidad integral, utilizando un método de globalización que
+pone en práctica las capacidades y actitudes que queremos para nuestro alumnado: relación con
+el medio como marco, recurso y objetivo; participación activa; cooperación; aceptación de
+responsabilidades; análisis crítico; compromiso y acción; resolución de problemas.
+
+9. MATERIALES Y RECURSOS DIDÁCTICOS
+MATERIALES
+   • Bibliografía de referencia técnica.
+   • Apuntes elaborados por el profesor.
+   • Documentación técnica obtenida en medios de comunicación.
+RECURSOS
+   • Medio de transmisión de información y evaluación.
+     o Exposiciones teórico-prácticas.
+     o Proyección de temas.
+     o Supuestos prácticos.
+     o Ejercicios prácticos.
+     o Exposición de trabajos.
+   • Medios físicos.
+     o Pizarra.
+     o Ordenadores.
+     o Proyector.
+     o Otros dispositivos y periféricos.
+   • Otros medios técnicos.
+     o Red de área local.
+     o Internet.
+
+10. MEDIDAS DE ATENCIÓN A LA DIVERSIDAD
+A los alumnos que, por su capacidad o por su experiencia, tengan un nivel claramente superior
+al resto de la clase se les propondrán actividades específicas que permitan desarrollar su
+intelecto de la forma más adecuada, recomendándoles lecturas de temas específicos tomadas de
+internet, de revistas o de libros sobre la materia, y dándoles ejercicios más complejos que al
+resto de la clase.
+
+A los que tengan un nivel claramente inferior a la media de la clase se les orientará hacia la
+realización de las actividades más básicas que cumplan los objetivos marcados para el módulo.
+Se les proporcionará información de apoyo adecuada a su nivel y se les orientará para que
+instalen y puedan utilizar el mismo material didáctico que se les da en el centro.
+
+A los alumnos que padezcan algún tipo de minusvalía que les impida el adecuado desarrollo de
+los conceptos vistos en clase, se les proporcionará todo tipo de medidas destinadas a que el
+alumno alcance los objetivos mínimos del módulo.

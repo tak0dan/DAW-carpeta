@@ -1,0 +1,2484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RA3 · JavaScript Avanzado · Fetch y APIs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0b0d14; --bg2: #131725; --bg3: #1b2035; --card: #1e2440;
+  --border: #28305a; --accent: #5b8ff9; --red: #ff6b6b; --green: #51e89e;
+  --yellow: #ffd166; --purple: #6c5ce7; --cyan: #26c6da; --text: #e8ebf4; --text2: #8a91b0;
+  --text3: #555d85; --code: #0e1120; --cborder: #2a3360;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: 'Sora', system-ui, -apple-system, sans-serif; font-size: 15px; line-height: 1.7;
+}
+.topbar {
+  position: fixed; z-index: 1000; top: 0; left: 0; right: 0;
+  background: rgba(11,13,20,0.96); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px; padding: 0 14px; height: 50px;
+}
+.topbar-logo { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 13px; color: var(--accent); white-space: nowrap; margin-right: 6px; }
+.search-wrap { position: relative; flex: 1; max-width: 340px; }
+.search-wrap input {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 7px;
+  color: var(--text); font-family: 'Sora', system-ui, sans-serif; font-size: 13px;
+  padding: 6px 12px 6px 32px; outline: none;
+}
+.search-wrap input:focus { border-color: var(--accent); }
+.search-wrap svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); opacity: 0.35; pointer-events: none; }
+#searchResults {
+  position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px;
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+  max-height: 480px; overflow-y: auto; z-index: 999; display: none;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6); width: max(400px, 50vw);
+}
+#searchResults.show { display: block; }
+.sr-item { padding: 9px 14px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: var(--bg3); }
+.sr-tit { font-size: 13px; color: var(--text); font-weight: 500; }
+.sr-des { font-size: 11px; color: var(--text2); }
+.sr-nada { padding: 14px; color: var(--text2); font-size: 13px; text-align: center; }
+.hl { background: rgba(255,209,102,0.35); border-radius: 2px; }
+.topbar-nav { display: flex; gap: 2px; margin-left: auto; overflow-x: auto; }
+.topbar-nav a { color: var(--text2); font-size: 12px; text-decoration: none; padding: 4px 8px; border-radius: 5px; white-space: nowrap; }
+.topbar-nav a:hover { color: var(--text); background: var(--bg3); }
+.main { max-width: 1200px; margin: 0 auto; padding: 66px 18px 40px; }
+h1 { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 1.8rem; text-align: center; padding: 24px 0 4px; }
+h1 span { color: var(--accent); }
+.sub { text-align: center; color: var(--text2); font-size: 14px; margin-bottom: 24px; }
+.section { margin-bottom: 36px; scroll-margin-top: 58px; }
+.section > h2 {
+  font-family: 'Sora', sans-serif; font-weight: 700; font-size: 1.15rem;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.section > h2 .t {
+  font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 5px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.t-red { background: rgba(255,107,107,0.1); color: var(--red); border: 1px solid rgba(255,107,107,0.2); }
+.t-green { background: rgba(81,232,158,0.08); color: var(--green); border: 1px solid rgba(81,232,158,0.18); }
+.t-yellow { background: rgba(255,209,102,0.08); color: var(--yellow); border: 1px solid rgba(255,209,102,0.18); }
+.t-purple { background: rgba(108,92,231,0.08); color: var(--purple); border: 1px solid rgba(108,92,231,0.18); }
+.t-cyan { background: rgba(38,198,218,0.08); color: var(--cyan); border: 1px solid rgba(38,198,218,0.18); }
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 16px 18px; margin-bottom: 10px;
+}
+.card h3 { font-size: 14px; margin-bottom: 6px; font-family: 'Sora', sans-serif; }
+.card p, .card li { color: var(--text2); font-size: 13.5px; }
+code { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.cd {
+  font-family: 'JetBrains Mono', monospace; font-size: 11.5px; padding: 2px 6px;
+  border-radius: 3px; background: rgba(255,255,255,0.04);
+}
+.cb { background: var(--code); border: 1px solid var(--cborder); border-radius: 8px; overflow: hidden; margin: 10px 0; }
+.ch {
+  display: flex; justify-content: space-between; padding: 5px 12px;
+  background: rgba(255,255,255,0.015); border-bottom: 1px solid var(--cborder);
+}
+.ch span {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 700;
+  letter-spacing: 0.6px; text-transform: uppercase; color: var(--text3);
+}
+.cb-btn { font-size: 11px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text2); padding: 3px 10px; border-radius: 5px; cursor: pointer; font-family: 'Sora', sans-serif; transition: all 0.2s; }
+.cb-btn:hover { background: rgba(91,143,249,0.15); color: var(--accent); border-color: var(--accent); }
+.cb-btn.explain-btn { color: var(--cyan); }
+.cb-btn.explain-btn:hover { background: rgba(38,198,218,0.15); color: var(--cyan); }
+.exp { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 6px 0; font-size: 12.5px; line-height: 1.7; display: none; max-height: 500px; overflow-y: auto; }
+.exp.show { display: block; }
+.exp table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.exp td { padding: 4px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.exp td:first-child { color: var(--accent); font-family: 'JetBrains Mono', monospace; white-space: pre; width: 30%; }
+.exp td:last-child { color: var(--text2); }
+.exp tr:last-child td { border-bottom: none; }
+pre.code {
+  padding: 12px 16px; overflow-x: auto; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; line-height: 1.6; white-space: pre;
+}
+.kw { color: #c678dd; } .prop { color: #61afef; } .val { color: #98c379; }
+.sel { color: #e06c75; } .cmt { color: #5c6370; font-style: italic; }
+.tc { color: #e06c75; } .at { color: #d19a66; } .st { color: #98c379; } .num { color: #56b6c2; }
+.box { padding: 10px 16px; border-radius: 8px; margin: 10px 0; font-size: 13.5px; display: flex; gap: 10px; align-items: flex-start; }
+.box.red { background: rgba(255,107,107,0.04); border: 1px solid rgba(255,107,107,0.18); }
+.box.green { background: rgba(81,232,158,0.035); border: 1px solid rgba(81,232,158,0.15); }
+.box.yellow { background: rgba(255,209,102,0.035); border: 1px solid rgba(255,209,102,0.15); }
+.box.blue { background: rgba(91,143,249,0.04); border: 1px solid rgba(91,143,249,0.18); }
+.box.purple { background: rgba(108,92,231,0.04); border: 1px solid rgba(108,92,231,0.18); }
+.footer { border-top: 1px solid var(--border); padding: 14px; text-align: center; color: var(--text3); font-size: 11px; }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+details.vm { margin: 10px 0; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; background: var(--bg2); }
+details.vm summary { padding: 10px 14px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--accent); background: var(--bg3); user-select: none; display: flex; align-items: center; gap: 6px; }
+details.vm summary::-webkit-details-marker { display: none; }
+details.vm summary:hover { filter: brightness(1.2); }
+details.vm[open] summary { border-bottom: 1px solid var(--border); }
+details.vm .vm-c { padding: 14px 16px; font-size: 13.5px; color: var(--text2); line-height: 1.85; }
+details.vm .vm-c p { margin-bottom: 10px; }
+details.vm .vm-c strong { color: var(--text); }
+details.vm .vm-c code { font-size: 12px; background: rgba(255,255,255,0.04); padding: 1px 5px; border-radius: 3px; }
+details.vm .vm-c ul { margin: 6px 0 6px 16px; }
+details.vm .vm-c ul li { margin-bottom: 4px; }
+details.vm .vm-c .cd { display: block; background: var(--code); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--cborder); font-family: 'JetBrains Mono', monospace; font-size: 12px; margin: 6px 0; white-space: pre; overflow-x: auto; }
+.subsec { margin: 28px 0; border-left: 2px solid var(--border); padding-left: 16px; scroll-margin-top: 60px; }
+.subsec > h3:first-child { margin-top: 0 !important; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin: 10px 0; }
+table th { background: var(--bg2); padding: 7px 12px; text-align: left; font-weight: 600; color: var(--text2); border-bottom: 1px solid var(--border); font-size: 12px; }
+table td { padding: 6px 12px; border-bottom: 1px solid var(--border); }
+table tr:last-child td { border-bottom: none; }
+.stats-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px; }
+.stat {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text3);
+  background: rgba(91, 143, 249, 0.06);
+  padding: 4px 10px; border-radius: 6px; font-weight: 500;
+}
+.stat-num { font-weight: 700; font-size: 13px; color: var(--accent); }
+.stat-search-hint { margin-left: auto; background: rgba(255, 209, 102, 0.10); color: var(--text3); }
+.stat-search-hint kbd { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.1); }
+
+/* TOC */
+.toc { position: relative; }
+.toc-header {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  user-select: none; padding: 6px 0;
+}
+.toc-header:hover { opacity: 0.8; }
+.toc-badge {
+  font-size: 11px; background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 99px; font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.toc-arrow {
+  margin-left: auto; font-size: 14px; transition: transform 0.25s;
+  color: var(--text3);
+}
+.toc-body {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px; margin: 10px 0 18px; transition: max-height 0.35s ease, opacity 0.25s;
+  max-height: 2000px; opacity: 1; overflow: hidden;
+}
+.toc-body.collapsed { max-height: 0; opacity: 0; margin: 0; }
+.toc-group {
+  display: flex; gap: 10px; padding: 10px 12px;
+  background: rgba(91, 143, 249, 0.05);
+  border-radius: 8px; border-left: 3px solid var(--accent);
+  transition: background 0.2s, transform 0.15s;
+}
+.toc-group:hover {
+  background: rgba(91, 143, 249, 0.10);
+  transform: translateX(2px);
+}
+.toc-num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.toc-group:nth-child(2) .toc-num { background: var(--yellow); }
+.toc-group:nth-child(3) .toc-num { background: var(--green); }
+.toc-group:nth-child(4) .toc-num { background: var(--purple); }
+.toc-group:nth-child(5) .toc-num { background: var(--red); }
+.toc-group:nth-child(6) .toc-num { background: var(--cyan); }
+.toc-group:nth-child(7) .toc-num { background: var(--yellow); }
+.toc-group:nth-child(8) .toc-num { background: var(--green); }
+.toc-group:nth-child(9) .toc-num { background: var(--purple); }
+.toc-group:nth-child(10) .toc-num { background: var(--red); }
+.toc-group-content { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.toc-main {
+  font-weight: 600; font-size: 13px; color: var(--text); text-decoration: none;
+  padding: 2px 0; transition: color 0.2s; position: relative;
+}
+.toc-main::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--accent); transition: width 0.25s;
+}
+.toc-main:hover { color: var(--accent); }
+.toc-main:hover::after { width: 100%; }
+.toc-main.active { color: var(--accent); }
+.toc-main.active::after { width: 100%; }
+.toc-sub { display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+.toc-sub a {
+  font-size: 11.5px; color: var(--text3); text-decoration: none;
+  padding: 1px 0 1px 12px; position: relative; transition: color 0.2s;
+  line-height: 1.5;
+}
+.toc-sub a::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--text3);
+  transition: background 0.2s;
+}
+.toc-sub a:hover { color: var(--text); }
+.toc-sub a:hover::before { background: var(--accent); }
+@media (max-width: 640px) {
+  .toc-body { grid-template-columns: 1fr; }
+}
+
+/* Progress bar */
+#progressBar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--purple));
+  z-index: 10000; width: 0; transition: width 0.1s linear;
+  box-shadow: 0 0 6px rgba(108,92,231,0.4);
+}
+
+/* Back to top */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 22px; cursor: pointer; box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, opacity 0.25s; opacity: 0.85; line-height: 1;
+}
+.back-to-top:hover { transform: scale(1.1); opacity: 1; }
+
+/* Demo box */
+.demo-box {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 10px;
+  margin: 14px 0; overflow: hidden;
+}
+.demo-box .db-title {
+  background: var(--bg3); padding: 8px 14px; font-size: 12px; font-weight: 700;
+  border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px;
+}
+.demo-box .db-title span { color: var(--text3); font-weight: 400; font-size: 10px; }
+.demo-box .db-body { padding: 14px; }
+.demo-btn {
+  background: var(--accent); color: #fff; border: none; padding: 6px 14px;
+  border-radius: 4px; cursor: pointer; font-size: 12px;
+}
+.demo-btn:hover { filter: brightness(1.2); }
+.demo-btn.green { background: var(--green); color: #000; }
+.demo-btn.red { background: var(--red); }
+.demo-btn.yellow { background: var(--yellow); color: #000; }
+.demo-btn.purple { background: var(--purple); }
+.demo-btn.cyan { background: var(--cyan); color: #000; }
+.demo-btn.sm { padding: 4px 10px; font-size: 11px; }
+input.demo-input {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 4px;
+  color: var(--text); padding: 5px 8px; font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; outline: none;
+}
+input.demo-input:focus { border-color: var(--accent); }
+select.demo-select {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 4px;
+  color: var(--text); padding: 5px 8px; font-size: 12px; outline: none;
+}
+
+/* Visual call stack */
+.stack-viz { display: flex; gap: 16px; flex-wrap: wrap; }
+.stack-viz .stack-panel { flex: 1; min-width: 200px; }
+.stack-viz .stack-panel h5 { font-size: 11px; color: var(--text3); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.3px; }
+.stack-items { background: var(--code); border: 1px solid var(--cborder); border-radius: 6px; min-height: 120px; padding: 6px; }
+.stack-item {
+  background: var(--accent); color: #fff; padding: 4px 8px; border-radius: 4px;
+  font-size: 11px; margin-bottom: 3px; font-family: 'JetBrains Mono', monospace;
+  animation: slideIn 0.2s ease;
+}
+.stack-item.green { background: var(--green); color: #000; }
+.stack-item.red { background: var(--red); }
+.stack-item.yellow { background: var(--yellow); color: #000; }
+.stack-item.out { animation: slideOut 0.2s ease forwards; }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideOut { from { opacity: 1; } to { opacity: 0; transform: translateX(20px); } }
+.queue-items { background: var(--code); border: 1px solid var(--cborder); border-radius: 6px; min-height: 80px; padding: 6px; display: flex; flex-direction: column; gap: 3px; }
+.queue-item {
+  background: var(--yellow); color: #000; padding: 3px 8px; border-radius: 4px;
+  font-size: 10px; font-family: 'JetBrains Mono', monospace; animation: slideIn 0.2s ease;
+}
+.log-output {
+  background: var(--code); border: 1px solid var(--cborder); border-radius: 6px;
+  padding: 8px; min-height: 60px; font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; max-height: 150px; overflow-y: auto;
+}
+.log-line { padding: 1px 0; color: var(--text2); }
+.log-line.sync { color: var(--green); }
+.log-line.async { color: var(--yellow); }
+
+/* Promise states */
+.promise-states { display: flex; gap: 10px; flex-wrap: wrap; }
+.promise-state {
+  flex: 1; min-width: 120px; border: 1px solid var(--border); border-radius: 8px;
+  padding: 12px; text-align: center;
+}
+.promise-state .ps-icon { font-size: 28px; margin-bottom: 4px; }
+.promise-state .ps-label { font-size: 11px; font-weight: 600; }
+.promise-state.ps-pending { border-color: var(--yellow); background: rgba(255,209,102,0.05); }
+.promise-state.ps-fulfilled { border-color: var(--green); background: rgba(81,232,158,0.05); }
+.promise-state.ps-rejected { border-color: var(--red); background: rgba(255,107,107,0.05); }
+
+/* Burger demo */
+.burger-steps { display: flex; gap: 4px; flex-wrap: wrap; margin: 8px 0; }
+.burger-step {
+  padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  background: var(--bg3); border: 1px solid var(--border); color: var(--text3);
+  transition: all 0.3s;
+}
+.burger-step.active { background: var(--yellow); color: #000; border-color: var(--yellow); }
+.burger-step.done { background: var(--green); color: #000; border-color: var(--green); }
+.burger-step.error { background: var(--red); color: #fff; border-color: var(--red); }
+
+/* Comparison side by side */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.comp-grid .comp-col { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.comp-grid .comp-col .comp-head { padding: 6px 10px; font-size: 11px; font-weight: 700; text-align: center; border-bottom: 1px solid var(--border); }
+.comp-grid .comp-col .comp-body { padding: 10px; font-family: 'JetBrains Mono', monospace; font-size: 11px; background: var(--code); }
+.comp-grid .comp-col .comp-body .line { padding: 1px 0; }
+@media (max-width: 700px) { .comp-grid { grid-template-columns: 1fr; } }
+
+/* HTTP methods grid */
+.http-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+.http-card {
+  border: 1px solid var(--border); border-radius: 8px; padding: 12px; text-align: center;
+  transition: transform 0.2s;
+}
+.http-card:hover { transform: translateY(-2px); }
+.http-card .hc-method { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 700; }
+.http-card .hc-desc { font-size: 10px; color: var(--text3); margin-top: 3px; }
+
+/* Fetch user card */
+.user-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  padding: 14px; display: flex; gap: 14px; align-items: center; margin: 8px 0;
+}
+.user-card img { width: 64px; height: 64px; border-radius: 50%; border: 2px solid var(--accent); }
+.user-card .uc-info { flex: 1; }
+.user-card .uc-info .uc-name { font-size: 14px; font-weight: 700; }
+.user-card .uc-info .uc-detail { font-size: 11px; color: var(--text2); }
+
+/* Error demo */
+.error-box { padding: 12px; border-radius: 8px; margin: 8px 0; font-size: 13px; }
+.error-box.err-crash { background: rgba(255,107,107,0.1); border: 1px solid var(--red); color: var(--red); }
+.error-box.err-graceful { background: rgba(81,232,158,0.05); border: 1px solid var(--green); color: var(--green); }
+
+/* Storage demo */
+.storage-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+.storage-item { background: var(--bg3); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 12px; min-width: 120px; text-align: center; }
+.storage-item .si-key { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); }
+.storage-item .si-val { font-weight: 600; margin-top: 2px; }
+
+/* File tree */
+.file-tree { font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.9; }
+.file-tree .ft-entry { padding-left: 20px; cursor: pointer; }
+.file-tree .ft-entry:hover { background: rgba(255,255,255,0.03); border-radius: 4px; }
+.file-tree .ft-folder { color: var(--yellow); }
+.file-tree .ft-file { color: var(--text2); }
+.file-tree .ft-active { color: var(--accent); font-weight: 600; }
+
+/* Function demo */
+.func-results { display: flex; gap: 12px; flex-wrap: wrap; }
+.func-card {
+  flex: 1; min-width: 140px; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px; text-align: center;
+}
+.func-card .fc-title { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.3px; }
+.func-card .fc-result { font-size: 22px; font-weight: 700; margin-top: 6px; }
+
+/* Visual diagram */
+.viz-flow {
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12px; font-family: 'JetBrains Mono', monospace;
+}
+.viz-flow .vf-node {
+  padding: 6px 12px; border-radius: 6px; background: var(--bg3); border: 1px solid var(--border);
+  text-align: center;
+}
+.viz-flow .vf-node.try { border-color: var(--accent); }
+.viz-flow .vf-node.catch { border-color: var(--red); }
+.viz-flow .vf-node.finally { border-color: var(--green); }
+.viz-flow .vf-arrow { color: var(--text3); font-size: 14px; }
+.viz-flow .vf-path { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+
+/* Operator demo */
+.op-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.op-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+.op-card .op-title { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+.op-card .op-desc { font-size: 11px; color: var(--text3); }
+@media (max-width: 600px) { .op-grid { grid-template-columns: 1fr; } }
+
+@media (max-width: 700px) {
+  .topbar-nav a { font-size: 10px; padding: 2px 5px; }
+  .search-wrap { max-width: 140px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="topbar">
+  <span class="topbar-logo">LM 📘</span>
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="buscar" placeholder='Busca: "fetch", "Promise", "async"…' autocomplete="off">
+    <div id="searchResults"></div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="ra2.html">RA2 · CSS/HTML5</a>
+    <a href="ra1.html">RA1 · JS/DOM/JSON</a>
+    <a href="ra3.html" style="font-weight:700">RA3 · Fetch/APIs</a>
+    <a href="ra456.html">RA4-5-6 · XML</a>
+    <a href="css-extra.html">CSS+</a>
+    <a href="index.html" style="color:var(--text3)">🏠</a>
+  </nav>
+</nav>
+
+<div class="main">
+
+<h1>RA3 — <span>JavaScript Avanzado, Fetch y APIs</span></h1>
+<p class="sub">📌 UD6.3 — Promesas, async/await, consumo de APIs REST</p>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-num">10</span> Temas</div>
+  <div class="stat"><span class="stat-num">30+</span> Subsecciones</div>
+  <div class="stat"><span class="stat-num">40+</span> Ejemplos código</div>
+  <div class="stat"><span class="stat-num">10</span> Demos interactivos</div>
+  <div class="stat"><span class="stat-num">6</span> Ejercicios prácticos</div>
+  <div class="stat stat-search-hint">🔍 <kbd>Ctrl+K</kbd> buscar</div>
+</div>
+
+<div class="toc" id="mainToc">
+  <div class="toc-header" onclick="toggleToc()">
+    <strong>📑 Índice de contenidos</strong>
+    <span class="toc-badge">10 temas · 10 demos</span>
+    <span class="toc-arrow" id="tocArrow">▾</span>
+  </div>
+  <div class="toc-body" id="tocBody">
+    <div class="toc-group">
+      <span class="toc-num">1</span>
+      <div class="toc-group-content">
+        <a href="#t1" class="toc-main">Sincronía vs Asincronía</a>
+        <div class="toc-sub">
+          <a href="#t1">Call Stack · Event Loop · setTimeout</a>
+          <a href="#t1">Bloqueante vs No bloqueante</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">2</span>
+      <div class="toc-group-content">
+        <a href="#t2" class="toc-main">Promesas (Promise)</a>
+        <div class="toc-sub">
+          <a href="#t2">Estados: Pending · Fulfilled · Rejected</a>
+          <a href="#t2">Cocinar hamburguesa · Promise.all / race</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">3</span>
+      <div class="toc-group-content">
+        <a href="#t3" class="toc-main">Async / Await</a>
+        <div class="toc-sub">
+          <a href="#t3">.then vs async/await · Countdown · try/catch</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">4</span>
+      <div class="toc-group-content">
+        <a href="#t4" class="toc-main">Fetch API + HTTP</a>
+        <div class="toc-sub">
+          <a href="#t4">GET / POST · JSONPlaceholder · HTTP Methods</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">5</span>
+      <div class="toc-group-content">
+        <a href="#t5" class="toc-main">Manejo de Errores</a>
+        <div class="toc-sub">
+          <a href="#t5">try/catch/throw/finally · Form fails</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">6</span>
+      <div class="toc-group-content">
+        <a href="#t6" class="toc-main">Operadores Modernos</a>
+        <div class="toc-sub">
+          <a href="#t6">?? vs || · ?. · ??= · ||= · &amp;&amp;=</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">7</span>
+      <div class="toc-group-content">
+        <a href="#t7" class="toc-main">localStorage / sessionStorage</a>
+        <div class="toc-sub">
+          <a href="#t7">setItem · getItem · removeItem · JSON</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">8</span>
+      <div class="toc-group-content">
+        <a href="#t8" class="toc-main">Módulos ES (import/export)</a>
+        <div class="toc-sub">
+          <a href="#t8">type="module" · export · import · Simulator</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">9</span>
+      <div class="toc-group-content">
+        <a href="#t9" class="toc-main">Funciones (clásica, anónima, flecha)</a>
+        <div class="toc-sub">
+          <a href="#t9">Comparativa · 3 botones · resultados</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">10</span>
+      <div class="toc-group-content">
+        <a href="#t10" class="toc-main">Ejercicios del Examen</a>
+        <div class="toc-sub">
+          <a href="#t10">Valenbisi · Rick & Morty · Monedas · D&D · PPTLS · Weather</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">11</span>
+      <div class="toc-group-content">
+        <a href="#t-acabalo" class="toc-main">Patrón ACABALO (Examen)</a>
+        <div class="toc-sub">
+          <a href="#t-acabalo">addEventListener · descuenta() · Promise.all · finally · response.ok</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">12</span>
+      <div class="toc-group-content">
+        <a href="#t-ejercicios" class="toc-main">Ejercicios Reales (Descargar)</a>
+        <div class="toc-sub">
+          <a href="#t-ejercicios">Criptomonedas · Monedas · PPTLS Spock · Temperatura</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="progressBar"></div>
+
+<section class="section" id="ra3">
+
+<div class="box blue">
+  <span>📌</span>
+  <span><strong>RA3</strong> — JavaScript Avanzado: asincronía, promesas, async/await, Fetch API, manejo de errores, operadores modernos, Web Storage, módulos ES y 6 ejercicios prácticos de examen.</span>
+</div>
+
+<!-- ====== TEMA 1: SINCRONÍA VS ASINCRONÍA ====== -->
+<div class="subsec" id="t1">
+<h3 style="color:var(--accent)">1. Sincronía vs Asincronía — Call Stack & Event Loop</h3>
+
+<div class="card">
+<p><strong>Analogía:</strong> La sincronía es como pagar en un supermercado con un solo cajero — si el cliente de delante tarda, todos esperan. La asincronía es como pedir comida en un restaurante — pides, te sientas, y cuando está lista te avisan. JavaScript es <strong>single-threaded</strong> (un solo hilo) pero gracias al <strong>Event Loop</strong> puede manejar operaciones asíncronas sin bloquear.</p>
+</div>
+
+<div class="box purple">
+  <span>🧠</span>
+  <span><strong>Call Stack:</strong> Ejecuta código síncrono línea por línea. <strong>Task Queue:</strong> Las tareas asíncronas (setTimeout, fetch) esperan aquí. <strong>Event Loop:</strong> Cuando el stack está vacío, mueve tareas de la cola al stack.</span>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🎮 Call Stack / Event Loop Simulator <span>Visualiza cómo funciona la asincronía</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <button class="demo-btn green sm" onclick="demo1Sync()">⚡ Código Síncrono</button>
+      <button class="demo-btn yellow sm" onclick="demo1Async()">⏳ Código Asíncrono</button>
+      <button class="demo-btn red sm" onclick="demo1Clear()">🧹 Limpiar</button>
+    </div>
+    <div class="stack-viz">
+      <div class="stack-panel">
+        <h5>📚 Call Stack (Pila)</h5>
+        <div class="stack-items" id="stack1"></div>
+      </div>
+      <div class="stack-panel">
+        <h5>📨 Task Queue (Cola)</h5>
+        <div class="queue-items" id="queue1"></div>
+      </div>
+    </div>
+    <div style="margin-top:8px">
+      <h5 style="font-size:11px;color:var(--text3);margin-bottom:4px">📋 Consola</h5>
+      <div class="log-output" id="log1"></div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Sincronía vs Asincronía</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// Código SÍNCRONO: se ejecuta línea por línea, en orden</span>
+<span class="kw">console</span>.log(<span class="st">"1. Inicio"</span>);
+<span class="kw">console</span>.log(<span class="st">"2. Proceso"</span>);
+<span class="kw">console</span>.log(<span class="st">"3. Fin"</span>);
+<span class="cmt">// → 1, 2, 3 (SIEMPRE ese orden)</span>
+
+<span class="cmt">// Código ASÍNCRONO: setTimeout y similares se "apartan"</span>
+<span class="kw">console</span>.log(<span class="st">"A. Inicio"</span>);
+<span class="kw">setTimeout</span>(() => <span class="kw">console</span>.log(<span class="st">"B. Timeout"</span>), <span class="num">0</span>);
+<span class="kw">console</span>.log(<span class="st">"C. Fin"</span>);
+<span class="cmt">// → A, C, B (aunque setTimeout sea 0ms, va a la cola)</span></pre>
+</div>
+
+<div class="box yellow">
+  <span>⚠️</span>
+  <span><strong>Pregunta típica de examen:</strong> "¿setTimeout(fn, 0) se ejecuta antes que la siguiente línea?" → <strong>Falso</strong>. El código síncrono siempre se ejecuta antes que el asíncrono, aunque el timeout sea 0ms.</span>
+</div>
+</div>
+
+<!-- ====== TEMA 2: PROMESAS ====== -->
+<div class="subsec" id="t2">
+<h3 style="color:var(--green)">2. Promesas (Promise) — Estados y consumo</h3>
+
+<div class="card">
+<p><strong>Analogía:</strong> Una promesa es como un ticket de hamburguesa. Cuando pides, te dan un ticket (Pending). Cuando la hamburguesa está lista (Fulfilled), te la entregan y ejecutas .then(). Si se quema la cocina (Rejected), te dan un vale de reembolso y ejecutas .catch(). Una promesa solo puede pasar de Pending a Fulfilled o Rejected — una vez resuelta, no cambia.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🎮 Estados de una Promesa <span>Pending → Fulfilled / Rejected</span></div>
+  <div class="db-body">
+    <div class="promise-states" id="promiseStates">
+      <div class="promise-state ps-pending">
+        <div class="ps-icon">⏳</div>
+        <div class="ps-label">Pending</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">Esperando...</div>
+      </div>
+      <div class="promise-state ps-fulfilled">
+        <div class="ps-icon">✅</div>
+        <div class="ps-label">Fulfilled</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">¡Éxito! → .then()</div>
+      </div>
+      <div class="promise-state ps-rejected">
+        <div class="ps-icon">❌</div>
+        <div class="ps-label">Rejected</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">Error → .catch()</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🍔 Cocinar Hamburguesa <span>Demo interactiva con setTimeout y promesas</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <button class="demo-btn green sm" onclick="burgerCook()">🍔 Cocinar</button>
+      <button class="demo-btn red sm" onclick="burgerBurn()">🔥 Quemar cocina</button>
+      <button class="demo-btn sm" onclick="burgerReset()">🔄 Reset</button>
+    </div>
+    <div class="burger-steps" id="burgerSteps">
+      <div class="burger-step" id="bs0">🫓 Preparar pan</div>
+      <div class="burger-step" id="bs1">🥩 Cocinar carne</div>
+      <div class="burger-step" id="bs2">🧀 Añadir queso</div>
+      <div class="burger-step" id="bs3">🥬 Poner lechuga</div>
+      <div class="burger-step" id="bs4">🍔 ¡Hamburguesa lista!</div>
+    </div>
+    <div style="margin-top:8px">
+      <div class="log-output" id="burgerLog" style="max-height:80px;min-height:40px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🏁 Promise.all vs Promise.race <span>Visualización comparativa</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <button class="demo-btn purple sm" onclick="demoPromiseAll()">⚡ Promise.all</button>
+      <button class="demo-btn cyan sm" onclick="demoPromiseRace()">🏃 Promise.race</button>
+      <button class="demo-btn sm" onclick="promiseCompClear()">🧹 Limpiar</button>
+    </div>
+    <div id="promiseCompResult" style="font-size:13px;min-height:40px;color:var(--text2)">Haz clic en un botón para ver el resultado</div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Crear y consumir Promesas</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// Crear una Promise manualmente</span>
+<span class="kw">const</span> miPromesa = <span class="kw">new</span> <span class="kw">Promise</span>((resolve, reject) => {
+  <span class="kw">setTimeout</span>(() => {
+    <span class="kw">const</span> exito = <span class="kw">true</span>;
+    <span class="kw">if</span> (exito) resolve(<span class="st">"¡Hecho!"</span>);
+    <span class="kw">else</span> reject(<span class="st">"Error"</span>);
+  }, <span class="num">2000</span>);
+});
+
+miPromesa
+  .then(msg => <span class="kw">console</span>.log(msg))
+  .catch(err => <span class="kw">console</span>.error(err))
+  .finally(() => <span class="kw">console</span>.log(<span class="st">"Terminado"</span>));
+
+<span class="cmt">// Promise.all - espera a TODAS (si una falla, falla todo)</span>
+<span class="kw">const</span> [users, posts] = <span class="kw">await</span> <span class="kw">Promise</span>.all([
+  fetch(url1).then(r => r.json()),
+  fetch(url2).then(r => r.json())
+]);
+
+<span class="cmt">// Promise.race - la PRIMERA en terminar gana</span>
+<span class="kw">const</span> ganador = <span class="kw">await</span> <span class="kw">Promise</span>.race([p1, p2]);</pre>
+</div>
+</div>
+
+<!-- ====== TEMA 3: ASYNC/AWAIT ====== -->
+<div class="subsec" id="t3">
+<h3 style="color:var(--purple)">3. Async / Await — Código asíncrono con sintaxis síncrona</h3>
+
+<div class="card">
+<p><strong>Async/Await</strong> es azúcar sintáctico sobre las promesas. <code>async</code> convierte cualquier función en una que devuelve una promesa. <code>await</code> pausa la ejecución de esa función hasta que la promesa se resuelva — sin bloquear el hilo principal. Hace que el código asíncrono se lea como si fuera síncrono.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">📊 .then vs async/await <span>Comparación lado a lado</span></div>
+  <div class="db-body">
+    <div class="comp-grid">
+      <div class="comp-col">
+        <div class="comp-head" style="background:rgba(255,107,107,0.1);color:var(--red)">Antes: .then()</div>
+        <div class="comp-body">
+          <div class="line"><span class="cmt">// Anidado, menos legible</span></div>
+          <div class="line"><span class="kw">function</span> getData() {</div>
+          <div class="line">  fetch(url)</div>
+          <div class="line">    .then(r => r.json())</div>
+          <div class="line">    .then(d => {</div>
+          <div class="line">      <span class="kw">console</span>.log(d);</div>
+          <div class="line">    })</div>
+          <div class="line">    .catch(e => {</div>
+          <div class="line">      <span class="kw">console</span>.error(e);</div>
+          <div class="line">    });</div>
+          <div class="line">}</div>
+        </div>
+      </div>
+      <div class="comp-col">
+        <div class="comp-head" style="background:rgba(81,232,158,0.1);color:var(--green)">Ahora: async/await</div>
+        <div class="comp-body">
+          <div class="line"><span class="cmt">// Lineal, más legible</span></div>
+          <div class="line"><span class="kw">async function</span> getData() {</div>
+          <div class="line">  <span class="kw">try</span> {</div>
+          <div class="line">    <span class="kw">const</span> r = <span class="kw">await</span> fetch(url);</div>
+          <div class="line">    <span class="kw">const</span> d = <span class="kw">await</span> r.json();</div>
+          <div class="line">    <span class="kw">console</span>.log(d);</div>
+          <div class="line">  } <span class="kw">catch</span> (e) {</div>
+          <div class="line">    <span class="kw">console</span>.error(e);</div>
+          <div class="line">  }</div>
+          <div class="line">}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">⏱️ Countdown con async/await <span>Temporizador visual</span></div>
+  <div class="db-body">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <input type="number" id="countdownInput" value="5" min="1" max="20" class="demo-input" style="width:60px">
+      <button class="demo-btn green sm" onclick="startCountdown()">▶ Iniciar</button>
+      <button class="demo-btn red sm" onclick="stopCountdown()">⏹ Parar</button>
+    </div>
+    <div style="margin-top:10px">
+      <div style="background:var(--code);border:1px solid var(--cborder);border-radius:8px;padding:16px;text-align:center">
+        <span id="countdownDisplay" style="font-size:48px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--accent)">--</span>
+        <div style="font-size:11px;color:var(--text3);margin-top:4px" id="countdownStatus">Introduce un número y pulsa Iniciar</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — async/await con try/catch</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// La función sleep: promesa que se resuelve tras ms milisegundos</span>
+<span class="kw">function</span> sleep(ms) {
+  <span class="kw">return new</span> <span class="kw">Promise</span>(resolve => <span class="kw">setTimeout</span>(resolve, ms));
+}
+
+<span class="cmt">// Countdown con async/await</span>
+<span class="kw">async function</span> countdown(segundos) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = segundos; i >= <span class="num">0</span>; i--) {
+    <span class="kw">document</span>.getElementById(<span class="st">'display'</span>).textContent = i;
+    <span class="kw">await</span> sleep(<span class="num">1000</span>); <span class="cmt">// Pausa 1 segundo sin bloquear</span>
+  }
+  <span class="kw">document</span>.getElementById(<span class="st">'display'</span>).textContent = <span class="st">"¡Tiempo!"</span>;
+}
+
+<span class="cmt">// Manejo de errores con try/catch</span>
+<span class="kw">async function</span> obtenerDatos() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(url);
+    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="st">`HTTP ${res.status}`</span>);
+    <span class="kw">return await</span> res.json();
+  } <span class="kw">catch</span> (err) {
+    <span class="kw">console</span>.error(<span class="st">"Error:"</span>, err.message);
+  }
+}</pre>
+</div>
+</div>
+
+<!-- ====== TEMA 4: FETCH API ====== -->
+<div class="subsec" id="t4">
+<h3 style="color:var(--yellow)">4. Fetch API — Llamadas HTTP a APIs REST</h3>
+
+<div class="card">
+<p><strong>Fetch</strong> es la forma moderna de hacer peticiones HTTP en JavaScript. Devuelve una promesa que se resuelve con la respuesta del servidor. <strong>Importante:</strong> fetch solo lanza error si NO hay conexión de red. Un error 404 se considera "éxito" (el servidor respondió). Siempre debes verificar <code>response.ok</code>.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🌐 Fetch GET desde JSONPlaceholder <span>Busca un usuario por ID</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+      <label style="font-size:12px">ID de usuario (1-10):</label>
+      <input type="number" id="fetchUserId" value="1" min="1" max="10" class="demo-input" style="width:60px">
+      <button class="demo-btn green sm" onclick="fetchUser()">🔍 Buscar</button>
+      <button class="demo-btn yellow sm" onclick="fetchCreatePost()">📝 Crear Post (POST)</button>
+      <span id="fetchStatus" style="font-size:11px;color:var(--text3)"></span>
+    </div>
+    <div id="fetchResult"></div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">📋 Métodos HTTP <span>Grid visual de los verbos HTTP</span></div>
+  <div class="db-body">
+    <div class="http-grid">
+      <div class="http-card" style="border-color:var(--green)">
+        <div class="hc-method" style="color:var(--green)">GET</div>
+        <div class="hc-desc">Obtener datos (Leer)</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">fetch(url)</div>
+      </div>
+      <div class="http-card" style="border-color:var(--yellow)">
+        <div class="hc-method" style="color:var(--yellow)">POST</div>
+        <div class="hc-desc">Crear datos nuevos</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">+ body JSON</div>
+      </div>
+      <div class="http-card" style="border-color:var(--accent)">
+        <div class="hc-method" style="color:var(--accent)">PUT</div>
+        <div class="hc-desc">Reemplazar datos</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">Actualizar completo</div>
+      </div>
+      <div class="http-card" style="border-color:var(--purple)">
+        <div class="hc-method" style="color:var(--purple)">PATCH</div>
+        <div class="hc-desc">Modificar parcial</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">Actualizar campos</div>
+      </div>
+      <div class="http-card" style="border-color:var(--red)">
+        <div class="hc-method" style="color:var(--red)">DELETE</div>
+        <div class="hc-desc">Borrar datos</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">fetch(url, {method})</div>
+      </div>
+      <div class="http-card" style="border-color:var(--cyan)">
+        <div class="hc-method" style="color:var(--cyan)">HEAD</div>
+        <div class="hc-desc">Solo cabeceras</div>
+        <div style="font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--text3);margin-top:4px">Sin body</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Los 6 Métodos HTTP con fetch</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ============================================================</span>
+<span class="cmt">//  GET    → Obtener/leer datos   → fetch(url)</span>
+<span class="cmt">//  POST   → Crear datos nuevos   → + headers + body JSON</span>
+<span class="cmt">//  PUT    → Reemplazar completo  → mismo objeto completo</span>
+<span class="cmt">//  PATCH  → Modificar parcial    → solo los campos que cambian</span>
+<span class="cmt">//  DELETE → Borrar datos         → fetch(url, { method: 'DELETE' })</span>
+<span class="cmt">//  HEAD   → Solo cabeceras       → igual que GET pero sin body</span>
+<span class="cmt">// ============================================================</span>
+
+<span class="cmt">// GET — Obtener datos (por defecto)</span>
+<span class="kw">async function</span> obtenerUsuario(id) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(<span class="st">`https://jsonplaceholder.typicode.com/users/${id}`</span>);
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="st">`HTTP ${res.status}`</span>);
+  <span class="kw">return await</span> res.json();
+}
+
+<span class="cmt">// POST — Crear datos (requiere body con JSON.stringify)</span>
+<span class="kw">async function</span> crearPost(titulo, contenido) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(<span class="st">'https://jsonplaceholder.typicode.com/posts'</span>, {
+    method: <span class="st">'POST'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: <span class="kw">JSON</span>.stringify({ title: titulo, body: contenido, userId: <span class="num">1</span> })
+  });
+  <span class="kw">return await</span> res.json();
+}
+
+<span class="cmt">// PUT — Reemplazar COMPLETO (envías el objeto entero aunque solo cambie un campo)</span>
+<span class="kw">async function</span> reemplazarPost(id, titulo, contenido) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(<span class="st">`https://jsonplaceholder.typicode.com/posts/${id}`</span>, {
+    method: <span class="st">'PUT'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: <span class="kw">JSON</span>.stringify({ id, title: titulo, body: contenido, userId: <span class="num">1</span> })
+  });
+  <span class="kw">return await</span> res.json();
+}
+
+<span class="cmt">// PATCH — Modificación PARCIAL (solo envías lo que cambia)</span>
+<span class="kw">async function</span> actualizarPost(id, campos) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(<span class="st">`https://jsonplaceholder.typicode.com/posts/${id}`</span>, {
+    method: <span class="st">'PATCH'</span>,
+    headers: { <span class="st">'Content-Type'</span>: <span class="st">'application/json'</span> },
+    body: <span class="kw">JSON</span>.stringify(campos)  <span class="cmt">// ej: { title: 'Nuevo título' }</span>
+  });
+  <span class="kw">return await</span> res.json();
+}
+
+<span class="cmt">// DELETE — Borrar datos (no necesita body)</span>
+<span class="kw">async function</span> borrarPost(id) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(<span class="st">`https://jsonplaceholder.typicode.com/posts/${id}`</span>, {
+    method: <span class="st">'DELETE'</span>
+  });
+  <span class="kw">if</span> (res.ok) <span class="kw">console</span>.log(<span class="st">"Borrado correctamente"</span>);
+}
+
+<span class="cmt">// HEAD — Solo cabeceras (útil para comprobar si un recurso existe)</span>
+<span class="kw">async function</span> comprobarExistencia(url) {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="kw">fetch</span>(url, { method: <span class="st">'HEAD'</span> });
+  <span class="kw">console</span>.log(<span class="st">`Existe: ${res.ok} | Tipo: ${res.headers.get('Content-Type')}`</span>);
+  <span class="kw">return</span> res.ok;
+}</pre>
+</div>
+</div>
+
+<div class="card" style="border-left:3px solid var(--purple)">
+<p><strong>🔑 Diferencia PUT vs PATCH (pregunta de examen):</strong><br>
+<strong>PUT</strong> envía el objeto <strong>COMPLETO</strong> — si solo cambias el título, igual mandas userId, body, etc. Si falta un campo, se sobrescribe con vacío.<br>
+<strong>PATCH</strong> envía <strong>SÓLO los campos que cambian</strong> — más eficiente, sin riesgo de perder datos.<br>
+<em>Ej: PUT = carnet entero, PATCH = solo cambiar la foto.</em></p>
+</div>
+
+<!-- ====== TEMA 5: MANEJO DE ERRORES ====== -->
+<div class="subsec" id="t5">
+<h3 style="color:var(--red)">5. Manejo de Errores — try / catch / throw / finally</h3>
+
+<div class="card">
+<p>Si tu código falla (ej: JSON.parse de algo roto), el script se detiene. Con <strong>try/catch</strong> puedes "capturar" el error para que la app siga funcionando y mostrar un mensaje bonito al usuario. <strong>throw</strong> te permite lanzar tus propios errores. <strong>finally</strong> se ejecuta siempre, haya error o no.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🎯 Graceful Error Handling <span>Formulario que falla de forma controlada</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+      <button class="demo-btn red sm" onclick="demoCrash()">💥 Crashear (sin try/catch)</button>
+      <button class="demo-btn green sm" onclick="demoGraceful()">🛡️ Manejo elegante</button>
+      <button class="demo-btn sm" onclick="demoErrorClear()">🧹 Limpiar</button>
+    </div>
+    <div id="errorDemoResult"></div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🔀 Diagrama de flujo try/catch/finally</div>
+  <div class="db-body">
+    <div class="viz-flow">
+      <div class="vf-path">
+        <div class="vf-node try">try { código }</div>
+        <div class="vf-arrow">↙️</div>
+        <div style="display:flex;gap:12px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="vf-arrow">✅ Sin error</div>
+            <div class="vf-node">continúa normalmente</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="vf-arrow">❌ Error</div>
+            <div class="vf-node catch">catch (e) { manejar }</div>
+          </div>
+        </div>
+        <div class="vf-arrow">⬇️</div>
+        <div class="vf-node finally">finally { limpieza } <span style="color:var(--text3);font-size:10px">(siempre se ejecuta)</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Manejo de errores completo</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// try/catch: captura errores para que la app no explote</span>
+<span class="kw">try</span> {
+  <span class="kw">const</span> usuario = <span class="kw">JSON</span>.parse(jsonRoto);
+  <span class="kw">console</span>.log(usuario.nombre);
+} <span class="kw">catch</span> (error) {
+  <span class="kw">console</span>.error(<span class="st">"Error:"</span>, error.message);
+  alert(<span class="st">"Los datos vinieron corruptos."</span>);
+} <span class="kw">finally</span> {
+  <span class="kw">console</span>.log(<span class="st">"Limpieza terminada."</span>); <span class="cmt">// Siempre se ejecuta</span>
+}
+
+<span class="cmt">// throw: lanzar errores personalizados</span>
+<span class="kw">function</span> dividir(a, b) {
+  <span class="kw">if</span> (b === <span class="num">0</span>) <span class="kw">throw new</span> Error(<span class="st">"No se puede dividir por cero"</span>);
+  <span class="kw">return</span> a / b;
+}
+
+<span class="cmt">// Error 404 en fetch NO es capturado por catch automáticamente</span>
+<span class="kw">const</span> res = <span class="kw">await</span> fetch(url);
+<span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="st">`HTTP ${res.status}`</span>); <span class="cmt">// Hay que hacerlo manual</span></pre>
+</div>
+</div>
+
+<!-- ====== TEMA 6: OPERADORES MODERNOS ====== -->
+<div class="subsec" id="t6">
+<h3 style="color:var(--cyan)">6. Operadores Modernos — ??, ?., ??=, ||=, &amp;&amp;=</h3>
+
+<div class="card">
+<p><strong>Nullish Coalescing (??)</strong>: Solo reemplaza si es null/undefined (a diferencia de || que reemplaza cualquier valor "falso" como 0 o ""). <strong>Optional Chaining (?.)</strong>: Accede a propiedades profundas sin miedo a errores si algo intermedio es null/undefined. <strong>Asignación Lógica</strong>: Atajos para asignar valores condicionalmente.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🎮 ?? vs || — Comparación interactiva</div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+      <label style="font-size:12px">Valor de prueba:</label>
+      <input type="text" id="opTestVal" value="0" class="demo-input" style="width:80px">
+      <button class="demo-btn sm" onclick="opTest()">Probar</button>
+      <button class="demo-btn yellow sm" onclick="opTestValues()">Probar valores típicos</button>
+    </div>
+    <div class="op-grid">
+      <div class="op-card">
+        <div class="op-title">|| (OR lógico)</div>
+        <div class="op-desc" id="opResultOr">Haz clic en "Probar"</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">Falla con 0, "", false</div>
+      </div>
+      <div class="op-card">
+        <div class="op-title">?? (Nullish Coalescing)</div>
+        <div class="op-desc" id="opResultNullish">Haz clic en "Probar"</div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px">Solo falla con null/undefined</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🔍 Optional Chaining (?.) — Explorador de objetos anidados</div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+      <select id="ocSelector" class="demo-select" onchange="ocDemo()">
+        <option value="user1">Usuario con dirección</option>
+        <option value="user2">Usuario sin dirección</option>
+        <option value="user3">Usuario null</option>
+      </select>
+    </div>
+    <div id="ocResult" style="font-size:13px;font-family:'JetBrains Mono',monospace;background:var(--code);border:1px solid var(--cborder);border-radius:6px;padding:10px;min-height:60px"></div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Operadores modernos</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ?? vs || — Diferencia clave</span>
+<span class="kw">const</span> altura = <span class="num">0</span>;
+altura || <span class="num">100</span>;     <span class="cmt">// → 100 (¡0 es falsy!)</span>
+altura ?? <span class="num">100</span>;    <span class="cmt">// → 0 (?? solo reacciona a null/undefined)</span>
+
+<span class="cmt">// Optional Chaining — Acceso seguro a propiedades profundas</span>
+<span class="kw">const</span> usuario = { nombre: <span class="st">"Ana"</span> };
+usuario?.direccion?.calle;     <span class="cmt">// → undefined (no explota)</span>
+usuario?.saludar?.();          <span class="cmt">// → undefined (función opcional)</span>
+
+<span class="cmt">// Asignación lógica</span>
+<span class="kw">let</span> config = { tema: <span class="kw">null</span> };
+config.tema ??= <span class="st">"oscuro"</span>;  <span class="cmt">// ??= solo asigna si es null/undefined</span>
+<span class="kw">let</span> contador = <span class="num">0</span>;
+contador ||= <span class="num">10</span>;            <span class="cmt">// ¡Cuidado! 0 es falsy, asigna 10</span></pre>
+</div>
+</div>
+
+<!-- ====== TEMA 7: LOCALSTORAGE ====== -->
+<div class="subsec" id="t7">
+<h3 style="color:var(--yellow)">7. localStorage y sessionStorage — Datos persistentes en el navegador</h3>
+
+<div class="card">
+<p><strong>localStorage</strong> guarda datos de forma persistente (cierras el navegador y los datos siguen ahí). <strong>sessionStorage</strong> es volátil (al cerrar la pestaña, los datos se borran). Solo guardan texto, así que para guardar objetos hay que usar <code>JSON.stringify</code> y <code>JSON.parse</code>.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">💾 Gestor de localStorage <span>Guarda, carga y elimina datos</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px">
+      <label style="font-size:12px">Clave:</label>
+      <input type="text" id="storageKey" value="nombre" class="demo-input" style="width:80px">
+      <label style="font-size:12px">Valor:</label>
+      <input type="text" id="storageVal" value="Ana" class="demo-input" style="width:100px">
+      <button class="demo-btn green sm" onclick="storageSave()">💾 Guardar</button>
+      <button class="demo-btn sm" onclick="storageLoad()">📂 Cargar</button>
+      <button class="demo-btn red sm" onclick="storageDelete()">🗑️ Eliminar</button>
+      <button class="demo-btn yellow sm" onclick="storageClear()">🧹 Limpiar todo</button>
+    </div>
+    <div id="storageResult" style="font-size:13px;min-height:30px;color:var(--text2);margin-bottom:8px"></div>
+    <div>
+      <h5 style="font-size:11px;color:var(--text3);margin-bottom:4px">📦 Datos en localStorage:</h5>
+      <div class="storage-grid" id="storageItems"></div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — localStorage completo</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// Guardar (solo texto)</span>
+localStorage.setItem(<span class="st">'nombre'</span>, <span class="st">'Ana'</span>);
+
+<span class="cmt">// Recuperar</span>
+<span class="kw">const</span> nombre = localStorage.getItem(<span class="st">'nombre'</span>);
+
+<span class="cmt">// Eliminar uno</span>
+localStorage.removeItem(<span class="st">'nombre'</span>);
+
+<span class="cmt">// Limpiar todo</span>
+localStorage.clear();
+
+<span class="cmt">// Guardar objetos: ¡SIEMPRE con JSON.stringify!</span>
+<span class="kw">const</span> carrito = [{ id: <span class="num">1</span>, producto: <span class="st">"Pizza"</span> }];
+localStorage.setItem(<span class="st">'carrito'</span>, <span class="kw">JSON</span>.stringify(carrito));
+
+<span class="cmt">// Recuperar objetos: ¡SIEMPRE con JSON.parse!</span>
+<span class="kw">const</span> datos = <span class="kw">JSON</span>.parse(localStorage.getItem(<span class="st">'carrito'</span>)) ?? [];
+<span class="cmt">// El ?? [] evita error si no existe la clave (getItem devuelve null)</span></pre>
+</div>
+</div>
+
+<!-- ====== TEMA 8: MÓDULOS ES ====== -->
+<div class="subsec" id="t8">
+<h3 style="color:var(--green)">8. Módulos ES (import / export)</h3>
+
+<div class="card">
+<p>Los módulos ES permiten dividir el código en archivos independientes y conectarlos con <code>import</code> y <code>export</code>. Se activan con <code>&lt;script type="module"&gt;</code>. <strong>Importante:</strong> Los módulos no funcionan con file:// (doble clic) — necesitas un servidor (Live Server de VS Code). Siempre usa la extensión <code>.js</code> en los imports.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">📁 Simulador visual de Módulos ES <span>Haz clic para explorar la estructura</span></div>
+  <div class="db-body">
+    <div class="file-tree" id="fileTree">
+      <div class="ft-entry ft-folder">📁 proyecto/</div>
+      <div class="ft-entry ft-file" onclick="moduleExplain('index')">  📄 index.html <span style="color:var(--text3);font-size:10px">(type="module")</span></div>
+      <div class="ft-entry ft-folder">  📁 js/</div>
+      <div class="ft-entry ft-file" onclick="moduleExplain('main')">    📄 main.js <span style="color:var(--text3);font-size:10px">(importa todo)</span></div>
+      <div class="ft-entry ft-file" onclick="moduleExplain('api')">     📄 api.js <span style="color:var(--text3);font-size:10px">(fetch, export)</span></div>
+      <div class="ft-entry ft-file" onclick="moduleExplain('ui')">      📄 ui.js <span style="color:var(--text3);font-size:10px">(render, export)</span></div>
+    </div>
+    <div id="moduleExplain" style="margin-top:8px;background:var(--code);border:1px solid var(--cborder);border-radius:6px;padding:10px;min-height:60px;font-size:12px;font-family:'JetBrains Mono',monospace">
+      Haz clic en un archivo para ver su contenido
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Módulos ES: export e import</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// === api.js — Exportar funciones ===</span>
+<span class="kw">export const</span> API_URL = <span class="st">"https://api.ejemplo.com"</span>;
+<span class="kw">export async function</span> traerDatos() {
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(API_URL + <span class="st">"/datos"</span>);
+  <span class="kw">return await</span> res.json();
+}
+<span class="kw">export default function</span> saludar() {
+  <span class="kw">console</span>.log(<span class="st">"¡Hola!"</span>);
+}
+
+<span class="cmt">// === main.js — Importar funciones ===</span>
+<span class="kw">import</span> saludarDefault, { API_URL, traerDatos } <span class="kw">from</span> <span class="st">'./api.js'</span>;
+<span class="kw">import</span> { renderizar } <span class="kw">from</span> <span class="st">'./ui.js'</span>;
+
+<span class="kw">const</span> datos = <span class="kw">await</span> traerDatos();
+renderizar(datos);
+
+<span class="cmt">// === index.html — El HTML debe tener type="module" ===</span>
+<span class="cmt">// &lt;script type="module" src="js/main.js"&gt;&lt;/script&gt;</span></pre>
+</div>
+</div>
+
+<!-- ====== TEMA 9: FUNCIONES ====== -->
+<div class="subsec" id="t9">
+<h3 style="color:var(--purple)">9. Funciones — Clásica, Anónima, Flecha</h3>
+
+<div class="card">
+<p>Tres formas de declarar funciones en JavaScript. La <strong>clásica</strong> tiene su propio <code>this</code> y <code>arguments</code>. La <strong>anónima</strong> se asigna a una variable. La <strong>flecha</strong> (=>) es más concisa y no tiene su propio <code>this</code> (hereda del contexto). Todas hacen lo mismo: encapsular código reutilizable.</p>
+</div>
+
+<div class="demo-box">
+  <div class="db-title">🎮 Tres formas de sumar <span>Clásica vs Anónima vs Flecha</span></div>
+  <div class="db-body">
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+      <label style="font-size:12px">Número A:</label>
+      <input type="number" id="funcA" value="10" class="demo-input" style="width:60px">
+      <label style="font-size:12px">Número B:</label>
+      <input type="number" id="funcB" value="5" class="demo-input" style="width:60px">
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <button class="demo-btn sm" onclick="funcClassic()">📜 Clásica</button>
+      <button class="demo-btn green sm" onclick="funcAnonymous()">📝 Anónima</button>
+      <button class="demo-btn yellow sm" onclick="funcArrow()">🏹 Flecha</button>
+    </div>
+    <div class="func-results" id="funcResults">
+      <div class="func-card">
+        <div class="fc-title">📜 Clásica</div>
+        <div class="fc-result" id="funcClassicResult" style="color:var(--accent)">--</div>
+      </div>
+      <div class="func-card">
+        <div class="fc-title">📝 Anónima</div>
+        <div class="fc-result" id="funcAnonymousResult" style="color:var(--green)">--</div>
+      </div>
+      <div class="func-card">
+        <div class="fc-title">🏹 Flecha</div>
+        <div class="fc-result" id="funcArrowResult" style="color:var(--yellow)">--</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+<div class="ch"><span>JS — Los 3 tipos de funciones</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 1. Función clásica (declarada)</span>
+<span class="kw">function</span> sumarClasica(a, b) {
+  <span class="kw">return</span> a + b;
+}
+
+<span class="cmt">// 2. Función anónima (expression)</span>
+<span class="kw">const</span> sumarAnonima = <span class="kw">function</span>(a, b) {
+  <span class="kw">return</span> a + b;
+};
+
+<span class="cmt">// 3. Función flecha (arrow)</span>
+<span class="kw">const</span> sumarFlecha = (a, b) => a + b;
+
+<span class="cmt">// Diferencias clave:</span>
+<span class="cmt">// - Clásica: tiene su propio 'this' y 'arguments'</span>
+<span class="cmt">// - Flecha: no tiene 'this' propio (hereda del padre)</span>
+<span class="cmt">// - Flecha: no puede usarse como constructor (new)</span>
+<span class="cmt">// - Todas pueden ser async: async function() o async () =></span></pre>
+</div>
+</div>
+
+<!-- ====== TEMA 10: EJERCICIOS DEL EXAMEN ====== -->
+<div class="subsec" id="t10">
+<h3 style="color:var(--red)">10. Ejercicios del Examen — Códigos reales explicados</h3>
+
+<div class="card">
+<p>Aquí tienes los 6 ejercicios que han aparecido en exámenes reales. Cada uno combina fetch, promesas, async/await y manipulación del DOM. Estudia los patrones: son la base de cualquier ejercicio de RA3.</p>
+</div>
+
+<h4 style="color:var(--green);margin:16px 0 6px">10.1 Valenbisi — API de estaciones + Mapa Leaflet + Multi-idioma</h4>
+<div class="card">
+<p><strong>API:</strong> Geoportal de Valencia. Fetch a estaciones de bicicletas, tabla de datos, mapa Leaflet con markers. Incluye sistema multi-idioma (ES, EN, FR, VAL) con traducciones cargadas desde JSON. Las coordenadas vienen en UTM y se convierten a WGS84 con proj4.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>Valenbisi — Fetch + Tabla + Mapa (código real)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">const</span> url = <span class="st">"https://geoportal.valencia.es/server/rest/services/OPENDATA/..."</span>;
+
+<span class="kw">async function</span> getStations() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(url);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+    renderTable(data);
+    loadMap(data);
+  } <span class="kw">catch</span> (e) { <span class="kw">console</span>.error(e); }
+}
+<span class="cmt">// setInterval(getStations, 60000) para refrescar cada minuto</span></pre>
+</div>
+
+<h4 style="color:var(--yellow);margin:16px 0 6px">10.2 Rick & Morty — Personajes femeninos aleatorios</h4>
+<div class="card">
+<p><strong>API:</strong> <code>https://rickandmortyapi.com/api/character/?gender=female</code>. Botón que muestra un personaje aleatorio. Usa <strong>caché</strong> para evitar re-fetch: guarda los resultados en una variable global la primera vez.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>Rick & Morty — Con caché para evitar re-fetch</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">let</span> cache = <span class="kw">null</span>;
+<span class="kw">async function</span> cargarPersonajes() {
+  <span class="kw">if</span> (cache) { mostrarAleatorio(cache); <span class="kw">return</span>; }
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="st">"https://rickandmortyapi.com/api/character/?gender=female"</span>);
+  cache = (<span class="kw">await</span> res.json()).results;
+  mostrarAleatorio(cache);
+}
+<span class="kw">function</span> mostrarAleatorio(personajes) {
+  <span class="kw">const</span> i = Math.floor(Math.random() * personajes.length);
+  <span class="kw">const</span> p = personajes[i];
+  cont.innerHTML = <span class="st">`&lt;img src="${p.image}"&gt;&lt;h3&gt;${p.name}&lt;/h3&gt;`</span>;
+}</pre>
+</div>
+
+<h4 style="color:var(--accent);margin:16px 0 6px">10.3 Conversor de Monedas — Frankfurter API</h4>
+<div class="card">
+<p><strong>API gratuita (sin API key):</strong> <code>https://api.frankfurter.dev/v1/latest?base=EUR</code>. Convierte una cantidad de EUR a múltiples monedas. También incluye consulta a Coinbase para criptomonedas.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>Monedas — Frankfurter + Coinbase</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">async function</span> convertir(cantidad) {
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="st">"https://api.frankfurter.dev/v1/latest?base=EUR"</span>);
+  <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+  <span class="kw">let</span> html = <span class="st">`&lt;ul&gt;`</span>;
+  <span class="kw">for</span> (<span class="kw">const</span> [code, nombre] of Object.entries(monedas)) {
+    html += <span class="st">`&lt;li&gt;${nombre}: ${(cantidad * data.rates[code]).toFixed(2)} ${code}&lt;/li&gt;`</span>;
+  }
+  <span class="kw">return</span> html + <span class="st">`&lt;/ul&gt;`</span>;
+}
+<span class="cmt">// Coinbase: fetch('https://api.coinbase.com/v2/prices/BTC-EUR/spot')</span></pre>
+</div>
+
+<h4 style="color:var(--purple);margin:16px 0 6px">10.4 D&D — Generador de Personajes</h4>
+<div class="card">
+<p><strong>API:</strong> OpenRouter AI. Genera atributos aleatorios (Fuerza, Destreza, Constitución, Inteligencia, Sabiduría, Carisma) entre 10-20, luego usa IA para generar descripción e imagen del personaje. Usa <strong>setInterval</strong> para mostrar segundos de espera.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>D&D — Atributos aleatorios (OpenRouter)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">function</span> aleatorio(min, max) {
+  <span class="kw">return</span> Math.floor(Math.random() * (max - min + 1) + min);
+}
+<span class="kw">const</span> atributos = [<span class="st">"Fuerza"</span>, <span class="st">"Destreza"</span>, <span class="st">"Constitución"</span>, <span class="st">"Inteligencia"</span>, <span class="st">"Sabiduría"</span>, <span class="st">"Carisma"</span>];
+atributos.forEach(a => {
+  <span class="kw">console</span>.log(<span class="st">`${a}: ${aleatorio(10, 20)}`</span>);
+});
+<span class="cmt">// fetch a OpenRouter para generar descripción e imagen</span></pre>
+</div>
+
+<h4 style="color:var(--yellow);margin:16px 0 6px">10.5 PPTLS — Piedra Papel Tijera Lagarto Spock</h4>
+<div class="card">
+<p>Usa <strong>promesas con setTimeout</strong> para que el ordenador "tarde 5 segundos en decidir". Las reglas son: tijera corta papel, papel cubre piedra, piedra aplasta tijera, lagarto envenena Spock, Spock rompe tijera, tijera decapita lagarto, lagarto come papel, papel desaprueba Spock, Spock vaporiza piedra, piedra aplasta lagarto.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>PPTLS — Promesa con setTimeout (5s)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">const</span> opciones = [<span class="st">"piedra"</span>,<span class="st">"papel"</span>,<span class="st">"tijera"</span>,<span class="st">"lagarto"</span>,<span class="st">"spock"</span>];
+<span class="kw">const</span> reglas = {
+  piedra: [<span class="st">"tijera"</span>, <span class="st">"lagarto"</span>],
+  papel: [<span class="st">"piedra"</span>, <span class="st">"spock"</span>],
+  tijera: [<span class="st">"papel"</span>, <span class="st">"lagarto"</span>],
+  lagarto: [<span class="st">"spock"</span>, <span class="st">"papel"</span>],
+  spock: [<span class="st">"tijera"</span>, <span class="st">"piedra"</span>]
+};
+<span class="kw">function</span> descuenta() {
+  <span class="kw">return new</span> <span class="kw">Promise</span>(resolve => {
+    <span class="kw">setTimeout</span>(() => resolve(opciones[Math.floor(Math.random() * <span class="num">5</span>)]), <span class="num">5000</span>);
+  });
+}
+<span class="cmt">// Llamada: descuenta().then(eleccion => ...) o const pc = await descuenta()</span></pre>
+</div>
+
+<h4 style="color:var(--cyan);margin:16px 0 6px">10.6 OpenWeatherMap — El tiempo en tu ciudad</h4>
+<div class="card">
+<p><strong>API:</strong> <code>https://api.openweathermap.org/data/2.5/weather</code>. Necesita API key gratuita (registro en openweathermap.org). Devuelve temperatura, descripción, humedad. Ampliación: geocoding para buscar ciudades con el mismo nombre.</p>
+</div>
+<div class="cb">
+<div class="ch"><span>OpenWeatherMap — Clima con fetch</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="kw">const</span> apiKey = <span class="st">"TU_API_KEY"</span>;
+<span class="kw">async function</span> obtenerClima(ciudad) {
+  <span class="kw">const</span> url = <span class="st">`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&units=metric&appid=${apiKey}`</span>;
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(url);
+    <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="st">`HTTP ${res.status}`</span>);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+    <span class="kw">console</span>.log(<span class="st">`${data.main.temp}°C, ${data.weather[0].description}`</span>);
+  } <span class="kw">catch</span> (e) { <span class="kw">console</span>.error(e); }
+}
+<span class="cmt">// Geocoding: api.openweathermap.org/geo/1.0/direct?q=Valencia&limit=5</span></pre>
+</div>
+
+</div>
+
+<!-- ====== TEMA 11: PATRÓN ACABALO ====== -->
+<div class="subsec" id="t-acabalo" style="scroll-margin-top:58px">
+<h3 style="color:var(--red);margin-top:36px">⚡ Patrón ACABALO — Ejercicios del Examen real</h3>
+<div class="card" style="border-left:3px solid var(--red)">
+<p>En los PDFs del examen, muchos ejercicios vienen con <code>/* ACABALO */</code> y <code>/* FIN ACABALO */</code>. El alumno debe COMPLETAR el código que falta. Aquí tienes los patrones más comunes con sus soluciones explicadas paso a paso.</p>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📝 Patrón 1: addEventListener("change") — Escuchar cambios en un select</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 🔴 CÓDIGO DEL EXAMEN (viene INCOMPLETO con /* ACABALO */):</span>
+<span class="kw">const</span> listaOpciones = document.getElementById("opciones");
+listaOpciones.addEventListener("change", function() {
+  <span class="cmt">/* ACABALO */</span>
+  <span class="kw">const</span> seleccion = this.value;  <span class="cmt">// this = listaOpciones, .value = opción elegida</span>
+  <span class="kw">console</span>.log(<span class="st">"Elegiste:"</span>, seleccion);
+  <span class="cmt">// Aquí puedes llamar a una función con la selección</span>
+  <span class="kw">if</span> (seleccion) {
+    document.getElementById("resultado").textContent = <span class="st">`Has elegido: ${seleccion}`</span>;
+  }
+  <span class="cmt">/* FIN ACABALO */</span>
+});
+<span class="cmt">// ❌ Error típico: olvidar el parámetro "change" o poner "onchange"</span>
+<span class="cmt">// ❌ Error típico: usar listaOpciones.value en lugar de this.value</span>
+<span class="cmt">// ✅ this.value devuelve el value del option seleccionado</span></pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📝 Patrón 2: descuenta() — Promesa con setTimeout (PPTLS)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 🔴 CÓDIGO DEL EXAMEN (viene INCOMPLETO con /* ACABALO */):</span>
+<span class="cmt">// El ordenador escoge tras pasar un tiempo</span>
+<span class="kw">function</span> descuenta() {
+  <span class="cmt">/* ACABALO */</span>
+  <span class="cmt">// 1. Crear una promesa que se resuelva después de X segundos</span>
+  <span class="kw">const</span> promesa = <span class="kw">new</span> <span class="kw">Promise</span>((resolve) => {
+    <span class="cmt">// 2. setTimeout para esperar sin bloquear</span>
+    <span class="kw">setTimeout</span>(() => {
+      <span class="cmt">// 3. El ordenador elige aleatoriamente</span>
+      <span class="kw">const</span> eleccion = opciones[Math.floor(Math.random() * opciones.length)];
+      <span class="kw">resolve</span>(eleccion);  <span class="cmt">// Resuelve la promesa con la elección</span>
+    }, <span class="num">5000</span>);  <span class="cmt">// 5 segundos de espera</span>
+  });
+  <span class="kw">return</span> promesa;  <span class="cmt">// 4. Devolver la promesa para poder hacer .then() o await</span>
+  <span class="cmt">/* FIN ACABALO */</span>
+}
+
+<span class="cmt">// Llamada con .then (forma clásica):</span>
+descuenta().then(eleccion => {
+  <span class="kw">console</span>.log(<span class="st">"Ordenador eligió:"</span>, eleccion);
+});
+
+<span class="cmt">// O con async/await (forma moderna):</span>
+<span class="kw">async function</span> jugar() {
+  <span class="kw">const</span> eleccionPC = <span class="kw">await</span> descuenta();
+  <span class="kw">console</span>.log(<span class="st">"Ordenador eligió:"</span>, eleccionPC);
+}
+
+<span class="cmt">// ✅ La promesa permite que setTimeout sea "esperable" con await</span>
+<span class="cmt">// ✅ El return de la promesa permite encadenar .then()</span>
+<span class="cmt">// ❌ Error típico: no devolver la promesa (return), entonces await no funciona</span></pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📝 Patrón 3: Promise.all — Peticiones en paralelo</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 🔴 PATRÓN TÍPICO DE EXAMEN: Varias peticiones fetch simultáneas</span>
+<span class="kw">async function</span> cargarTodo() {
+  <span class="kw">try</span> {
+    <span class="cmt">/* ACABALO - Promise.all lanza TODAS las fetch en paralelo */</span>
+    <span class="kw">const</span> [usuarios, posts] = <span class="kw">await</span> <span class="kw">Promise</span>.all([
+      fetch(<span class="st">'https://jsonplaceholder.typicode.com/users'</span>).then(r => r.json()),
+      fetch(<span class="st">'https://jsonplaceholder.typicode.com/posts'</span>).then(r => r.json())
+    ]);
+    <span class="cmt">/* FIN ACABALO */</span>
+    <span class="kw">console</span>.log(<span class="st">`${usuarios.length} usuarios y ${posts.length} posts cargados`</span>);
+  } <span class="kw">catch</span> (e) {
+    <span class="kw">console</span>.error(<span class="st">"Error en las peticiones:"</span>, e);
+  }
+}
+<span class="cmt">// ⏱ Promise.all reduce el tiempo: pide todo EN PARALELO</span>
+<span class="cmt">// ❌ Si haces await uno por uno, tardas la SUMA de tiempos</span>
+<span class="cmt">// ✅ Con Promise.all, tardas el MÁXIMO de los tiempos</span></pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📝 Patrón 4: finally — Código que se ejecuta siempre</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 🔴 PATRÓN DE EXAMEN: finally para limpieza/estado</span>
+<span class="kw">function</span> procesar() {
+  mostrarSpinner(<span class="kw">true</span>);  <span class="cmt">// Muestra "cargando..."</span>
+  fetch(<span class="st">'https://api.com/datos'</span>)
+    .then(r => r.json())
+    .then(data => {
+      <span class="cmt">/* ACABALO */</span>
+      renderizar(data);
+      <span class="cmt">/* FIN ACABALO */</span>
+    })
+    .catch(e => console.error(e))
+    .finally(() => {
+      <span class="cmt">/* ACABALO - finally se ejecuta TANTO si falla como si no */</span>
+      mostrarSpinner(<span class="kw">false</span>);  <span class="cmt">// Oculta "cargando..." pase lo que pase</span>
+      <span class="cmt">/* FIN ACABALO */</span>
+    });
+}
+<span class="cmt">// ❌ Error típico: poner la limpieza SOLO en .then o .catch</span>
+<span class="cmt">// ✅ finally se ejecuta SIEMPRE: éxito O error</span></pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📝 Patrón 5: response.ok — Verificar errores HTTP</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// 🔴 PATRÓN DE EXAMEN CRÍTICO: fetch NO lanza error con 404</span>
+<span class="kw">async function</span> getUser(id) {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="st">`https://api.com/users/${id}`</span>);
+
+    <span class="cmt">/* ACABALO - Verificar si la respuesta es OK */</span>
+    <span class="kw">if</span> (!res.ok) {
+      <span class="kw">throw new</span> Error(<span class="st">`Error HTTP: ${res.status}`</span>);
+    }
+    <span class="cmt">/* FIN ACABALO */</span>
+
+    <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+    <span class="kw">return</span> data;
+  } <span class="kw">catch</span> (e) {
+    <span class="kw">console</span>.error(<span class="st">"Error:"</span>, e.message);
+    <span class="kw">return</span> <span class="kw">null</span>;
+  }
+}
+<span class="cmt">// ⚠️ MUY IMPORTANTE: fetch solo rechaza por error de RED (sin internet).</span>
+<span class="cmt">// ⚠️ 404, 500 etc son "respuestas exitosas" para fetch.</span>
+<span class="cmt">// ✅ Por eso hay que verificar response.ok MANUALMENTE.</span>
+<span class="cmt">// ❌ Error típico: creer que el .catch() captura errores 404</span></pre>
+</div>
+
+<!-- ====== TEMA 12: EJERCICIOS REALES EXAMEN (RESUELTOS Y EXPLICADOS) ====== -->
+<div class="subsec" id="t-ejercicios" style="scroll-margin-top:58px">
+<h3 style="color:var(--green);margin-top:36px">📂 Ejercicios Reales de Examen — Resueltos y Explicados</h3>
+<div class="card" style="border-left:3px solid var(--green)">
+
+<p><strong>⚠️ ATENCIÓN:</strong> Estos son los <strong>4 ejercicios reales de examen</strong>. Aquí tienes el <strong>enunciado original</strong> (lo que ve el alumno en el examen), los <strong>ACABALO marcados</strong> (lo que hay que escribir) y la <strong>solución explicada línea por línea</strong>.</p>
+<p><strong>📥</strong> Junto a cada ejercicio tienes el enlace para descargar la plantilla original <strong>sin resolver</strong> para practicar.</p>
+</div>
+
+<!-- ================================================================================== -->
+<!--  EJERCICIO 1: CRIPTOMONEDAS (Coinbase)                                              -->
+<!-- ================================================================================== -->
+<h4 style="color:var(--yellow);margin:24px 0 6px;font-size:15px">🪙 1. Criptomonedas — Coinbase API</h4>
+
+<div class="card" style="border-left:2px solid var(--yellow)">
+<p><strong>📜 ENUNCIADO:</strong></p>
+<p>Recibes un HTML con un <strong>conversor de criptomonedas</strong>. La página tiene:</p>
+<table>
+<tr><td><code>&lt;input type="number" id="cantidad" value="100"&gt;</code></td><td>Cantidad de euros a convertir</td></tr>
+<tr><td><code>&lt;input type="button" id="convertir" value="Convertir"&gt;</code></td><td>Botón para iniciar la conversión</td></tr>
+<tr><td><code>&lt;div id="resultados"&gt;&lt;/div&gt;</code></td><td>Aquí se pintan los resultados como una lista</td></tr>
+<tr><td><code>&lt;p id="error"&gt;&lt;/p&gt;</code></td><td>Mensajes de error</td></tr>
+</table>
+<p><strong>⚠️ Tienes que completar 2 ACABALO en el JavaScript:</strong></p>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📄 Código ORIGINAL del examen (criptomonedas.html)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button></div>
+<pre class="code"><span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 1: Esta función debe crear y devolver un &lt;li&gt;</span>
+<span class="cmt">//    con: "BTC: 84750.23 EUR → Total: 8475023.00 EUR"</span>
+<span class="cmt">// =============================================</span>
+<span class="kw">function</span> creaElemento(cripto, cambio, cantidad) {
+  <span class="cmt">/*  ACABALO  */</span>        <span class="cmt">// ← tienes que escribir AQUÍ</span>
+  <span class="cmt">//let liElement ...</span>
+  <span class="cmt">/*  FIN ACABALO  */</span>
+  <span class="kw">return</span> liElement        <span class="cmt">// ← esta línea YA existe, solo necesitas definir liElement</span>
+}
+
+<span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 2: Dentro del fetch, usar creaElemento()</span>
+<span class="cmt">//    y añadirlo al &lt;ul&gt; con appendChild</span>
+<span class="cmt">// =============================================</span>
+fetch(url)
+  .then(response => response.json())
+  .then(datos => {
+    <span class="cmt">/*  ACABALO  */</span>        <span class="cmt">// ← tienes que escribir AQUÍ</span>
+    <span class="cmt">// haz cosas con los datos</span>
+    <span class="kw">let</span> cambio = datos.data.amount
+    console.log(<span class="st">"==>"</span> + cambio);
+    <span class="cmt">//usa creaElemento(cripto,cambio,cantidad)</span>
+    <span class="cmt">/*  FIN ACABALO  */</span>
+  })
+  .catch(e => {
+    error.textContent = <span class="st">"Error al obtener los datos"</span>
+  });</pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>✅ SOLUCIÓN — Lo que tienes que escribir en cada ACABALO</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 1: creaElemento(cripto, cambio, cantidad)</span>
+<span class="cmt">//  Crear un &lt;li&gt; → "BTC: 84750.23 EUR → Total: 8475023.00 EUR"</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="kw">function</span> creaElemento(cripto, cambio, cantidad) {
+  <span class="cmt">/*  ACABALO  */</span>
+  <span class="kw">const</span> liElement = document.createElement(<span class="st">"li"</span>);     <span class="cmt">// ← crear &lt;li&gt; en memoria</span>
+  liElement.textContent =                                  <span class="cmt">// ← asignar texto</span>
+    <span class="st">`${cripto}: ${cambio} EUR → Total: ${(cambio * cantidad).toFixed(2)} EUR`</span>;
+  <span class="cmt">/*  FIN ACABALO  */</span>
+  <span class="kw">return</span> liElement;
+}
+
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 2: dentro del .then(datos => {...})</span>
+<span class="cmt">//  Extraer cambio, llamar a creaElemento(), añadir al DOM</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+fetch(url)
+  .then(response => response.json())
+  .then(datos => {
+    <span class="cmt">/*  ACABALO  */</span>
+    <span class="kw">const</span> cambio = datos.data.amount;                    <span class="cmt">// ← extraer precio</span>
+    <span class="kw">const</span> li = creaElemento(cripto, cambio, valor);      <span class="cmt">// ← crear &lt;li&gt;</span>
+    ulElement.appendChild(li);                             <span class="cmt">// ← añadir al DOM</span>
+    <span class="cmt">/*  FIN ACABALO  */</span>
+  })
+  .catch(e => { error.textContent = <span class="st">"Error al obtener los datos"</span>; });</pre>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 1 — Crear el &lt;li&gt;:</strong><br>
+• <code>document.createElement("li")</code> → crea en MEMORIA un &lt;li&gt; vacío. No se ve en pantalla hasta que se añada al DOM.<br>
+• La variable DEBE llamarse <code>liElement</code> porque el <code>return liElement</code> ya existe fuera del ACABALO.<br>
+• <code>textContent</code> asigna texto plano. La template string <code>``</code> interpola: cripto="BTC", cambio=84750.23, total calculado con <code>*</code>.<br>
+• <code>.toFixed(2)</code> → obliga a 2 decimales: 8475023 → "8475023.00". Sin esto JS da 8475023.000000001 por precisión flotante.</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERRORES TÍPICOS ACABALO 1:</strong><br>
+• ❌ Usar <code>let</code> en vez de <code>const</code> → funciona, pero const es más correcto (no reasignas la variable).<br>
+• ❌ Olvidar <code>.toFixed(2)</code> → el cálculo con decimales da errores de precisión flotante.<br>
+• ❌ No usar template string → concatenar con + también funciona pero es menos legible.</span>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 2 — Fetch + DOM:</strong><br>
+• <code>const cambio = datos.data.amount</code> → Coinbase devuelve <code>{ data: { amount: "84750.23" } }</code>. <code>amount</code> está DENTRO de <code>data</code>.<br>
+• <code>creaElemento(cripto, cambio, valor)</code> → llama a la función del ACABALO 1 con los parámetros del forEach.<br>
+• <code>ulElement.appendChild(li)</code> → mete el &lt;li&gt; dentro del &lt;ul&gt;. Sin appendChild NO aparece en pantalla.<br>
+• ⚠️ <code>ulElement</code> es el &lt;ul&gt; ya creado. NO es <code>resultados</code> (el div contenedor).</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERRORES TÍPICOS ACABALO 2:</strong><br>
+• ❌ <code>resultados.appendChild(li)</code> → resultados es el &lt;div&gt;, el &lt;ul&gt; está dentro. Hay que añadir al &lt;ul&gt;.<br>
+• ❌ Poner appendChild FUERA del .then() → cuando se ejecute, el li aún no existe (fetch es asíncrono).<br>
+• ❌ <code>datos.amount</code> (sin .data) → undefined porque amount está dentro de data.</span>
+</div>
+
+<!-- ================================================================================== -->
+<!--  EJERCICIO 2: MONEDAS (Frankfurter)                                                -->
+<!-- ================================================================================== -->
+<h4 style="color:var(--cyan);margin:28px 0 6px;font-size:15px">💱 2. Monedas — Frankfurter API</h4>
+
+<div class="card" style="border-left:2px solid var(--cyan)">
+<p><strong>📜 ENUNCIADO:</strong></p>
+<p>Recibes un HTML con un <strong>conversor de divisas</strong> usando la API de Frankfurter. La página tiene:</p>
+<table>
+<tr><td><code>&lt;input type="number" id="cantidad" value="1"&gt;</code></td><td>Cantidad a convertir</td></tr>
+<tr><td><code>&lt;input type="button" id="convertir" value="Convertir"&gt;</code></td><td>Botón</td></tr>
+<tr><td><code>&lt;div id="resultado"&gt;&lt;/div&gt;</code></td><td>Aquí se muestran los resultados</td></tr>
+</table>
+<p><strong>⚠️ Tienes que completar 2 ACABALO:</strong></p>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📄 Código ORIGINAL del examen (monedas.html)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button></div>
+<pre class="code"><span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 1: Crear y devolver un &lt;li&gt; con "USD: 1.08 EUR"</span>
+<span class="cmt">// =============================================</span>
+<span class="kw">function</span> creaElemento(valor, clave) {
+  <span class="kw">const</span> total = Math.round(parseFloat(cantidad.value) * parseFloat(valor) * <span class="num">100</span>) / <span class="num">100</span>;
+  <span class="cmt">/*  ACABALO  */</span>        <span class="cmt">// ← tienes que escribir AQUÍ</span>
+
+  <span class="cmt">//let liElement ....</span>
+  <span class="cmt">/*  FIN ACABALO  */</span>
+  <span class="kw">return</span> liElement        <span class="cmt">// ← esta línea YA existe</span>
+}
+
+<span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 2: Dentro del forEach, usar creaElemento()</span>
+<span class="cmt">//    y añadirlo al div#resultado con appendChild</span>
+<span class="cmt">// =============================================</span>
+fetch(url)
+  .then(response => response.json())
+  .then(datos => {
+    <span class="kw">const</span> cambios = Object.entries(datos.rates)
+    cambios.forEach(([clave, valor]) => {
+      console.log(clave, valor);
+      <span class="cmt">/*  ACABALO  */</span>    <span class="cmt">// ← tienes que escribir AQUÍ</span>
+
+      <span class="cmt">//usa creaElemento(valor, clave)</span>
+      <span class="cmt">/*  FIN ACABALO  */</span>
+    });
+  })
+  .catch(error => console.log(error));</pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>✅ SOLUCIÓN — Lo que tienes que escribir en cada ACABALO</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 1: creaElemento(valor, clave)</span>
+<span class="cmt">//  Crear un &lt;li&gt; → "USD: 1.08 EUR"</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="kw">function</span> creaElemento(valor, clave) {
+  <span class="kw">const</span> total = Math.round(parseFloat(cantidad.value) * parseFloat(valor) * <span class="num">100</span>) / <span class="num">100</span>;
+  <span class="cmt">/*  ACABALO  */</span>
+  <span class="kw">const</span> liElement = document.createElement(<span class="st">"li"</span>);     <span class="cmt">// ← crear &lt;li&gt; en memoria</span>
+  liElement.textContent = <span class="st">`${clave}: ${total} EUR`</span>;  <span class="cmt">// ← "USD: 1.08 EUR"</span>
+  <span class="cmt">/*  FIN ACABALO  */</span>
+  <span class="kw">return</span> liElement;
+}
+
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 2: dentro del forEach — crear y añadir &lt;li&gt;</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+fetch(url)
+  .then(response => response.json())
+  .then(datos => {
+    <span class="kw">const</span> cambios = Object.entries(datos.rates)
+    cambios.forEach(([clave, valor]) => {
+      <span class="cmt">/*  ACABALO  */</span>
+      resultado.appendChild(creaElemento(valor, clave));  <span class="cmt">// ← ÚNICA línea</span>
+      <span class="cmt">/*  FIN ACABALO  */</span>
+    });
+  })
+  .catch(error => console.log(error));</pre>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 1 — Crear el &lt;li&gt;:</strong><br>
+• <code>const total = ...</code> → ya está fuera del ACABALO. El cálculo viene hecho.<br>
+• <code>document.createElement("li")</code> → la variable DEBE llamarse <code>liElement</code> porque el <code>return liElement</code> ya existe fuera.<br>
+• ⚠️ Si la llamas <code>li</code> o <code>elem</code> → <code>return liElement</code> devuelve undefined.<br>
+• <code>liElement.textContent = `${clave}: ${total} EUR`</code> → clave="USD", total=1.08 → "USD: 1.08 EUR"</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERROR TÍPICO ACABALO 1:</strong><br>
+• ❌ Nombrar mal la variable. El return espera <code>liElement</code>. Si pones <code>const elem = ...</code> → return liElement es undefined.</span>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 2 — forEach + DOM:</strong><br>
+• <code>Object.entries(datos.rates)</code> → <code>datos.rates</code> es un objeto <code>{ "USD": 1.08, "GBP": 0.85 }</code>. Object.entries() lo convierte en array de pares: <code>[["USD", 1.08], ...]</code>. Sin esto NO puedes hacer forEach.<br>
+• <code>forEach(([clave, valor]) => ...)</code> → <code>[clave, valor]</code> es DESTRUCTURACIÓN. Cada sub-array se desempaqueta.<br>
+• <code>resultado.appendChild(creaElemento(valor, clave))</code> → creaElemento devuelve un &lt;li&gt;, appendChild lo mete en el div.<br>
+• ⚠️ Fíjate en el ORDEN: <code>creaElemento(valor, clave)</code> — primero el número, luego el texto.</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERRORES TÍPICOS ACABALO 2:</strong><br>
+• ❌ <code>forEach(datos.rates)</code> directamente → Error: <code>datos.rates.forEach is not a function</code> (los objetos no tienen forEach).<br>
+• ❌ <code>creaElemento(clave, valor)</code> → orden invertido. La función espera primero el número, luego el texto.<br>
+• ❌ Poner appendChild fuera del forEach → solo se añade el último elemento.<br>
+• ❌ <code>resultado.innerHTML += ...</code> también funciona, pero el examen espera appendChild.</span>
+</div>
+
+<!-- ================================================================================== -->
+<!--  EJERCICIO 3: PPTLS SPOCK                                                           -->
+<!-- ================================================================================== -->
+<h4 style="color:var(--purple);margin:28px 0 6px;font-size:15px">🖖 3. PPTLS Spock — addEventListener + Promise + setTimeout</h4>
+
+<div class="card" style="border-left:2px solid var(--purple)">
+<p><strong>📜 ENUNCIADO:</strong></p>
+<p>Juego PPTLS (Big Bang Theory). El HTML tiene:</p>
+<table>
+<tr><td><code>&lt;select id="playerChoice"&gt;</code></td><td>5 opciones: piedra, papel, tijera, lagarto, spock</td></tr>
+<tr><td><code>&lt;p id="ordenadorElige"&gt;</code></td><td>Muestra "Ordenador pensando..." o "Ordenador eligió: X"</td></tr>
+<tr><td><code>&lt;div class="resultados"&gt;</code></td><td>Muestra elecciones + quién gana</td></tr>
+</table>
+<p><strong>⚠️ Tienes que completar 2 ACABALO:</strong></p>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📄 Código ORIGINAL del examen (spock.html)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button></div>
+<pre class="code"><span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 1: addEventListener("change")</span>
+<span class="cmt">//    Cuando el usuario elige del &lt;select&gt;,</span>
+<span class="cmt">//    guardar la elección y llamar a quienGana()</span>
+<span class="cmt">// =============================================</span>
+listaOpciones.addEventListener(<span class="st">"change"</span>, <span class="kw">function</span>() {
+  <span class="cmt">/*  ACABALO  */</span>        <span class="cmt">// ← tienes que escribir AQUÍ</span>
+
+  <span class="cmt">/*  FIN ACABALO  */</span>
+});
+
+<span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO 2: descuenta() — Promise con setTimeout</span>
+<span class="cmt">//    Devuelve una Promise que tras N segundos:</span>
+<span class="cmt">//    1. Elige aleatoriamente una opción</span>
+<span class="cmt">//    2. La muestra en el DOM</span>
+<span class="cmt">//    3. Resuelve la Promise</span>
+<span class="cmt">// =============================================</span>
+<span class="kw">function</span> descuenta() {
+  <span class="cmt">/*  ACABALO  */</span>        <span class="cmt">// ← tienes que escribir AQUÍ</span>
+
+  <span class="cmt">/*  FIN ACABALO  */</span>
+}</pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>✅ SOLUCIÓN — Lo que tienes que escribir en cada ACABALO</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 1: addEventListener("change")</span>
+<span class="cmt">//  Guardar selección del &lt;select&gt; y evaluar quién gana</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+listaOpciones.addEventListener(<span class="st">"change"</span>, <span class="kw">function</span>() {
+  <span class="cmt">/*  ACABALO  */</span>
+  jugadorEscoge = <span class="kw">this</span>.value;                     <span class="cmt">// ← "piedra" | "papel" | "tijera" | "lagarto" | "spock"</span>
+  quienGana(jugadorEscoge, ordenadorEscoge);         <span class="cmt">// ← evaluar resultado</span>
+  <span class="cmt">/*  FIN ACABALO  */</span>
+});
+
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO 2: descuenta() — Promise + setTimeout</span>
+<span class="cmt">//  Elegir aleatorio, mostrar en DOM, resolver Promise</span>
+<span class="cmt">//  ⚠️ ¡OBLIGATORIO return promesa!</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="kw">function</span> descuenta() {
+  <span class="cmt">/*  ACABALO  */</span>
+  <span class="kw">const</span> promesa = <span class="kw">new</span> <span class="kw">Promise</span>((resolve) => {          <span class="cmt">// ← crear Promise</span>
+    <span class="kw">setTimeout</span>(() => {                              <span class="cmt">// ← temporizador 5s</span>
+      ordenadorEscoge =                                 <span class="cmt">// ← elegir aleatorio</span>
+        opciones[Math.floor(Math.random() * opciones.length)];
+      document.getElementById(<span class="st">"ordenadorElige"</span>).textContent =   <span class="cmt">// ← mostrar en DOM</span>
+        <span class="st">`Ordenador eligió: ${ordenadorEscoge}`</span>;
+      resolve(ordenadorEscoge);                         <span class="cmt">// ← resolver Promise</span>
+    }, tiempoPensar * <span class="num">1000</span>);
+  });
+  <span class="kw">return</span> promesa;                                    <span class="cmt">// ← ⚠️ OBLIGATORIO</span>
+  <span class="cmt">/*  FIN ACABALO  */</span>
+}</pre>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 1 — addEventListener:</strong><br>
+• <code>this.value</code> → usando <code>function()</code> NORMAL (NO arrow), <code>this</code> es el &lt;select&gt;. <code>this.value = "piedra"</code> | <code>"papel"</code> | etc.<br>
+• ⚠️ Si usaras <code>() =></code> arrow function, <code>this</code> sería window, no el select.<br>
+• <code>quienGana(jugadorEscoge, ordenadorEscoge)</code> → evalúa reglas y muestra "Ganaste"/"Perdiste"/"Empate".<br>
+• Si <code>ordenadorEscoge</code> es undefined (aún no pasaron 5s), muestra "Espera". Esta función YA está implementada.</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERROR TÍPICO ACABALO 1:</strong><br>
+• ❌ Usar arrow function <code>() => { this.value }</code> → <code>this = window</code>, no funciona.</span>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN ACABALO 2 — Promise + setTimeout (lo + importante del examen):</strong><br>
+• <code>new Promise((resolve) => { ... })</code> → crea una Promise. <code>resolve</code> se llama cuando la operación asíncrona termina. La Promise está "pending" hasta resolve() → "fulfilled".<br>
+• <code>setTimeout(() => { ... }, tiempoPensar * 1000)</code> → 5*1000 = 5000ms. Dentro: ❶ elegir aleatorio con <code>Math.random()</code> ❷ mostrar en DOM ❸ <code>resolve(ordenadorEscoge)</code>.<br>
+• <code>Math.random()</code> = 0.0-0.999, *5 = 0.0-4.999, <code>Math.floor</code> = 0,1,2,3,4 → índice del array opciones[].<br>
+• <code>return promesa</code> → 🚫 SIN ESTO descuenta() devuelve undefined y <code>.then()</code> da TypeError.</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERRORES TÍPICOS ACABALO 2 (MUY GRAVES):</strong><br>
+• ❌ NO poner <code>return promesa</code> → descuenta() devuelve undefined. <code>descuenta().then()</code> da TypeError. <strong>ES EL ERROR MÁS FRECUENTE DEL EXAMEN.</strong><br>
+• ❌ Poner <code>resolve()</code> vacío → quien llama recibe undefined.<br>
+• ❌ Olvidar <code>* 1000</code> → 5ms en vez de 5 segundos.<br>
+• ❌ Poner setTimeout fuera de la Promise → no hay control asíncrono.</span>
+</div>
+
+<!-- ================================================================================== -->
+<!--  EJERCICIO 4: TEMPERATURA (OpenWeatherMap)                                        -->
+<!-- ================================================================================== -->
+<h4 style="color:var(--orange);margin:28px 0 6px;font-size:15px">🌡️ 4. Temperatura — OpenWeatherMap</h4>
+
+<div class="card" style="border-left:2px solid var(--orange)">
+<p><strong>📜 ENUNCIADO:</strong></p>
+<p>El alumno recibe un HTML con el clima actual usando la API de OpenWeatherMap. La página tiene:</p>
+<table>
+<tr><td><code>&lt;h1 id="titulo"&gt;Clima actual&lt;/h1&gt;</code></td><td>Título que se actualiza con el nombre de la ciudad</td></tr>
+<tr><td><code>&lt;p id="weather"&gt;Cargando...&lt;/p&gt;</code></td><td>Aquí se muestran temperatura + descripción + humedad</td></tr>
+<tr><td><code>&lt;input type="text" id="city" value="Valencia"&gt;</code></td><td>Campo para cambiar de ciudad</td></tr>
+<tr><td><code>&lt;button type="button" id="boton"&gt;Actualizar&lt;/button&gt;</code></td><td>Botón para recargar el clima de la ciudad escrita</td></tr>
+</table>
+<p><strong>⚠️ Tienes que completar 1 ACABALO en el JavaScript:</strong></p>
+<p>Dentro del <code>.then((data) => {...})</code> ya tienes <code>temperature</code>, <code>description</code> y <code>humidity</code> extraídos del JSON. <strong>Solo falta mostrarlos en el DOM</strong>.</p>
+</div>
+
+<div class="cb">
+<div class="ch"><span>📄 Código ORIGINAL del examen (temperatura.html)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button></div>
+<pre class="code"><span class="cmt">// =============================================</span>
+<span class="cmt">// 🟡 ACABALO ÚNICO: Dentro del .then((data) => {...})</span>
+<span class="cmt">//    Mostrar temperature, description y humidity</span>
+<span class="cmt">//    en el &lt;p id="weather"&gt;</span>
+<span class="cmt">// =============================================</span>
+<span class="kw">function</span> obtenerClima() {
+  <span class="kw">const</span> ciudad = inputCiudad.value;
+  <span class="kw">const</span> url = <span class="st">`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&amp;lang=es&amp;units=metric&amp;appid=${apiKey}`</span>;
+
+  titulo.innerHTML = <span class="st">"Clima actual " + ciudad</span>;
+
+  fetch(url)
+    .then(response => {
+      <span class="kw">if</span> (!response.ok) {
+        <span class="kw">throw new</span> Error(<span class="st">'Error: ' + response.statusText</span>);
+      }
+      <span class="kw">return</span> response.json();
+    })
+    .then((data) => {
+      <span class="kw">const</span> temperature = data.main.temp;
+      <span class="kw">const</span> description = data.weather[<span class="num">0</span>].description;
+      <span class="kw">const</span> humidity = data.main.humidity;
+
+      <span class="cmt">/*  ACABALO  */</span>              <span class="cmt">// ← tienes que escribir AQUÍ</span>
+
+      <span class="cmt">//Mostrar temperatura, descripción y humedad en #weather</span>
+      <span class="cmt">/*  FIN ACABALO  */</span>
+    })
+    .catch(error => {
+      console.error(<span class="st">'Hubo un problema:'</span>, error);
+      document.getElementById(<span class="st">'weather'</span>).textContent =
+        <span class="st">`No se pudo obtener el clima: ${error.message}`</span>;
+    });
+}</pre>
+</div>
+
+<div class="cb">
+<div class="ch"><span>✅ SOLUCIÓN — Lo que tienes que escribir en el ACABALO</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code"><span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="cmt">//  🥇 ACABALO ÚNICO: mostrar datos en el DOM</span>
+<span class="cmt">//  temperature, description y humidity YA están extraídos</span>
+<span class="cmt">//  Solo falta ponerlos en el &lt;p id="weather"&gt;</span>
+<span class="cmt">// ═══════════════════════════════════════════════════════════</span>
+<span class="kw">function</span> obtenerClima() {
+  <span class="kw">const</span> ciudad = inputCiudad.value;
+  <span class="kw">const</span> url = <span class="st">`https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&amp;lang=es&amp;units=metric&amp;appid=${apiKey}`</span>;
+
+  titulo.innerHTML = <span class="st">"Clima actual " + ciudad</span>;
+
+  fetch(url)
+    .then(response => {
+      <span class="kw">if</span> (!response.ok) {
+        <span class="kw">throw new</span> Error(<span class="st">'Error: ' + response.statusText</span>);
+      }
+      <span class="kw">return</span> response.json();
+    })
+    .then((data) => {
+      <span class="kw">const</span> temperature = data.main.temp;
+      <span class="kw">const</span> description = data.weather[<span class="num">0</span>].description;
+      <span class="kw">const</span> humidity = data.main.humidity;
+
+      <span class="cmt">/*  ACABALO  */</span>
+      document.getElementById(<span class="st">"weather"</span>).innerHTML =   <span class="cmt">// ← seleccionar &lt;p&gt; y asignar</span>
+        <span class="st">`🌡️ ${temperature}°C · ${description} · 💧 ${humidity}% humedad`</span>;
+      <span class="cmt">/*  FIN ACABALO  */</span>
+    })
+    .catch(error => {
+      console.error(<span class="st">'Hubo un problema:'</span>, error);
+      document.getElementById(<span class="st">'weather'</span>).textContent =
+        <span class="st">`No se pudo obtener el clima: ${error.message}`</span>;
+    });
+}</pre>
+</div>
+
+<div class="box blue">
+<span>📖</span>
+<span><strong>EXPLICACIÓN — Mostrar datos en el DOM:</strong><br>
+• <code>document.getElementById("weather")</code> → busca en el DOM el &lt;p&gt; con id="weather". Devuelve el elemento, listo para modificar.<br>
+• <code>.innerHTML</code> vs <code>.textContent</code>: innerHTML interpreta HTML y emojis (🌡️ se ve bien). textContent solo texto plano (los emojis salen como código Unicode).<br>
+• Template string <code>``</code> con <code>${}</code> → interpola variables sin concatenar con +. Ej: <code>`${temperature}°C`</code> → "25.3°C".<br>
+• <code>data.weather[0].description</code> → weather es un ARRAY (aunque tenga 1 elemento). <code>[0]</code> accede al primer elemento. Sin <code>[0]</code> daría undefined.</span>
+</div>
+
+<div class="box red">
+<span>🚫</span>
+<span><strong>ERRORES TÍPICOS:</strong><br>
+• ❌ Usar <code>textContent</code> en vez de <code>innerHTML</code> → los emojis no se renderizan.<br>
+• ❌ <code>data.weather.description</code> (sin <code>[0]</code>) → weather es array, no objeto → undefined.<br>
+• ❌ Poner el ACABALO fuera del <code>.then()</code> → temperature etc aún no existen (fetch es asíncrono).<br>
+• ❌ No comprobar <code>response.ok</code> → la API en 404 no lanza error, data sería inválido.</span>
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+<footer class="footer">
+  LM · IES Juan de Garay · DAW · RA3 — JavaScript Avanzado: Fetch y APIs
+</footer>
+
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
+
+<script>
+/* ===== SHARED UTILITIES ===== */
+function copiarCodigo(btn) {
+  const pre = btn.closest('.cb').querySelector('pre.code');
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    const t = btn.textContent; btn.textContent = '✓ Copiado'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = t; btn.style.color = ''; }, 1800);
+  });
+}
+function explicarCodigo(btn) {
+  const cb = btn.closest('.cb');
+  if (!cb) return;
+  const pre = cb.querySelector('pre.code');
+  if (!pre) return;
+  let expDiv = cb.querySelector('.exp');
+  if (!expDiv) { expDiv = document.createElement('div'); expDiv.className = 'exp'; cb.appendChild(expDiv); }
+  const code = pre.innerText || pre.textContent;
+  if (!code.trim()) return;
+  if (expDiv.classList.contains('show')) {
+    expDiv.classList.remove('show');
+    if (btn.dataset.origText) btn.textContent = btn.dataset.origText;
+    return;
+  }
+  btn.dataset.origText = btn.textContent;
+  btn.textContent = 'Ocultar';
+  const lines = code.split('\n');
+  let html = '<table>';
+  for (const line of lines) {
+    const t = line.trim();
+    const display = line.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (!t) { html += '<tr><td colspan="2" style="height:3px"></td></tr>'; continue; }
+    let expl = 'Ejecuta esta línea de código';
+    if (/^\/\//.test(t)) expl = 'Comentario: ' + t.replace(/^\/\/\s*/,'');
+    else if (/^\/\*/.test(t)) expl = 'Inicio de comentario multilínea';
+    else if (/^\*\//.test(t)) expl = 'Fin de comentario multilínea';
+    else if (/^\*\s/.test(t)) expl = t.replace(/^\*\s*/,'');
+    else if (/^(let|const|var)\s/.test(t)) expl = 'Declara una variable';
+    else if (/^function\s/.test(t)) expl = 'Define una función';
+    else if (/^if\s*\(/.test(t)) expl = 'Evalúa una condición';
+    else if (/^else\s/.test(t)) expl = 'Bloque alternativo (si no se cumple la condición)';
+    else if (/^for\s*\(/.test(t)) expl = 'Inicia un bucle for';
+    else if (/^while\s*\(/.test(t)) expl = 'Inicia un bucle while';
+    else if (/^switch\s*\(/.test(t)) expl = 'Evalúa múltiples casos';
+    else if (/^case\s/.test(t)) expl = 'Caso específico del switch';
+    else if (/^default\s*:/.test(t)) expl = 'Caso por defecto del switch';
+    else if (/^try\b/.test(t)) expl = 'Bloque de prueba (intenta ejecutar código que puede fallar)';
+    else if (/^catch\s*\(/.test(t)) expl = 'Captura el error si ocurre';
+    else if (/^finally\b/.test(t)) expl = 'Se ejecuta siempre, haya o no error';
+    else if (/^throw\b/.test(t)) expl = 'Lanza una excepción manualmente';
+    else if (/^return\b/.test(t)) expl = 'Devuelve un valor desde la función';
+    else if (/^new\s/.test(t)) expl = 'Crea una nueva instancia (objeto)';
+    else if (/^async\s/.test(t)) expl = 'Define una función asíncrona';
+    else if (/^await\b/.test(t)) expl = 'Espera a que se resuelva una promesa';
+    else if (/\bfetch\(/.test(t)) expl = 'Petición HTTP mediante fetch';
+    else if (/.then\(/.test(t)) expl = 'Encadena: ejecuta cuando la promesa se resuelve';
+    else if (/.catch\(/.test(t)) expl = 'Encadena: maneja errores de la promesa';
+    else if (/.finally\(/.test(t)) expl = 'Se ejecuta siempre después de la promesa';
+    else if (/Promise\.all\(/.test(t)) expl = 'Espera a que todas las promesas se resuelvan';
+    else if (/^<\//.test(t)) expl = 'Cierra una etiqueta HTML';
+    else if (/^</.test(t)) expl = 'Abre una etiqueta HTML';
+    else if (/\{/.test(t) && !t.includes('}')) expl = 'Apertura de bloque';
+    else if (/\}/.test(t) && !t.includes('{')) expl = 'Cierre de bloque';
+    html += '<tr><td><code>' + display + '</code></td><td>' + expl + '</td></tr>';
+  }
+  html += '</table>';
+  expDiv.innerHTML = html;
+  expDiv.classList.add('show');
+}
+function e(btn) { const d = btn.closest('.vm')||btn.closest('details'); if(d) d.open = !d.open; }
+function toggleToc() {
+  document.getElementById('tocBody').classList.toggle('collapsed');
+  document.getElementById('tocArrow').style.transform =
+    document.getElementById('tocBody').classList.contains('collapsed') ? 'rotate(-90deg)' : '';
+}
+
+/* ===== PROGRESS BAR ===== */
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progressBar').style.width = h > 0 ? (window.scrollY / h * 100) + '%' : '0';
+});
+
+/* ===== SEARCH ===== */
+const searchData = [
+  { t: 'Sincronía vs Asincronía', d: 'Call Stack, Event Loop, setTimeout, setInterval, bloqueante, no bloqueante, console.log, síncrono, asíncrono, orden ejecución, demo visual, pila llamadas', id: 't1' },
+  { t: 'Promesas (Promise)', d: 'Promise, pending, fulfilled, rejected, .then(), .catch(), .finally(), Promise.all, Promise.race, resolve, reject, then catch, promesa, asincronía', id: 't2' },
+  { t: 'Async / Await', d: 'async, await, async function, async/await, then vs async await, countdown, temporizador, try catch finally, setTimeout con await, fetch con await', id: 't3' },
+  { t: 'Fetch API + HTTP', d: 'fetch, GET, POST, PUT, PATCH, DELETE, HEAD, HTTP methods, verbos HTTP, JSONPlaceholder, response.ok, response.json, API, petición, body, headers, método HTTP', id: 't4' },
+  { t: 'Manejo de Errores', d: 'try, catch, throw, finally, error, errores 404, 500, JSON.parse, response.ok, error HTTP, manejo errores, try catch finally, excepción', id: 't5' },
+  { t: 'Operadores Modernos', d: '??, ?., Nullish Coalescing, Optional Chaining, ??=, ||=, &&=, operador nullish, encadenamiento opcional, cortocircuito, null, undefined', id: 't6' },
+  { t: 'localStorage / sessionStorage', d: 'localStorage, sessionStorage, setItem, getItem, removeItem, clear, JSON.stringify, JSON.parse, persistencia, almacenamiento, storage, guardar datos', id: 't7' },
+  { t: 'Módulos ES (import/export)', d: 'módulos, import, export, export default, export named, type module, CORS, script module, modular, ES modules, importar, exportar', id: 't8' },
+  { t: 'Funciones: clásica, anónima, flecha', d: 'function, función, función clásica, función anónima, arrow function, =>, diferencias this, function declaration, function expression, flecha vs normal', id: 't9' },
+  { t: 'Ejercicios del Examen', d: 'Valenbisi, Rick Morty, Monedas, D&D, PPTLS, OpenWeatherMap, ejercicios, examen, ejemplos prácticos', id: 't10' },
+  { t: 'Valenbisi', d: 'Valenbisi, bicicletas, Valencia, estaciones, Leaflet, mapa, multi-idioma, fetch API, JSON, estaciones bici', id: 't10' },
+  { t: 'Rick & Morty', d: 'Rick, Morty, personajes, API, fetch, personajes femeninos, caché, aleatorio, serie, cartoon', id: 't10' },
+  { t: 'Conversor de Monedas', d: 'monedas, conversor, divisas, Frankfurter, EUR, USD, GBP, JPY, Coinbase, crypto, criptomonedas, Bitcoin, Ethereum, fetch, tipo cambio', id: 't10' },
+  { t: 'D&D Personajes', d: 'Dungeons, Dragons, D&D, Calabozos, Dragones, personajes, atributos, dados, rol, OpenRouter, generación, imágenes', id: 't10' },
+  { t: 'PPTLS Spock', d: 'PPTLS, Spock, piedra, papel, tijera, lagarto, Big Bang, juego, promesa, Promise, setTimeout, quienGana, reglas, addEventListener, change, select', id: 't10' },
+  { t: 'OpenWeatherMap', d: 'clima, temperatura, tiempo, OpenWeatherMap, weather, API key, ciudad, grados, humedad, descripción, fetch, response.ok, metric, celsius', id: 't10' },
+  { t: 'Patrón ACABALO', d: 'ACABALO, FIN ACABALO, /* ACABALO */, /* FIN ACABALO */, patrón, addEventListener, descuenta, Promise.all, finally, response.ok, sintaxis, examen, crear elementos, createElement, appendChild, fetch then', id: 't-acabalo' },
+  { t: 'Ejercicios Reales Examen ACABALO', d: 'ACABALO, ejercicios, examen, reales, Criptomonedas, Coinbase, Bitcoin, ETH, SOL, DOGE, Monedas, Frankfurter, divisas, PPTLS, Spock, piedra papel tijera lagarto, Temperatura, OpenWeatherMap, clima, createElement, appendChild, fetch, Promise, setTimeout, addEventListener, change, Object.entries, forEach, datos.data.amount, innerHTML, solución, resuelto, descargar', id: 't-ejercicios' },
+];
+document.getElementById('buscar').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const r = document.getElementById('searchResults');
+  if (!q) { r.classList.remove('show'); return; }
+  const words = q.split(/\s+/).filter(w => w.length > 1);
+  const f = searchData.filter(s => {
+    const txt = (s.t + ' ' + s.d).toLowerCase();
+    return words.every(w => txt.includes(w));
+  });
+  r.innerHTML = f.length ? f.map(s => `<div class="sr-item" onclick="document.getElementById('${s.id}').scrollIntoView({behavior:'smooth'});document.getElementById('searchResults').classList.remove('show');document.getElementById('buscar').value=''"><div class="sr-tit">${s.t.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi'),m=>'<span class="hl">'+m+'</span>')}</div><div class="sr-des">${s.d}</div></div>`).join('') : '<div class="sr-nada">❌ No se encontraron resultados</div>';
+  r.classList.add('show');
+});
+document.addEventListener('click', e => { if(!e.target.closest('.search-wrap')) document.getElementById('searchResults').classList.remove('show'); });
+document.addEventListener('keydown', e => { if((e.ctrlKey||e.metaKey)&&e.key==='k') { e.preventDefault(); document.getElementById('buscar').focus(); } });
+
+/* ===== TEMA 1: SINCRONÍA VS ASINCRONÍA ===== */
+let demo1Running = false;
+function demo1Sync() {
+  if (demo1Running) return;
+  const stack = document.getElementById('stack1');
+  const queue = document.getElementById('queue1');
+  const log = document.getElementById('log1');
+  stack.innerHTML = ''; queue.innerHTML = ''; log.innerHTML = '';
+  const lines = ['console.log("1. Inicio")', 'console.log("2. Proceso")', 'console.log("3. Fin")'];
+  let i = 0;
+  demo1Running = true;
+  function next() {
+    if (i >= lines.length) { demo1Running = false; return; }
+    const item = document.createElement('div');
+    item.className = 'stack-item green';
+    item.textContent = lines[i];
+    stack.appendChild(item);
+    stack.scrollTop = stack.scrollHeight;
+    const l = document.createElement('div');
+    l.className = 'log-line sync';
+    l.textContent = '✓ ' + (i+1) + '. ' + lines[i];
+    log.appendChild(l);
+    log.scrollTop = log.scrollHeight;
+    i++;
+    setTimeout(() => { item.classList.add('out'); setTimeout(next, 200); }, 500);
+  }
+  next();
+}
+function demo1Async() {
+  if (demo1Running) return;
+  const stack = document.getElementById('stack1');
+  const queue = document.getElementById('queue1');
+  const log = document.getElementById('log1');
+  stack.innerHTML = ''; queue.innerHTML = ''; log.innerHTML = '';
+  demo1Running = true;
+  function addStack(text, cls, cb) {
+    const item = document.createElement('div');
+    item.className = 'stack-item ' + (cls||'');
+    item.textContent = text;
+    stack.appendChild(item);
+    stack.scrollTop = stack.scrollHeight;
+    const l = document.createElement('div');
+    l.className = 'log-line sync';
+    l.textContent = '→ ' + text;
+    log.appendChild(l);
+    log.scrollTop = log.scrollHeight;
+    setTimeout(() => { item.classList.add('out'); setTimeout(cb, 200); }, 400);
+  }
+  function addQueue(text) {
+    const item = document.createElement('div');
+    item.className = 'queue-item';
+    item.textContent = text;
+    queue.appendChild(item);
+  }
+  addStack('console.log("A")', null, () => {
+    addStack('setTimeout(fn, 0)', 'yellow', () => {
+      addQueue('setTimeout callback');
+      addStack('console.log("C")', null, () => {
+        setTimeout(() => {
+          const item = document.createElement('div');
+          item.className = 'stack-item yellow';
+          item.textContent = 'console.log("B")';
+          stack.innerHTML = '';
+          stack.appendChild(item);
+          const l = document.createElement('div');
+          l.className = 'log-line async';
+          l.textContent = '⏳ B. Dentro del timeout (después de C)';
+          log.appendChild(l);
+          demo1Running = false;
+        }, 300);
+      });
+    });
+  });
+}
+function demo1Clear() {
+  document.getElementById('stack1').innerHTML = '';
+  document.getElementById('queue1').innerHTML = '';
+  document.getElementById('log1').innerHTML = '';
+  demo1Running = false;
+}
+
+/* ===== TEMA 2: PROMESAS ===== */
+let burgerTimeout = null;
+function burgerReset() {
+  if (burgerTimeout) { clearTimeout(burgerTimeout); burgerTimeout = null; }
+  for (let i = 0; i <= 4; i++) {
+    const el = document.getElementById('bs' + i);
+    el.className = 'burger-step';
+  }
+  document.getElementById('burgerLog').innerHTML = '';
+}
+function burgerCook() {
+  burgerReset();
+  const steps = ['bs0','bs1','bs2','bs3','bs4'];
+  const msgs = ['Pan preparado ✅', 'Carne cocinada ✅', 'Queso añadido ✅', 'Lechuga puesta ✅', '🍔 ¡Hamburguesa lista! Disfruta'];
+  const log = document.getElementById('burgerLog');
+  let i = 0;
+  function next() {
+    if (i >= steps.length) return;
+    const el = document.getElementById(steps[i]);
+    el.className = 'burger-step active';
+    setTimeout(() => {
+      el.className = 'burger-step done';
+      const l = document.createElement('div');
+      l.className = 'log-line sync';
+      l.textContent = msgs[i];
+      log.appendChild(l);
+      log.scrollTop = log.scrollHeight;
+      i++;
+      burgerTimeout = setTimeout(next, 800);
+    }, 400);
+  }
+  next();
+}
+function burgerBurn() {
+  burgerReset();
+  const log = document.getElementById('burgerLog');
+  const el = document.getElementById('bs1');
+  el.className = 'burger-step active';
+  setTimeout(() => {
+    el.className = 'burger-step error';
+    const l = document.createElement('div');
+    l.className = 'log-line';
+    l.style.color = 'var(--red)';
+    l.textContent = '🔥 ¡La cocina se ha quemado! Error en la promesa';
+    log.appendChild(l);
+  }, 1000);
+}
+function demoPromiseAll() {
+  const r = document.getElementById('promiseCompResult');
+  r.innerHTML = '⏳ Promise.all: Esperando a que TODAS terminen...<br>';
+  const p1 = new Promise(resolve => setTimeout(() => { r.innerHTML += '✅ Tarea 1 completada (1s)<br>'; resolve('T1'); }, 1000));
+  const p2 = new Promise(resolve => setTimeout(() => { r.innerHTML += '✅ Tarea 2 completada (2s)<br>'; resolve('T2'); }, 2000));
+  const p3 = new Promise(resolve => setTimeout(() => { r.innerHTML += '✅ Tarea 3 completada (1.5s)<br>'; resolve('T3'); }, 1500));
+  Promise.all([p1, p2, p3]).then(() => { r.innerHTML += '🏁 <strong style="color:var(--green)">¡TODAS completadas! Promise.all resuelta</strong>'; });
+}
+function demoPromiseRace() {
+  const r = document.getElementById('promiseCompResult');
+  r.innerHTML = '🏃 Promise.race: La primera en terminar gana...<br>';
+  const p1 = new Promise(resolve => setTimeout(() => { r.innerHTML += '🐢 Tarea 1 terminó (2s)<br>'; resolve('T1'); }, 2000));
+  const p2 = new Promise(resolve => setTimeout(() => { r.innerHTML += '🐇 Tarea 2 terminó (1s)<br>'; resolve('T2'); }, 1000));
+  const p3 = new Promise(resolve => setTimeout(() => { r.innerHTML += '🐕 Tarea 3 terminó (1.5s)<br>'; resolve('T3'); }, 1500));
+  Promise.race([p1, p2, p3]).then(winner => { r.innerHTML += '🏆 <strong style="color:var(--yellow)">Ganadora: ' + winner + '</strong>'; });
+}
+function promiseCompClear() {
+  document.getElementById('promiseCompResult').innerHTML = 'Haz clic en un botón para ver el resultado';
+}
+
+/* ===== TEMA 3: ASYNC/AWAIT ===== */
+let countdownRunning = false;
+let countdownStopped = false;
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
+async function startCountdown() {
+  if (countdownRunning) return;
+  const input = document.getElementById('countdownInput');
+  let secs = parseInt(input.value);
+  if (isNaN(secs) || secs < 1) { secs = 5; input.value = 5; }
+  countdownRunning = true;
+  countdownStopped = false;
+  const display = document.getElementById('countdownDisplay');
+  const status = document.getElementById('countdownStatus');
+  display.style.color = 'var(--accent)';
+  for (let i = secs; i >= 0; i--) {
+    if (countdownStopped) { countdownRunning = false; return; }
+    display.textContent = i;
+    status.textContent = i > 0 ? `Faltan ${i} segundos...` : '¡Tiempo!';
+    if (i === 0) { display.style.color = 'var(--green)'; status.textContent = '✅ ¡Cuenta atrás finalizada!'; countdownRunning = false; return; }
+    await sleep(1000);
+  }
+  countdownRunning = false;
+}
+function stopCountdown() {
+  countdownStopped = true;
+  countdownRunning = false;
+  document.getElementById('countdownDisplay').textContent = '⏹';
+  document.getElementById('countdownStatus').textContent = '⏸️ Cuenta atrás detenida';
+}
+
+/* ===== TEMA 4: FETCH API ===== */
+async function fetchUser() {
+  const id = document.getElementById('fetchUserId').value;
+  const result = document.getElementById('fetchResult');
+  const status = document.getElementById('fetchStatus');
+  status.textContent = '⏳ Cargando...';
+  result.innerHTML = '';
+  try {
+    const res = await fetch('https://jsonplaceholder.typicode.com/users/' + id);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const user = await res.json();
+    status.textContent = '✅ Usuario encontrado';
+    result.innerHTML = `<div class="user-card">
+      <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=5b8ff9&color=fff&size=64" alt="">
+      <div class="uc-info">
+        <div class="uc-name">${user.name}</div>
+        <div class="uc-detail">📧 ${user.email}</div>
+        <div class="uc-detail">📞 ${user.phone}</div>
+        <div class="uc-detail">🏢 ${user.company.name}</div>
+        <div class="uc-detail">📍 ${user.address.city}, ${user.address.street}</div>
+      </div>
+    </div>`;
+  } catch (err) {
+    status.textContent = '❌ Error: ' + err.message;
+  }
+}
+async function fetchCreatePost() {
+  const result = document.getElementById('fetchResult');
+  const status = document.getElementById('fetchStatus');
+  status.textContent = '⏳ Creando post...';
+  try {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'Nuevo post desde RA3', body: 'Contenido del post creado con fetch POST', userId: 1 })
+    });
+    const data = await res.json();
+    status.textContent = '✅ Post creado con ID: ' + data.id;
+    result.innerHTML = `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px">
+      <strong>Post creado correctamente</strong><br>
+      <span style="font-size:12px;color:var(--text2)">ID: ${data.id} | Título: ${data.title}</span>
+    </div>`;
+  } catch (err) {
+    status.textContent = '❌ Error: ' + err.message;
+  }
+}
+
+/* ===== TEMA 5: MANEJO DE ERRORES ===== */
+function demoCrash() {
+  const r = document.getElementById('errorDemoResult');
+  r.innerHTML = '<div class="error-box err-crash">💥 <strong>¡CRASH!</strong> Intentando parsear JSON inválido...<br><code style="font-size:11px">JSON.parse("{mal: formado}")</code><br><span style="color:var(--text3)">(Este error detendría el script si no hubiera try/catch)</span></div>';
+}
+function demoGraceful() {
+  const r = document.getElementById('errorDemoResult');
+  r.innerHTML = '<div class="error-box err-graceful">🛡️ <strong>Manejo Elegante:</strong> El error se capturó sin romper nada.<br><code style="font-size:11px">try { JSON.parse("{mal: formado}") } catch(e) { console.error(e) }</code><br><span style="color:var(--text2)">✅ La aplicación sigue funcionando correctamente.</span></div>';
+}
+function demoErrorClear() {
+  document.getElementById('errorDemoResult').innerHTML = '';
+}
+
+/* ===== TEMA 6: OPERADORES MODERNOS ===== */
+function opTest() {
+  const val = document.getElementById('opTestVal').value;
+  const rOr = document.getElementById('opResultOr');
+  const rNull = document.getElementById('opResultNullish');
+  const def = 'VALOR POR DEFECTO';
+  const isZeroOrEmpty = val === '' || val === '0' || val === 'false';
+  const isNullUndef = val === 'null' || val === 'undefined' || val === '';
+  rOr.innerHTML = `<span style="color:var(--yellow)">"${val}" || "${def}"</span> → <strong>${val || def}</strong> ${isZeroOrEmpty ? '<span style="color:var(--text3);font-size:10px">(⚠️ || consideró "' + val + '" como falso)</span>' : ''}`;
+  const nullishVal = isNullUndef ? def : val;
+  rNull.innerHTML = `<span style="color:var(--green)">"${val}" ?? "${def}"</span> → <strong>${nullishVal}</strong> ${!isNullUndef && val !== '' ? '<span style="color:var(--text3);font-size:10px">(✅ ?? solo reacciona a null/undefined)</span>' : ''}`;
+}
+function opTestValues() {
+  const tests = ['0', '""', 'false', 'null', 'undefined', 'Hola'];
+  let i = 0;
+  function runNext() {
+    if (i >= tests.length) return;
+    document.getElementById('opTestVal').value = tests[i];
+    opTest();
+    i++;
+    setTimeout(runNext, 1200);
+  }
+  runNext();
+}
+function ocDemo() {
+  const sel = document.getElementById('ocSelector').value;
+  const users = {
+    user1: { nombre: 'Ana García', direccion: { calle: 'Calle Mayor 10', ciudad: 'Valencia', codigo: '46001' }, telefono: '612345678' },
+    user2: { nombre: 'Luis Pérez' },
+    user3: null
+  };
+  const r = document.getElementById('ocResult');
+  const u = users[sel];
+  if (sel === 'user3') {
+    r.innerHTML = '<span style="color:var(--red)">❌ usuario es null</span><br><span style="color:var(--text3)">▸ usuario?.nombre → undefined (no explota)</span><br><span style="color:var(--text3)">▸ usuario?.direccion?.calle → undefined</span>';
+    return;
+  }
+  r.innerHTML = `<span style="color:var(--accent)">const usuario = ${JSON.stringify(u, null, 2)}</span><br><br>`;
+  r.innerHTML += `▸ usuario?.nombre → <strong>${u?.nombre ?? 'undefined'}</strong><br>`;
+  r.innerHTML += `▸ usuario?.direccion?.calle → <strong>${u?.direccion?.calle ?? 'undefined'}</strong><br>`;
+  r.innerHTML += `▸ usuario?.telefono ?? "No disponible" → <strong>${u?.telefono ?? 'No disponible'}</strong><br>`;
+  r.innerHTML += `▸ usuario?.direccion?.ciudad ?? "Desconocida" → <strong>${u?.direccion?.ciudad ?? 'Desconocida'}</strong><br>`;
+  r.innerHTML += `<br><span style="color:var(--green)">✅ Sin ?. esto explotaría si falta una propiedad intermedia</span>`;
+}
+
+/* ===== TEMA 7: LOCALSTORAGE ===== */
+function storageRefresh() {
+  const grid = document.getElementById('storageItems');
+  grid.innerHTML = '';
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const val = localStorage.getItem(key);
+    const div = document.createElement('div');
+    div.className = 'storage-item';
+    div.innerHTML = `<div class="si-key">${key}</div><div class="si-val">${val.length > 30 ? val.substring(0,30)+'...' : val}</div>`;
+    grid.appendChild(div);
+  }
+}
+function storageSave() {
+  const key = document.getElementById('storageKey').value.trim();
+  const val = document.getElementById('storageVal').value;
+  if (!key) { document.getElementById('storageResult').textContent = '❌ La clave no puede estar vacía'; return; }
+  localStorage.setItem(key, val);
+  document.getElementById('storageResult').textContent = '✅ Guardado: ' + key + ' = ' + val;
+  storageRefresh();
+}
+function storageLoad() {
+  const key = document.getElementById('storageKey').value.trim();
+  if (!key) { document.getElementById('storageResult').textContent = '❌ Introduce una clave'; return; }
+  const val = localStorage.getItem(key);
+  document.getElementById('storageResult').textContent = val !== null ? '📂 ' + key + ' = ' + val : '❌ Clave "' + key + '" no encontrada';
+}
+function storageDelete() {
+  const key = document.getElementById('storageKey').value.trim();
+  if (!key) { document.getElementById('storageResult').textContent = '❌ Introduce una clave'; return; }
+  localStorage.removeItem(key);
+  document.getElementById('storageResult').textContent = '🗑️ Eliminada la clave: ' + key;
+  storageRefresh();
+}
+function storageClear() {
+  localStorage.clear();
+  document.getElementById('storageResult').textContent = '🧹 localStorage limpiado';
+  storageRefresh();
+}
+
+/* ===== TEMA 8: MÓDULOS ES ===== */
+function moduleExplain(file) {
+  const r = document.getElementById('moduleExplain');
+  const files = {
+    index: `<span style="color:var(--text3)">&lt;!-- index.html --&gt;</span>
+<span style="color:var(--accent)">&lt;script type="module" src="js/main.js"&gt;&lt;/script&gt;</span>
+<span style="color:var(--text3)">// type="module" activa los módulos ES</span>
+<span style="color:var(--text3)">// ❌ NO funciona con file:// (doble clic)</span>
+<span style="color:var(--text3)">// ✅ Usa Live Server de VS Code</span>`,
+    main: `<span style="color:var(--text3)">// main.js</span>
+<span style="color:var(--kw)">import</span> saludar, { API_URL, traerDatos } <span style="color:var(--kw)">from</span> <span style="color:var(--st)">'./api.js'</span>;
+<span style="color:var(--kw)">import</span> { renderTabla } <span style="color:var(--kw)">from</span> <span style="color:var(--st)">'./ui.js'</span>;
+
+<span style="color:var(--kw)">const</span> datos = <span style="color:var(--kw)">await</span> traerDatos();
+renderTabla(datos);`,
+    api: `<span style="color:var(--text3)">// api.js — funciones de fetch</span>
+<span style="color:var(--kw)">export const</span> API_URL = <span style="color:var(--st)">"https://jsonplaceholder.typicode.com"</span>;
+
+<span style="color:var(--kw)">export async function</span> traerDatos() {
+  <span style="color:var(--kw)">const</span> res = <span style="color:var(--kw)">await</span> fetch(API_URL + <span style="color:var(--st)">"/users"</span>);
+  <span style="color:var(--kw)">return await</span> res.json();
+}
+
+<span style="color:var(--kw)">export default function</span> saludar() {
+  <span style="color:var(--kw)">console</span>.log(<span style="color:var(--st)">"Módulo api.js cargado"</span>);
+}`,
+    ui: `<span style="color:var(--text3)">// ui.js — funciones de render</span>
+<span style="color:var(--kw)">export function</span> renderTabla(usuarios) {
+  <span style="color:var(--kw)">const</span> lista = <span style="color:var(--kw)">document</span>.getElementById(<span style="color:var(--st)">'lista'</span>);
+  lista.innerHTML = usuarios.map(u =>
+    <span style="color:var(--st)">\`&lt;div&gt;\${u.name} - \${u.email}&lt;/div&gt;\`</span>
+  ).join(<span style="color:var(--st)">''</span>);
+}`
+  };
+  r.innerHTML = files[file] || '<span style="color:var(--text3)">Haz clic en un archivo</span>';
+}
+
+/* ===== TEMA 9: FUNCIONES ===== */
+function getFuncValues() {
+  const a = parseFloat(document.getElementById('funcA').value) || 0;
+  const b = parseFloat(document.getElementById('funcB').value) || 0;
+  return [a, b];
+}
+function funcClassic() {
+  const [a, b] = getFuncValues();
+  function sumarClasica(x, y) { return x + y; }
+  document.getElementById('funcClassicResult').textContent = sumarClasica(a, b);
+  document.getElementById('funcAnonymousResult').textContent = '--';
+  document.getElementById('funcArrowResult').textContent = '--';
+}
+function funcAnonymous() {
+  const [a, b] = getFuncValues();
+  const sumarAnonima = function(x, y) { return x + y; };
+  document.getElementById('funcClassicResult').textContent = '--';
+  document.getElementById('funcAnonymousResult').textContent = sumarAnonima(a, b);
+  document.getElementById('funcArrowResult').textContent = '--';
+}
+function funcArrow() {
+  const [a, b] = getFuncValues();
+  const sumarFlecha = (x, y) => x + y;
+  document.getElementById('funcClassicResult').textContent = '--';
+  document.getElementById('funcAnonymousResult').textContent = '--';
+  document.getElementById('funcArrowResult').textContent = sumarFlecha(a, b);
+}
+
+/* ===== INIT ===== */
+storageRefresh();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS+ · Apuntes Examen UD5.1 + UD5.2</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   VARIABLES & BASE
+   ============================================================ */
+:root {
+  --bg:      #0d0f14;
+  --bg2:     #141720;
+  --bg3:     #1c2030;
+  --bg4:     #232840;
+  --border:  #2a3050;
+  --text:    #e2e8f8;
+  --text2:   #a0aabf;
+  --text3:   #606880;
+  --accent:  #5b8ff9;
+  --accent2: #3d6fd4;
+  --green:   #34d399;
+  --yellow:  #ffd166;
+  --red:     #ff6b6b;
+  --purple:  #a78bfa;
+  --orange:  #fb923c;
+  --cyan:    #22d3ee;
+  --mono:    'Space Mono', monospace;
+  --sans:    'Syne', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: rgba(13,15,20,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 16px;
+  padding: 0 20px; height: 52px;
+}
+.topbar-logo {
+  font-family: var(--mono); font-weight: 700; font-size: 14px;
+  color: var(--accent); letter-spacing: 2px; white-space: nowrap;
+}
+.search-wrap {
+  flex: 1; max-width: 500px; position: relative;
+  display: flex; align-items: center; gap: 8px;
+}
+.search-wrap svg { color: var(--text3); flex-shrink: 0; }
+#buscar {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 12px 7px 34px; color: var(--text);
+  font-family: var(--sans); font-size: 13px; outline: none;
+  transition: border-color 0.2s;
+}
+#buscar:focus { border-color: var(--accent); }
+.search-wrap svg { position: absolute; left: 10px; }
+#searchResults {
+  position: absolute; top: calc(100% + 8px); left: 0; right: 0;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 10px; z-index: 9999; display: none;
+  max-height: 320px; overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.sr-item {
+  padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: var(--bg4); }
+.sr-label { font-size: 12px; color: var(--text2); }
+.sr-title { font-size: 13px; font-weight: 600; }
+.topbar-nav { display: flex; gap: 4px; margin-left: auto; }
+.topbar-nav a {
+  font-size: 12px; padding: 4px 10px; border-radius: 6px;
+  text-decoration: none; color: var(--text3); transition: all 0.15s;
+  white-space: nowrap;
+}
+.topbar-nav a:hover { background: var(--bg3); color: var(--text); }
+.topbar-nav a.active { background: rgba(91,143,249,0.15); color: var(--accent); }
+
+/* ============================================================
+   LAYOUT PRINCIPAL
+   ============================================================ */
+.main {
+  max-width: 1000px; margin: 0 auto; padding: 80px 20px 80px;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  text-align: center; padding: 48px 0 40px;
+  position: relative;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 0%, rgba(91,143,249,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800;
+  letter-spacing: -1px; line-height: 1.1;
+}
+.hero h1 span { color: var(--accent); }
+.hero .sub {
+  font-size: 14px; color: var(--text2); margin-top: 10px;
+  font-family: var(--mono);
+}
+.pills {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  justify-content: center; margin-top: 20px;
+}
+.pill {
+  font-family: var(--mono); font-size: 11px;
+  padding: 4px 12px; border-radius: 99px;
+  border: 1px solid var(--border); color: var(--text2);
+  background: var(--bg2);
+}
+.pill.hot { border-color: var(--accent); color: var(--accent); background: rgba(91,143,249,0.08); }
+
+/* ============================================================
+   STATS
+   ============================================================ */
+.stats-row {
+  display: flex; flex-wrap: wrap; gap: 12px 32px;
+  justify-content: center; margin: 24px 0;
+}
+.stat { display: flex; align-items: center; gap: 8px; }
+.stat-num { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--accent); }
+.stat-label { font-size: 12px; color: var(--text3); }
+
+/* ============================================================
+   TOC — Índice interactivo (estilo ra2.html)
+   ============================================================ */
+.toc { position: relative; background: var(--bg2); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 40px; }
+.toc-header {
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; user-select: none; padding-bottom: 14px;
+}
+.toc-header:hover { opacity: 0.8; }
+.toc-title { font-weight: 700; font-size: 14px; }
+.toc-badge {
+  font-size: 11px; background: var(--accent); color: #fff;
+  padding: 2px 10px; border-radius: 99px; font-weight: 600;
+  font-family: var(--mono);
+}
+.toc-arrow { margin-left: auto; color: var(--text3); font-size: 14px; transition: transform 0.25s; }
+.toc-body {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px; margin: 10px 0 0; transition: max-height 0.35s ease, opacity 0.25s;
+  max-height: 2000px; opacity: 1; overflow: hidden;
+}
+.toc-body.collapsed { max-height: 0 !important; opacity: 0; margin: 0; }
+.toc-group {
+  display: flex; gap: 10px; padding: 10px 12px;
+  background: rgba(91, 143, 249, 0.05);
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-radius: 8px; border-left: 3px solid var(--accent);
+  transition: background 0.2s, transform 0.15s;
+}
+.toc-group:hover {
+  background: rgba(91, 143, 249, 0.10);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateX(2px);
+}
+.toc-num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.toc-group:nth-child(2) .toc-num { background: var(--green); }
+.toc-group:nth-child(3) .toc-num { background: var(--yellow); }
+.toc-group:nth-child(4) .toc-num { background: var(--red); }
+.toc-group:nth-child(5) .toc-num { background: var(--purple); }
+.toc-group:nth-child(6) .toc-num { background: var(--cyan); }
+.toc-group:nth-child(2) { border-color: var(--green); }
+.toc-group:nth-child(3) { border-color: var(--yellow); }
+.toc-group:nth-child(4) { border-color: var(--red); }
+.toc-group:nth-child(5) { border-color: var(--purple); }
+.toc-group:nth-child(6) { border-color: var(--cyan); }
+.toc-group-content { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.toc-main {
+  font-weight: 600; font-size: 13px; color: var(--text); text-decoration: none;
+  padding: 2px 0; transition: color 0.2s; position: relative;
+}
+.toc-main::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--accent); transition: width 0.25s;
+}
+.toc-main:hover { color: var(--accent); }
+.toc-main:hover::after { width: 100%; }
+.toc-sub { display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+.toc-sub a {
+  font-size: 11.5px; color: var(--text3); text-decoration: none;
+  padding: 1px 0 1px 12px; position: relative; transition: color 0.2s;
+  line-height: 1.5;
+}
+.toc-sub a::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--text3);
+  transition: background 0.2s;
+}
+.toc-sub a:hover { color: var(--text); }
+.toc-sub a:hover::before { background: var(--accent); }
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.section {
+  margin-bottom: 60px;
+}
+h2 {
+  font-size: 1.6rem; font-weight: 800; color: var(--text);
+  padding: 14px 0 4px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 2px solid var(--border); margin-bottom: 24px;
+}
+h2 .tag {
+  font-family: var(--mono); font-size: 11px; padding: 3px 10px;
+  border-radius: 6px; background: rgba(91,143,249,0.12);
+  color: var(--accent); border: 1px solid rgba(91,143,249,0.25);
+  letter-spacing: 1px;
+}
+h3 {
+  font-size: 1.1rem; font-weight: 700; color: var(--text);
+  margin: 28px 0 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+h3::before {
+  content: ''; width: 4px; height: 18px;
+  background: var(--accent); border-radius: 2px; flex-shrink: 0;
+}
+p { color: var(--text2); margin-bottom: 12px; }
+ul, ol { padding-left: 20px; color: var(--text2); margin-bottom: 12px; }
+li { margin-bottom: 4px; }
+code {
+  font-family: var(--mono); font-size: 12px;
+  background: var(--bg3); color: var(--accent);
+  padding: 2px 6px; border-radius: 4px;
+}
+strong { color: var(--text); }
+
+/* ============================================================
+   CODE BLOCKS
+   ============================================================ */
+.cb {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 12px 0;
+}
+.ch {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px; color: var(--text3);
+}
+.ch span { flex: 1; }
+.ch button {
+  font-family: var(--mono); font-size: 11px; padding: 3px 10px;
+  border-radius: 5px; border: 1px solid var(--border);
+  background: var(--bg4); color: var(--text2); cursor: pointer;
+  transition: all 0.15s;
+}
+.ch button:hover { border-color: var(--accent); color: var(--accent); }
+pre.code {
+  margin: 0; padding: 16px; overflow-x: auto;
+  font-family: var(--mono); font-size: 12.5px; line-height: 1.7;
+  color: var(--text); tab-size: 2;
+}
+
+/* ============================================================
+   TABLAS
+   ============================================================ */
+.prop-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; margin: 12px 0; border-radius: 10px; overflow: hidden;
+}
+.prop-table th {
+  text-align: left; padding: 9px 12px;
+  background: var(--bg3); color: var(--text2);
+  font-weight: 600; border-bottom: 2px solid var(--border);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.5px;
+}
+.prop-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--text2); }
+.prop-table td:first-child { font-family: var(--mono); color: var(--accent); font-weight: 600; }
+.prop-table tr:last-child td { border-bottom: none; }
+.prop-table tr:hover td { background: rgba(91,143,249,0.04); }
+
+/* ============================================================
+   DEMOS INTERACTIVOS — ESTILOS BASE
+   ============================================================ */
+.demo-box {
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 16px 0;
+}
+.demo-label {
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  padding: 8px 14px; background: var(--bg4);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.demo-label span { color: var(--green); }
+.demo-area {
+  padding: 20px; min-height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+.demo-controls {
+  padding: 12px 14px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+}
+.demo-btn {
+  font-family: var(--mono); font-size: 11px; padding: 5px 12px;
+  border-radius: 6px; border: 1px solid var(--border);
+  background: var(--bg4); color: var(--text2);
+  cursor: pointer; transition: all 0.15s;
+}
+.demo-btn:hover, .demo-btn.active {
+  border-color: var(--accent); color: var(--accent);
+  background: rgba(91,143,249,0.1);
+}
+.demo-btn.active-green { border-color: var(--green); color: var(--green); background: rgba(52,211,153,0.1); }
+
+/* ============================================================
+   DEMO: POSITION
+   ============================================================ */
+.pos-demo-container {
+  position: relative; background: var(--bg2);
+  border: 2px dashed var(--border); border-radius: 8px;
+  width: 100%; height: 200px; overflow: hidden;
+}
+.pos-demo-ref {
+  position: relative; width: 80px; height: 50px;
+  background: rgba(91,143,249,0.2); border: 2px dashed var(--accent);
+  border-radius: 6px; font-size: 11px; color: var(--text3);
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; font-family: var(--mono);
+}
+.pos-demo-box {
+  width: 80px; height: 50px; background: var(--accent);
+  border-radius: 6px; display: flex; align-items: center;
+  justify-content: center; color: #fff; font-weight: 700;
+  font-size: 12px; font-family: var(--mono);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: static; top: auto; left: auto;
+}
+.pos-demo-text {
+  position: absolute; right: 12px; bottom: 10px;
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+}
+
+/* ============================================================
+   DEMO: FLOAT
+   ============================================================ */
+.float-demo-area {
+  position: relative; background: var(--bg2);
+  border: 2px dashed var(--border); border-radius: 8px;
+  padding: 14px; font-size: 13px; color: var(--text2);
+  line-height: 1.6; min-height: 120px;
+}
+.float-img {
+  width: 90px; height: 80px; background: var(--green);
+  border-radius: 6px; margin: 4px 12px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 700; font-size: 11px;
+  font-family: var(--mono); text-align: center;
+  transition: all 0.4s;
+}
+
+/* ============================================================
+   DEMO: DISPLAY
+   ============================================================ */
+.display-demo {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  align-items: flex-start; justify-content: center; padding: 16px;
+}
+.disp-box {
+  background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 11px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; font-weight: 700; text-align: center;
+  transition: all 0.4s;
+}
+.disp-block { width: 100%; height: 44px; background: var(--accent); }
+.disp-inline { width: auto; height: auto; padding: 6px 12px; background: var(--green); }
+.disp-inline-block { width: 80px; height: 44px; background: var(--yellow); color: #222; }
+.disp-none { display: none !important; }
+
+/* ============================================================
+   DEMO: Z-INDEX
+   ============================================================ */
+.z-demo {
+  position: relative; height: 160px; width: 100%;
+}
+.z-box {
+  position: absolute; width: 100px; height: 80px;
+  border-radius: 8px; font-family: var(--mono);
+  font-size: 11px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; line-height: 1.3;
+  transition: z-index 0s, transform 0.3s;
+  cursor: pointer;
+}
+.z1 { top: 20px; left: 20px; background: var(--accent); z-index: 1; }
+.z2 { top: 50px; left: 70px; background: var(--green); z-index: 2; }
+.z3 { top: 30px; left: 130px; background: var(--red); z-index: 3; }
+.z-info { font-family: var(--mono); font-size: 11px; color: var(--text3); }
+
+/* ============================================================
+   DEMO: OVERFLOW
+   ============================================================ */
+.overflow-demos { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; padding: 16px; }
+.overflow-demo-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+.overflow-box {
+  width: 100%; height: 90px; background: var(--bg3);
+  border-bottom: 1px solid var(--border); position: relative;
+}
+.overflow-inner {
+  width: 150%; height: 150%; font-size: 11px; color: var(--text2);
+  padding: 8px; font-family: var(--mono);
+  background: repeating-linear-gradient(
+    45deg, transparent, transparent 10px,
+    rgba(91,143,249,0.05) 10px, rgba(91,143,249,0.05) 20px
+  );
+}
+.overflow-label { padding: 6px 10px; font-family: var(--mono); font-size: 11px; color: var(--accent); }
+
+/* ============================================================
+   DEMO: VISIBILIDAD
+   ============================================================ */
+.vis-demo { display: flex; gap: 12px; flex-wrap: wrap; padding: 16px; }
+.vis-box {
+  width: 90px; height: 70px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  text-align: center; color: #fff;
+}
+
+/* ============================================================
+   DEMO: FLEXBOX INTERACTIVO
+   ============================================================ */
+.flex-playground {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 16px 0;
+}
+.flex-playground-header {
+  padding: 10px 16px; background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--mono); font-size: 12px; color: var(--purple);
+  display: flex; align-items: center; gap: 8px;
+}
+.flex-container-demo {
+  min-height: 120px; padding: 16px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+  background: var(--bg2); position: relative;
+  transition: all 0.3s;
+}
+.flex-item-demo {
+  min-width: 50px; height: 60px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 13px; font-weight: 700;
+  color: #fff; transition: all 0.4s; flex: 0 1 auto;
+}
+.fi1 { background: var(--accent); }
+.fi2 { background: var(--green); }
+.fi3 { background: var(--yellow); color: #222; }
+.fi4 { background: var(--red); }
+.fi5 { background: var(--purple); }
+.flex-controls {
+  padding: 14px 16px; border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;
+}
+.ctrl-group label {
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+  display: block; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.ctrl-group select {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 10px; color: var(--text);
+  font-family: var(--mono); font-size: 12px; outline: none;
+  transition: border-color 0.2s; cursor: pointer;
+}
+.ctrl-group select:focus { border-color: var(--accent); }
+.flex-output {
+  padding: 8px 16px; background: var(--bg4);
+  border-top: 1px solid var(--border);
+  font-family: var(--mono); font-size: 11px; color: var(--green);
+}
+
+/* ============================================================
+   DEMO: FLEX-GROW VISUAL
+   ============================================================ */
+.grow-demo {
+  background: var(--bg2); border: 2px dashed var(--border);
+  border-radius: 8px; padding: 12px;
+  display: flex; gap: 8px; align-items: stretch;
+}
+.grow-item {
+  height: 50px; border-radius: 6px; display: flex;
+  align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: #fff; transition: all 0.5s; padding: 0 10px;
+}
+
+/* ============================================================
+   DEMO: TRANSICIONES
+   ============================================================ */
+.transition-demo {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.trans-box {
+  width: 80px; height: 80px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; font-weight: 700;
+  color: #fff; text-align: center; cursor: pointer;
+}
+.trans-color {
+  background: var(--accent); transition: background 2s;
+}
+.trans-color:hover { background: var(--green); }
+.trans-size {
+  background: var(--purple); transition: width 4s, height 1s;
+}
+.trans-size:hover { width: 120px; height: 120px; }
+.trans-all {
+  background: var(--red); transition: all 0.5s;
+}
+.trans-all:hover { transform: rotate(45deg) scale(1.2); background: var(--orange); border-radius: 50%; }
+.trans-none {
+  background: var(--yellow); color: #222;
+}
+.trans-none:hover { background: var(--cyan); color: #fff; }
+
+/* ============================================================
+   DEMO: HOVER FLEX ANIMADO
+   ============================================================ */
+.flex-anim-demo {
+  display: flex; gap: 5px; padding: 16px;
+  background: var(--bg2); border-radius: 8px; height: 100px; align-items: stretch;
+}
+.flex-anim-item {
+  flex: 0 1 15%; border-radius: 8px;
+  background: var(--bg3); border: 1px solid var(--border);
+  transition: all 0.5s; display: flex;
+  align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  cursor: pointer;
+}
+.flex-anim-item:hover {
+  flex: 1 1 10%; background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+
+/* ============================================================
+   DEMO: TIPOGRAFÍA
+   ============================================================ */
+.typo-demo {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; margin: 12px 0;
+}
+.typo-area {
+  padding: 20px; min-height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+.typo-sample { font-size: 24px; color: var(--text); transition: all 0.3s; }
+.typo-controls {
+  padding: 12px 14px; border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+
+/* ============================================================
+   DEMO: TEXT-ALIGN / LINE-HEIGHT
+   ============================================================ */
+.text-demo-area {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 16px; margin: 8px 0;
+  color: var(--text2); font-size: 14px; transition: all 0.3s;
+  min-height: 80px;
+}
+
+/* ============================================================
+   CALLOUTS
+   ============================================================ */
+.callout {
+  border-radius: 10px; padding: 14px 16px; margin: 14px 0;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.callout-body { flex: 1; }
+.callout-title { font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.callout-text { font-size: 13px; color: var(--text2); }
+.callout.warning { background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.2); }
+.callout.warning .callout-title { color: var(--yellow); }
+.callout.info { background: rgba(91,143,249,0.08); border: 1px solid rgba(91,143,249,0.2); }
+.callout.info .callout-title { color: var(--accent); }
+.callout.tip { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); }
+.callout.tip .callout-title { color: var(--green); }
+.callout.danger { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.2); }
+.callout.danger .callout-title { color: var(--red); }
+
+/* ============================================================
+   PRACTICAS
+   ============================================================ */
+.practica-card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 14px; padding: 20px; margin-bottom: 16px;
+  border-left: 4px solid var(--green);
+}
+.practica-card h3::before { background: var(--green); }
+.practica-card ol { margin-top: 10px; }
+
+/* ============================================================
+   CHEATSHEET VISUAL DE FLEX
+   ============================================================ */
+.cheat-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px; margin: 16px 0;
+}
+.cheat-item {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden;
+}
+.cheat-item-header {
+  font-family: var(--mono); font-size: 11px; color: var(--accent);
+  padding: 8px 12px; background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+.cheat-item-demo {
+  height: 60px; display: flex; gap: 6px; align-items: center;
+  padding: 8px 12px; background: rgba(0,0,0,0.2);
+}
+.cheat-mini {
+  height: 40px; border-radius: 4px; font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff; font-family: var(--mono); font-weight: 700;
+  transition: all 0.3s;
+}
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 20px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(91,143,249,0.4);
+  transition: transform 0.2s, opacity 0.2s; opacity: 0;
+}
+.back-to-top.visible { opacity: 1; }
+.back-to-top:hover { transform: scale(1.1); }
+
+/* ============================================================
+   MATERIAL DESCARGABLE
+   ============================================================ */
+.dl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; margin: 12px 0; }
+.dl-link {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; text-decoration: none;
+  color: var(--text); transition: all 0.15s;
+}
+.dl-link:hover { border-color: var(--accent); background: var(--bg3); }
+.dl-link .dl-icon { font-size: 20px; }
+.dl-link .dl-info { flex: 1; }
+.dl-link .dl-name { font-size: 13px; font-weight: 600; }
+.dl-link .dl-type { font-size: 11px; color: var(--text3); font-family: var(--mono); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  .toc-body { grid-template-columns: 1fr; }
+  .cheat-grid { grid-template-columns: 1fr; }
+  .topbar-nav { display: none; }
+  .flex-controls { grid-template-columns: 1fr; }
+  .overflow-demos { grid-template-columns: 1fr 1fr; }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+.exp { background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; margin: 6px 0; font-size: 12.5px; line-height: 1.7; display: none; max-height: 500px; overflow-y: auto; }
+.exp.show { display: block; }
+.exp table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.exp td { padding: 4px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.exp td:first-child { color: var(--accent); font-family: 'Space Mono', monospace; white-space: pre; width: 30%; }
+.exp td:last-child { color: var(--text2); }
+.exp tr:last-child td { border-bottom: none; }
+.cb-btn { background:none; border:1px solid var(--border); color:var(--text2); font-size:9px; padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit; }
+.cb-btn:hover { border-color:var(--accent); color:var(--accent); }
+.explain-btn { margin-left:4px; }
+</style>
+</head>
+<body>
+
+<!-- ====================================================
+     TOPBAR
+     ==================================================== -->
+<nav class="topbar">
+  <span class="topbar-logo">LM 📘</span>
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="buscar" placeholder='Busca: "position", "flex", "float", "transition"…' autocomplete="off">
+    <div id="searchResults"></div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="ra2.html">RA2 · CSS/HTML5</a>
+    <a href="ra1.html">RA1 · JS/DOM/JSON</a>
+    <a href="ra3.html">RA3 · Fetch/APIs</a>
+    <a href="ra456.html">RA4-5-6 · XML</a>
+    <a href="css-extra.html" style="font-weight:700;color:var(--accent)">CSS+</a>
+    <a href="index.html" style="color:var(--text3)" title="Inicio">🏠</a>
+  </nav>
+</nav>
+
+<div class="main">
+
+<!-- ====================================================
+     HERO
+     ==================================================== -->
+<div class="hero">
+  <h1>CSS <span>Extra</span></h1>
+  <p class="sub">📌 UD5.1 · Posicionamiento + Tipografía &nbsp;|&nbsp; UD5.2 · Flexbox + Transiciones</p>
+  <div class="pills">
+    <span class="pill hot">position</span>
+    <span class="pill hot">float · clear</span>
+    <span class="pill hot">display · visibility</span>
+    <span class="pill hot">z-index · overflow</span>
+    <span class="pill hot">flexbox</span>
+    <span class="pill hot">transition</span>
+    <span class="pill">tipografía CSS</span>
+    <span class="pill">text-align · line-height</span>
+    <span class="pill">demos interactivos</span>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-num">6</span><span class="stat-label">Secciones</span></div>
+  <div class="stat"><span class="stat-num">30+</span><span class="stat-label">Code blocks</span></div>
+  <div class="stat"><span class="stat-num">15+</span><span class="stat-label">Demos vivos</span></div>
+  <div class="stat"><span class="stat-num">2</span><span class="stat-label">Prácticas</span></div>
+</div>
+
+<!-- ====================================================
+     TOC — Índice estilo ra2.html
+     ==================================================== -->
+<div class="toc" id="mainToc">
+  <div class="toc-header" onclick="toggleToc()">
+    <strong class="toc-title">📑 Índice de contenidos</strong>
+    <span class="toc-badge">6 secciones · todo el examen</span>
+    <span class="toc-arrow" id="tocArrow">▾</span>
+  </div>
+  <div class="toc-body" id="tocBody">
+    <div class="toc-group">
+      <span class="toc-num">1</span>
+      <div class="toc-group-content">
+        <a href="#s-position" class="toc-main">Posicionamiento CSS</a>
+        <div class="toc-sub">
+          <a href="#s-position-tipos">5 tipos: static · relative · absolute · fixed · sticky</a>
+          <a href="#s-relative">Relativo — desplazamiento sin salir del flujo</a>
+          <a href="#s-absolute">Absoluto — sale del flujo, busca ancestro posicionado</a>
+          <a href="#s-fixed">Fijo — siempre en la ventana</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">2</span>
+      <div class="toc-group-content">
+        <a href="#s-float" class="toc-main">Float · Clear · Overflow</a>
+        <div class="toc-sub">
+          <a href="#s-float">float: left | right | none</a>
+          <a href="#s-overflow">overflow: visible | hidden | scroll | auto</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">3</span>
+      <div class="toc-group-content">
+        <a href="#s-display" class="toc-main">Display · Visibility · z-index</a>
+        <div class="toc-sub">
+          <a href="#s-display">block · inline · inline-block · none</a>
+          <a href="#s-visibility">visibility vs display: diferencia clave</a>
+          <a href="#s-zindex">z-index — apilar elementos</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">4</span>
+      <div class="toc-group-content">
+        <a href="#s-text" class="toc-main">Tipografía y Texto</a>
+        <div class="toc-sub">
+          <a href="#s-font">font-family · font-size · font-weight · font-style</a>
+          <a href="#s-textp">text-align · line-height · text-decoration</a>
+          <a href="#s-textx">text-transform · vertical-align · letter/word-spacing</a>
+          <a href="#s-whitespace">white-space · pseudo-elementos</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">5</span>
+      <div class="toc-group-content">
+        <a href="#s-flex" class="toc-main">Flexbox</a>
+        <div class="toc-sub">
+          <a href="#s-flex-conceptos">Contenedor · Ítems · Ejes</a>
+          <a href="#s-flex-direction">flex-direction · flex-wrap · flex-flow</a>
+          <a href="#s-flex-align">justify-content · align-items · align-content</a>
+          <a href="#s-flex-self">align-self · order</a>
+          <a href="#s-flex-grow">flex-grow · flex-shrink · flex-basis · flex</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">6</span>
+      <div class="toc-group-content">
+        <a href="#s-transition" class="toc-main">Transiciones CSS</a>
+        <div class="toc-sub">
+          <a href="#s-transition">transition: propiedad duración</a>
+          <a href="#s-trans-entrada">Entrada y salida — A/B states</a>
+          <a href="#s-trans-prop">Transiciones por propiedad</a>
+          <a href="#s-flex-anim">Flex animado — hover effect</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 1: POSICIONAMIENTO
+     ==================================================== -->
+<div class="section" id="s-position">
+<h2>1. Posicionamiento CSS <span class="tag">UD5.1</span></h2>
+
+<p>La propiedad <code>position</code> controla <strong>cómo y dónde se coloca</strong> una caja HTML. Las propiedades <code>top</code>, <code>right</code>, <code>bottom</code>, <code>left</code> desplazan el elemento según el tipo de posicionamiento activo.</p>
+
+<h3 id="s-position-tipos">Los 5 tipos de posicionamiento</h3>
+
+<table class="prop-table">
+<tr><th>Valor</th><th>Sale del flujo</th><th>Referencia</th><th>Descripción</th></tr>
+<tr><td>static</td><td>❌ No</td><td>—</td><td>Por defecto. top/left/right/bottom se ignoran</td></tr>
+<tr><td>relative</td><td>❌ No (hueco queda)</td><td>Su posición original</td><td>Se desplaza respecto a donde estaría normalmente</td></tr>
+<tr><td>absolute</td><td>✅ Sí</td><td>Primer ancestro posicionado (no static)</td><td>Sale del flujo. El resto ocupa su sitio</td></tr>
+<tr><td>fixed</td><td>✅ Sí</td><td>Ventana del navegador</td><td>Inamovible al hacer scroll</td></tr>
+<tr><td>sticky</td><td>⚡ Mixto</td><td>Flujo → ventana al llegar al umbral</td><td>Respeta el flujo hasta que alcanza el umbral</td></tr>
+</table>
+
+<!-- DEMO INTERACTIVO POSITION -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo interactivo — Pulsa un tipo de position <span>LIVE</span></div>
+  <div class="demo-area" style="flex-direction:column; gap:16px; padding:20px;">
+    <div style="font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center">
+      La caja azul cambia su posición según el tipo seleccionado
+    </div>
+    <div class="pos-demo-container" id="posContainer">
+      <div style="position:relative; top:40px; left:20px; display:flex; gap:8px; align-items:flex-start;">
+        <div class="pos-demo-ref" id="posRef">hueco<br>original</div>
+        <div class="pos-demo-box" id="posBox">CAJA</div>
+      </div>
+      <div class="pos-demo-text" id="posText">position: static</div>
+    </div>
+  </div>
+  <div class="demo-controls">
+    <button class="demo-btn active" onclick="setPos('static')">static</button>
+    <button class="demo-btn" onclick="setPos('relative')">relative</button>
+    <button class="demo-btn" onclick="setPos('absolute')">absolute</button>
+    <button class="demo-btn" onclick="setPos('fixed')">fixed (demo)</button>
+  </div>
+</div>
+
+<h3 id="s-relative">Posicionamiento relativo</h3>
+<p>El elemento <strong>no sale del flujo</strong>. El hueco original se mantiene. El desplazamiento es relativo a su posición normal. <code>top</code> mueve hacia abajo, <code>left</code> hacia la derecha.</p>
+
+<div class="callout warning">
+  <span class="callout-icon">⚠️</span>
+  <div class="callout-body">
+    <div class="callout-title">Importante</div>
+    <div class="callout-text">Con <code>position: relative</code> el hueco original <strong>siempre se mantiene</strong> aunque el elemento se desplace visualmente.</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>position: relative</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">img.desplazada {
+  position: relative;
+  top: 8em;     /* mueve 8em hacia ABAJO */
+  left: 20px;   /* mueve 20px hacia la DERECHA */
+}
+
+/* Valores negativos = dirección contraria */
+img.subida {
+  position: relative;
+  top: -20px;   /* mueve hacia ARRIBA */
+}</pre>
+</div>
+
+<h3 id="s-absolute">Posicionamiento absoluto</h3>
+<p>La caja <strong>sale del flujo</strong>. El resto de elementos se mueven para ocupar su lugar. La referencia se determina así:</p>
+<ol>
+  <li>Se busca el <strong>primer ancestro posicionado</strong> (que NO sea static)</li>
+  <li>Si ninguno está posicionado → la referencia es la <strong>ventana del navegador</strong></li>
+</ol>
+
+<div class="callout info">
+  <span class="callout-icon">💡</span>
+  <div class="callout-body">
+    <div class="callout-title">Truco esencial del examen</div>
+    <div class="callout-text">Para que un <code>absolute</code> se posicione dentro de un <code>div</code>, ese <code>div</code> debe tener <code>position: relative</code>. Este patrón es <strong>muy habitual en exámenes</strong>.</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>absolute dentro de contenedor relativo</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">/* El contenedor es la referencia */
+div.contenedor {
+  position: relative;   /* ← hace de "contenedor posicionado" */
+  border: 2px solid #CCC;
+  padding: 1em;
+  width: 300px;
+}
+
+/* El hijo se posiciona respecto al div */
+div.contenedor img {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}</pre>
+</div>
+
+<h3 id="s-fixed">Posicionamiento fijo</h3>
+<p>Como <code>absolute</code> pero la referencia es <strong>siempre la ventana del navegador</strong>. El elemento permanece inamovible aunque el usuario haga scroll. Típico uso: menú de navegación.</p>
+
+<div class="cb">
+  <div class="ch"><span>position: fixed — menú siempre visible</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">nav.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #333;
+  color: #fff;
+  z-index: 1000;   /* Encima de todo */
+}</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 2: FLOAT
+     ==================================================== -->
+<div class="section" id="s-float">
+<h2>2. Float · Clear · Overflow <span class="tag">UD5.1</span></h2>
+
+<p><code>float</code> desplaza una caja todo lo posible hacia la izquierda o derecha. El texto de los elementos adyacentes fluye a su alrededor.</p>
+
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Valores</th><th>Descripción</th></tr>
+<tr><td>float</td><td>left | right | none</td><td>Desplaza el elemento. El texto fluye alrededor</td></tr>
+<tr><td>clear</td><td>left | right | both | none</td><td>Impide que el elemento se sitúe junto a flotantes</td></tr>
+<tr><td>overflow</td><td>visible | hidden | scroll | auto</td><td>Controla el desbordamiento. También "limpia" floats</td></tr>
+</table>
+
+<!-- DEMO FLOAT -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo interactivo — Float <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:16px;">
+    <div class="float-demo-area" id="floatArea">
+      <div class="float-img" id="floatImg" style="float:left;">IMG<br>float:left</div>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+    </div>
+  </div>
+  <div class="demo-controls">
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">float:</span>
+    <button class="demo-btn active" onclick="setFloat('left')">left</button>
+    <button class="demo-btn" onclick="setFloat('right')">right</button>
+    <button class="demo-btn" onclick="setFloat('none')">none</button>
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-left:12px;">clear en texto:</span>
+    <button class="demo-btn" onclick="setClear('none')">none</button>
+    <button class="demo-btn" onclick="setClear('left')">left</button>
+    <button class="demo-btn" onclick="setClear('both')">both</button>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>float: left + clear: both</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.imagen {
+  float: left;       /* La imagen flota a la izquierda */
+  margin: 10px;      /* Espacio alrededor */
+  width: 200px;
+}
+
+.footer {
+  clear: both;       /* El pie de página NO flota junto a la imagen */
+}
+
+/* Limpiar floats con overflow */
+.contenedor {
+  overflow: auto;    /* El contenedor "ve" a sus hijos flotados */
+}</pre>
+</div>
+
+<h3 id="s-overflow">Overflow</h3>
+
+<!-- DEMO OVERFLOW -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo interactivo — overflow <span>LIVE</span></div>
+  <div class="overflow-demos">
+    <div class="overflow-demo-item">
+      <div class="overflow-box" style="overflow:visible;">
+        <div class="overflow-inner">Texto que desborda overflow:visible Lorem ipsum dolor sit amet más texto aquí</div>
+      </div>
+      <div class="overflow-label">visible (defecto)</div>
+    </div>
+    <div class="overflow-demo-item">
+      <div class="overflow-box" style="overflow:hidden;">
+        <div class="overflow-inner">Texto que desborda overflow:hidden Lorem ipsum dolor sit amet más texto aquí</div>
+      </div>
+      <div class="overflow-label">hidden</div>
+    </div>
+    <div class="overflow-demo-item">
+      <div class="overflow-box" style="overflow:scroll;">
+        <div class="overflow-inner">Texto que desborda overflow:scroll Lorem ipsum dolor sit amet más texto aquí</div>
+      </div>
+      <div class="overflow-label">scroll</div>
+    </div>
+    <div class="overflow-demo-item">
+      <div class="overflow-box" style="overflow:auto;">
+        <div class="overflow-inner">Texto que desborda overflow:auto Lorem ipsum dolor sit amet más texto aquí</div>
+      </div>
+      <div class="overflow-label">auto</div>
+    </div>
+  </div>
+</div>
+
+<div class="callout warning">
+  <span class="callout-icon">⚠️</span>
+  <div class="callout-body">
+    <div class="callout-title">¡Diferencia clave!</div>
+    <div class="callout-text"><code>overflow: scroll</code> muestra <strong>siempre</strong> la barra de scroll. <code>overflow: auto</code> solo la muestra <strong>si hace falta</strong>. En la práctica se prefiere <code>auto</code>.</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>overflow — caja con scroll vertical</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">div.caja {
+  width: 200px;
+  height: 100px;
+  overflow-y: scroll;    /* scroll solo en vertical */
+  overflow-x: hidden;    /* corta en horizontal */
+}</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 3: DISPLAY / VISIBILITY / Z-INDEX
+     ==================================================== -->
+<div class="section" id="s-display">
+<h2>3. Display · Visibility · z-index <span class="tag">UD5.1</span></h2>
+
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Valores</th><th>Comportamiento</th></tr>
+<tr><td>display</td><td>block | inline | inline-block | none | flex | grid</td><td><code>none</code> oculta y <strong>no deja hueco</strong></td></tr>
+<tr><td>visibility</td><td>visible | hidden | collapse</td><td><code>hidden</code> oculta pero <strong>deja el hueco</strong></td></tr>
+<tr><td>z-index</td><td>auto | número (puede ser negativo)</td><td>Mayor valor = más arriba. Solo aplica a elementos posicionados</td></tr>
+</table>
+
+<!-- DEMO DISPLAY vs VISIBILITY -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — display:none vs visibility:hidden <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:20px;">
+    <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; background:var(--bg2); border:2px dashed var(--border); border-radius:8px; padding:12px;">
+      <div id="demoA" class="disp-box" style="width:80px; height:50px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; color:#fff; font-weight:700; transition:all 0.3s;">A</div>
+      <div id="demoB" class="disp-box" style="width:80px; height:50px; background:var(--green); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; color:#fff; font-weight:700; transition:all 0.3s;">B (afectado)</div>
+      <div class="disp-box" style="width:80px; height:50px; background:var(--red); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:11px; color:#fff; font-weight:700;">C</div>
+    </div>
+    <p id="visExplain" style="margin-top:10px; font-size:12px; font-family:var(--mono); color:var(--text3);">Pulsa un botón para ver la diferencia</p>
+  </div>
+  <div class="demo-controls">
+    <button class="demo-btn" onclick="demoVis('display')">display: none en B</button>
+    <button class="demo-btn" onclick="demoVis('visibility')">visibility: hidden en B</button>
+    <button class="demo-btn active-green" onclick="demoVis('visible')">Restaurar</button>
+  </div>
+</div>
+
+<div class="callout danger">
+  <span class="callout-icon">🔥</span>
+  <div class="callout-body">
+    <div class="callout-title">¡Esto sale en examen!</div>
+    <div class="callout-text"><code>display: none</code> → elimina el espacio, el resto se mueve. <code>visibility: hidden</code> → el elemento es invisible pero <strong>el hueco queda</strong>.</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>display vs visibility — JavaScript</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">/* Oculta y DEJA el hueco (invisible pero ocupa espacio) */
+element.style.visibility = 'hidden';
+element.style.visibility = 'visible';  /* Restaurar */
+
+/* Oculta y NO deja hueco (el resto se expande) */
+element.style.display = 'none';
+element.style.display = 'block';       /* Restaurar */
+
+/* En CSS directamente */
+.oculto-con-hueco  { visibility: hidden; }
+.oculto-sin-hueco  { display: none; }</pre>
+</div>
+
+<h3 id="s-visibility">Display: block, inline, inline-block</h3>
+
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — Tipos de display <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:16px;">
+    <div style="background:var(--bg2); border:2px dashed var(--border); border-radius:8px; padding:12px; display:flex; flex-direction:column; gap:8px;" id="displayDemo">
+      <div style="background:var(--accent); color:#fff; padding:8px; border-radius:5px; width:100%; font-family:var(--mono); font-size:11px; font-weight:700; text-align:center;">block → ocupa todo el ancho</div>
+      <div style="display:flex; gap:4px; flex-wrap:wrap;">
+        <span style="background:var(--green); color:#fff; padding:6px 12px; border-radius:5px; font-family:var(--mono); font-size:11px; font-weight:700;">inline</span>
+        <span style="background:var(--green); color:#fff; padding:6px 12px; border-radius:5px; font-family:var(--mono); font-size:11px; font-weight:700;">inline</span>
+        <span style="background:var(--green); color:#fff; padding:6px 12px; border-radius:5px; font-family:var(--mono); font-size:11px; font-weight:700;">inline → solo su contenido</span>
+      </div>
+      <div style="display:flex; gap:4px; flex-wrap:wrap; align-items:center;">
+        <div style="background:var(--yellow); color:#222; padding:6px 12px; border-radius:5px; font-family:var(--mono); font-size:11px; font-weight:700; width:110px; height:50px; display:flex; align-items:center; justify-content:center; text-align:center;">inline-block<br>w+h fijos</div>
+        <div style="background:var(--yellow); color:#222; padding:6px 12px; border-radius:5px; font-family:var(--mono); font-size:11px; font-weight:700; width:110px; height:50px; display:flex; align-items:center; justify-content:center; text-align:center;">inline-block<br>en línea</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="prop-table">
+<tr><th>Valor</th><th>width/height</th><th>Línea nueva</th><th>Uso típico</th></tr>
+<tr><td>block</td><td>✅ Sí</td><td>✅ Sí</td><td>div, p, h1-h6, section…</td></tr>
+<tr><td>inline</td><td>❌ No</td><td>❌ No</td><td>span, a, em, strong…</td></tr>
+<tr><td>inline-block</td><td>✅ Sí</td><td>❌ No</td><td>Botones, menús horizontales</td></tr>
+<tr><td>none</td><td>—</td><td>—</td><td>Ocultar sin hueco</td></tr>
+</table>
+
+<h3 id="s-zindex">z-index — Apilamiento</h3>
+<p><code>z-index</code> controla cuál elemento queda encima cuando se solapan. Solo funciona en elementos <strong>posicionados</strong> (no static). Mayor valor = más arriba.</p>
+
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — z-index <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:20px;">
+    <div class="z-demo" id="zDemo">
+      <div class="z-box z1" id="zb1" onclick="bumpZ(1)">z-index:1<br>click↑</div>
+      <div class="z-box z2" id="zb2" onclick="bumpZ(2)">z-index:2<br>click↑</div>
+      <div class="z-box z3" id="zb3" onclick="bumpZ(3)">z-index:3<br>click↑</div>
+    </div>
+    <p class="z-info" id="zInfo">Pulsa cualquier caja para subirla encima de las demás</p>
+  </div>
+  <div class="demo-controls">
+    <button class="demo-btn" onclick="resetZ()">Reset z-index</button>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>z-index</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">/* z-index solo funciona en elementos posicionados */
+.capa-inferior {
+  position: absolute;
+  z-index: 1;
+}
+.capa-superior {
+  position: absolute;
+  z-index: 10;   /* Aparece encima */
+}
+.menu-fijo {
+  position: fixed;
+  z-index: 9999; /* Siempre encima de todo */
+}</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 4: TIPOGRAFÍA Y TEXTO
+     ==================================================== -->
+<div class="section" id="s-text">
+<h2>4. Tipografía y Texto <span class="tag">UD5.1</span></h2>
+
+<h3 id="s-font">Propiedades de fuente</h3>
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Valores principales</th><th>Descripción</th></tr>
+<tr><td>color</td><td>#hex | rgb() | nombre</td><td>Color de la letra. Se hereda</td></tr>
+<tr><td>font-family</td><td>Arial, serif, sans-serif…</td><td>Tipo de letra. Lista de alternativas</td></tr>
+<tr><td>font-size</td><td>px | em | % | xx-small…xx-large</td><td>Tamaño. Recomendado: em o %</td></tr>
+<tr><td>font-weight</td><td>normal | bold | 100–900</td><td>Grosor. normal=400, bold=700</td></tr>
+<tr><td>font-style</td><td>normal | italic | oblique</td><td>Cursiva</td></tr>
+</table>
+
+<!-- DEMO TIPOGRAFÍA -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — Propiedades de fuente <span>LIVE</span></div>
+  <div class="demo-area" style="flex-direction:column; gap:12px;">
+    <div id="fontSample" style="font-size:28px; color:var(--text); transition:all 0.3s; text-align:center; font-family:sans-serif;">
+      Texto de ejemplo
+    </div>
+  </div>
+  <div class="demo-controls">
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">font-weight:</span>
+    <button class="demo-btn" onclick="setFontProp('fontWeight','normal')">normal</button>
+    <button class="demo-btn" onclick="setFontProp('fontWeight','bold')">bold</button>
+    <button class="demo-btn" onclick="setFontProp('fontWeight','900')">900</button>
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">font-style:</span>
+    <button class="demo-btn" onclick="setFontProp('fontStyle','normal')">normal</button>
+    <button class="demo-btn" onclick="setFontProp('fontStyle','italic')">italic</button>
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">font-size:</span>
+    <button class="demo-btn" onclick="setFontProp('fontSize','14px')">14px</button>
+    <button class="demo-btn" onclick="setFontProp('fontSize','24px')">24px</button>
+    <button class="demo-btn" onclick="setFontProp('fontSize','40px')">40px</button>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>Tipografía — propiedades clave</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">body {
+  color: #777;
+  font-family: Arial, Helvetica, sans-serif;  /* Lista de alternativas */
+  font-size: 1em;           /* Recomendado: em o % */
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: bold;        /* o font-weight: 700 */
+  font-style: italic;
+}
+
+/* Familias genéricas */
+/* serif      → Times New Roman   */
+/* sans-serif → Arial             */
+/* cursive    → Comic Sans        */
+/* monospace  → Courier New       */</pre>
+</div>
+
+<h3 id="s-textp">Propiedades de texto</h3>
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Valores</th><th>Descripción</th></tr>
+<tr><td>text-align</td><td>left | right | center | justify</td><td>Alineación horizontal del texto</td></tr>
+<tr><td>line-height</td><td>normal | número | px | %</td><td>Interlineado. Recomendado: número sin unidad</td></tr>
+<tr><td>text-decoration</td><td>none | underline | overline | line-through</td><td>Decoraciones: subrayado, tachado…</td></tr>
+</table>
+
+<!-- DEMO TEXT-ALIGN -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — text-align + line-height <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:16px;">
+    <div class="text-demo-area" id="textAlignDemo">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud.
+    </div>
+  </div>
+  <div class="demo-controls">
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);">text-align:</span>
+    <button class="demo-btn active" onclick="setTextProp('textAlign','left')">left</button>
+    <button class="demo-btn" onclick="setTextProp('textAlign','center')">center</button>
+    <button class="demo-btn" onclick="setTextProp('textAlign','right')">right</button>
+    <button class="demo-btn" onclick="setTextProp('textAlign','justify')">justify</button>
+    <span style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-left:12px;">line-height:</span>
+    <button class="demo-btn" onclick="setTextProp('lineHeight','1')">1</button>
+    <button class="demo-btn active" onclick="setTextProp('lineHeight','1.6')">1.6</button>
+    <button class="demo-btn" onclick="setTextProp('lineHeight','2.5')">2.5</button>
+  </div>
+</div>
+
+<h3 id="s-textx">Más propiedades de texto</h3>
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Valores</th><th>Descripción</th></tr>
+<tr><td>text-transform</td><td>none | capitalize | uppercase | lowercase</td><td>Transforma el texto (MAYÚSCULAS, minúsculas, Cada Palabra)</td></tr>
+<tr><td>vertical-align</td><td>baseline | top | middle | bottom | sub | super</td><td>Alineación vertical en línea. Muy usado para imágenes</td></tr>
+<tr><td>text-indent</td><td>px | em | %</td><td>Tabulación de la primera línea</td></tr>
+<tr><td>letter-spacing</td><td>normal | px | em</td><td>Espacio entre letras</td></tr>
+<tr><td>word-spacing</td><td>normal | px | em</td><td>Espacio entre palabras</td></tr>
+</table>
+
+<!-- DEMO TEXT-TRANSFORM -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — text-transform <span>LIVE</span></div>
+  <div class="demo-area" style="flex-direction:column; gap:10px;">
+    <div id="ttSample" style="font-size:20px; color:var(--text); transition:all 0.3s; text-align:center;">
+      hola mundo desde css
+    </div>
+  </div>
+  <div class="demo-controls">
+    <button class="demo-btn active" onclick="setTT('none')">none (original)</button>
+    <button class="demo-btn" onclick="setTT('capitalize')">capitalize</button>
+    <button class="demo-btn" onclick="setTT('uppercase')">uppercase</button>
+    <button class="demo-btn" onclick="setTT('lowercase')">lowercase</button>
+  </div>
+</div>
+
+<h3 id="s-whitespace">white-space y pseudo-elementos</h3>
+<table class="prop-table">
+<tr><th>Valor white-space</th><th>Respeta espacios</th><th>Respeta saltos línea</th><th>Ajusta líneas</th></tr>
+<tr><td>normal</td><td>❌</td><td>❌</td><td>✅</td></tr>
+<tr><td>pre</td><td>✅</td><td>✅</td><td>❌</td></tr>
+<tr><td>nowrap</td><td>❌</td><td>❌</td><td>❌</td></tr>
+<tr><td>pre-wrap</td><td>✅</td><td>✅</td><td>✅</td></tr>
+<tr><td>pre-line</td><td>❌</td><td>✅</td><td>✅</td></tr>
+</table>
+
+<div class="cb">
+  <div class="ch"><span>Pseudo-elementos :first-line y :first-letter</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">/* Estilo solo a la primera línea */
+p:first-line {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Letra capital */
+p:first-letter {
+  font-size: 2.5em;
+  font-weight: bold;
+  line-height: 0.9em;
+  float: left;         /* Para letra capital clásica */
+  margin-right: 4px;
+}
+
+/* Texto que no hace wrap */
+.nowrap {
+  white-space: nowrap;
+}
+
+/* text-indent — tabular primera línea */
+p {
+  text-indent: 2em;
+}</pre>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>letter-spacing + word-spacing</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">h1 { letter-spacing: .2em; }   /* Espacio entre letras */
+p  { word-spacing: .5em; }     /* Espacio entre palabras */
+
+/* text-decoration */
+a           { text-decoration: underline; }   /* Subrayado */
+del, s      { text-decoration: line-through; } /* Tachado */
+.limpio     { text-decoration: none; }         /* Quitar subrayado de links */</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 5: FLEXBOX
+     ==================================================== -->
+<div class="section" id="s-flex">
+<h2>5. Flexbox <span class="tag">UD5.2</span></h2>
+
+<p>Flexbox es un sistema de diseño que permite distribuir y alinear elementos de forma flexible. Se activa con <code>display: flex</code> en el <strong>contenedor padre</strong>.</p>
+
+<h3 id="s-flex-conceptos">Conceptos básicos</h3>
+<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px; margin:12px 0;">
+  <div style="background:rgba(91,143,249,0.1); border:1px solid rgba(91,143,249,0.3); border-radius:10px; padding:14px;">
+    <div style="font-weight:700; color:var(--accent); margin-bottom:4px;">📦 Contenedor flex</div>
+    <div style="font-size:13px; color:var(--text2);">El elemento padre con <code>display: flex</code>. Las propiedades de alineación se aplican aquí.</div>
+  </div>
+  <div style="background:rgba(52,211,153,0.1); border:1px solid rgba(52,211,153,0.3); border-radius:10px; padding:14px;">
+    <div style="font-weight:700; color:var(--green); margin-bottom:4px;">→ Eje principal</div>
+    <div style="font-size:13px; color:var(--text2);">Por defecto horizontal (fila). Lo controla <code>flex-direction</code>.</div>
+  </div>
+  <div style="background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.3); border-radius:10px; padding:14px;">
+    <div style="font-weight:700; color:var(--purple); margin-bottom:4px;">↓ Eje secundario</div>
+    <div style="font-size:13px; color:var(--text2);">Perpendicular al principal. Vertical por defecto.</div>
+  </div>
+  <div style="background:rgba(255,107,107,0.1); border:1px solid rgba(255,107,107,0.3); border-radius:10px; padding:14px;">
+    <div style="font-weight:700; color:var(--red); margin-bottom:4px;">🔲 Ítem flex</div>
+    <div style="font-size:13px; color:var(--text2);">Cada hijo directo del contenedor. Las propiedades de ítem van aquí.</div>
+  </div>
+</div>
+
+<!-- PLAYGROUND FLEXBOX -->
+<div class="flex-playground">
+  <div class="flex-playground-header">
+    🕹️ Playground Flexbox — Modifica las propiedades en tiempo real
+  </div>
+  <div class="flex-container-demo" id="flexPlayground">
+    <div class="flex-item-demo fi1" style="min-width:50px; padding:0 8px;">1</div>
+    <div class="flex-item-demo fi2" style="min-width:50px; padding:0 8px;">2</div>
+    <div class="flex-item-demo fi3" style="min-width:50px; padding:0 8px;">3</div>
+    <div class="flex-item-demo fi4" style="min-width:50px; padding:0 8px;">4</div>
+    <div class="flex-item-demo fi5" style="min-width:50px; padding:0 8px;">5</div>
+  </div>
+  <div class="flex-controls">
+    <div class="ctrl-group">
+      <label>flex-direction</label>
+      <select onchange="setFlexProp('flexDirection', this.value)">
+        <option value="row">row (defecto)</option>
+        <option value="row-reverse">row-reverse</option>
+        <option value="column">column</option>
+        <option value="column-reverse">column-reverse</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <label>flex-wrap</label>
+      <select onchange="setFlexProp('flexWrap', this.value)">
+        <option value="nowrap">nowrap (defecto)</option>
+        <option value="wrap">wrap</option>
+        <option value="wrap-reverse">wrap-reverse</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <label>justify-content</label>
+      <select onchange="setFlexProp('justifyContent', this.value)">
+        <option value="flex-start">flex-start (defecto)</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="space-between">space-between</option>
+        <option value="space-around">space-around</option>
+        <option value="space-evenly">space-evenly</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <label>align-items</label>
+      <select onchange="setFlexProp('alignItems', this.value)">
+        <option value="stretch">stretch (defecto)</option>
+        <option value="flex-start">flex-start</option>
+        <option value="flex-end">flex-end</option>
+        <option value="center">center</option>
+        <option value="baseline">baseline</option>
+      </select>
+    </div>
+    <div class="ctrl-group">
+      <label>gap</label>
+      <select onchange="setFlexProp('gap', this.value)">
+        <option value="0px">0px</option>
+        <option value="8px" selected>8px</option>
+        <option value="16px">16px</option>
+        <option value="24px">24px</option>
+      </select>
+    </div>
+  </div>
+  <div class="flex-output" id="flexOutput">
+    display: flex; flex-direction: row; justify-content: flex-start; align-items: stretch; gap: 8px;
+  </div>
+</div>
+
+<h3 id="s-flex-direction">flex-direction · flex-wrap · flex-flow</h3>
+
+<div class="cheat-grid">
+  <div class="cheat-item">
+    <div class="cheat-item-header">flex-direction: row (defecto)</div>
+    <div class="cheat-item-demo" style="justify-content:flex-start;">
+      <div class="cheat-mini" style="width:40px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:40px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:40px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">flex-direction: row-reverse</div>
+    <div class="cheat-item-demo" style="justify-content:flex-start; flex-direction:row-reverse;">
+      <div class="cheat-mini" style="width:40px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:40px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:40px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">flex-direction: column</div>
+    <div class="cheat-item-demo" style="flex-direction:column; height:90px; gap:4px;">
+      <div class="cheat-mini" style="width:50px; height:20px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:50px; height:20px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:50px; height:20px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">flex-wrap: wrap</div>
+    <div class="cheat-item-demo" style="flex-wrap:wrap; gap:4px;">
+      <div class="cheat-mini" style="width:45px; height:24px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:45px; height:24px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:45px; height:24px; background:var(--yellow); color:#222;">3</div>
+      <div class="cheat-mini" style="width:45px; height:24px; background:var(--red);">4</div>
+      <div class="cheat-mini" style="width:45px; height:24px; background:var(--purple);">5</div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>flex-direction · flex-wrap · flex-flow</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.container {
+  display: flex;
+  flex-direction: row;      /* row | row-reverse | column | column-reverse */
+  flex-wrap: wrap;          /* nowrap | wrap | wrap-reverse */
+  /* Atajo: */
+  flex-flow: row wrap;      /* = flex-direction + flex-wrap */
+}</pre>
+</div>
+
+<h3 id="s-flex-align">Alineación: justify-content · align-items · align-content</h3>
+
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Actúa en</th><th>Valores principales</th></tr>
+<tr><td>justify-content</td><td>Eje principal (→)</td><td>flex-start · flex-end · center · space-between · space-around · space-evenly</td></tr>
+<tr><td>align-items</td><td>Eje secundario (↓)</td><td>stretch · flex-start · flex-end · center · baseline</td></tr>
+<tr><td>align-content</td><td>Eje secundario (multilínea)</td><td>flex-start · flex-end · center · space-between · space-around · stretch</td></tr>
+</table>
+
+<!-- CHEAT VISUAL justify-content -->
+<div class="cheat-grid">
+  <div class="cheat-item">
+    <div class="cheat-item-header">justify-content: flex-start</div>
+    <div class="cheat-item-demo" style="justify-content:flex-start;">
+      <div class="cheat-mini" style="width:35px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">justify-content: center</div>
+    <div class="cheat-item-demo" style="justify-content:center;">
+      <div class="cheat-mini" style="width:35px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">justify-content: space-between</div>
+    <div class="cheat-item-demo" style="justify-content:space-between;">
+      <div class="cheat-mini" style="width:35px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">justify-content: space-evenly</div>
+    <div class="cheat-item-demo" style="justify-content:space-evenly;">
+      <div class="cheat-mini" style="width:35px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">align-items: flex-start</div>
+    <div class="cheat-item-demo" style="align-items:flex-start; height:70px;">
+      <div class="cheat-mini" style="width:35px; height:20px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; height:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; height:50px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">align-items: center</div>
+    <div class="cheat-item-demo" style="align-items:center; height:70px;">
+      <div class="cheat-mini" style="width:35px; height:20px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; height:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; height:50px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">align-items: flex-end</div>
+    <div class="cheat-item-demo" style="align-items:flex-end; height:70px;">
+      <div class="cheat-mini" style="width:35px; height:20px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; height:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; height:50px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+  <div class="cheat-item">
+    <div class="cheat-item-header">align-items: stretch (defecto)</div>
+    <div class="cheat-item-demo" style="align-items:stretch; height:70px;">
+      <div class="cheat-mini" style="width:35px; background:var(--accent);">1</div>
+      <div class="cheat-mini" style="width:35px; background:var(--green);">2</div>
+      <div class="cheat-mini" style="width:35px; background:var(--yellow); color:#222;">3</div>
+    </div>
+  </div>
+</div>
+
+<h3 id="s-flex-self">align-self y order</h3>
+
+<div class="cb">
+  <div class="ch"><span>align-self · order</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.item-especial {
+  align-self: flex-end;   /* Sobreescribe align-items solo para este ítem */
+  order: -1;              /* Aparece ANTES visualmente (sin cambiar el DOM) */
+}
+
+.item-ultimo {
+  order: 2;               /* Aparece después de los order: 0 y order: 1 */
+}
+
+/* Por defecto todos los ítems tienen order: 0 */</pre>
+</div>
+
+<h3 id="s-flex-grow">flex-grow · flex-shrink · flex-basis · flex (atajo)</h3>
+
+<table class="prop-table">
+<tr><th>Propiedad</th><th>Defecto</th><th>Descripción</th></tr>
+<tr><td>flex-basis</td><td>auto</td><td>Tamaño base del ítem antes de repartir espacio</td></tr>
+<tr><td>flex-grow</td><td>0</td><td>Factor de crecimiento. 0=no crece. 1=reparte espacio sobrante</td></tr>
+<tr><td>flex-shrink</td><td>1</td><td>Factor de contracción. 0=no se encoge nunca</td></tr>
+<tr><td>flex</td><td>0 1 auto</td><td>Atajo: grow shrink basis. flex: 1 = 1 1 0</td></tr>
+</table>
+
+<!-- DEMO FLEX-GROW -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — flex-grow <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:16px;">
+    <div class="grow-demo" id="growDemo">
+      <div class="grow-item" style="flex-grow:0; background:var(--accent);" id="gItem1">grow:0</div>
+      <div class="grow-item" style="flex-grow:1; background:var(--green);" id="gItem2">grow:1</div>
+      <div class="grow-item" style="flex-grow:1; background:var(--yellow); color:#222;" id="gItem3">grow:1</div>
+    </div>
+    <p style="margin-top:8px; font-size:11px; font-family:var(--mono); color:var(--text3);" id="growExplain">Elemento 1 no crece. Los otros 2 reparten el espacio sobrante a partes iguales.</p>
+  </div>
+  <div class="demo-controls">
+    <button class="demo-btn active" onclick="setGrow(0,1,1,'grow:0 | grow:1 | grow:1 — Los 2 últimos reparten el espacio')">0 / 1 / 1</button>
+    <button class="demo-btn" onclick="setGrow(1,2,1,'grow:1 | grow:2 | grow:1 — El elemento 2 crece el DOBLE')">1 / 2 / 1</button>
+    <button class="demo-btn" onclick="setGrow(1,1,1,'grow:1 | grow:1 | grow:1 — Los 3 reparten igual')">1 / 1 / 1</button>
+    <button class="demo-btn" onclick="setGrow(0,0,0,'grow:0 — Nadie crece, tamaño natural')">0 / 0 / 0</button>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>flex-grow · flex-shrink · flex-basis · flex (atajo)</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.item {
+  flex-grow: 1;         /* Crece para llenar el espacio sobrante */
+}
+.item-doble {
+  flex-grow: 2;         /* Crece el DOBLE que los demás */
+}
+.item-fijo {
+  flex-shrink: 0;       /* Nunca se encoge */
+  flex-basis: 200px;    /* Tamaño base 200px */
+}
+
+/* Atajo flex: grow shrink basis */
+.item { flex: 1; }            /* = flex: 1 1 0 */
+.item { flex: 1 1 200px; }    /* Crece, se encoge, base 200px */
+.item { flex: 0 0 auto; }     /* Tamaño natural, no crece ni encoge */</pre>
+</div>
+
+<div class="callout tip">
+  <span class="callout-icon">💡</span>
+  <div class="callout-body">
+    <div class="callout-title">gap — sin margin en hijos</div>
+    <div class="callout-text"><code>gap</code> (o <code>row-gap</code> / <code>column-gap</code>) establece el hueco entre ítems directamente desde el contenedor. Más limpio que usar <code>margin</code> en los hijos.</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>gap · row-gap · column-gap</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  /* Equivalente a:
+     row-gap: 4px;
+     column-gap: 8px; */
+}
+
+/* Mismo gap en ambos ejes */
+gap: 16px;</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN 6: TRANSICIONES
+     ==================================================== -->
+<div class="section" id="s-transition">
+<h2>6. Transiciones CSS <span class="tag">UD5.2</span></h2>
+
+<p>Las transiciones CSS permiten que los cambios de propiedades ocurran de forma <strong>gradual y suave</strong> en lugar de forma instantánea. Se combinan con pseudoclases como <code>:hover</code>.</p>
+
+<div class="callout info">
+  <span class="callout-icon">ℹ️</span>
+  <div class="callout-body">
+    <div class="callout-title">Sintaxis básica</div>
+    <div class="callout-text"><code>transition: propiedad duración;</code> — Por ejemplo: <code>transition: background 2s;</code> o <code>transition: all 0.5s;</code></div>
+  </div>
+</div>
+
+<!-- DEMO TRANSICIONES -->
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — Pasa el ratón por encima de cada caja <span>LIVE</span></div>
+  <div class="demo-area" style="flex-direction:column; gap:20px;">
+    <div class="transition-demo">
+      <div style="text-align:center;">
+        <div class="trans-box trans-color">transition:<br>bg 2s</div>
+        <div style="font-size:10px; color:var(--text3); font-family:var(--mono); margin-top:6px;">color lento</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="trans-box trans-size" style="width:80px; height:80px;">transition:<br>w 4s h 1s</div>
+        <div style="font-size:10px; color:var(--text3); font-family:var(--mono); margin-top:6px;">tamaño por prop</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="trans-box trans-all">transition:<br>all 0.5s</div>
+        <div style="font-size:10px; color:var(--text3); font-family:var(--mono); margin-top:6px;">todo + rotación</div>
+      </div>
+      <div style="text-align:center;">
+        <div class="trans-box trans-none" style="cursor:pointer;">sin<br>transition</div>
+        <div style="font-size:10px; color:var(--text3); font-family:var(--mono); margin-top:6px;">cambio brusco</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3 id="s-trans-entrada">Transición de entrada y salida</h3>
+<p>Se controla <strong>dónde se coloca</strong> la propiedad <code>transition</code>:</p>
+
+<div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:12px; margin:12px 0;">
+  <div style="background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px;">
+    <div style="font-family:var(--mono); font-size:11px; color:var(--accent); margin-bottom:6px;">transition en A (elemento)</div>
+    <div style="font-size:13px; color:var(--text2);">Se ejecuta <strong>tanto al entrar como al salir</strong> del hover.</div>
+  </div>
+  <div style="background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px;">
+    <div style="font-family:var(--mono); font-size:11px; color:var(--green); margin-bottom:6px;">transition en B (:hover)</div>
+    <div style="font-size:13px; color:var(--text2);">Se ejecuta <strong>solo al entrar</strong> al hover. Al salir el cambio es brusco.</div>
+  </div>
+  <div style="background:var(--bg2); border:1px solid var(--border); border-radius:10px; padding:14px;">
+    <div style="font-family:var(--mono); font-size:11px; color:var(--yellow); margin-bottom:6px;">transition en A y en B</div>
+    <div style="font-size:13px; color:var(--text2);">Se ejecuta en ambos sentidos, pero la duración total se <strong>suma</strong> (2s + 2s = 4s).</div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>Transiciones — casos de uso</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">/* Caso 1: transición en A → entra Y sale con transición */
+.element {
+  background: red;
+  transition: 2s;   /* ← En A */
+}
+.element:hover {
+  background: blue;
+}
+
+/* Caso 2: transición en B → solo entra con transición */
+.element {
+  background: red;
+}
+.element:hover {
+  background: blue;
+  transition: 2s;   /* ← En B */
+}
+
+/* Caso 3: transición solo en hover */
+.element { background: red; }
+.element:hover { background: blue; }</pre>
+</div>
+
+<h3 id="s-trans-prop">Transiciones por propiedad</h3>
+
+<div class="cb">
+  <div class="ch"><span>Diferentes duraciones por propiedad</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.element {
+  width: 200px;
+  height: 200px;
+  background: grey;
+  transition:
+    width 4s,         /* El ancho tarda 4 segundos */
+    background 1s;    /* El color tarda 1 segundo */
+}
+.element:hover {
+  width: 400px;
+  background: deeppink;
+}
+
+/* También se puede: */
+transition: all 0.5s;   /* Todas las propiedades a la vez */</pre>
+</div>
+
+<h3 id="s-flex-anim">Flex animado con hover</h3>
+<p>Las propiedades <code>flex-grow</code>, <code>flex-shrink</code> y <code>flex</code> son <strong>animables</strong>. Combinadas con <code>transition</code> crean efectos muy llamativos con poco código:</p>
+
+<div class="demo-box">
+  <div class="demo-label">🎮 Demo — Flex animado, pasa el ratón por las barras <span>LIVE</span></div>
+  <div class="demo-area" style="display:block; padding:16px;">
+    <div class="flex-anim-demo">
+      <div class="flex-anim-item">1</div>
+      <div class="flex-anim-item">2</div>
+      <div class="flex-anim-item">3</div>
+      <div class="flex-anim-item">4</div>
+      <div class="flex-anim-item">5</div>
+      <div class="flex-anim-item">6</div>
+    </div>
+  </div>
+</div>
+
+<div class="cb">
+  <div class="ch"><span>Flex animado — hover effect</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+  <pre class="code">.container {
+  display: flex;
+  gap: 5px;
+  height: 150px;
+}
+
+.item {
+  flex: 0 1 15%;           /* Tamaño base pequeño */
+  background: black;
+  transition: all 0.5s;    /* Anima el cambio de flex */
+}
+
+.item:hover {
+  flex: 1 1 10%;           /* Se expande al hacer hover */
+  background: indigo;
+}</pre>
+</div>
+</div>
+
+<!-- ====================================================
+     SECCIÓN PRÁCTICAS
+     ==================================================== -->
+<div class="section" id="s-practicas">
+<h2>Prácticas <span class="tag">UD5.1 + UD5.1B</span></h2>
+
+<div class="practica-card">
+  <h3>UD5.1 Práctica — Float + Display + Position</h3>
+  <p>Recopila float, overflow, clear, visibility, display, position fixed y @media queries:</p>
+  <ol>
+    <li><strong>Barra de menú fija</strong> — <code>position: fixed; top: 0;</code> El menú no se mueve al hacer scroll. Al pasar el cursor, subrayado azul y fondo naranja.</li>
+    <li><strong>Capa con visibility</strong> — Desaparece con <code>visibility: hidden</code>. <strong>Deja el hueco</strong>. Son capas con float. JS: <code>element.style.visibility = 'hidden'</code></li>
+    <li><strong>Capa con display</strong> — Desaparece con <code>display: none</code>. <strong>NO deja hueco</strong>, la caja de la derecha se expande. JS: <code>element.style.display = 'none'</code></li>
+    <li><strong>Capa estilo menú pero sin fixed</strong> — Desaparece al pulsar, pero al hacer scroll se desplaza (no es fixed).</li>
+    <li><strong>Responsive con @media</strong></li>
+  </ol>
+
+  <div class="cb" style="margin-top:14px;">
+    <div class="ch"><span>Código base de la práctica UD5.1</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+    <pre class="code">/* Menú fijo */
+nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; }
+nav a:hover { text-decoration: underline; color: blue; background: orange; }
+
+/* Capa con float + visibility */
+.imageLeft  { float: left; }
+.imageRight { float: right; }
+.clear      { clear: both; }
+
+/* Botones del enunciado */
+/* Visibility: deja hueco */
+onclick="document.getElementById('imageLeft').style.visibility = 'hidden'"
+
+/* Display: NO deja hueco */
+onclick="document.getElementById('imageToHide').style.display = 'none'"
+
+/* Overflow en contenedor */
+.caja-scroll { overflow-y: scroll; overflow-x: hidden; height: 150px; }</pre>
+  </div>
+</div>
+
+<div class="practica-card">
+  <h3>UD5.1B Práctica Extra — Float</h3>
+  <p>Maquetación completa con float. La web de la empresa puede ser lo que quieras:</p>
+  <ol>
+    <li><strong>Menú superior fijo</strong> — Siempre en la parte superior aunque uses el scroll.</li>
+    <li><strong>Título empresa</strong> — Debajo se ve el fondo de la página que <strong>NO se desplaza</strong> (background-attachment: fixed).</li>
+    <li><strong>Capa cookies</strong> — Aparece a mitad de página. Desaparece al pulsar el botón (como la semana pasada).</li>
+    <li><strong>Zona central</strong> — Dos capas de información. La primera: imagen a la derecha. La segunda: imagen a la izquierda.</li>
+    <li><strong>Menú lateral flotante a la derecha</strong> — Lista con imágenes clickables.</li>
+    <li><strong>Pie de página</strong> — Con información de la empresa.</li>
+    <li>Los enlaces se subrayan al pasar el cursor (<code>a:hover { text-decoration: underline; }</code>).</li>
+    <li><strong>Responsive</strong> — En móvil, el menú lateral (capa 5) pasa a verse horizontalmente debajo de la capa 4.</li>
+  </ol>
+
+  <div class="cb" style="margin-top:14px;">
+    <div class="ch"><span>Estructura base UD5.1B</span><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+    <pre class="code">/* Menú fijo */
+nav.menu { position: fixed; top: 0; width: 100%; z-index: 999; }
+
+/* Fondo que no se desplaza */
+.header-empresa { background-attachment: fixed; }
+
+/* Capa cookies */
+.cookies { position: fixed; bottom: 0; left: 0; right: 0; }
+.cookies button { } /* Pulsar → element.style.display = 'none' */
+
+/* Zona central */
+.zona-central { overflow: auto; }  /* Limpia los floats */
+.col-info-1 img { float: right; margin-left: 12px; }
+.col-info-2 img { float: left;  margin-right: 12px; }
+
+/* Menú lateral derecha */
+.menu-lateral { float: right; width: 200px; }
+.menu-lateral img { display: block; width: 100%; }
+
+/* Footer */
+footer { clear: both; }
+
+/* Links */
+a:hover { text-decoration: underline; }
+
+/* Responsive — móvil */
+@media (max-width: 768px) {
+  .menu-lateral {
+    float: none;         /* Deja de flotar */
+    display: flex;       /* Pasa a horizontal */
+    width: 100%;
+  }
+}</pre>
+  </div>
+</div>
+</div>
+
+<!-- ====================================================
+     MATERIAL DESCARGABLE
+     ==================================================== -->
+<div class="section" id="s-material">
+<h2>Material descargable</h2>
+<div class="dl-grid">
+  <a href="CSS_extra/UD_5.1 (1).pdf" class="dl-link" target="_blank">
+    <span class="dl-icon">📄</span>
+    <div class="dl-info">
+      <div class="dl-name">UD5.1 — CSS Avanzado</div>
+      <div class="dl-type">PDF · Posicionamiento + Tipografía</div>
+    </div>
+  </a>
+  <a href="CSS_extra/UD_5.2.pdf" class="dl-link" target="_blank">
+    <span class="dl-icon">📄</span>
+    <div class="dl-info">
+      <div class="dl-name">UD5.2 — Flexbox</div>
+      <div class="dl-type">PDF · Flexbox + Transiciones</div>
+    </div>
+  </a>
+  <a href="CSS_extra/UD_5.1_practica.pdf" class="dl-link" target="_blank">
+    <span class="dl-icon">📋</span>
+    <div class="dl-info">
+      <div class="dl-name">UD5.1 Práctica</div>
+      <div class="dl-type">PDF · Float + Display + Position</div>
+    </div>
+  </a>
+  <a href="CSS_extra/UD_5.1B_practica.pdf" class="dl-link" target="_blank">
+    <span class="dl-icon">📋</span>
+    <div class="dl-info">
+      <div class="dl-name">UD5.1B Práctica Extra Float</div>
+      <div class="dl-type">PDF · Maquetación completa</div>
+    </div>
+  </a>
+  <a href="CSS_extra/esquema flexbox.pdf" class="dl-link" target="_blank">
+    <span class="dl-icon">🗺️</span>
+    <div class="dl-info">
+      <div class="dl-name">Esquema Flexbox</div>
+      <div class="dl-type">PDF · Resumen propiedades</div>
+    </div>
+  </a>
+</div>
+</div>
+
+</div><!-- .main -->
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
+
+<!-- ====================================================
+     SCRIPTS
+     ==================================================== -->
+<script>
+// ============================
+// BÚSQUEDA
+// ============================
+const searchIndex = [
+  {title:'position: static', label:'Posicionamiento', href:'#s-position-tipos'},
+  {title:'position: relative', label:'Posicionamiento', href:'#s-relative'},
+  {title:'position: absolute — ancestro posicionado', label:'Posicionamiento', href:'#s-absolute'},
+  {title:'position: fixed — fijo en ventana', label:'Posicionamiento', href:'#s-fixed'},
+  {title:'float: left / right', label:'Float', href:'#s-float'},
+  {title:'clear: both', label:'Float', href:'#s-float'},
+  {title:'overflow: hidden / scroll / auto', label:'Float/Overflow', href:'#s-overflow'},
+  {title:'display: block / inline / inline-block / none', label:'Display', href:'#s-display'},
+  {title:'visibility: hidden (deja hueco)', label:'Display/Visibility', href:'#s-visibility'},
+  {title:'z-index — apilamiento', label:'Display', href:'#s-zindex'},
+  {title:'color — color del texto', label:'Tipografía', href:'#s-font'},
+  {title:'font-family — tipo de letra', label:'Tipografía', href:'#s-font'},
+  {title:'font-size — tamaño', label:'Tipografía', href:'#s-font'},
+  {title:'font-weight — bold / normal / 700', label:'Tipografía', href:'#s-font'},
+  {title:'font-style — italic', label:'Tipografía', href:'#s-font'},
+  {title:'text-align — left / center / right / justify', label:'Texto', href:'#s-textp'},
+  {title:'line-height — interlineado', label:'Texto', href:'#s-textp'},
+  {title:'text-decoration — underline / line-through', label:'Texto', href:'#s-textp'},
+  {title:'text-transform — uppercase / lowercase / capitalize', label:'Texto', href:'#s-textx'},
+  {title:'vertical-align — middle / baseline', label:'Texto', href:'#s-textx'},
+  {title:'letter-spacing — espacio entre letras', label:'Texto', href:'#s-textx'},
+  {title:'word-spacing — espacio entre palabras', label:'Texto', href:'#s-textx'},
+  {title:'white-space — normal / pre / nowrap', label:'Texto', href:'#s-whitespace'},
+  {title:':first-line / :first-letter — pseudo-elementos', label:'Texto', href:'#s-whitespace'},
+  {title:'display: flex — activar flexbox', label:'Flexbox', href:'#s-flex-conceptos'},
+  {title:'flex-direction — row / column', label:'Flexbox', href:'#s-flex-direction'},
+  {title:'flex-wrap — wrap / nowrap', label:'Flexbox', href:'#s-flex-direction'},
+  {title:'flex-flow — atajo direction+wrap', label:'Flexbox', href:'#s-flex-direction'},
+  {title:'justify-content — eje principal', label:'Flexbox', href:'#s-flex-align'},
+  {title:'align-items — eje secundario', label:'Flexbox', href:'#s-flex-align'},
+  {title:'align-content — multilínea', label:'Flexbox', href:'#s-flex-align'},
+  {title:'align-self — ítem individual', label:'Flexbox', href:'#s-flex-self'},
+  {title:'order — orden visual sin cambiar DOM', label:'Flexbox', href:'#s-flex-self'},
+  {title:'flex-grow — factor de crecimiento', label:'Flexbox', href:'#s-flex-grow'},
+  {title:'flex-shrink — factor de contracción', label:'Flexbox', href:'#s-flex-grow'},
+  {title:'flex-basis — tamaño base', label:'Flexbox', href:'#s-flex-grow'},
+  {title:'flex: 1 — atajo grow shrink basis', label:'Flexbox', href:'#s-flex-grow'},
+  {title:'gap / row-gap / column-gap', label:'Flexbox', href:'#s-flex-grow'},
+  {title:'transition — animación suave', label:'Transiciones', href:'#s-transition'},
+  {title:'transition: all 0.5s', label:'Transiciones', href:'#s-transition'},
+  {title:'Transición entrada y salida — estado A/B', label:'Transiciones', href:'#s-trans-entrada'},
+  {title:'Transiciones por propiedad — comas', label:'Transiciones', href:'#s-trans-prop'},
+  {title:'Flex animado — hover con transition', label:'Transiciones', href:'#s-flex-anim'},
+  {title:'Práctica UD5.1 — float display position', label:'Prácticas', href:'#s-practicas'},
+  {title:'Práctica UD5.1B — maquetación float extra', label:'Prácticas', href:'#s-practicas'},
+];
+
+const buscar = document.getElementById('buscar');
+const results = document.getElementById('searchResults');
+
+buscar.addEventListener('input', () => {
+  const q = buscar.value.trim().toLowerCase();
+  if (!q) { results.style.display='none'; return; }
+  const hits = searchIndex.filter(i => i.title.toLowerCase().includes(q) || i.label.toLowerCase().includes(q)).slice(0,8);
+  if (!hits.length) { results.style.display='none'; return; }
+  results.innerHTML = hits.map(h => `
+    <div class="sr-item" onclick="goTo('${h.href}')">
+      <div class="sr-label">${h.label}</div>
+      <div class="sr-title">${h.title}</div>
+    </div>
+  `).join('');
+  results.style.display='block';
+});
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.search-wrap')) results.style.display='none';
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); buscar.focus(); }
+});
+
+function goTo(href) {
+  results.style.display='none';
+  buscar.value='';
+  const el = document.querySelector(href);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============================
+// COPIAR CÓDIGO
+// ============================
+function c(btn) {
+  const code = btn.closest('.cb').querySelector('.code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.style.color = 'var(--green)';
+    btn.style.borderColor = 'var(--green)';
+    setTimeout(() => { btn.textContent = orig; btn.style.color=''; btn.style.borderColor=''; }, 1500);
+  });
+}
+function copiarCodigo(btn) {
+  const pre = btn.closest('.cb').querySelector('pre.code');
+  if (!pre) return;
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    const t = btn.textContent; btn.textContent = '✓ Copiado'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = t; btn.style.color = ''; }, 1800);
+  });
+}
+function explicarCodigo(btn) {
+  const cb = btn.closest('.cb');
+  if (!cb) return;
+  const pre = cb.querySelector('pre.code');
+  if (!pre) return;
+  let expDiv = cb.querySelector('.exp');
+  if (!expDiv) { expDiv = document.createElement('div'); expDiv.className = 'exp'; cb.appendChild(expDiv); }
+  const code = pre.innerText || pre.textContent;
+  if (!code.trim()) return;
+  if (expDiv.classList.contains('show')) {
+    expDiv.classList.remove('show');
+    if (btn.dataset.origText) btn.textContent = btn.dataset.origText;
+    return;
+  }
+  btn.dataset.origText = btn.textContent;
+  btn.textContent = 'Ocultar';
+  const lines = code.split('\n');
+  let html = '<table>';
+  for (const line of lines) {
+    const t = line.trim();
+    const display = line.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (!t) { html += '<tr><td colspan="2" style="height:3px"></td></tr>'; continue; }
+    let expl = 'Ejecuta esta línea';
+    if (/^\/\//.test(t)) expl = 'Comentario CSS';
+    else if (/^\/\*/.test(t)) expl = 'Inicio comentario CSS';
+    else if (/^\*\//.test(t)) expl = 'Fin comentario CSS';
+    else if (/\{/.test(t) && /\}$/.test(t)) expl = 'Regla CSS completa';
+    else if (/\{/.test(t)) expl = 'Apertura de bloque CSS';
+    else if (/\}/.test(t)) expl = 'Cierre de bloque CSS';
+    else if (/^@media/.test(t)) expl = 'Media query: estilos condicionales';
+    else if (/^@keyframes/.test(t)) expl = 'Define animación CSS';
+    html += '<tr><td><code>' + display + '</code></td><td>' + expl + '</td></tr>';
+  }
+  html += '</table>';
+  expDiv.innerHTML = html;
+  expDiv.classList.add('show');
+}
+
+// ============================
+// TOC
+// ============================
+function toggleToc() {
+  const body = document.getElementById('tocBody');
+  const arrow = document.getElementById('tocArrow');
+  body.classList.toggle('collapsed');
+  arrow.textContent = body.classList.contains('collapsed') ? '▸' : '▾';
+}
+
+// ============================
+// BACK TO TOP
+// ============================
+const btt = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  btt.classList.toggle('visible', window.scrollY > 300);
+});
+
+// ============================
+// DEMO: POSITION
+// ============================
+function setPos(type) {
+  const box = document.getElementById('posBox');
+  const ref = document.getElementById('posRef');
+  const txt = document.getElementById('posText');
+  document.querySelectorAll('.demo-controls .demo-btn').forEach(b=>{
+    if(b.getAttribute('onclick')===`setPos('${type}')`) b.classList.add('active');
+    else if(b.getAttribute('onclick')?.startsWith('setPos')) b.classList.remove('active');
+  });
+
+  box.style.position = 'static';
+  box.style.top = 'auto';
+  box.style.left = 'auto';
+  box.style.right = 'auto';
+  box.style.bottom = 'auto';
+  box.style.background = 'var(--accent)';
+  ref.style.display = 'flex';
+
+  if(type==='static') {
+    txt.textContent = 'position: static — posición normal en el flujo';
+  } else if(type==='relative') {
+    box.style.position = 'relative';
+    box.style.top = '20px';
+    box.style.left = '30px';
+    txt.textContent = 'position: relative — desplazado pero el hueco original queda';
+  } else if(type==='absolute') {
+    box.style.position = 'absolute';
+    box.style.top = '10px';
+    box.style.right = '10px';
+    ref.style.display = 'none'; // Sale del flujo
+    txt.textContent = 'position: absolute — sale del flujo, referencia = contenedor posicionado';
+  } else if(type==='fixed') {
+    box.style.position = 'relative';
+    box.style.top = '-10px';
+    box.style.background = 'var(--red)';
+    txt.textContent = 'position: fixed — en la práctica queda fijo en la ventana (simulado aquí)';
+  }
+}
+
+// ============================
+// DEMO: FLOAT
+// ============================
+let currentFloat = 'left', currentClear = 'none';
+function setFloat(v) {
+  currentFloat = v;
+  const img = document.getElementById('floatImg');
+  img.style.float = v;
+  img.textContent = `IMG\nfloat:${v}`;
+  img.childNodes[0] && (img.innerHTML = `IMG<br>float:${v}`);
+  updateFloatBtns();
+}
+function setClear(v) {
+  currentClear = v;
+  updateFloatBtns();
+}
+function updateFloatBtns() {
+  document.querySelectorAll('#s-float .demo-controls .demo-btn').forEach(b=>{
+    const oc = b.getAttribute('onclick');
+    b.classList.remove('active');
+    if(oc===`setFloat('${currentFloat}')` || oc===`setClear('${currentClear}')`) b.classList.add('active');
+  });
+}
+
+// ============================
+// DEMO: DISPLAY vs VISIBILITY
+// ============================
+function demoVis(mode) {
+  const B = document.getElementById('demoB');
+  const explain = document.getElementById('visExplain');
+  B.style.display='';
+  B.style.visibility='';
+  if(mode==='display') {
+    B.style.display='none';
+    explain.textContent = 'display:none → B desaparece Y su espacio es ocupado por C (sin hueco)';
+    explain.style.color='var(--red)';
+  } else if(mode==='visibility') {
+    B.style.visibility='hidden';
+    explain.textContent = 'visibility:hidden → B es invisible pero el HUECO queda (C no se mueve)';
+    explain.style.color='var(--yellow)';
+  } else {
+    explain.textContent = 'Restaurado. B vuelve a ser visible.';
+    explain.style.color='var(--green)';
+  }
+}
+
+// ============================
+// DEMO: Z-INDEX
+// ============================
+const zvals = [1,2,3];
+function bumpZ(idx) {
+  const maxZ = Math.max(...zvals) + 1;
+  zvals[idx-1] = maxZ;
+  for(let i=1;i<=3;i++) {
+    document.getElementById(`zb${i}`).style.zIndex = zvals[i-1];
+  }
+  document.getElementById('zInfo').textContent = `z-index — [1:${zvals[0]}] [2:${zvals[1]}] [3:${zvals[2]}]`;
+}
+function resetZ() {
+  zvals[0]=1; zvals[1]=2; zvals[2]=3;
+  for(let i=1;i<=3;i++) document.getElementById(`zb${i}`).style.zIndex = zvals[i-1];
+  document.getElementById('zInfo').textContent = 'Pulsa cualquier caja para subirla encima de las demás';
+}
+
+// ============================
+// DEMO: TIPOGRAFÍA
+// ============================
+function setFontProp(prop, val) {
+  document.getElementById('fontSample').style[prop] = val;
+}
+
+// ============================
+// DEMO: TEXT-ALIGN
+// ============================
+function setTextProp(prop, val) {
+  document.getElementById('textAlignDemo').style[prop] = val;
+}
+
+// ============================
+// DEMO: TEXT-TRANSFORM
+// ============================
+function setTT(val) {
+  document.getElementById('ttSample').style.textTransform = val;
+}
+
+// ============================
+// PLAYGROUND FLEXBOX
+// ============================
+const flexState = {
+  flexDirection: 'row',
+  flexWrap: 'nowrap',
+  justifyContent: 'flex-start',
+  alignItems: 'stretch',
+  gap: '8px'
+};
+
+function setFlexProp(prop, val) {
+  flexState[prop] = val;
+  const pg = document.getElementById('flexPlayground');
+  Object.assign(pg.style, flexState);
+  document.getElementById('flexOutput').textContent =
+    `display: flex; flex-direction: ${flexState.flexDirection}; flex-wrap: ${flexState.flexWrap}; justify-content: ${flexState.justifyContent}; align-items: ${flexState.alignItems}; gap: ${flexState.gap};`;
+}
+
+// ============================
+// DEMO: FLEX-GROW
+// ============================
+function setGrow(g1,g2,g3,explain) {
+  document.getElementById('gItem1').style.flexGrow = g1;
+  document.getElementById('gItem2').style.flexGrow = g2;
+  document.getElementById('gItem3').style.flexGrow = g3;
+  document.getElementById('gItem1').textContent = `grow:${g1}`;
+  document.getElementById('gItem2').textContent = `grow:${g2}`;
+  document.getElementById('gItem3').textContent = `grow:${g3}`;
+  document.getElementById('growExplain').textContent = explain;
+}
+</script>
+</body>
+</html>

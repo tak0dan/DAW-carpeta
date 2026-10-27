@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 Examen Cheat · JS/DOM/JSON</title>
+<style>
+:root {
+  --bg: #0b0d14; --bg2: #131725; --card: #1e2440;
+  --border: #28305a; --accent: #5b8ff9; --red: #ff6b6b; --green: #51e89e;
+  --yellow: #ffd166; --text: #e8ebf4; --text2: #8a91b0; --text3: #555d85;
+  --code-bg: #0e1120;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 14px; line-height: 1.6;
+}
+.topbar {
+  position: fixed; z-index: 1000; top:0; left:0; right:0;
+  background: rgba(11,13,20,0.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; padding: 0 14px; height: 50px;
+}
+.topbar h1 { font-size: 14px; color: var(--accent); white-space: nowrap; font-family: 'Arial Black', sans-serif; }
+.topbar h1 span { color: var(--yellow); }
+.search-box { flex: 1; max-width: 360px; position: relative; }
+.search-box input {
+  width: 100%; background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 7px; color: var(--text); font-size: 13px;
+  padding: 6px 12px 6px 30px; outline: none;
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-box svg { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); opacity: 0.35; pointer-events: none; }
+.tabs-wrap { display: flex; gap: 3px; margin-left: auto; overflow-x: auto; }
+.tab-btn {
+  background: transparent; color: var(--text2); border: 1px solid transparent;
+  font-size: 11px; padding: 4px 10px; border-radius: 5px; cursor: pointer;
+  white-space: nowrap; font-weight: 600; transition: 0.15s;
+}
+.tab-btn:hover { color: var(--text); background: var(--bg2); }
+.tab-btn.active { color: var(--accent); border-color: var(--accent); background: rgba(91,143,249,0.1); }
+
+.main { max-width: 1300px; margin: 0 auto; padding: 62px 12px 40px; }
+
+/* ===== CARDS ===== */
+.card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+  margin-bottom: 12px; overflow: hidden; transition: 0.2s;
+}
+.card.hidden { display: none; }
+.card-header {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; cursor: pointer; user-select: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; font-weight: 700;
+}
+.card-header:hover { filter: brightness(1.15); }
+.card-header .tag {
+  font-size: 9px; font-weight: 700; text-transform: uppercase;
+  padding: 2px 8px; border-radius: 99px; letter-spacing: 0.5px;
+}
+.tag-js { background: rgba(255,209,102,0.15); color: var(--yellow); }
+.tag-dom { background: rgba(91,143,249,0.15); color: var(--accent); }
+.tag-json { background: rgba(81,232,158,0.12); color: var(--green); }
+.tag-err { background: rgba(255,107,107,0.12); color: var(--red); }
+.tag-html { background: rgba(255,107,107,0.12); color: #ff8a5c; }
+.tag-css { background: rgba(91,143,249,0.12); color: #74b9ff; }
+.card-header .arrow { margin-left: auto; font-size: 12px; transition: transform 0.2s; color: var(--text3); }
+.card-header .arrow.open { transform: rotate(180deg); }
+.card-body { padding: 0; }
+.card-body.collapsed { display: none; }
+
+/* ===== CODE BLOCKS ===== */
+.code-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+.code-grid-3 {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+}
+.code-col { padding: 0; border-right: 1px solid var(--border); }
+.code-col:last-child { border-right: none; }
+.code-label {
+  font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px;
+  font-weight: 700; color: var(--text3); padding: 5px 10px;
+  background: rgba(255,255,255,0.015); border-bottom: 1px solid var(--border);
+}
+.code-block {
+  font-family: 'Cascadia Code','Fira Code','Consolas',monospace;
+  font-size: 11.5px; line-height: 1.6; padding: 8px 10px;
+  background: var(--code-bg); color: #cdd6f4;
+  overflow-x: auto; white-space: pre; margin: 0;
+  min-height: 60px;
+}
+.kw { color: #cba6f7; } .st { color: #a6e3a1; } .cmt { color: #6c7086; font-style: italic; }
+.tc { color: #f38ba8; } .at { color: #fab387; } .fn { color: #89b4fa; }
+.num { color: #fab387; } .prop { color: #94e2d5; }
+
+/* ===== CATEGORY SECTIONS ===== */
+.cat-title {
+  font-family: 'Arial Black', sans-serif; font-size: 16px;
+  margin: 18px 0 8px; padding-bottom: 6px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.cat-title .badge {
+  font-size: 10px; font-weight: 700; padding: 2px 10px;
+  border-radius: 99px; background: var(--accent); color: #fff;
+}
+
+/* ===== HIGHLIGHTS ===== */
+.highlight { background: rgba(255,209,102,0.3); border-radius: 2px; }
+
+.code-btns { display:flex; gap:3px; padding:4px 6px; background:var(--code-bg); border-bottom:1px solid var(--border); }
+.cb-btn { background:none; border:1px solid var(--border); color:var(--text2); font-size:9px; padding:2px 8px; border-radius:4px; cursor:pointer; font-family:inherit; }
+.cb-btn:hover { border-color:var(--accent); color:var(--accent); }
+.explain-btn { margin-left:4px; }
+.topbar-logo { font-family:'Arial Black',sans-serif;font-weight:800;font-size:13px;color:var(--accent);white-space:nowrap;margin-right:6px;cursor:pointer }
+.exp { background:var(--bg2); border:1px solid var(--border); border-radius:6px; padding:8px 12px; margin:4px 0; font-size:11.5px; line-height:1.6; display:none; max-height:400px; overflow-y:auto; }
+.exp.show { display:block; }
+.exp table { width:100%; border-collapse:collapse; font-size:11.5px; }
+.exp td { padding:3px 6px; border-bottom:1px solid var(--border); vertical-align:top; }
+.exp td:first-child { color:var(--accent); font-family:'Cascadia Code','Fira Code','Consolas',monospace; white-space:pre; width:35%; font-size:10px; }
+.exp td:last-child { color:var(--text2); font-size:11px; }
+.exp tr:last-child td { border-bottom:none; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+  .code-grid, .code-grid-3 { grid-template-columns: 1fr; }
+  .code-col { border-right: none; border-bottom: 1px solid var(--border); }
+  .code-col:last-child { border-bottom: none; }
+  .tabs-wrap { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="topbar-logo" style="font-family:'Arial Black',sans-serif;font-weight:800;font-size:13px;color:var(--accent);white-space:nowrap;margin-right:6px;cursor:pointer" onclick="window.location.href='index.html'">LM 📘</span>
+  <h1 style="font-size:13px;color:var(--text2);white-space:nowrap;font-family:'Arial Black',sans-serif;margin-right:8px"><span style="color:var(--yellow)">Cheat</span> Sheet</h1>
+  <div class="search-box">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder='Buscar: "map", "appendChild", "fetch"...' autocomplete="off">
+  </div>
+  <nav style="display:flex;gap:2px;margin-left:auto;overflow-x:auto">
+    <a href="ra1.html" style="color:var(--text2);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap">RA1</a>
+    <a href="ra2.html" style="color:var(--text2);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap">RA2</a>
+    <a href="ra3.html" style="color:var(--text2);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap">RA3</a>
+    <a href="ra456.html" style="color:var(--text2);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap">RA4-6</a>
+    <a href="css-extra.html" style="color:var(--text2);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap">CSS+</a>
+    <a href="index.html" style="color:var(--text3);font-size:11px;text-decoration:none;padding:4px 8px;border-radius:5px;white-space:nowrap" title="Inicio">🏠</a>
+  </nav>
+</div>
+
+<div class="main" id="main">
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="js"><span>⚡</span> JS Básico <span class="badge">variables · tipos · condicionales · bucles · funciones</span></div>
+
+<div class="card" data-tags="js variables let const">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>📦 Variables y tipos</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">JS</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// let → mutable, const → no reasignable</span>
+<span class="kw">let</span> nombre = <span class="st">"Ana"</span>;
+<span class="kw">const</span> PI = <span class="num">3.14</span>;
+<span class="kw">let</span> activo = <span class="kw">true</span>;      <span class="cmt">// boolean</span>
+<span class="kw">let</span> cuenta;               <span class="cmt">// undefined</span>
+<span class="kw">let</span> nulo = <span class="kw">null</span>;
+
+<span class="cmt">// Array</span>
+<span class="kw">let</span> colores = [<span class="st">"rojo"</span>, <span class="st">"verde"</span>];
+colores.push(<span class="st">"azul"</span>);   <span class="cmt">// añade al final</span>
+
+<span class="cmt">// Objeto</span>
+<span class="kw">let</span> p = { nombre: <span class="st">"Ana"</span>, edad: <span class="num">25</span> };
+p.profesion = <span class="st">"DAW"</span>;    <span class="cmt">// añade propiedad</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">Consola</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">console.log(<span class="st">"Mensaje"</span>);       <span class="cmt">// info</span>
+console.warn(<span class="st">"Aviso"</span>);       <span class="cmt">// amarillo</span>
+console.error(<span class="st">"Error"</span>);      <span class="cmt">// rojo</span>
+console.table(colores);        <span class="cmt">// como tabla</span>
+console.log(<span class="st">`Hola ${nombre}`</span>); <span class="cmt">// template string</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="js condicionales if else switch ternario">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔀 Condicionales: if · switch · ternario</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">if / else</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="kw">if</span> (edad >= <span class="num">18</span>) {
+  console.log(<span class="st">"Mayor"</span>);
+} <span class="kw">else</span> {
+  console.log(<span class="st">"Menor"</span>);
+}
+
+<span class="cmt">// else if</span>
+<span class="kw">if</span> (nota >= <span class="num">9</span>) { <span class="st">"Sobresaliente"</span>; }
+<span class="kw">else if</span> (nota >= <span class="num">7</span>) { <span class="st">"Notable"</span>; }
+<span class="kw">else</span> { <span class="st">"Suspenso"</span>; }</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">switch · ternario</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// switch</span>
+<span class="kw">switch</span> (dia) {
+  <span class="kw">case</span> <span class="num">1</span>: console.log(<span class="st">"Lunes"</span>); <span class="kw">break</span>;
+  <span class="kw">case</span> <span class="num">2</span>: console.log(<span class="st">"Martes"</span>); <span class="kw">break</span>;
+  <span class="kw">default</span>: console.log(<span class="st">"Otro"</span>);
+}
+
+<span class="cmt">// Ternario: cond ? true : false</span>
+<span class="kw">const</span> msg = edad >= <span class="num">18</span>
+  ? <span class="st">"Mayor"</span>
+  : <span class="st">"Menor"</span>;</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="js bucles for while forin forof">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔄 Bucles: for · for...in · for...of · while · forEach</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">for clásico · while</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// for clásico (necesitas índice)</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < colores.length; i++) {
+  console.log(colores[i]);
+}
+
+<span class="cmt">// while (no sabes cuántas veces)</span>
+<span class="kw">while</span> (intento !== secreto) {
+  intento = parseInt(prompt(<span class="st">"Adivina:"</span>));
+}</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">for...in / for...of / forEach</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// for...in → CLAVES del objeto</span>
+<span class="kw">for</span> (<span class="kw">let</span> prop <span class="kw">in</span> empleado) {
+  console.log(prop, empleado[prop]);
+}
+
+<span class="cmt">// for...of → VALORES del array</span>
+<span class="kw">for</span> (<span class="kw">let</span> color <span class="kw">of</span> colores) {
+  console.log(color);
+}
+
+<span class="cmt">// forEach → array (índice opcional)</span>
+colores.forEach((c, i) => {
+  console.log(i, c);
+});</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="js funciones function arrow flecha">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🎯 Funciones: declarada · anónima · flecha · params por defecto</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">Declarada · Anónima</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Declarada (hoisting → puede ir antes)</span>
+<span class="kw">function</span> <span class="tc">sumar</span>(a, b) {
+  <span class="kw">return</span> a + b;
+}
+
+<span class="cmt">// Anónima (asignada a variable)</span>
+<span class="kw">const</span> multiplicar = <span class="kw">function</span>(a, b) {
+  <span class="kw">return</span> a * b;
+};</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">Flecha (arrow) · Params defecto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Flecha → moderna, más corta</span>
+<span class="kw">const</span> dividir = (a, b) => a / b;
+<span class="kw">const</span> cuadrado = x => x * x;
+
+<span class="cmt">// Parámetros por defecto</span>
+<span class="kw">function</span> <span class="tc">usuario</span>(nombre, edad = <span class="num">25</span>) {
+  <span class="kw">return</span> <span class="st">`${nombre}, ${edad}`</span>;
+}
+usuario(<span class="st">"Ana"</span>); <span class="cmt">// "Ana, 25"</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="js"><span>🧩</span> Métodos de Array <span class="badge">map · filter · find · forEach · reduce · Set · spread</span></div>
+
+<div class="card" data-tags="js array map transformar">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔄 map( ) → transforma cada elemento</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">map</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Crea NUEVO array aplicando función</span>
+<span class="kw">const</span> nums = [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>];
+<span class="kw">const</span> dobles = nums.map(n => n * <span class="num">2</span>);
+<span class="cmt">// dobles → [2, 4, 6]</span>
+
+<span class="cmt">// Array de objetos → array de strings</span>
+<span class="kw">const</span> nombres = usuarios.map(u => u.nombre);
+
+<span class="cmt">// Con índice</span>
+nums.map((n, i) => <span class="st">`${i}: ${n}`</span>);</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">filter · find</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// filter → NUEVO array con los que cumplen</span>
+<span class="kw">const</span> mayores = edades.filter(e => e >= <span class="num">18</span>);
+<span class="cmt">// [15,22,18] → [22,18]</span>
+
+<span class="cmt">// find → PRIMER elemento que cumple</span>
+<span class="kw">const</span> usuario = usuarios.find(u => u.id === <span class="num">2</span>);
+<span class="cmt">// → { id:2, nombre:"Luis" } o undefined</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="js array forEach reduce set spread">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔁 forEach · reduce · Set · Spread</span>
+    <span class="tag tag-js">JS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">forEach · reduce</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// forEach → solo ejecuta (no devuelve nada)</span>
+frutas.forEach(f => console.log(f));
+
+<span class="cmt">// forEach con índice</span>
+frutas.forEach((f, i) => {
+  console.log(i, f);
+});
+
+<span class="cmt">// reduce → acumula a UN solo valor</span>
+<span class="kw">const</span> total = notas.reduce((acum, n) => acum + n, <span class="num">0</span>);
+<span class="cmt">// [7,8,9] → 24</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">Set · Spread (...)</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Set → elimina duplicados</span>
+<span class="kw">const</span> unicos = [...new Set([<span class="num">1</span>,<span class="num">1</span>,<span class="num">2</span>,<span class="num">3</span>,<span class="num">3</span>])];
+<span class="cmt">// unicos → [1, 2, 3]</span>
+
+<span class="cmt">// Spread → expande/clona</span>
+<span class="kw">const</span> juntos = [...a, ...b];
+<span class="kw">const</span> copiaObj = { ...original, z: <span class="num">3</span> };
+<span class="kw">const</span> clonArr = [...original];</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="dom"><span>🖥️</span> DOM <span class="badge">seleccionar · modificar · crear · eventos</span></div>
+
+<div class="card" data-tags="dom seleccionar querySelector getElementById">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔍 Seleccionar elementos</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid-3">
+      <div class="code-col">
+        <div class="code-label">HTML</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;h1</span> <span class="at">id</span>=<span class="st">"titulo"</span><span class="tc">&gt;</span>Título<span class="tc">&lt;/h1&gt;</span>
+<span class="tc">&lt;p</span> <span class="at">class</span>=<span class="st">"info"</span><span class="tc">&gt;</span>Texto<span class="tc">&lt;/p&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">data-role</span>=<span class="st">"admin"</span><span class="tc">&gt;</span>Admin<span class="tc">&lt;/div&gt;</span>
+<span class="tc">&lt;li</span> <span class="at">class</span>=<span class="st">"item"</span><span class="tc">&gt;</span>Item<span class="tc">&lt;/li&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS · Selección</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Por ID (SIN #)</span>
+<span class="kw">const</span> titulo = document.getElementById(<span class="st">"titulo"</span>);
+
+<span class="cmt">// Por clase (CON .)</span>
+<span class="kw">const</span> info = document.querySelector(<span class="st">".info"</span>); <span class="cmt">// 1º</span>
+<span class="kw">const</span> todos = document.querySelectorAll(<span class="st">".info"</span>);
+
+<span class="cmt">// Por etiqueta</span>
+<span class="kw">const</span> items = document.querySelectorAll(<span class="st">"li"</span>);
+
+<span class="cmt">// Por atributo</span>
+<span class="kw">const</span> admins = document.querySelectorAll(<span class="st">"[data-role='admin']"</span>);
+
+<span class="cmt">// querySelector("#id") = getElementById</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">⚠️ Errores típicos</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// ❌ getElementById("#id") → con #</span>
+<span class="cmt">// ✅ getElementById("id") → sin #</span>
+
+<span class="cmt">// ❌ querySelector("#id") → bien con #</span>
+<span class="cmt">// ✅ querySelector(".clase") → con .</span>
+
+<span class="cmt">// ❌ Acceder antes de cargar</span>
+<span class="cmt">// ✅ Script al final / DOMContentLoaded</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="dom modificar textContent innerHTML style classList">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>✏️ Modificar: textContent · innerHTML · style · classList</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid-3">
+      <div class="code-col">
+        <div class="code-label">HTML / CSS</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">&lt;!-- HTML --&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"caja"</span><span class="tc">&gt;</span>Texto<span class="tc">&lt;/div&gt;</span>
+
+<span class="cmt">/* CSS */</span>
+<span class="tc">.activa</span> { background: <span class="st">#6c5ce7</span>; color: white; }</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS · Modificación</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Texto plano (seguro)</span>
+caja.textContent = <span class="st">"Nuevo texto"</span>;
+
+<span class="cmt">// Interpreta HTML (peligro XSS)</span>
+caja.innerHTML = <span class="st">"&lt;b&gt;Negrita&lt;/b&gt;"</span>;
+
+<span class="cmt">// CSS directo (camelCase!)</span>
+caja.style.backgroundColor = <span class="st">"blue"</span>;
+caja.style.fontSize = <span class="st">"20px"</span>;
+caja.style.display = <span class="st">"none"</span>;  <span class="cmt">// ocultar</span>
+
+<span class="cmt">// Clases CSS</span>
+caja.classList.add(<span class="st">"activa"</span>);
+caja.classList.remove(<span class="st">"activa"</span>);
+caja.classList.toggle(<span class="st">"activa"</span>);</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">⚠️ Errores típicos</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// ❌ style.background-color (guión)</span>
+<span class="cmt">// ✅ style.backgroundColor (camelCase)</span>
+
+<span class="cmt">// ❌ appendChild("&lt;p&gt;x&lt;/p&gt;") con string</span>
+<span class="cmt">// ✅ createElement + appendChild</span>
+
+<span class="cmt">// ❌ innerHTML si solo cambias texto</span>
+<span class="cmt">// ✅ textContent es más seguro</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="dom crear createElement appendChild">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🆕 Crear elementos: createElement + appendChild</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">HTML inicial</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"lista"</span><span class="tc">&gt;&lt;/div&gt;</span>
+<span class="tc">&lt;ul</span> <span class="at">id</span>=<span class="st">"items"</span><span class="tc">&gt;&lt;/ul&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// 1. Crear elemento</span>
+<span class="kw">const</span> btn = document.createElement(<span class="st">"button"</span>);
+btn.textContent = <span class="st">"Click me"</span>;
+btn.className = <span class="st">"btn"</span>;
+
+<span class="cmt">// 2. Añadirlo al DOM</span>
+document.getElementById(<span class="st">"lista"</span>).appendChild(btn);
+
+<span class="cmt">// Crear varios con bucle</span>
+[<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>].forEach(t => {
+  <span class="kw">const</span> li = document.createElement(<span class="st">"li"</span>);
+  li.textContent = t;
+  document.getElementById(<span class="st">"items"</span>).appendChild(li);
+});</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="dom eventos addEventListener click submit input">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>⚡ Eventos: click · input · submit · mouse · keydown</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid-3">
+      <div class="code-col">
+        <div class="code-label">HTML</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;button</span> <span class="at">id</span>=<span class="st">"btn"</span><span class="tc">&gt;</span>Pulsa<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;input</span> <span class="at">id</span>=<span class="st">"texto"</span> <span class="at">type</span>=<span class="st">"text"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;form</span> <span class="at">id</span>=<span class="st">"form"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">name</span>=<span class="st">"nombre"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">type</span>=<span class="st">"submit"</span><span class="tc">&gt;</span>Enviar<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;/form&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS · Eventos</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// click</span>
+btn.addEventListener(<span class="st">"click"</span>, () => {
+  console.log(<span class="st">"¡clic!"</span>);
+});
+
+<span class="cmt">// input (en tiempo real)</span>
+texto.addEventListener(<span class="st">"input"</span>, (e) => {
+  console.log(e.target.value);
+});
+
+<span class="cmt">// submit (formulario)</span>
+form.addEventListener(<span class="st">"submit"</span>, (e) => {
+  e.preventDefault(); <span class="cmt">// evita recargar</span>
+  console.log(<span class="st">"enviado"</span>);
+});
+
+<span class="cmt">// mouseover / mouseout</span>
+btn.addEventListener(<span class="st">"mouseover"</span>, () => {
+  btn.style.background = <span class="st">"yellow"</span>;
+});</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">⚠️ Errores típicos</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// ❌ getElementById antes de que exista</span>
+<span class="cmt">// ✅ Poner script al final del body</span>
+<span class="cmt">// ✅ O usar DOMContentLoaded:</span>
+document.addEventListener(<span class="st">"DOMContentLoaded"</span>, () => {
+  <span class="cmt">// código aquí</span>
+});
+
+<span class="cmt">// ❌ No hacer preventDefault en submit</span>
+<span class="cmt">// → la página se recarga</span>
+
+<span class="cmt">// ❌ addEventListener("click", fn())</span>
+<span class="cmt">// ✅ addEventListener("click", fn)  sin ()</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="dom"><span>📋</span> Task Manager (práctica completa) <span class="badge">arrays · objetos · DOM · eventos</span></div>
+
+<div class="card" data-tags="dom taskmanager practica">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>📋 Gestor de Tareas — patrón completo</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid-3">
+      <div class="code-col">
+        <div class="code-label">HTML</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"app"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;input</span> <span class="at">id</span>=<span class="st">"taskInput"</span> <span class="at">placeholder</span>=<span class="st">"Nueva tarea"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;button</span> <span class="at">id</span>=<span class="st">"addBtn"</span><span class="tc">&gt;</span>Añadir<span class="tc">&lt;/button&gt;</span>
+  <span class="tc">&lt;ul</span> <span class="at">id</span>=<span class="st">"taskList"</span><span class="tc">&gt;&lt;/ul&gt;</span>
+<span class="tc">&lt;/div&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS · Array de objetos</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="kw">let</span> tareas = [
+  { id: <span class="num">1</span>, texto: <span class="st">"Estudiar"</span>, hecha: <span class="kw">false</span> }
+];
+
+<span class="kw">function</span> <span class="tc">render</span>() {
+  <span class="kw">const</span> lista = document.getElementById(<span class="st">"taskList"</span>);
+  lista.innerHTML = <span class="st">""</span>;
+  tareas.forEach(t => {
+    <span class="kw">const</span> li = document.createElement(<span class="st">"li"</span>);
+    li.textContent = t.texto;
+    li.style.textDecoration = t.hecha
+      ? <span class="st">"line-through"</span> : <span class="st">"none"</span>;
+    li.addEventListener(<span class="st">"click"</span>, () => {
+      t.hecha = !t.hecha;
+      render(); <span class="cmt">// re-pintar</span>
+    });
+    lista.appendChild(li);
+  });
+}
+
+document.getElementById(<span class="st">"addBtn"</span>)
+  .addEventListener(<span class="st">"click"</span>, () => {
+  <span class="kw">const</span> input = document.getElementById(<span class="st">"taskInput"</span>);
+  tareas.push({
+    id: Date.now(),
+    texto: input.value,
+    hecha: <span class="kw">false</span>
+  });
+  input.value = <span class="st">""</span>;
+  render();
+});
+
+render(); <span class="cmt">// inicial</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">💡 Claves</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// 1. Array de objetos como "base de datos"</span>
+<span class="cmt">// 2. render() pinta todo desde cero</span>
+<span class="cmt">// 3. Eventos modifican el array y re-renderizan</span>
+<span class="cmt">// 4. Cada li tiene su propio evento</span>
+<span class="cmt">//    (o delegación en #taskList)</span>
+
+<span class="cmt">// Delegación de eventos:</span>
+lista.addEventListener(<span class="st">"click"</span>, (e) => {
+  <span class="kw">if</span> (e.target.tagName === <span class="st">"LI"</span>) {
+    <span class="cmt">// e.target es el li pulsado</span>
+  }
+});</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="json"><span>🔤</span> JSON <span class="badge">objeto {} vs array [] · parse · stringify · fetch</span></div>
+
+<div class="card" data-tags="json objeto array estructura">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>📦 Estructura JSON: objeto {} vs array []</span>
+    <span class="tag tag-json">JSON</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">Objeto { } → claves</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">{                         <span class="cmt">// empieza por {</span>
+  <span class="st">"nombre"</span>: <span class="st">"Iron Man"</span>,
+  <span class="st">"edad"</span>: <span class="num">45</span>,
+  <span class="st">"esHumano"</span>: <span class="kw">true</span>,
+  <span class="st">"poderes"</span>: <span class="kw">null</span>,
+  <span class="st">"equipo"</span>: [<span class="st">"Repulsores"</span>, <span class="st">"Armadura"</span>],
+  <span class="st">"direccion"</span>: {
+    <span class="st">"ciudad"</span>: <span class="st">"NY"</span>,
+    <span class="st">"pais"</span>: <span class="st">"EEUU"</span>
+  }
+}                         <span class="cmt">// termina por }</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">Array [ ] → lista</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">[                         <span class="cmt">// empieza por [</span>
+  { <span class="st">"id"</span>: <span class="num">1</span>, <span class="st">"nombre"</span>: <span class="st">"Ana"</span> },
+  { <span class="st">"id"</span>: <span class="num">2</span>, <span class="st">"nombre"</span>: <span class="st">"Luis"</span> },
+  { <span class="st">"id"</span>: <span class="num">3</span>, <span class="st">"nombre"</span>: <span class="st">"Sara"</span> }
+]                         <span class="cmt">// termina por ]</span>
+
+<span class="cmt">// Si empieza por { → for...in (claves)</span>
+<span class="cmt">// Si empieza por [ → forEach / for...of</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="json parse stringify fetch">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔄 JSON ⇄ JS: parse · stringify · fetch</span>
+    <span class="tag tag-json">JSON</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">parse / stringify</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// String JSON → objeto JS</span>
+<span class="kw">const</span> obj = JSON.parse(textoJson);
+
+<span class="cmt">// Objeto JS → string JSON</span>
+<span class="kw">const</span> texto = JSON.stringify(obj, <span class="kw">null</span>, <span class="num">2</span>);
+
+<span class="cmt">// SIEMPRE con try/catch</span>
+<span class="kw">try</span> {
+  <span class="kw">const</span> datos = JSON.parse(respuesta);
+} <span class="kw">catch</span> (e) {
+  console.error(<span class="st">"JSON inválido:"</span>, e.message);
+}</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">fetch (GET)</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// fetch → promesa</span>
+fetch(<span class="st">"https://api.example.com/datos"</span>)
+  .then(res => {
+    <span class="kw">if</span> (!res.ok) throw Error(res.status);
+    <span class="kw">return</span> res.json();  <span class="cmt">// parsea JSON</span>
+  })
+  .then(data => {
+    console.log(data);  <span class="cmt">// ya es objeto JS</span>
+  })
+  .catch(err => console.error(err));
+
+<span class="cmt">// Con async/await</span>
+<span class="kw">async function</span> <span class="tc">getDatos</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(url);
+    <span class="kw">const</span> data = <span class="kw">await</span> res.json();
+    console.log(data);
+  } <span class="kw">catch</span> (err) {
+    console.error(err);
+  }
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="json multiidioma localStorage fetch">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🌍 Multiidioma — fetch + localStorage + data-key</span>
+    <span class="tag tag-json">JSON</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid-3">
+      <div class="code-col">
+        <div class="code-label">HTML · data-key</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;h1</span> <span class="at">data-key</span>=<span class="st">"welcome"</span><span class="tc">&gt;</span>Bienvenido<span class="tc">&lt;/h1&gt;</span>
+<span class="tc">&lt;p</span> <span class="at">data-key</span>=<span class="st">"subtitle"</span><span class="tc">&gt;</span>Texto<span class="tc">&lt;/p&gt;</span>
+<span class="tc">&lt;button</span> <span class="at">id</span>=<span class="st">"btn-es"</span><span class="tc">&gt;</span>ES<span class="tc">&lt;/button&gt;</span>
+<span class="tc">&lt;button</span> <span class="at">id</span>=<span class="st">"btn-en"</span><span class="tc">&gt;</span>EN<span class="tc">&lt;/button&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">translations.json</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">{                        <span class="cmt">// objeto</span>
+  <span class="st">"welcome"</span>: {
+    <span class="st">"es"</span>: <span class="st">"Bienvenido"</span>,
+    <span class="st">"en"</span>: <span class="st">"Welcome"</span>
+  },
+  <span class="st">"subtitle"</span>: {
+    <span class="st">"es"</span>: <span class="st">"Texto en español"</span>,
+    <span class="st">"en"</span>: <span class="st">"Text in English"</span>
+  }
+}</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS · lógica</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="kw">let</span> translations = {};
+<span class="kw">let</span> lang = localStorage.getItem(<span class="st">"lang"</span>) || <span class="st">"es"</span>;
+
+fetch(<span class="st">"translations.json"</span>)
+  .then(r => r.json())
+  .then(data => {
+    translations = data;
+    translatePage(lang);
+  });
+
+<span class="kw">function</span> <span class="tc">translatePage</span>(lang) {
+  localStorage.setItem(<span class="st">"lang"</span>, lang);
+  document.querySelectorAll(<span class="st">"[data-key]"</span>).forEach(el => {
+    <span class="kw">const</span> key = el.dataset.key;
+    <span class="kw">if</span> (translations[key]?.[lang]) {
+      el.textContent = translations[key][lang];
+    }
+  });
+}
+
+document.getElementById(<span class="st">"btn-es"</span>)
+  .addEventListener(<span class="st">"click"</span>, () => translatePage(<span class="st">"es"</span>));
+document.getElementById(<span class="st">"btn-en"</span>)
+  .addEventListener(<span class="st">"click"</span>, () => translatePage(<span class="st">"en"</span>));</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="json errores reglas estrictas">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>⚠️ Reglas estrictas de JSON</span>
+    <span class="tag tag-json">JSON</span>
+    <span class="tag tag-err">ERROR</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">❌ Incorrecto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">{                       <span class="cmt">// 🔴 clave sin comillas</span>
+  nombre: <span class="st">"Ana"</span>,        <span class="cmt">// 🔴 clave sin ""</span>
+  <span class="st">"edad"</span>: <span class="st">'25'</span>,        <span class="cmt">// 🔴 comillas simples</span>
+  <span class="st">"activo"</span>: true,
+  <span class="st">"notas"</span>: [<span class="num">7</span>,<span class="num">8</span>,],       <span class="cmt">// 🔴 trailing comma</span>
+  <span class="st">"fn"</span>: function(){},   <span class="cmt">// 🔴 no hay funciones</span>
+  <span class="st">"x"</span>: undefined       <span class="cmt">// 🔴 no existe en JSON</span>
+}</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">✅ Correcto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block">{                       <span class="cmt">// ✅ claves con ""</span>
+  <span class="st">"nombre"</span>: <span class="st">"Ana"</span>,     <span class="cmt">// ✅ strings con ""</span>
+  <span class="st">"edad"</span>: <span class="num">25</span>,          <span class="cmt">// ✅ números sin ""</span>
+  <span class="st">"activo"</span>: <span class="kw">true</span>,      <span class="cmt">// ✅ boolean sin ""</span>
+  <span class="st">"notas"</span>: [<span class="num">7</span>, <span class="num">8</span>],      <span class="cmt">// ✅ sin coma final</span>
+  <span class="st">"saldo"</span>: <span class="kw">null</span>        <span class="cmt">// ✅ null sin ""</span>
+}                       <span class="cmt">// ✅ sin comentarios</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="errores"><span>🎯</span> Caza de Errores <span class="badge">HTML · CSS · DOM · JSON</span></div>
+
+<div class="card" data-tags="errores html">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔴 Errores HTML</span>
+    <span class="tag tag-html">HTML</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">❌ Errores</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">&lt;!-- Etiquetas solapadas --&gt;</span>
+<span class="tc">&lt;div&gt;&lt;p&gt;</span>Texto<span class="tc">&lt;/div&gt;&lt;/p&gt;</span>
+
+<span class="cmt">&lt;!-- img sin alt --&gt;</span>
+<span class="tc">&lt;img</span> <span class="at">src</span>=<span class="st">"foto.jpg"</span><span class="tc">&gt;</span>
+
+<span class="cmt">&lt;!-- a sin href --&gt;</span>
+<span class="tc">&lt;a&gt;</span>Enlace roto<span class="tc">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Sin DOCTYPE / meta charset --&gt;</span>
+<span class="tc">&lt;html&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+  <span class="tc">&lt;title&gt;</span>Mal<span class="tc">&lt;/title&gt;</span>
+<span class="tc">&lt;/head&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">✅ Correcto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">&lt;!-- Cerrar en orden inverso LIFO --&gt;</span>
+<span class="tc">&lt;div&gt;&lt;p&gt;</span>Texto<span class="tc">&lt;/p&gt;&lt;/div&gt;</span>
+
+<span class="cmt">&lt;!-- img siempre con alt --&gt;</span>
+<span class="tc">&lt;img</span> <span class="at">src</span>=<span class="st">"foto.jpg"</span>
+     <span class="at">alt</span>=<span class="st">"Descripción"</span><span class="tc">&gt;</span>
+
+<span class="cmt">&lt;!-- a siempre con href --&gt;</span>
+<span class="tc">&lt;a</span> <span class="at">href</span>=<span class="st">"pagina.html"</span><span class="tc">&gt;</span>Enlace<span class="tc">&lt;/a&gt;</span>
+
+<span class="cmt">&lt;!-- Estructura HTML5 completa --&gt;</span>
+<span class="tc">&lt;!DOCTYPE html&gt;</span>
+<span class="tc">&lt;html</span> <span class="at">lang</span>=<span class="st">"es"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;head&gt;</span>
+  <span class="tc">&lt;meta</span> <span class="at">charset</span>=<span class="st">"UTF-8"</span><span class="tc">&gt;</span>
+  <span class="tc">&lt;title&gt;</span>Bien<span class="tc">&lt;/title&gt;</span>
+<span class="tc">&lt;/head&gt;</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="errores css">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔴 Errores CSS</span>
+    <span class="tag tag-css">CSS</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">❌ Errores</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">/* Falta ; */</span>
+<span class="tc">.caja</span> {
+  color: red
+  font-size: <span class="num">16</span>px
+}
+
+<span class="cmt">/* Selector mal */</span>
+miClase { }          <span class="cmt">// falta .</span>
+miId { }             <span class="cmt">// falta #</span>
+
+<span class="cmt">/* Typo */</span>
+backgrond-color: blue;
+
+<span class="cmt">/* Unidad mal */</span>
+width: <span class="num">500</span>;         <span class="cmt">// falta px</span>
+margin: <span class="num">10</span> px;      <span class="cmt">// espacio</span>
+
+<span class="cmt">/* Valor inexistente */</span>
+display: flexbox;</pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">✅ Correcto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">/* Siempre ; al final */</span>
+<span class="tc">.caja</span> {
+  color: red;
+  font-size: <span class="num">16</span>px;
+}
+
+<span class="cmt">/* Clase → .   ID → # */</span>
+<span class="tc">.miClase</span> { }
+<span class="tc">#miId</span> { }
+
+<span class="cmt">/* Propiedades bien escritas */</span>
+background-color: blue;
+
+<span class="cmt">/* Unidades sin espacio */</span>
+width: <span class="num">500</span>px;
+margin: <span class="num">10</span>px;
+
+display: flex;</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card" data-tags="errores dom">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔴 Errores DOM</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="tag tag-err">ERROR</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">❌ Errores</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Acceder antes de cargar</span>
+<span class="kw">const</span> btn = document.getElementById(<span class="st">"btn"</span>);
+btn.addEventListener(...) <span class="cmt">// ❌ btn es null</span>
+
+<span class="cmt">// Typo en método</span>
+document.getElememtById(<span class="st">"id"</span>);
+document.querySelektor(<span class="st">"#id"</span>);
+
+<span class="cmt">// # en getElementById</span>
+document.getElementById(<span class="st">"#id"</span>); <span class="cmt">// ❌</span>
+
+<span class="cmt">// appendChild con string</span>
+padre.appendChild(<span class="st">"&lt;p&gt;x&lt;/p&gt;"</span>); <span class="cmt">// ❌</span>
+
+<span class="cmt">// Estilo con guiones</span>
+el.style.background-color; <span class="cmt">// ❌</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">✅ Correcto</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="cmt">// Script al final del body</span>
+<span class="cmt">// o DOMContentLoaded:</span>
+document.addEventListener(<span class="st">"DOMContentLoaded"</span>, () => {
+  <span class="kw">const</span> btn = document.getElementById(<span class="st">"btn"</span>);
+  btn.addEventListener(...);
+});
+
+<span class="cmt">// getElementById("id") SIN #</span>
+document.getElementById(<span class="st">"id"</span>);
+
+<span class="cmt">// querySelector("#id") CON #</span>
+document.querySelector(<span class="st">"#id"</span>);
+document.querySelector(<span class="st">".clase"</span>);
+
+<span class="cmt">// createElement + appendChild</span>
+<span class="kw">const</span> p = document.createElement(<span class="st">"p"</span>);
+p.textContent = <span class="st">"texto"</span>;
+padre.appendChild(p);
+
+<span class="cmt">// camelCase en style</span>
+el.style.backgroundColor = <span class="st">"blue"</span>;
+el.style.fontSize = <span class="st">"20px"</span>;</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<div class="cat-title" data-cat="errores"><span>🔐</span> Ejercicios prácticos <span class="badge">César · Errores</span></div>
+
+<div class="card" data-tags="errores cesar cifrado">
+  <div class="card-header" onclick="toggleCard(this)">
+    <span>🔐 Cifrado César — patrón típico de examen</span>
+    <span class="tag tag-js">JS</span>
+    <span class="tag tag-dom">DOM</span>
+    <span class="arrow">▾</span>
+  </div>
+  <div class="card-body">
+    <div class="code-grid">
+      <div class="code-col">
+        <div class="code-label">HTML</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"text"</span> <span class="at">id</span>=<span class="st">"frase"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;input</span> <span class="at">type</span>=<span class="st">"range"</span> <span class="at">id</span>=<span class="st">"number"</span>
+       <span class="at">min</span>=<span class="st">"0"</span> <span class="at">max</span>=<span class="st">"20"</span> <span class="at">value</span>=<span class="st">"10"</span><span class="tc">&gt;</span>
+<span class="tc">&lt;span</span> <span class="at">id</span>=<span class="st">"number-value"</span><span class="tc">&gt;</span>10<span class="tc">&lt;/span&gt;</span>
+<span class="tc">&lt;div</span> <span class="at">id</span>=<span class="st">"solucion"</span><span class="tc">&gt;&lt;/div&gt;</span>
+<span class="tc">&lt;a</span> <span class="at">id</span>=<span class="st">"run"</span> <span class="at">href</span>=<span class="st">"#"</span><span class="tc">&gt;</span>Enviar<span class="tc">&lt;/a&gt;</span></pre>
+      </div>
+      <div class="code-col">
+        <div class="code-label">JS</div>
+        <div class="code-btns"><button class="cb-btn" onclick="copiarCodigo(this)">Copiar</button><button class="cb-btn explain-btn" onclick="explicarCodigo(this)">Explicar</button></div>
+<pre class="code-block"><span class="kw">const</span> alfabeto = <span class="st">"abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789"</span>;
+
+<span class="kw">function</span> <span class="tc">cifrar</span>(cadena, paso) {
+  <span class="kw">let</span> resultado = <span class="st">""</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i < cadena.length; i++) {
+    <span class="kw">const</span> pos = alfabeto.indexOf(cadena[i]);
+    <span class="kw">if</span> (pos === -<span class="num">1</span>) {
+      resultado += cadena[i]; <span class="cmt">// no está: igual</span>
+    } <span class="kw">else</span> {
+      resultado += alfabeto[(pos + paso) % alfabeto.length];
+    }
+  }
+  <span class="kw">return</span> resultado;
+}
+
+document.getElementById(<span class="st">"run"</span>).addEventListener(<span class="st">"click"</span>, () => {
+  <span class="kw">const</span> paso = parseInt(document.getElementById(<span class="st">"number"</span>).value);
+  document.getElementById(<span class="st">"solucion"</span>).textContent =
+    cifrar(document.getElementById(<span class="st">"frase"</span>).value, paso);
+});
+
+<span class="cmt">// Mostrar valor del range en vivo</span>
+document.getElementById(<span class="st">"number"</span>)
+  .addEventListener(<span class="st">"input"</span>, () => {
+  document.getElementById(<span class="st">"number-value"</span>).textContent =
+    document.getElementById(<span class="st">"number"</span>).value;
+});</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+// ===== Toggle cards =====
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.arrow');
+  body.classList.toggle('collapsed');
+  arrow.classList.toggle('open');
+}
+
+// Open all cards by default
+document.querySelectorAll('.card-body').forEach(b => b.classList.remove('collapsed'));
+document.querySelectorAll('.card-header .arrow').forEach(a => a.classList.add('open'));
+
+// ===== Tabs =====
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.card').forEach(c => {
+      if (tab === 'all') { c.classList.remove('hidden'); return; }
+      const tags = c.dataset.tags || '';
+      c.classList.toggle('hidden', !tags.split(' ').includes(tab));
+    });
+  });
+});
+
+// ===== Search =====
+document.getElementById('search').addEventListener('input', function() {
+  const q = this.value.trim().toLowerCase();
+  document.querySelectorAll('.card').forEach(c => {
+    if (!q) { c.classList.remove('hidden'); return; }
+    const text = c.textContent.toLowerCase();
+    c.classList.toggle('hidden', !text.includes(q));
+  });
+  // Highlight
+  document.querySelectorAll('.highlight').forEach(el => {
+    const p = el.parentNode; p.replaceChild(document.createTextNode(el.textContent), el);
+  });
+  if (!q) return;
+  const walker = document.createTreeWalker(document.getElementById('main'), NodeFilter.SHOW_TEXT, null, false);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    const idx = node.textContent.toLowerCase().indexOf(q);
+    if (idx === -1) return;
+    const span = document.createElement('span');
+    span.className = 'highlight';
+    span.textContent = node.textContent.substring(idx, idx + q.length);
+    const frag = document.createDocumentFragment();
+    frag.appendChild(document.createTextNode(node.textContent.substring(0, idx)));
+    frag.appendChild(span);
+    frag.appendChild(document.createTextNode(node.textContent.substring(idx + q.length)));
+    node.parentNode.replaceChild(frag, node);
+  });
+});
+
+// ===== Code copy (double-click) =====
+document.querySelectorAll('.code-block').forEach(block => {
+  block.addEventListener('dblclick', () => {
+    navigator.clipboard.writeText(block.textContent);
+    const orig = block.style.outline;
+    block.style.outline = '2px solid var(--green)';
+    setTimeout(() => block.style.outline = orig, 600);
+  });
+});
+
+// ===== Copy & Explain buttons =====
+function copiarCodigo(btn) {
+  const pre = btn.closest('.code-col')?.querySelector('pre.code-block');
+  if (!pre) return;
+  navigator.clipboard.writeText(pre.textContent).then(() => {
+    const t = btn.textContent; btn.textContent = '✓ Copiado'; btn.style.color = 'var(--green)';
+    setTimeout(() => { btn.textContent = t; btn.style.color = ''; }, 1800);
+  });
+}
+function explicarCodigo(btn) {
+  const col = btn.closest('.code-col');
+  if (!col) return;
+  const pre = col.querySelector('pre.code-block');
+  if (!pre) return;
+  let expDiv = col.querySelector('.exp');
+  if (!expDiv) { expDiv = document.createElement('div'); expDiv.className = 'exp'; col.appendChild(expDiv); }
+  const code = pre.innerText || pre.textContent;
+  if (!code.trim()) return;
+  if (expDiv.classList.contains('show')) {
+    expDiv.classList.remove('show');
+    if (btn.dataset.origText) btn.textContent = btn.dataset.origText;
+    return;
+  }
+  btn.dataset.origText = btn.textContent;
+  btn.textContent = 'Ocultar';
+  const lines = code.split('\n');
+  let html = '<table>';
+  for (const line of lines) {
+    const t = line.trim();
+    const display = line.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    if (!t) { html += '<tr><td colspan="2" style="height:3px"></td></tr>'; continue; }
+    let expl = 'Ejecuta esta línea';
+    if (/^\/\//.test(t)) expl = 'Comentario: ' + t.replace(/^\/\/\s*/,'');
+    else if (/^\/\*/.test(t)) expl = 'Inicio de comentario';
+    else if (/^\*\//.test(t)) expl = 'Fin de comentario';
+    else if (/^(let|const|var)\s/.test(t)) expl = 'Declara una variable';
+    else if (/^function\s/.test(t)) expl = 'Define una función';
+    else if (/^if\s*\(/.test(t)) expl = 'Evalúa una condición';
+    else if (/^else\s/.test(t)) expl = 'Bloque alternativo';
+    else if (/^for\s*\(/.test(t)) expl = 'Inicia un bucle for';
+    else if (/^while\s*\(/.test(t)) expl = 'Inicia un bucle while';
+    else if (/^switch\s*\(/.test(t)) expl = 'Evalúa múltiples casos';
+    else if (/^try\b/.test(t)) expl = 'Bloque de prueba';
+    else if (/^catch\s*\(/.test(t)) expl = 'Captura el error';
+    else if (/^return\b/.test(t)) expl = 'Devuelve un valor';
+    else if (/^<\//.test(t)) expl = 'Cierra etiqueta HTML';
+    else if (/^</.test(t)) expl = 'Abre etiqueta HTML';
+    else if (/\{/.test(t) && !t.includes('}')) expl = 'Apertura de bloque';
+    else if (/\}/.test(t) && !t.includes('{')) expl = 'Cierre de bloque';
+    html += '<tr><td><code>' + display + '</code></td><td>' + expl + '</td></tr>';
+  }
+  html += '</table>';
+  expDiv.innerHTML = html;
+  expDiv.classList.add('show');
+}
+</script>
+</body>
+</html>

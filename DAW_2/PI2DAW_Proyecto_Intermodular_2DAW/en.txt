@@ -1,0 +1,295 @@
+COURSE PROGRAMME 2026-27
+C.F.G.S.: Web Application Development
+Module: Intermodular Project 2nd year DAW
+
+IES JUAN DE GARAY - VALENCIA
+
+Teacher: Jesús Mª Timoneda i Timoneda
+
+INDEX
+Introduction............................................................. 3
+2. Contents................................................................ 5
+3. Learning outcomes....................................................... 6
+4. Timetable................................................................ 7
+5. Methodology............................................................. 7
+6. Assessment criteria...................................................... 8
+7. Extracurricular activities............................................... 8
+8. Cross-curricular themes.................................................. 8
+9. Teaching materials and resources........................................ 9
+10. Measures for attention to diversity.................................... 10
+
+Higher Degree Cycle in Web Application Development
+Intermodular Project 2nd year DAW                            -3-
+
+INTRODUCTION
+The Intermodular Project module is taught in the second year of the Higher Degree Cycle in Web
+Application Development and consists of integrating the competences acquired in the rest of the
+modules of the cycle, especially those related to information search, innovation, applied
+research and entrepreneurship. It also fosters collaborative work, critical thinking and student
+autonomy:
+    a) Develop, deploy and maintain web applications, regardless of the model used and using
+        specific technologies, guaranteeing secure access to data and complying with the
+        accessibility, usability and quality criteria required by established standards.
+    b) Manage application servers, adapting their configuration in each case to allow the
+        deployment of web applications.
+    c) Develop web applications with database access using languages, access objects and
+        mapping tools suited to the specifications.
+    d) Integrate contents into the logic of a web application, developing data access
+        components suited to the specifications.
+    e) Develop and integrate software components in the web server environment, using specific
+        tools and languages, in order to meet the application's specifications.
+    f) Develop services to integrate their functions into other web applications, ensuring their
+        functionality.
+    g) Produce and maintain the documentation of development processes, using documentation
+        generation and version control tools.
+
+2. CONTENTS
+The teaching units to be delivered are:
+
+UT1: Selection of architectures and programming tools
+UT2: Requirements analysis
+UT3: Design of the adopted solutions and technologies
+UT4: Development of web applications using embedded code
+UT5: Use of data access techniques
+UT6: Programming of Web services
+UT7: Debugging the application
+UT8: Writing the project report and presentation.
+
+Below is a detailed breakdown of the contents that will make up each of the teaching units.
+
+UT 1: Selection of architectures and programming tools
+
+- Programming models in client/server environments.
+- Dynamic generation of web pages.
+- Programming languages in the server environment.
+- Integration with markup languages.
+- Integration with web servers.
+- Programming tools.
+
+UT 2: Requirements analysis
+
+- Study of the universe of data and processes to be implemented.
+- Obtaining requirements through interviews or forms.
+- Determining the scope and reach of the project.
+- Planning and cost assessment.
+
+UT 3: Design of the adopted solutions and technologies
+
+- Decision making.
+- E-R diagram.
+- Use case diagram.
+- User categories.
+- Class diagram.
+- Study and choice of technologies to implement the project.
+
+UT 4: Development of web applications using embedded code
+
+- State maintenance.
+- Security: users, profiles, roles.
+- User authentication.
+- Mechanisms for separating business logic.
+- Server controls.
+- Mechanisms for the dynamic generation of the web interface.
+
+UT 5: Use of data access techniques
+
+- Establishing connections.
+- Retrieval and editing of information.
+- Use of result sets.
+- Execution of SQL statements.
+- Transactions.
+
+UT 6: Programming of Web services
+
+- Mechanisms and protocols involved.
+- Generation of a web service.
+- Description of the service.
+- Interface of a web service.
+
+UT 7: Debugging the application
+
+- Debugging via the IDE used.
+- Testing and debugging with automated systems.
+
+UT 8: Writing the project report and presentation
+
+- Use of information from the previous phases.
+- Use of AI to generate documentation automatically.
+
+3. LEARNING OUTCOMES
+
+The learning outcomes (RA) in the Intermodular Project are the RAs of the different modules of
+the CFGS DAW. Finally, we break down the different sections and elements that the intermodular
+project must include.
+    1. Architecture: the application will have a directory and folder structure that allows
+        teamwork, modularity, scalability and object orientation.
+            a. public: storage of the front end of the application with the usual subfolders for
+               CSS, js, img and assets.
+            b. Src: storage of the objects and part of the model.
+            c. Other folders required, available to students depending on the chosen project.
+    2. The technologies to be used are:
+            a. JAVA or PHP or an equivalent language for the server side.
+            b. CSS, HTML and/or JS for the frontend base of the application.
+            c. GitHub for collaborative development.
+    3. Information persistence will be developed against a relational MySQL database (not
+        assessed from the programming module, or whichever is decided in the database module).
+        All interaction with this database will be carried out using PHP/JAVA, using Object-
+        Oriented Programming.
+    4. Documentation and models to be submitted in the project report:
+            a. Entity-Relationship Diagram.
+            b. Relational Model.
+            c. Class diagram.
+            d. DDL creation script/automation.
+            e. SQL query and trigger code.
+    5. The website must be responsive and respond to the design parameters appropriate to the
+        project being presented.
+
+4. TIMETABLE
+The time distribution of the different units is as follows:
+
+    1st Assessment:
+
+      UT1: Selection of architectures and programming tools
+      UT2: Requirements analysis
+      UT3: Design of the adopted solutions and technologies
+      UT4: Development of web applications using embedded code
+
+    2nd Assessment:
+
+      UT5: Use of data access techniques
+      UT6: Programming of Web services
+      UT8: Debugging the application
+      UT9: Writing the project report and presentation.
+
+At the end of the assessment of the different thematic units, the defence will be held before a
+panel made up of the course teachers.
+
+5. METHODOLOGY
+The methodology to be followed will consist of presenting a set of concepts of the subject
+matter of learning on the whiteboard or using the projector. Afterwards, related problems or
+activities will be proposed, with the aim of helping the student to better assimilate the
+contents. Supplementary material will be used: a selection of exercises or theory to
+complement the explanations, and recommended bibliography on those points the teacher
+deems appropriate, in paper or electronic format.
+
+Given the essentially procedural nature of the subject, various exercises and practicals
+associated with each of the units will be proposed and solved in class. While the students are
+doing the exercises, the teacher will deal with any doubts that may arise and explain additional
+concepts that may be of help. In each of the thematic units, additional activities will be offered
+to those students who require them.
+
+Considerations in the event of suspension of in-person teaching or division of the group
+
+If in-person teaching is suspended, students will carry out the teaching-learning activities of
+the lesson/subject remotely.
+
+To this end, the following tools provided by the Regional Ministry of Education will be used to
+carry out the distance-learning process and student monitoring:
+
+• Aules platform: it allows us to create virtual classrooms to complement in-person classes and
+  monitor the distance-learning process, as well as to comply with data protection regulations,
+  since the information always resides on servers owned by the Generalitat (regional
+  government).
+
+• WebEx platform: it is the Regional Ministry of Education's official tool for video
+  conferencing. This tool is proposed for delivering live teaching. Access will be through a
+  permanent, unique URL link for each teacher.
+
+• E-mail: e-mail will preferably be used for communication with students.
+
+If in-person teaching is not suspended, but the group must be split in two to guarantee hygiene
+and safety measures, part of the work will be carried out remotely using the tools mentioned
+above.
+
+In both cases, the fundamental contents of the lesson will be prioritised in order to achieve its
+minimum objectives.
+
+6. ASSESSMENT CRITERIA
+The student will pass the subject when achieving a grade of "apt" (pass) in both the
+theoretical and practical tests that will be held each term and which will be used to evaluate
+the knowledge acquired during that academic period.
+
+The final mark for the module will be 80% the mark of the two assessments and the remaining
+20% if the student chooses to present the project before a panel made up of the group's
+teachers.
+
+It will be necessary to have submitted and passed the module project of the subject.
+
+7. EXTRACURRICULAR ACTIVITIES
+Throughout the course, students will be informed well in advance of the extracurricular
+activities that may be offered and that are of academic interest to the students.
+
+8. CROSS-CURRICULAR THEMES
+The royal decrees that have established the curricula of the different educational stages define
+a series of teachings that must be present in the different subject areas. For the Ministry of
+Education and Science, speaking of cross-curricular teaching is not about introducing new
+contents that are not already reflected in the subject curricula, but rather about organising some
+of those contents around a given educational axis. The reason for the presence of cross-
+curricular themes in the curriculum is strongly justified both for the personal and integral
+development of students and for a project of a freer society that is more respectful of people
+and of the human environment.
+
+The presence of attitudes and values has been structured around the following cross-curricular
+themes:
+  • Education for equal opportunities for both sexes.
+  • Education for peace.
+  • Environmental education.
+
+The presence of cross-curricular themes in the curriculum development is the responsibility of
+the entire educational community, especially of the teaching staff, which is why they must be
+present in the school's educational project, in the stage curriculum project and in the teaching
+programmes.
+
+In the case at hand, since this is a vocational training module, the cross-cutting nature of its
+contents affects students differently from those taking general education courses. Given that it
+is vocational training, it is very difficult to incorporate cross-curricular themes such as health
+education, peace, consumer education, etc. into the curriculum. We believe that it is in the
+classroom development that values and behaviours, as well as their learning, must be
+addressed; this type of element forms part of what is known as the hidden curriculum.
+
+The role played by the teacher in the field of values is decisive, both as regards their personal
+attitude and in the organisation and management of the students' activities within the
+educational centre. Although the decrees establishing the curriculum of the training cycles have
+not incorporated cross-curricular themes, from the training cycle in question and, more
+specifically, from the module being programmed, the objective is the development of the
+integral personality, using a globalising method that puts into practice the capacities and
+attitudes we want for our students: relationship with the environment as a framework, resource
+and objective; active participation; cooperation; acceptance of responsibilities; critical
+analysis; commitment and action; problem solving.
+
+9. TEACHING MATERIALS AND RESOURCES
+MATERIALS
+   • Reference technical bibliography.
+   • Notes prepared by the teacher.
+   • Technical documentation obtained from the media.
+RESOURCES
+   • Means of transmitting information and of assessment.
+     o Theoretical-practical presentations.
+     o Projection of topics.
+     o Practical case studies.
+     o Practical exercises.
+     o Presentation of assignments.
+   • Physical means.
+     o Whiteboard.
+     o Computers.
+     o Projector.
+     o Other devices and peripherals.
+   • Other technical means.
+     o Local area network.
+     o Internet.
+
+10. MEASURES FOR ATTENTION TO DIVERSITY
+Students who, whether due to their ability or their experience, have a level clearly higher than
+the rest of the class will be offered specific activities that allow them to develop their intellect
+in the most appropriate way, with recommendations to read on specific topics taken from the
+internet, magazines or books on the subject, and being given more complex exercises than the
+rest of the class.
+
+Those who have a level clearly below the class average will be guided towards carrying out the
+most basic activities that meet the objectives set for the module. They will be provided with
+support information appropriate to their level and will be guided so that they can install and use
+the same teaching material given at the centre.
+
+Students who suffer from some type of disability that prevents them from properly developing
+the concepts covered in class will be provided with all kinds of measures designed to ensure
+that the student achieves the minimum objectives of the module.

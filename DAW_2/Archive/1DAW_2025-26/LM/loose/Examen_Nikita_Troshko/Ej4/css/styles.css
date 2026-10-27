@@ -1,0 +1,129 @@
+/*
+    CSS para el examen
+
+    colores:
+
+    fondo: white;
+    footer, menu, container: white;
+    linea: lightgray;
+    sombra: lightgray;
+    boton: #000e88;
+    boton seleccionado: red;
+*/
+
+body {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.container {
+    text-align: center;
+}
+
+.footer,.instagrammer, .header {
+    background-color: white;
+    margin: 10px auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.header{
+        border: dashed;
+    border-radius: 5px;
+}
+
+.footer {
+        border: dashed;
+    border-radius: 5px;
+}
+
+img{
+    width: 90%;
+    margin-bottom: 20px;
+    border: dashed;
+    border-radius: 15px;
+    margin-top: 20px;
+    
+}
+
+.imageHome{
+
+    
+    /* Se utiliza en imágenes y videos 
+    para asegurarse de que siempre llenen 
+    completamente el contenedor, manteniendo
+    su relación de aspecto*/
+    object-fit: cover; 
+    border-radius: 10;
+}
+
+.instagrammer{
+    border: dashed;
+    border-radius: 5px;
+}
+
+.instagrammer .images {
+    
+    width: 150px;
+    height: 150px;    
+    box-shadow: 2px 2px 4px darkgrey;
+    /* Se utiliza en imágenes y videos 
+    para asegurarse de que siempre llenen 
+    completamente el contenedor, manteniendo 
+    su relación de aspecto*/
+    object-fit: cover; 
+}
+
+.instagrammer h2 {
+    color: #333;
+    font-size: 1.5em;
+    margin: 10px 0;
+        border: dashed;
+
+}
+
+.instagrammer p {
+    color: black;
+    font-size: 1em;
+    
+}
+
+menu {
+    display: inline;
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+li {
+        display: inline;
+    list-style: none;
+    border-left: 5px solid red;   
+}
+
+#menu a {
+    display: inline;
+    list-style: none;
+}
+
+#menu a:hover {
+
+}
+
+
+.button {
+
+    background-color: yellow;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    /* animacion en css, para cambiar el color del boton, no visto en clase 
+    pero yo te lo regalo ;) */
+    transition: background-color 0.3s ease;
+}
+
+@media all and (max-width: 700px) {
+    
+}

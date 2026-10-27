@@ -1,0 +1,71 @@
+1. What resources does an operating system manage?
+
+CPU (processing time)
+
+RAM memory
+
+Storage (files and disks)
+
+Input/output devices
+
+Processes and user permissions
+
+2. Are all single-processor systems single-task?
+Are all multiprocessor systems multitasking?
+
+No. A single-processor system can be multitasking if the OS shares CPU time between processes.
+
+No. A multiprocessor system could run only one task, although almost all modern ones are multitasking.
+
+3. What is an interface?
+
+An interface is a communication method between two parts.
+It allows systems, programs, or users to exchange information clearly.
+
+6. Most widely used operating systems
+a) Four most popular operating systems
+
+Windows
+
+Linux
+
+macOS
+
+Android
+
+b) Current prices
+
+Windows
+
+Windows 11 Home: ~€100–150
+
+Windows 11 Pro: ~€200–230
+
+Linux
+
+Free to download and use
+
+Optional paid support or enterprise versions
+
+macOS
+
+Included with Apple computers (not sold separately)
+
+Android
+
+Free for users
+
+Included with mobile devices
+
+7. Classification of operating systems
+Operating System	Users	Tasks	Processors	Response Time
+DOS	Single-user	Single-task	Single processor	Interactive
+Windows 9X	Single-user	Limited multitasking	Single processor	Interactive
+Windows 2000 Professional	Single-user	Multitasking	Multiprocessor	Interactive
+Windows 2000 Server	Multi-user	Multitasking	Multiprocessor	Interactive
+Windows XP Professional	Single-user	Multitasking	Multiprocessor	Interactive
+Windows 2003 Server	Multi-user	Multitasking	Multiprocessor	Interactive
+Windows Vista	Single-user	Multitasking	Multiprocessor	Interactive
+Windows 2008 Server	Multi-user	Multitasking	Multiprocessor	Interactive
+Linux Ubuntu 8.04	Multi-user	Multitasking	Multiprocessor	Interactive
+UNIX SCO System V R4	Multi-user	Multitasking	Multiprocessor	Interactive

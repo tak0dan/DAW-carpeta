@@ -1,0 +1,70 @@
+CAPTURA DE PANTALLA (TERMINAL)
+================================
+Entorno: TWM - no compatible con capturas graficas.
+Sistema: tak_0@HUNGRYTAK0
+
+Proyecto: Mapa Leaflet + Sidebar bidireccional (T6/T7)
+
+$ curl -s 'http://localhost:8080/mapearbicis.php?lang=es' | head -20
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mapa de estaciones Valenbici</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+</head>
+<body>
+    <header class="hero hero--compact">
+        <div class="hero__content">
+            <p class="eyebrow">Leaflet + data.json</p>
+            <h1>Mapa de estaciones Valenbici</h1>
+            <p class="hero__intro">Visualiza en un mapa las estaciones obtenidas desde la API municipal.</p>
+            <div class="hero__actions">
+                <a class="button button--primary" href="index.php?lang=es">Ver tabla</a>
+                <a class="button button--secondary" href="mapearbicis.php?lang=en">English</a>
+            </div>
+        </div>
+    </header>
+    <main class="layout layout--map">
+        <aside class="panel sidebar">
+            <h2>Estaciones cargadas: 273</h2>
+            <ul class="station-list">
+                <li data-number="1"><strong>#1</strong> C/GUILLEM DE CASTRO ...</li>
+                <li data-number="2"><strong>#2</strong> Salvador Giner - C. Museo</li>
+                ...
+
+=== CODIGO JS DE ENLACE BIDIRECCIONAL ===
+
+marker.on('click', () => {
+    document.querySelectorAll('.station-list li').forEach((el) => {
+        el.classList.remove('station-list--active');
+    });
+    const li = document.querySelector(`.station-list li[data-number="${station.number}"]`);
+    if (li) {
+        li.classList.add('station-list--active');
+        li.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+
+li.addEventListener('click', () => {
+    const num = parseInt(li.getAttribute('data-number'), 10);
+    const marker = markers[num];
+    if (marker) {
+        document.querySelectorAll('.station-list li').forEach((el) => {
+            el.classList.remove('station-list--active');
+        });
+        li.classList.add('station-list--active');
+        map.setView(marker.getLatLng(), 16);
+        marker.openPopup();
+    }
+});
+
+=== WEB LOGS (valenbici-web.log, ultimas lineas) ===
+$ docker exec -i valenbici-web tail /var/www/html/logs/valenbici-web.log
+[2026-06-12 09:20:50] Datos cargados desde cache: data.json (273 estaciones)
+[2026-06-12 09:20:50] Forzando recarga desde API (forceRefresh=true)
+[2026-06-12 09:20:50] Inicio fetch API
+[2026-06-12 09:20:50] cURL respuesta HTTP 200 (225ms)
+[2026-06-12 09:20:50] JSON descargado: 84394 bytes
+[2026-06-12 09:20:50] Procesadas 273 estaciones
+[2026-06-12 09:20:50] Cache guardado: data.json (80263 bytes, 273 estaciones)

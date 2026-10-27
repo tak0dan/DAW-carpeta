@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LM · Ordinaria Extraordinaria</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+  .hub-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-decoration: none; color: var(--text); transition: transform 0.15s, border-color 0.15s; display: flex; flex-direction: column; gap: 8px; }
+  .hub-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+  .hub-card h3 { font-family: 'Syne', sans-serif; font-size: 16px; margin: 0; }
+  .hub-card p { color: var(--text2); font-size: 13px; margin: 0; line-height: 1.5; }
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <span class="topbar-logo">LM 📘</span>
+  <div style="flex:1"></div>
+  <nav class="topbar-nav">
+    <a href="ra2.html">RA2 · CSS/HTML5</a>
+    <a href="ra1.html">RA1 · JS/DOM/JSON</a>
+    <a href="ra3.html">RA3 · Fetch/APIs</a>
+    <a href="ra456.html">RA4-5-6 · XML</a>
+    <a href="css-extra.html">CSS Extra</a>
+  </nav>
+</nav>
+
+<div class="main">
+  <h1>Ordinaria <span>Extraordinaria</span></h1>
+  <p class="sub">Selecciona un RA para ver su contenido</p>
+
+  <div class="hub-grid">
+    <a href="ra2.html" class="hub-card">
+      <h3>RA2 — CSS y HTML5</h3>
+      <p>HTML5 semántico, formularios, posicionamiento CSS (static, relative, absolute, fixed, float, overflow, z-index).</p>
+    </a>
+
+    <a href="ra1.html" class="hub-card">
+      <h3>RA1 — JS, DOM, JSON y Errores</h3>
+      <p>Caza de errores en HTML, CSS, DOM y JSON. JavaScript básico, manipulación del DOM, formato JSON, gestión de errores.</p>
+    </a>
+
+    <a href="ra3.html" class="hub-card">
+      <h3>RA3 — Fetch y APIs</h3>
+      <p>JavaScript avanzado, Fetch API, Promesas, async/await, consumo de APIs REST (Rick & Morty, Valenbisi, Monedas).</p>
+    </a>
+
+    <a href="ra456.html" class="hub-card">
+      <h3>RA4/5/6 — XML y Validación</h3>
+      <p>Estructura XML, DTD (interna y externa), validación, XML Copy Editor, ejercicios de catálogos y agendas.</p>
+    </a>
+    <a href="css-extra.html" class="hub-card">
+      <h3>CSS Extra — Posicionamiento y Flexbox</h3>
+      <p>UD5.1 CSS Avanzado (position, float, display, z-index) y UD5.2 Flexbox (flex-direction, justify-content, align-items, flex-grow).</p>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  LM · IES Juan de Garay · DAW
+</footer>
+</body>
+</html>

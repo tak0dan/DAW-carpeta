@@ -1,0 +1,9 @@
+[2026-06-12 09:10:13] Forzando recarga desde API (forceRefresh=true)
+[2026-06-12 09:10:13] Inicio fetch API: https://geoportal.valencia.es/server/rest/services/OPENDATA/Trafico/MapServer/228/query?where=1%3D1&outFields=*&returnGeometry=true&outSR=4326&f=json
+[2026-06-12 09:10:13] cURL respuesta HTTP 200 (174ms)
+[2026-06-12 09:10:13] JSON descargado: 84395 bytes
+[2026-06-12 09:10:13] Procesadas 273 estaciones
+[2026-06-12 09:10:13] Cache guardado: /var/www/html/data.json (80264 bytes, 273 estaciones)
+[2026-06-12 09:10:13] Datos cargados desde cache: /var/www/html/data.json (273 estaciones)
+[2026-06-12 09:10:13] Datos cargados desde cache: /var/www/html/data.json (273 estaciones)
+[2026-06-12 09:10:13] Datos cargados desde cache: /var/www/html/data.json (273 estaciones)

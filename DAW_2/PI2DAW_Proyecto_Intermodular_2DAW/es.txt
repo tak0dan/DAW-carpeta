@@ -1,0 +1,301 @@
+PROGRAMACIÓN CURSO 2026-27
+C.F.G.S.: Desarrollo de Aplicaciones Web
+Módulo: Proyecto Intermodular 2º DAW
+
+IES JUAN DE GARAY - VALENCIA
+
+Profesor: Jesús Mª Timoneda i Timoneda
+
+ÍNDICE
+Introducción................................................................... 3
+2. Contenidos................................................................... 5
+3. Resultados de aprendizaje................................................... 6
+4. Temporalización............................................................. 7
+5. Metodología................................................................. 7
+6. Criterios de evaluación..................................................... 8
+7. Actividades extraescolares.................................................. 8
+8. Temas transversales......................................................... 8
+9. Materiales y recursos didácticos.......................................... 9
+10. Medidas de atención a la diversidad..................................... 10
+
+Ciclo de Grado Superior Desarrollo de Aplicaciones Web
+Proyecto Intermodular 2º DAW                                -3-
+
+INTRODUCCIÓN
+El módulo Proyecto Intermodular se imparte en el segundo curso del Ciclo Superior de Desarrollo
+de Aplicaciones Web y consiste en integrar las competencias adquiridas en el resto de los
+módulos del ciclo, especialmente lo relacionado con la búsqueda de información, la innovación,
+la investigación aplicada y el emprendimiento. Además, fomenta el trabajo colaborativo, el
+pensamiento crítico y la autonomía del estudiante:
+    a) Desarrollar, implantar y mantener aplicaciones web, con independencia del modelo
+        empleado y utilizando tecnologías específicas, garantizando el acceso a los datos de
+        forma segura y cumpliendo los criterios de accesibilidad, usabilidad y calidad exigidos
+        en los estándares establecidos.
+    b) Gestionar servidores de aplicaciones adaptando su configuración en cada caso para
+        permitir el despliegue de aplicaciones web.
+    c) Desarrollar aplicaciones web con acceso a bases de datos utilizando lenguajes, objetos
+        de acceso y herramientas de mapeo adecuados a las especificaciones.
+    d) Integrar contenidos en la lógica de una aplicación web, desarrollando componentes de
+        acceso a datos adecuados a las especificaciones.
+    e) Desarrollar e integrar componentes de software en el entorno del servidor web,
+        utilizando herramientas y lenguajes específicos, para cumplir las especificaciones de la
+        aplicación.
+    f) Desarrollar servicios para integrar sus funciones en otras aplicaciones web, asegurando
+        su funcionalidad.
+    g) Elaborar y mantener la documentación de los procesos de desarrollo, utilizando
+        herramientas de generación de documentación y control de versiones.
+
+2. CONTENIDOS
+Las unidades de trabajo a impartir son:
+
+UT1: Selección de arquitecturas y herramientas de programación
+UT2: Análisis de requisitos
+UT3: Diseño de las soluciones y tecnologías adoptadas
+UT4: Desarrollo de aplicaciones web utilizando código embebido
+UT5: Utilización de técnicas de acceso a datos
+UT6: Programación de servicios Web
+UT7: Depuración de la aplicación
+UT8: Redacción de la memoria del proyecto y presentación.
+
+A continuación se detalla el desglose de los contenidos que constituirán cada una de las
+unidades de trabajo.
+
+UT 1: Selección de arquitecturas y herramientas de programación
+
+- Modelos de programación en entornos cliente/servidor.
+- Generación dinámica de páginas web.
+- Lenguajes de programación en entorno servidor.
+- Integración con los lenguajes de marcas.
+- Integración con los servidores web.
+- Herramientas de programación.
+
+UT 2: Análisis de requisitos
+
+- Estudio del universo de datos y procesos a implementar.
+- Obtención de requisitos mediante entrevistas o formularios.
+- Determinar el ámbito y el alcance del proyecto.
+- Planificación y valoración de costes.
+
+UT 3: Diseño de las soluciones y tecnologías adoptadas
+
+- Toma de decisiones.
+- Diagrama E-R.
+- Diagrama de casos de uso.
+- Categorías de usuario.
+- Diagrama de clases.
+- Estudio y elección de tecnologías para implementar el proyecto.
+
+UT 4: Desarrollo de aplicaciones web utilizando código embebido
+
+- Mantenimiento del estado.
+- Seguridad: usuarios, perfiles, roles.
+- Autenticación de usuarios.
+- Mecanismos de separación de la lógica de negocio.
+- Controles de servidor.
+- Mecanismos de generación dinámica de la interfaz web.
+
+UT 5: Utilización de técnicas de acceso a datos
+
+- Establecimiento de conexiones.
+- Recuperación y edición de información.
+- Utilización de conjuntos de resultados.
+- Ejecución de sentencias SQL.
+- Transacciones.
+
+UT 6: Programación de servicios Web
+
+- Mecanismos y protocolos implicados.
+- Generación de un servicio web.
+- Descripción del servicio.
+- Interfaz de un servicio web.
+
+UT 7: Depuración de la aplicación
+
+- Depuración (debug) mediante el IDE utilizado.
+- Pruebas y depuración con sistemas automáticos.
+
+UT 8: Redacción de la memoria del proyecto y presentación
+
+- Utilización de información proveniente de las fases anteriores.
+- Uso de IA para generar documentación de manera automática.
+
+3. RESULTADOS DE APRENDIZAJE
+
+Los RA en el Proyecto Intermodular son los RA de los diferentes módulos del CFGS DAW.
+Finalmente, pasamos a desglosar los diferentes apartados y elementos que deberá incluir el
+proyecto intermodular.
+    1. Arquitectura: la aplicación tendrá una estructura de directorios y carpetas que permita
+        el desarrollo en equipo, la modularidad, la escalabilidad y la orientación a objetos.
+            a. public: almacenamiento de la parte frontal de la aplicación con las subcarpetas
+               habituales para los CSS, js, img y assets.
+            b. Src: almacenamiento de los objetos y parte del modelo.
+            c. Otras carpetas necesarias a disposición del alumnado según el proyecto elegido.
+    2. Las tecnologías que se utilizarán son:
+            a. JAVA o PHP o lenguaje equivalente para la parte de servidor.
+            b. CSS, HTML y/o JS para la base frontend de la aplicación.
+            c. GitHub para el desarrollo colaborativo.
+    3. El desarrollo de la persistencia de información se realizará contra una BBDD relacional
+        MySQL (no evaluado desde el módulo de programación o la que se decida desde el
+        módulo de BBDD). Toda la interacción con esta BBDD se realizará mediante
+        PHP/JAVA, usando Programación Orientada a Objetos.
+    4. Documentación y modelos que deberán entregarse en la memoria del proyecto:
+            a. Diagrama Entidad-Relación.
+            b. Modelo Relacional.
+            c. Diagrama de clases.
+            d. Script/automatización de creación DDL.
+            e. Código de consultas y triggers SQL.
+    5. El sitio web deberá ser responsive y responder a los parámetros de diseño adecuados al
+        proyecto que se presenta.
+
+4. TEMPORALIZACIÓN
+La distribución temporal de las diferentes unidades es:
+
+    1ª Evaluación:
+
+      UT1: Selección de arquitecturas y herramientas de programación
+      UT2: Análisis de requisitos
+      UT3: Diseño de las soluciones y tecnologías adoptadas
+      UT4: Desarrollo de aplicaciones web utilizando código embebido
+
+    2ª Evaluación:
+
+      UT5: Utilización de técnicas de acceso a datos
+      UT6: Programación de servicios Web
+      UT8: Depuración de la aplicación
+      UT9: Redacción de la memoria del proyecto y presentación.
+
+Al finalizar la evaluación de las diferentes unidades temáticas se procederá a realizar la
+defensa ante un tribunal formado por los profesores del curso.
+
+5. METODOLOGÍA
+La metodología a seguir consistirá en presentar un conjunto de conceptos de la materia objeto
+de aprendizaje en la pizarra o mediante el proyector. Posteriormente se plantearán problemas
+o actividades relacionadas, con el objetivo de ayudar al alumno a asimilar mejor los
+contenidos. Se utilizará como material complementario: selección de ejercicios o teoría que
+complementen las explicaciones y bibliografía recomendada en aquellos puntos que el profesor
+considere convenientes, en formato papel o electrónico.
+
+Dado el carácter eminentemente procedimental de la asignatura, se plantearán y resolverán en
+clase diversos ejercicios y prácticas asociados a cada una de las unidades. Mientras los alumnos
+realizan los ejercicios, el profesor atenderá las dudas que puedan surgir y explicará conceptos
+suplementarios que puedan ser de ayuda. En cada una de las unidades temáticas se propondrán
+actividades adicionales a aquellos alumnos que lo requieran.
+
+Consideraciones en caso de suspensión de la actividad docente presencial o división del grupo
+
+En caso de suspensión de la actividad docente presencial, los alumnos y alumnas realizarán las
+actividades de enseñanza-aprendizaje de la lección/asignatura de forma telemática.
+
+Para ello se utilizarán las siguientes herramientas proporcionadas por la Conselleria de
+Educación para poder llevar a cabo el proceso de aprendizaje a distancia y el seguimiento del
+alumnado:
+
+• Plataforma Aules: nos permite crear aulas virtuales para complementar las clases presenciales
+  y llevar un seguimiento del proceso de aprendizaje a distancia, así como cumplir con la
+  normativa de protección de datos, ya que la información reside en todo momento en servidores
+  propios de la Generalitat.
+
+• Plataforma WebEx: es la herramienta oficial para realizar videoconferencias de la Conselleria
+  de Educación. Se propone esta herramienta para impartir docencia en directo. Se accederá
+  mediante un enlace URL permanente y único para cada docente.
+
+• Correo electrónico: se utilizará preferentemente el correo electrónico para la comunicación
+  con el alumnado.
+
+En caso de no suspender la actividad docente presencial, pero sí tener que dividir el grupo en
+dos para garantizar las medidas de higiene y seguridad, se realizará una parte del trabajo a
+distancia utilizando las herramientas mencionadas anteriormente.
+
+En ambos casos se priorizarán los contenidos fundamentales de la lección, con el fin de alcanzar
+los objetivos mínimos de la misma.
+
+6. CRITERIOS DE EVALUACIÓN
+El alumno superará la asignatura cuando obtenga una calificación de apto tanto en las pruebas
+teóricas como prácticas que se realizarán cada trimestre y que servirán para evaluar los
+conocimientos adquiridos durante ese período lectivo.
+
+La nota final del módulo será en un 80% la nota de las dos evaluaciones y un 20% restante en
+caso de que el alumno quiera optar a presentar el proyecto ante un tribunal formado por los
+profesores del grupo.
+
+Será necesario haber entregado y aprobado el proyecto de módulo de la asignatura.
+
+7. ACTIVIDADES EXTRAESCOLARES
+A lo largo del curso se informará a los alumnos con la antelación suficiente de las actividades
+extraescolares que puedan ofertarse y que sean de interés académico para el alumnado.
+
+8. TEMAS TRANSVERSALES
+Los reales decretos que han establecido los currículos de las diferentes etapas educativas
+definen una serie de enseñanzas que deben estar presentes en las diferentes áreas. Para el
+Ministerio de Educación y Ciencia, hablar de enseñanzas transversales no es introducir
+contenidos nuevos que no estén ya reflejados en el currículo de las áreas, sino organizar algunos
+de esos contenidos alrededor de un eje educativo determinado. La razón de la presencia de los
+temas transversales en el currículo tiene una justificación importante tanto para el desarrollo
+personal e integral de los alumnos como para un proyecto de sociedad más libre y respetuosa
+con las personas y con el entorno de la sociedad humana.
+
+La presencia de las actitudes y valores ha sido estructurada en los siguientes temas
+transversales:
+  • Educación para la igualdad de oportunidades de ambos sexos.
+  • Educación para la paz.
+  • Educación ambiental.
+
+La presencia de los temas transversales en el desarrollo curricular es responsabilidad de toda la
+comunidad educativa, especialmente del equipo docente, por lo que deben estar presentes en el
+proyecto educativo de centro, en el proyecto curricular de etapa y en las programaciones
+didácticas.
+
+En el caso que nos ocupa, al tratarse de un módulo de formación profesional, la transversalidad
+de sus contenidos afecta de manera diferente a la de los alumnos y alumnas que cursan
+enseñanzas comunes. Al tratarse de formación profesional, resulta muy difícil incorporar al
+currículo temas transversales como educación para la salud, la paz, el consumo, etc. Pensamos
+que es en el desarrollo en el aula donde hay que hablar de valores y comportamientos, así como
+de su aprendizaje; este tipo de elementos forma parte de lo que se conoce como currículo
+oculto.
+
+El papel que juega el profesor o profesora en el campo de los valores es determinante, tanto en
+lo que respecta a su actitud personal como en la organización y dirección de las actuaciones de
+los alumnos y alumnas dentro del centro educativo. Aunque en los decretos que establecen el
+currículo de los ciclos formativos no se han incorporado los temas transversales, desde el ciclo
+formativo que nos ocupa y, más concretamente, desde el módulo que se está programando, el
+objetivo es el desarrollo de la personalidad integral, utilizando un método de globalización que
+pone en práctica las capacidades y actitudes que queremos para nuestro alumnado: relación con
+el medio como marco, recurso y objetivo; participación activa; cooperación; aceptación de
+responsabilidades; análisis crítico; compromiso y acción; resolución de problemas.
+
+9. MATERIALES Y RECURSOS DIDÁCTICOS
+MATERIALES
+   • Bibliografía de referencia técnica.
+   • Apuntes elaborados por el profesor.
+   • Documentación técnica obtenida en medios de comunicación.
+RECURSOS
+   • Medio de transmisión de información y evaluación.
+     o Exposiciones teórico-prácticas.
+     o Proyección de temas.
+     o Supuestos prácticos.
+     o Ejercicios prácticos.
+     o Exposición de trabajos.
+   • Medios físicos.
+     o Pizarra.
+     o Ordenadores.
+     o Proyector.
+     o Otros dispositivos y periféricos.
+   • Otros medios técnicos.
+     o Red de área local.
+     o Internet.
+
+10. MEDIDAS DE ATENCIÓN A LA DIVERSIDAD
+A los alumnos que, por su capacidad o por su experiencia, tengan un nivel claramente superior
+al resto de la clase se les propondrán actividades específicas que permitan desarrollar su
+intelecto de la forma más adecuada, recomendándoles lecturas de temas específicos tomadas de
+internet, de revistas o de libros sobre la materia, y dándoles ejercicios más complejos que al
+resto de la clase.
+
+A los que tengan un nivel claramente inferior a la media de la clase se les orientará hacia la
+realización de las actividades más básicas que cumplan los objetivos marcados para el módulo.
+Se les proporcionará información de apoyo adecuada a su nivel y se les orientará para que
+instalen y puedan utilizar el mismo material didáctico que se les da en el centro.
+
+A los alumnos que padezcan algún tipo de minusvalía que les impida el adecuado desarrollo de
+los conceptos vistos en clase, se les proporcionará todo tipo de medidas destinadas a que el
+alumno alcance los objetivos mínimos del módulo.

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>math3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let result = 7 + 13 / 9 + 7;
+    let result2 = 100 / 2 * 6;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+
+    // 1. Multiply result and result2, assigning back to result.
+    // The task asks for the assignment shorthand operator, `*=`.
+    result *= result2;
+
+    // 2. Round to two decimal places.
+    // Careful: toFixed() always returns a *string* ("4633.33"), not a number.
+    let finalResult = result.toFixed(2);
+
+    // 3. If it is a string, convert it back to a number type.
+    let finalNumber;
+    if (typeof finalResult === 'string') {
+      finalNumber = Number(finalResult);
+    }
+
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    const para1 = document.createElement('p');
+    para1.textContent = `Your finalResult is ${ finalResult }`;
+    const para2 = document.createElement('p');
+    const finalNumberCheck = isNaN(finalNumber) === false ?
+      'finalNumber is a number type. Well done!'
+      : `Ooops! finalNumber is not a number.`;
+    para2.textContent = finalNumberCheck;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>

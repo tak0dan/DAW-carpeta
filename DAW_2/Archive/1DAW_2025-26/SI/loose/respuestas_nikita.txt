@@ -1,0 +1,44 @@
+0) ¿Qué es una red de datos?
+
+Una red de datos es un conjunto de dispositivos conectados para intercambiar información. Se usa para compartir Internet, archivos, impresoras, servicios, etc.
+
+1) Tipos de redes
+PAN: Red personal (Bluetooth, móvil, smartwatch).
+LAN: Red local (casas, oficinas).
+MAN: Red metropolitana (una ciudad).
+WAN: Red amplia (entre países/continentes).
+GAN: Red global (Internet).
+2) Dispositivos de interconexión
+Hub: Repite todo a todos los puertos (tonto).
+Repetidor: Regenera señal para cubrir más distancia.
+Switch: Envía datos solo al puerto correcto (inteligente).
+Bridge: Conecta dos segmentos de red.
+Router: Conecta redes distintas (LAN ↔ Internet).
+Firewall: Filtra tráfico y aporta seguridad.
+Gateway: Traduce entre redes con protocolos diferentes.
+PLC: Usa cableado eléctrico para transmitir red.
+3) Modelo comercial (doméstico/pequeña empresa)
+Switch (ejemplo típico)
+5–24 puertos Gigabit
+Plug and play (no configuración)
+A veces VLAN/PoE si es "smart"
+Router (doméstico)
+Puertos LAN + WAN
+Wi-Fi integrado
+NAT, DHCP, firewall
+Admin vía web o app
+4) ¿Qué es una VLAN?
+
+Una red virtual dentro de un switch que separa lógicamente equipos aunque estén en el mismo hardware.
+
+5) ¿Qué es una VPN?
+
+Un túnel cifrado que conecta de forma segura dos puntos por Internet para parecer una red privada.
+
+6) ¿Qué es NAT?
+
+Técnica del router que traduce IPs internas a una IP pública para que varios equipos compartan Internet.
+
+7) ¿Qué es PoE?
+
+Alimentación eléctrica por el cable Ethernet para dar luz + datos a cámaras, APs, teléfonos VoIP, etc.

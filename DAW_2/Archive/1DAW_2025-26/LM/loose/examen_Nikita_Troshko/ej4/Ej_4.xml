@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Musicador>
+    <Discos>
+        <Disco>
+            <Titulo>Joshua tree
+            </Titulo>
+
+            <Grupo>U2
+            </Grupo>
+            
+            <Formato>CD
+            </Formato>
+
+            <id>D1
+            </id>
+
+            <Fecha_comprado>01/01/2026
+            </Fecha_comprado>
+        </Disco>
+
+        <Disco>
+            <Titulo>La venganza de Goku
+            </Titulo>
+
+            <Grupo>Akira Toriyama
+            </Grupo>
+            
+            <Formato>LP
+            </Formato>
+
+            <id>D2
+            </id>
+
+            <Fecha_comprado>01/03/2026
+            </Fecha_comprado>
+        </Disco>
+
+        <Disco>
+            <Titulo>BSO mortadelo y filemón
+            </Titulo>
+
+            <Grupo>Ibañez
+            </Grupo>
+            
+            <Formato>Cassette
+            </Formato>
+
+            <id>D3
+            </id>
+
+            <Fecha_comprado>01/04/2026
+            </Fecha_comprado>
+        </Disco>
+
+
+        <Disco>
+            <Titulo>BSO Tarzán de niña a mujer
+            </Titulo>
+
+            <Grupo>BTS
+            </Grupo>
+            
+            <Formato>CD
+            </Formato>
+
+            <id>D4
+            </id>
+
+            <Fecha_comprado>01/05/2026
+            </Fecha_comprado>
+        </Disco>
+
+
+        <Disco>
+            <Titulo>MP, Me Piro
+            </Titulo>
+
+            <Grupo>Soy &gt; de edad
+            </Grupo>
+            
+            <Formato>USB
+            </Formato>
+
+            <id>D5
+            </id>
+
+            <Fecha_comprado>01/06/2026
+            </Fecha_comprado>
+        </Disco>
+
+    </Discos>
+
+
+    <Clientes>
+
+        <Cliente>
+            <Nombres>
+                <nombre>María</nombre>
+                <nombre>Pilar</nombre>
+
+            </Nombres>
+            <Prestados>
+                <Prestado>
+                    <Elementos_prestados>D1</Elementos_prestados>
+                    <Fecha_prestamo>01/06/2026</Fecha_prestamo>
+                </Prestado>
+                <Prestado>
+                    <Elementos_prestados>D3</Elementos_prestados>
+                    <Fecha_prestamo>02/06/2026</Fecha_prestamo>
+                </Prestado>
+            </Prestados>
+
+
+            <DNI>111</DNI>
+
+            <Telefonos>
+                <numero>2323</numero>
+                <numero>121</numero>
+            </Telefonos>
+        </Cliente>
+
+
+        <Cliente>
+            <Nombres>
+                <nombre>Jose</nombre>
+                <nombre>María</nombre>
+            </Nombres>
+            <Prestados>
+                <Prestado>
+                    <Elementos_prestados>D2</Elementos_prestados>
+                    <Fecha_prestamo>05/06/2026</Fecha_prestamo>
+                </Prestado>
+            </Prestados>
+
+
+            <DNI>222</DNI>
+
+            <Telefonos>
+                <numero>32322</numero>
+            </Telefonos>
+        </Cliente>
+
+
+        <Cliente>
+            <Nombres>
+                <nombre>Adriana</nombre>
+            </Nombres>
+            <Prestados>
+                <Prestado>
+                    <Elementos_prestados>D4</Elementos_prestados>
+                    <Fecha_prestamo>05/06/2026</Fecha_prestamo>
+                </Prestado>
+                <Prestado>
+                    <Elementos_prestados>D5</Elementos_prestados>
+                    <Fecha_prestamo>02/06/2026</Fecha_prestamo>
+                </Prestado>
+            </Prestados>
+
+
+            <DNI>333</DNI>
+
+            <Telefonos>
+                <numero>32324</numero>
+            </Telefonos>
+        </Cliente>
+    </Clientes>
+</Musicador>

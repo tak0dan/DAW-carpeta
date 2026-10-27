@@ -1,0 +1,90 @@
+*
+{
+    padding: 0%;
+    margin: 0%;
+}
+body {    
+    background-image: url("../images/fondo.jpeg");
+    background-size: auto;
+    background-color: red;
+    margin: 20px;    
+}
+
+@media (max-width: 600px) {
+    #col-img {
+        float: none;
+        width: 100%;
+    }
+
+    #col-datos {
+        float: none;
+        width: 100%;
+    }
+}
+
+#menu {
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+
+#menu li {
+    display: inline;    
+    
+}
+
+#container {
+    
+    min-height: 85vh;
+    background-color: white;
+
+    overflow: hidden;
+    position: relative;
+}
+
+
+#col-img {
+    float: left;
+    width: 15%;
+    vertical-align: top;
+}
+
+#col-datos {
+    float: left;
+    width: 85%;
+    padding: 20px;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+#col-datos li {
+    margin-left: 15px;
+}
+
+#header {
+    background-color: white;
+    padding: 20px;
+}
+
+a {
+    color: blue;
+    font-size: 1.5em;
+}
+
+img {
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-left: 15px;
+    width: 90%;
+}
+
+#footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: white;
+    border-top: 1px solid black;
+    text-align: right;
+    padding-right: 20px;
+    box-sizing: border-box;
+}

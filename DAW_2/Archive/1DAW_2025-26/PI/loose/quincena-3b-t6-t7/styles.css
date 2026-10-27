@@ -1,0 +1,244 @@
+:root {
+    --bg: #f4f7fb;
+    --panel: #ffffff;
+    --line: #d7e0ea;
+    --text: #163047;
+    --muted: #5f7488;
+    --primary: #006d77;
+    --primary-strong: #00535b;
+    --secondary: #edf6f9;
+    --success: #e7f8ee;
+    --error: #fdecec;
+    --shadow: 0 18px 40px rgba(22, 48, 71, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(180deg, #eef4fb 0%, #f7fafc 100%);
+}
+
+a {
+    color: inherit;
+}
+
+.hero {
+    padding: 3rem 1.5rem 2.5rem;
+    background: radial-gradient(circle at top left, rgba(0, 109, 119, 0.16), transparent 40%), #0d2236;
+    color: #ffffff;
+}
+
+.hero--compact {
+    padding-bottom: 2rem;
+}
+
+.hero__content {
+    max-width: 1120px;
+    margin: 0 auto;
+}
+
+.eyebrow {
+    margin: 0 0 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.hero h1 {
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.hero__intro {
+    max-width: 780px;
+    margin: 1rem 0 0;
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.6;
+}
+
+.hero__actions {
+    display: flex;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.button--primary {
+    background: #ffffff;
+    color: var(--primary-strong);
+}
+
+.button--secondary {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+}
+
+.layout {
+    max-width: 1120px;
+    margin: -1.5rem auto 0;
+    padding: 0 1.5rem 2.5rem;
+}
+
+.layout--map {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 1.25rem;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.metric,
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.metric {
+    padding: 1.15rem 1.25rem;
+}
+
+.metric span {
+    display: block;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+}
+
+.metric strong {
+    font-size: 1.4rem;
+}
+
+.panel {
+    padding: 1.15rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.panel--success {
+    background: var(--success);
+}
+
+.panel--error {
+    background: var(--error);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.9rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+}
+
+th {
+    background: #f7fbfc;
+    font-size: 0.92rem;
+}
+
+tbody tr:hover {
+    background: #f8fcff;
+}
+
+.sidebar {
+    align-self: start;
+}
+
+.station-list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+}
+
+.station-list li {
+    display: grid;
+    gap: 0.25rem;
+    padding: 0.85rem;
+    border-radius: 14px;
+    background: #f8fbfd;
+    border: 1px solid var(--line);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.station-list li:hover {
+    border-color: #006d77;
+}
+
+.station-list--active {
+    border-color: #00a86b !important;
+    box-shadow: 0 0 0 2px rgba(0, 168, 107, 0.35);
+    background: #edfbf4;
+}
+
+.station-list span,
+.station-list small {
+    color: var(--muted);
+}
+
+.map-panel {
+    min-height: 640px;
+}
+
+#map {
+    width: 100%;
+    min-height: 600px;
+    border-radius: 16px;
+}
+
+.footer {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+    color: var(--muted);
+    text-align: center;
+}
+
+code {
+    font-family: "Courier New", monospace;
+    word-break: break-word;
+}
+
+@media (max-width: 900px) {
+    .layout--map {
+        grid-template-columns: 1fr;
+    }
+
+    .map-panel {
+        min-height: auto;
+    }
+}

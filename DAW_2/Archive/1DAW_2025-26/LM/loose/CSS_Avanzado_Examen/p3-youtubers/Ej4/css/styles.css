@@ -1,0 +1,117 @@
+/*
+    CSS para el examen
+
+    colores:
+
+    fondo: #333333;
+    fondo: cajas: #424242;
+    linea: lightgray;
+    boton: #007BFF;
+    boton seleccionado: #0056b3;
+*/
+
+body {
+    /* 1- color de fondo */
+    background-color: #333333;
+    /* 2- ancho 90% */
+    width: 90%;
+    /* 3- centrar */
+    margin: 0 auto;
+}
+
+.container {
+    text-align: center;
+}
+
+.youtuber, .footer, .header {
+    /* 4- color de fondo */
+    background-color: #424242;
+    border: 1px solid lightgray;
+    /* 5- redondear el borde */
+    border-radius: 10px;
+    /* 6- sombra */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    margin: 10px auto;
+    padding: 20px;
+    text-align: center;    
+}
+.footer {
+    padding: 0px;
+    color: white;
+}
+
+.youtuber .images {
+    /* 8- redondear la imagen*/
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;    
+    object-fit: cover; 
+}
+
+.youtuber h2 {    
+    color: white;
+    font-size: 1.5em;
+    margin: 10px 0;
+}
+
+.youtuber p {
+    color: white;
+    font-size: 1em;
+}
+
+#menu {
+    /* 9- quita los puntos */
+    list-style: none;
+}
+
+li {
+    /* 10- haz que los li no sean de tipo bloque */
+    display: inline-block;
+    /* 11- borde izquierdo rojo */
+    border-left: 4px red solid;
+    /* 12- separa el borde de la izquierda */
+    padding-left: 5px;
+}
+
+#menu a {
+    /* 13- enlaces blancos */
+    color: white;
+    /* 14- sin subrayado */
+    text-decoration: none;
+}
+
+#menu a:hover {
+    /* 15- cambia el color al pasar el raton */
+    color: #007BFF;
+}
+
+
+.button {
+    padding: 10px 20px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+.button:hover {
+    /* 16- cambia el color al boton */
+    background-color: #0056b3;
+}
+
+@media all and (max-width: 700px) {
+    .youtuber, .footer {
+        /* 17- cambia el color al BORDE */
+        border-color: red;
+    }
+    .button {
+        /* 18- cambia el color al boton */
+        background-color: #0056b3;
+    }
+    .button:hover {
+        /* 19- cambia el color al boton */
+        background-color: #007BFF;
+    }    
+}

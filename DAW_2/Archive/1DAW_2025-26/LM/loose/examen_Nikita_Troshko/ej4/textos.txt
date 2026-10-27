@@ -1,0 +1,58 @@
+Título
+Grupo
+Formato
+id
+Fecha comprado
+Joshua tree
+U2
+CD
+D1
+01/01/2026
+La venganza de Goku
+Akira Toriyama
+LP
+D2
+01/03/2026
+BSO mortadelo y filemón
+Ibañez
+Cassette
+D3
+01/04/2026
+BSO Tarzán de niña a mujer
+BTS
+CD
+D4
+01/05/2026
+MP, Me Piro
+Soy > de edad
+USB
+D5
+01/06/2026
+Nombre
+Elementos prestados
+Fecha préstamo
+DNI
+Teléfono
+María
+Pilar
+D1
+D3
+01/06/2026
+02/06/2026
+111
+2323
+121
+Jose
+María
+D2
+05/06/2026
+222
+32322
+Adriana
+D4
+D5
+05/06/2026
+02/06/2026
+333
+32324
+

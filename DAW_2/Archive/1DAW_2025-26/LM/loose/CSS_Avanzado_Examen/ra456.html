@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RA4-5-6 · XML · Ordinaria Extraordinaria</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+.ej-box { background:var(--bg2); border:1px solid var(--border); border-radius:8px; padding:14px; margin:10px 0; }
+.ej-box h5 { color:var(--accent); font-size:13px; margin-bottom:6px; }
+.tag-xml { color:#e06c75; }
+.tag-attr { color:#d19a66; }
+.tag-val { color:#98c379; }
+.tag-cmt { color:#5c6370; font-style:italic; }
+.tag-kw { color:#c678dd; }
+/* ===== Índice interactivo mejorado ===== */
+.toc { position: relative; }
+.toc-header {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  user-select: none; padding: 6px 0;
+}
+.toc-header:hover { opacity: 0.8; }
+.toc-badge {
+  font-size: 11px; background: var(--accent); color: #fff;
+  padding: 2px 8px; border-radius: 99px; font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.toc-arrow {
+  margin-left: auto; font-size: 14px; transition: transform 0.25s;
+  color: var(--text3);
+}
+.toc-body {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px; margin: 10px 0 18px; transition: max-height 0.35s ease, opacity 0.25s;
+  max-height: 2000px; opacity: 1; overflow: hidden;
+}
+.toc-body.collapsed { max-height: 0; opacity: 0; margin: 0; }
+.toc-group {
+  display: flex; gap: 10px; padding: 10px 12px;
+  background: rgba(91, 143, 249, 0.05); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  border-radius: 8px; border-left: 3px solid var(--accent);
+  transition: background 0.2s, transform 0.15s;
+}
+.toc-group:hover {
+  background: rgba(91, 143, 249, 0.10); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateX(2px);
+}
+.toc-num {
+  flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: #fff; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; margin-top: 2px;
+}
+.toc-group:nth-child(2) .toc-num { background: var(--yellow); }
+.toc-group-content { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; }
+.toc-main {
+  font-weight: 600; font-size: 13px; color: var(--text); text-decoration: none;
+  padding: 2px 0; transition: color 0.2s; position: relative;
+}
+.toc-main::after {
+  content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+  background: var(--accent); transition: width 0.25s;
+}
+.toc-main:hover { color: var(--accent); }
+.toc-main:hover::after { width: 100%; }
+.toc-main.active { color: var(--accent); }
+.toc-main.active::after { width: 100%; }
+.toc-sub { display: flex; flex-direction: column; gap: 1px; margin-top: 2px; }
+.toc-sub a {
+  font-size: 11.5px; color: var(--text3); text-decoration: none;
+  padding: 1px 0 1px 12px; position: relative; transition: color 0.2s;
+  line-height: 1.5;
+}
+.toc-sub a::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 4px; height: 4px; border-radius: 50%; background: var(--text3);
+  transition: background 0.2s;
+}
+.toc-sub a:hover { color: var(--text); }
+.toc-sub a:hover::before { background: var(--accent); }
+
+/* ===== Barra de progreso ===== */
+#progressBar {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), #6c5ce7);
+  z-index: 10000; width: 0; transition: width 0.1s linear;
+  box-shadow: 0 0 6px rgba(108,92,231,0.4);
+}
+
+/* ===== Stats row ===== */
+.stats-row {
+  display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 16px;
+}
+.stat {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text3); background: rgba(91, 143, 249, 0.06); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  padding: 4px 10px; border-radius: 6px; font-weight: 500;
+}
+.stat-num {
+  font-weight: 700; font-size: 13px; color: var(--accent);
+}
+.stat-search-hint {
+  margin-left: auto; background: rgba(255, 209, 102, 0.10); /* fallback for color-mix */
+  background: color-mix(in srgb, var(--yellow) 10%, transparent);
+  color: var(--text3);
+}
+.stat-search-hint kbd {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  background: rgba(0,0,0,0.08); padding: 1px 5px; border-radius: 3px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* ===== Cards con borde sutil ===== */
+.section .card { border-left: 3px solid var(--accent); }
+
+@media (max-width: 640px) {
+  .toc-body { grid-template-columns: 1fr; }
+}
+
+/* ===== Botón volver arriba (siempre visible) ===== */
+.back-to-top {
+  position: fixed; bottom: 30px; right: 30px; z-index: 9999;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 22px; cursor: pointer; box-shadow: 0 3px 15px rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, opacity 0.25s; opacity: 0.85; line-height: 1;
+}
+.back-to-top:hover { transform: scale(1.1); opacity: 1; }
+
+</style>
+</head>
+<body>
+<nav class="topbar">
+  <span class="topbar-logo">LM 📘</span>
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="buscar" placeholder='Busca en toda la página: "XML", "estructura", "ejercicio", "elementos"…' autocomplete="off">
+    <div id="searchResults"></div>
+  </div>
+  <nav class="topbar-nav">
+    <a href="ra2.html">RA2 · CSS/HTML5</a>
+    <a href="ra1.html">RA1 · JS/DOM/JSON</a>
+    <a href="ra3.html">RA3 · Fetch/APIs</a>
+    <a href="ra456.html" style="font-weight:700">RA4-5-6 · XML</a>
+    <a href="css-extra.html">CSS+</a>
+    <a href="index.html" style="color:var(--text3)">🏠</a>
+  </nav>
+</nav>
+
+<div class="main">
+
+<h1>RA4/5/6 — <span>XML, Estructura y Ejercicios</span></h1>
+<p class="sub">📌 UD8 — XML bien formado, elementos, atributos, CDATA, entidades</p>
+
+<div class="stats-row">
+  <div class="stat"><span class="stat-num">2</span> Bloques</div>
+  <div class="stat"><span class="stat-num">10+</span> Conceptos clave</div>
+  <div class="stat"><span class="stat-num">9</span> Ejercicios oficiales</div>
+  <div class="stat"><span class="stat-num">4</span> Ejemplos XML</div>
+  <div class="stat stat-search-hint">🔍 <kbd>Ctrl+K</kbd> buscar</div>
+</div>
+
+<div class="toc" id="mainToc">
+  <div class="toc-header" onclick="toggleToc()">
+    <strong>📑 Índice de contenidos</strong>
+    <span class="toc-badge">2 bloques · 9 ejercicios</span>
+    <span class="toc-arrow" id="tocArrow">▾</span>
+  </div>
+  <div class="toc-body" id="tocBody">
+    <div class="toc-group">
+      <span class="toc-num">1</span>
+      <div class="toc-group-content">
+        <a href="#ra456-estructura" class="toc-main">Estructura de XML</a>
+        <div class="toc-sub">
+          <a href="#ra456-estructura">Declaración XML · elemento raíz</a>
+          <a href="#ra456-estructura">Etiquetas · atributos · contenido</a>
+          <a href="#ra456-estructura">Comentarios · CDATA · entidades</a>
+          <a href="#ra456-estructura">Bien formado vs válido</a>
+          <a href="#ra456-estructura">Errores típicos de sintaxis XML</a>
+        </div>
+      </div>
+    </div>
+    <div class="toc-group">
+      <span class="toc-num">2</span>
+      <div class="toc-group-content">
+        <a href="#ra456-ejercicios" class="toc-main">Ejercicios oficiales XML</a>
+        <div class="toc-sub">
+          <a href="#ra456-ej1">📝 Ej.1 — Primer documento XML</a>
+          <a href="#ra456-ej2">📝 Ej.2 — Pedido (destinatario, artículo)</a>
+          <a href="#ra456-ej3">📝 Ej.3 — Mensaje (estructura árbol)</a>
+          <a href="#ra456-ej4">📝 Ej.4 — Carta de desayunos</a>
+          <a href="#ra456-ej5">📝 Ej.5 — ¿Están bien formados? (errores)</a>
+          <a href="#ra456-ej6">📝 Ej.6 — Coches (concesionario)</a>
+          <a href="#ra456-ej7">📝 Ej.7 — Árboles (información botánica)</a>
+          <a href="#ra456-ej8">📝 Ej.8 — Libros (múltiples librerías)</a>
+          <a href="#ra456-ej9">📝 Ej.9 — CDs de música (Beatles, Stones)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="progressBar"></div>
+
+<section class="section" id="ra456">
+  <h2>RA4/5/6 — Almacenar y transmitir: XML, Estructura y Ejercicios <span class="t t-red">UD8</span></h2>
+
+  <div class="box red">
+    <span>📁</span>
+    <span>Archivos en <code>RA4-5-6/</code>: UD_8.1.pdf, UD_8.1_ejercicios.pdf, UD_8.1_ejercicios_solucionados.pdf, Manual xml copy editor.pdf, 8.1.ejercicios.xml.zip</span>
+  </div>
+
+  <div class="box blue">
+    <span>📌</span>
+    <span>    <strong>RA4/5/6</strong> — XML bien formado, estructura, elementos, atributos, CDATA, entidades y jerarquías.</span>
+  </div>
+
+  <!-- ============================================================
+       1. ESTRUCTURA DE XML
+  ============================================================ -->
+  <div class="subsec" id="ra456-estructura">
+  <h3 style="font-size:14px;margin:12px 0 6px;color:var(--accent)">1. Estructura de XML</h3>
+
+  <div class="card">
+    <p>XML (eXtensible Markup Language) es un lenguaje de marcas diseñado para <strong>almacenar y transportar datos</strong>. A diferencia de HTML, XML no define cómo se ve el contenido, sino qué es cada cosa. Es el formato estándar para intercambio de datos entre sistemas heterogéneos.</p>
+  </div>
+
+  <table>
+    <tr><th>Elemento</th><th>Explicación</th><th>Ejemplo</th></tr>
+    <tr><td>Declaración XML</td><td>Primera línea del documento. Indica versión y codificación.</td><td><code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;</code></td></tr>
+    <tr><td>Elemento raíz</td><td>Todo documento XML debe tener UN solo elemento raíz que contiene todo</td><td><code>&lt;biblioteca&gt;...&lt;/biblioteca&gt;</code></td></tr>
+    <tr><td>Etiquetas</td><td>Se abren y cierran. Diferencia mayúsculas/minúsculas.</td><td><code>&lt;libro&gt;&lt;/libro&gt;</code></td></tr>
+    <tr><td>Atributos</td><td>Valores dentro de la etiqueta de apertura. Van entre comillas.</td><td><code>&lt;libro id="1"&gt;</code></td></tr>
+    <tr><td>Contenido</td><td>Texto entre etiquetas de apertura y cierre</td><td><code>&lt;titulo&gt;El Quijote&lt;/titulo&gt;</code></td></tr>
+    <tr><td>Comentarios</td><td>No se procesan, solo documentan</td><td><code>&lt;!-- esto es un comentario --&gt;</code></td></tr>
+    <tr><td>CDATA</td><td>Texto que no debe ser parseado como XML</td><td><code>&lt;![CDATA[ texto con &lt; > & ]]&gt;</code></td></tr>
+    <tr><td>Entidades predefinidas</td><td>Caracteres especiales: &amp;lt; (&lt;), &amp;gt; (&gt;), &amp;amp; (&amp;), &amp;quot; ("), &amp;apos; (')</td><td><code>&lt;texto&gt;5 &amp;lt; 10&lt;/texto&gt;</code></td></tr>
+  </table>
+
+  <details class="vm">
+    <summary>📖 Explicación detallada: XML bien formado vs válido</summary>
+    <div class="vm-c">
+      <p><strong>XML bien formado (well-formed):</strong> Un documento XML está bien formado si cumple estas reglas sintácticas:</p>
+      <ul>
+        <li>Tiene una declaración XML <code>&lt;?xml version="1.0"?&gt;</code></li>
+        <li>Tiene un único elemento raíz</li>
+        <li>Todas las etiquetas se cierran correctamente</li>
+        <li>Las etiquetas están correctamente anidadas (no se cruzan)</li>
+        <li>Los atributos van entre comillas (simples o dobles)</li>
+        <li>Diferencia mayúsculas/minúsculas (&lt;Libro&gt; ≠ &lt;libro&gt;)</li>
+      </ul>
+
+      <p><strong>XML válido (valid):</strong> Un documento es válido si, además de estar bien formado, cumple con una DTD o Schema que define la estructura permitida (qué elementos pueden aparecer, en qué orden, qué atributos tienen, etc.).</p>
+
+      <div class="cd">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!-- Documento XML bien formado de ejemplo --&gt;
+&lt;biblioteca&gt;
+  &lt;libro id="1"&gt;
+    &lt;titulo&gt;El Quijote&lt;/titulo&gt;
+    &lt;autor&gt;Miguel de Cervantes&lt;/autor&gt;
+    &lt;anyo&gt;1605&lt;/anyo&gt;
+    &lt;precio moneda="EUR"&gt;29.95&lt;/precio&gt;
+  &lt;/libro&gt;
+  &lt;libro id="2"&gt;
+    &lt;titulo&gt;La Celestina&lt;/titulo&gt;
+    &lt;autor&gt;Fernando de Rojas&lt;/autor&gt;
+    &lt;anyo&gt;1499&lt;/anyo&gt;
+  &lt;/libro&gt;
+&lt;/biblioteca&gt;</div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+
+      <p><strong>Ejemplos de XML mal formado (errores típicos):</strong></p>
+      <div class="cd"><span class="tag-cmt">&lt;!-- Error 1: Etiquetas cruzadas (mal anidadas) --&gt;</span>
+&lt;padre&gt;&lt;hijo&gt;texto&lt;/padre&gt;&lt;/hijo&gt;
+
+<span class="tag-cmt">&lt;!-- Error 2: Dos elementos raíz --&gt;</span>
+&lt;libro&gt;...&lt;/libro&gt;
+&lt;libro&gt;...&lt;/libro&gt;
+
+<span class="tag-cmt">&lt;!-- Error 3: Atributo sin comillas --&gt;</span>
+&lt;libro id=1&gt;
+
+<span class="tag-cmt">&lt;!-- Error 4: Etiqueta sin cerrar --&gt;</span>
+&lt;titulo&gt;El Quijote
+
+<span class="tag-cmt">&lt;!-- Error 5: Case sensitive --&gt;</span>
+&lt;Libro&gt;&lt;/libro&gt;</div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+    </div>
+  </details>
+
+  <div class="box yellow">
+    <span>⚠️</span>
+    <span><strong>Errores típicos de examen en XML:</strong> (1) Etiquetas que se cruzan (mal anidadas). (2) Múltiples elementos raíz. (3) Atributos sin comillas. (4) No cerrar etiquetas. (5) Case-sensitive (Libro ≠ libro). (6) Usar caracteres & o < sin escaparlos con entidades.</span>
+  </div>
+
+  <div class="subsec" id="ra456-ejercicios">
+  <h3 style="font-size:14px;margin:14px 0 6px;color:var(--yellow)">2. Ejercicios oficiales — UD 8.1 XML</h3>
+
+  <div class="card">
+    <p>Estos son los <strong>9 ejercicios del PDF oficial del profesor</strong> (<code>UD_8.1_ejercicios_solucionados.pdf</code>). Cada ejercicio incluye enunciado y solución oficial.</p>
+  </div>
+
+  <!-- ============ EJERCICIO 1 ============ -->
+  <h4 id="ra456-ej1" style="font-size:13px;color:var(--accent);margin:16px 0 4px">📝 Ejercicio 1 — Primer documento XML</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Copia el siguiente ejemplo en un documento mediante un editor de texto sencillo (Bloc de notas, gedit). Guárdalo con extensión .XML y ábrelo con un navegador.</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;nombre&gt;</span>
+  <span class="tag-xml">&lt;nombre_pila&gt;</span>Juan Martín<span class="tag-xml">&lt;/nombre_pila&gt;</span>
+  <span class="tag-xml">&lt;apellidos&gt;</span>Fernández Moreno de la Vega<span class="tag-xml">&lt;/apellidos&gt;</span>
+<span class="tag-xml">&lt;/nombre&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+      <p>Este ejercicio no tiene ningún misterio. Es el XML más básico: declaración, elemento raíz, elementos hijo y contenido textual.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Este documento XML representa un nombre completo de persona. La estructura es deliberadamente simple para mostrar la sintaxis básica de XML: declaración, elemento raíz, elementos hijo anidados y contenido textual.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>El elemento raíz es <code>&lt;nombre&gt;</code>. Dentro tiene dos hijos directos: <code>&lt;nombre_pila&gt;</code> (el nombre de pila) y <code>&lt;apellidos&gt;</code> (los apellidos). No hay atributos, solo contenido textual.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;nombre&gt;</code> — Elemento raíz obligatorio. Contiene todo el documento.</li>
+  <li><code>&lt;nombre_pila&gt;</code> — Almacena el nombre de pila: "Juan Martín".</li>
+  <li><code>&lt;apellidos&gt;</code> — Almacena los apellidos: "Fernández Moreno de la Vega".</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>nombre &#8594; [nombre_pila, apellidos]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD explícita. El documento está <strong>bien formado</strong>: tiene declaración XML, un único elemento raíz, etiquetas correctamente anidadas y cerradas, y los nombres de etiqueta distinguen mayúsculas/minúsculas (todo en minúsculas, consistente).</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 2 ============ -->
+  <h4 id="ra456-ej2" style="font-size:13px;color:var(--green);margin:16px 0 4px">📝 Ejercicio 2 — Pedido</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Crea un documento XML para el siguiente texto, marcando los campos: destinatario del pedido, artículo pedido, dirección de entrega, fecha de entrega.</p>
+    <div class="cd" style="border:1px solid var(--border);margin-top:6px">Pedido para el señor Juan Delgado Martínez. El pedido se compone de una bicicleta A2023. A entregar en la calle Barco 4, tercer piso, letra A, el día 19-5-2000.</div>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;pedido&gt;</span>
+  <span class="tag-xml">&lt;destinatario&gt;</span>Juan Delgado Martínez<span class="tag-xml">&lt;/destinatario&gt;</span>
+  <span class="tag-xml">&lt;articulo&gt;</span>bicicleta A2023<span class="tag-xml">&lt;/articulo&gt;</span>
+  <span class="tag-xml">&lt;direccion&gt;</span>C/ Barco 4, tercer piso, letra A<span class="tag-xml">&lt;/direccion&gt;</span>
+  <span class="tag-xml">&lt;fecha&gt;</span>19-5-2000<span class="tag-xml">&lt;/fecha&gt;</span>
+<span class="tag-xml">&lt;/pedido&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+      <p><strong>Variante válida propuesta en clase:</strong></p>
+      <div class="cd"><span class="tag-xml">&lt;direccion&gt;</span>
+  <span class="tag-xml">&lt;calle&gt;</span>Barco<span class="tag-xml">&lt;/calle&gt;</span>
+  <span class="tag-xml">&lt;numero&gt;</span>4<span class="tag-xml">&lt;/numero&gt;</span>
+  <span class="tag-xml">&lt;piso&gt;</span>tercero, letra A<span class="tag-xml">&lt;/piso&gt;</span>
+<span class="tag-xml">&lt;/direccion&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> El XML modela un pedido comercial con los datos esenciales: a quién va dirigido, qué artículo se pide, dónde entregarlo y la fecha de entrega. Se incluye una variante que desglosa la dirección en sub-elementos para mayor granularidad.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;pedido&gt;</code>. Hijos directos: <code>&lt;destinatario&gt;</code>, <code>&lt;articulo&gt;</code>, <code>&lt;direccion&gt;</code> y <code>&lt;fecha&gt;</code>. Todos son elementos hoja (solo contienen texto).</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;pedido&gt;</code> — Raíz. Representa el pedido completo.</li>
+  <li><code>&lt;destinatario&gt;</code> — Nombre de la persona que recibe: "Juan Delgado Martínez". Requerido.</li>
+  <li><code>&lt;articulo&gt;</code> — Producto solicitado: "bicicleta A2023". Requerido.</li>
+  <li><code>&lt;direccion&gt;</code> — Dirección completa de entrega. Requerido.</li>
+  <li><code>&lt;fecha&gt;</code> — Fecha de entrega: "19-5-2000". Requerido.</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>pedido &#8594; [destinatario, articulo, direccion, fecha]</code></p>
+<p><strong>Variante:</strong> La dirección puede desglosarse en <code>direccion &#8594; [calle, numero, piso]</code>. Ambas formas son válidas; la elección depende de si necesitas tratar cada parte por separado.</p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. El documento está bien formado: única raíz, etiquetas cerradas, correcto anidamiento. Los nombres descriptivos en español son válidos en XML.</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 3 ============ -->
+  <h4 id="ra456-ej3" style="font-size:13px;color:var(--yellow);margin:16px 0 4px">📝 Ejercicio 3 — Mensaje (estructura árbol)</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Escribir un documento XML que represente la estructura y datos de un mensaje. Completar el contenido para que tenga 3 párrafos: "¿Hola qué tal?", "Hace mucho tiempo que no escribes. A ver si llamas y quedamos pronto.", "Un saludo."</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;mensaje&gt;</span>
+  <span class="tag-xml">&lt;remitente&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Alfredo Reino<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;email&gt;</span>alf@ibium.com<span class="tag-xml">&lt;/email&gt;</span>
+  <span class="tag-xml">&lt;/remitente&gt;</span>
+  <span class="tag-xml">&lt;destinatario&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Bill Clinton<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;email&gt;</span>president@whitehouse.gov<span class="tag-xml">&lt;/email&gt;</span>
+  <span class="tag-xml">&lt;/destinatario&gt;</span>
+  <span class="tag-xml">&lt;asunto&gt;</span>Hola Bill<span class="tag-xml">&lt;/asunto&gt;</span>
+  <span class="tag-xml">&lt;texto&gt;</span>
+    <span class="tag-xml">&lt;parrafo&gt;</span>¿Hola qué tal?<span class="tag-xml">&lt;/parrafo&gt;</span>
+    <span class="tag-xml">&lt;parrafo&gt;</span>Hace mucho tiempo que no escribes. A ver si llamas y quedamos pronto.<span class="tag-xml">&lt;/parrafo&gt;</span>
+    <span class="tag-xml">&lt;parrafo&gt;</span>Un saludo.<span class="tag-xml">&lt;/parrafo&gt;</span>
+  <span class="tag-xml">&lt;/texto&gt;</span>
+<span class="tag-xml">&lt;/mensaje&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+      <p><strong>Importante:</strong> Aunque es válido poner <code>&lt;parrafo1&gt;</code>...<code>&lt;parrafoN&gt;</code>, no es útil porque no podrías recuperar todos los párrafos "de golpe" si cada etiqueta tiene un nombre distinto. Mejor usar la misma etiqueta <code>&lt;parrafo&gt;</code> para todos.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Este XML representa un mensaje de correo electrónico con remitente, destinatario, asunto y cuerpo. La estructura en árbol refleja los componentes típicos de un email, y el cuerpo se divide en párrafos independientes usando el mismo nombre de etiqueta.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;mensaje&gt;</code>. Tiene cuatro ramas principales: <code>&lt;remitente&gt;</code>, <code>&lt;destinatario&gt;</code>, <code>&lt;asunto&gt;</code> y <code>&lt;texto&gt;</code>. Tanto <code>remitente</code> como <code>destinatario</code> se componen de <code>nombre</code> + <code>email</code>. La etiqueta <code>&lt;texto&gt;</code> contiene múltiples ocurrencias de <code>&lt;parrafo&gt;</code>.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;mensaje&gt;</code> — Raíz del documento.</li>
+  <li><code>&lt;remitente&gt;</code> — Contenedor con <code>nombre</code> ("Alfredo Reino") y <code>email</code> ("alf@ibium.com").</li>
+  <li><code>&lt;destinatario&gt;</code> — Misma estructura: <code>nombre</code> ("Bill Clinton") y <code>email</code> ("president@whitehouse.gov").</li>
+  <li><code>&lt;asunto&gt;</code> — Línea de asunto: "Hola Bill".</li>
+  <li><code>&lt;texto&gt;</code> — Contenedor del cuerpo del mensaje. Hijo: <code>&lt;parrafo&gt;</code> (se repite 3 veces).</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>mensaje &#8594; [remitente &#8594; [nombre, email], destinatario &#8594; [nombre, email], asunto, texto &#8594; [parrafo, parrafo, parrafo]]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. La clave pedagógica es entender por qué NO se deben usar nombres distintos (<code>parrafo1</code>, <code>parrafo2</code>, <code>parrafo3</code>): al recorrer el árbol con un parser, todos los <code>&lt;parrafo&gt;</code> se obtienen con una sola consulta, mientras que nombres distintos obligarían a consultar uno por uno. El documento está bien formado.</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 4 ============ -->
+  <h4 id="ra456-ej4" style="font-size:13px;color:var(--red);margin:16px 0 4px">📝 Ejercicio 4 — Carta de desayunos</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Representar la estructura en árbol y escribir un XML con la carta del menú de desayunos de un restaurante. Incluye desayunos con nombre, precio, descripción y calorías.</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;cartadesayunos&gt;</span>
+  <span class="tag-xml">&lt;desayuno&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Gofres Belgas<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;precio&gt;</span>5.95<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Dos de nuestros famosos Gofres belgas con abundante sirope<span class="tag-xml">&lt;/descripcion&gt;</span>
+    <span class="tag-xml">&lt;calorias&gt;</span>650<span class="tag-xml">&lt;/calorias&gt;</span>
+  <span class="tag-xml">&lt;/desayuno&gt;</span>
+  <span class="tag-xml">&lt;desayuno&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Gobres Belgas con fresas<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;precio&gt;</span>7.95<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Ligeros gofres belgas cubiertos de fresas y nata montada<span class="tag-xml">&lt;/descripcion&gt;</span>
+    <span class="tag-xml">&lt;calorias&gt;</span>900<span class="tag-xml">&lt;/calorias&gt;</span>
+  <span class="tag-xml">&lt;/desayuno&gt;</span>
+  <span class="tag-xml">&lt;desayuno&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Gofres Belgas con frutas del bosque<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;precio&gt;</span>8.95<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Ligeros gofres belgas cubiertos con frutas del bosque y nata montada<span class="tag-xml">&lt;/descripcion&gt;</span>
+    <span class="tag-xml">&lt;calorias&gt;</span>900<span class="tag-xml">&lt;/calorias&gt;</span>
+  <span class="tag-xml">&lt;/desayuno&gt;</span>
+  <span class="tag-xml">&lt;desayuno&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Tostada Francesa<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;precio&gt;</span>4.50<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Dos gruesas rebanadas de nuestro pan francés<span class="tag-xml">&lt;/descripcion&gt;</span>
+    <span class="tag-xml">&lt;calorias&gt;</span>600<span class="tag-xml">&lt;/calorias&gt;</span>
+  <span class="tag-xml">&lt;/desayuno&gt;</span>
+  <span class="tag-xml">&lt;desayuno&gt;</span>
+    <span class="tag-xml">&lt;nombre&gt;</span>Desayuno de la casa<span class="tag-xml">&lt;/nombre&gt;</span>
+    <span class="tag-xml">&lt;precio&gt;</span>6.95<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Dos huevos, bacon o salchicha, tostada y patatas fritas<span class="tag-xml">&lt;/descripcion&gt;</span>
+    <span class="tag-xml">&lt;calorias&gt;</span>950<span class="tag-xml">&lt;/calorias&gt;</span>
+  <span class="tag-xml">&lt;/desayuno&gt;</span>
+<span class="tag-xml">&lt;/cartadesayunos&gt;</span></div>
+      <p><strong>Dudas surgidas en clase:</strong> (1) Si el nombre del desayuno es el padre (p.ej. <code>&lt;Gofres_Belgas&gt;</code>) cada etiqueta sería distinta y no podrías recuperar todos los desayunos fácilmente. (2) Si pones <code>&lt;nombre&gt;</code> como hermano de <code>&lt;precio&gt;</code> sin agrupar en <code>&lt;desayuno&gt;</code>, un programa no podría recuperar el precio asociado a cada nombre.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Un catálogo de desayunos de restaurante. Cada desayuno tiene nombre, precio, descripción y calorías. La estructura demuestra cómo agrupar datos repetitivos bajo un contenedor común (<code>&lt;desayuno&gt;</code>) para mantener la relación entre los campos.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;cartadesayunos&gt;</code>. Contiene 5 elementos <code>&lt;desayuno&gt;</code>, todos hermanos directos. Cada <code>&lt;desayuno&gt;</code> contiene en orden: <code>&lt;nombre&gt;</code>, <code>&lt;precio&gt;</code>, <code>&lt;descripcion&gt;</code> y <code>&lt;calorias&gt;</code>.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;cartadesayunos&gt;</code> — Raíz. Agrupa todos los desayunos.</li>
+  <li><code>&lt;desayuno&gt;</code> — Contenedor por plato. Se repite 5 veces. Es el elemento que asocia los datos de un mismo desayuno.</li>
+  <li><code>&lt;nombre&gt;</code> — Nombre del plato (ej: "Gofres Belgas").</li>
+  <li><code>&lt;precio&gt;</code> — Precio en formato decimal (ej: "5.95").</li>
+  <li><code>&lt;descripcion&gt;</code> — Descripción textual del plato.</li>
+  <li><code>&lt;calorias&gt;</code> — Valor calórico en kcal (ej: "650").</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>cartadesayunos &#8594; desayuno* &#8594; [nombre, precio, descripcion, calorias]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. La solución evita dos errores típicos: (1) usar el nombre del plato como etiqueta (<code>&lt;Gofres_Belgas&gt;</code>) porque cada desayuno tendría una etiqueta distinta; (2) poner <code>&lt;nombre&gt;</code>, <code>&lt;precio&gt;</code> como hijos directos de la raíz sin agrupar, perdiendo la relación entre los campos de un mismo plato.</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 5 ============ -->
+  <h4 id="ra456-ej5" style="font-size:13px;color:var(--purple);margin:16px 0 4px">📝 Ejercicio 5 — ¿Están bien formados? (corregir errores)</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Decir si los siguientes documentos XML están bien formados. Si no lo están, decir por qué y corregir los errores.</p>
+
+    <p><strong>Documento 1:</strong></p>
+    <div class="cd" style="border:1px solid var(--red);margin:6px 0"><span class="tag-xml">&lt;?xml version="1.0"?&gt;</span>
+<span class="tag-xml">&lt;documento&gt;</span>
+  <span class="tag-xml">&lt;p&gt;</span>Mi Primer <span class="tag-xml">&lt;destacar</span> importancia=1<span class="tag-xml">&gt;</span>documento XML<span class="tag-xml">&lt;/destacar&gt;&lt;/p]</span>
+  <span class="tag-xml">&lt;p&gt;</span>Comienza con la etiqueta &lt;documento&gt;<span class="tag-xml">&lt;/p&gt;</span>
+  <span class="tag-xml">&lt;p&gt;</span>A continuacion colocamos un elemento sin contenido<span class="tag-xml">&lt;/p&gt;</span>
+  <span class="tag-xml">&lt;imagen</span> fichero="imagen.gif"<span class="tag-xml">&gt;</span>
+<span class="tag-xml">&lt;/documento&gt;</span></div>
+
+    <p><strong>Documento 2:</strong></p>
+    <div class="cd" style="border:1px solid var(--red);margin:6px 0"><span class="tag-xml">&lt;?xml version="1.0"?&gt;</span>
+<span class="tag-xml">&lt;libros&gt;</span>
+  <span class="tag-xml">&lt;libro</span> id="quijote"<span class="tag-xml">&gt;</span>
+    <span class="tag-xml">&lt;titulo&gt;</span>El Quijote<span class="tag-xml">&lt;/titulo&gt;</span>
+    <span class="tag-xml">&lt;autor</span> nombre=cervantes nombre=cervantes<span class="tag-xml">&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Es el m<span class="tag-xml">&lt;ejor</span> libro de cervantes.<span class="tag-xml">&lt;/descripcion&gt;</span>
+  <span class="tag-xml">&lt;/libro]</span>
+<span class="tag-xml">&lt;/Libros&gt;</span></div>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial — Errores y correcciones</summary>
+    <div class="vm-c">
+      <p><strong>Documento 1 — Errores:</strong></p>
+      <ol>
+        <li><code>&lt;p&gt;...&lt;/p]</code> → la etiqueta de cierre está mal (<code>&lt;/p]</code> en vez de <code>&lt;/p&gt;</code>).</li>
+        <li><code>importancia=1</code> → el atributo necesita comillas: <code>importancia="1"</code>.</li>
+        <li><code>&lt;p&gt;Comienza con la etiqueta &lt;documento&gt;</code> → el carácter <code>&lt;</code> se interpreta como inicio de etiqueta. Debe escaparse: <code>&amp;lt;documento&amp;gt;</code>.</li>
+        <li><code>&lt;imagen fichero="imagen.gif"&gt;</code> → etiqueta sin cerrar: debe ser <code>&lt;imagen fichero="imagen.gif"&gt;&lt;/imagen&gt;</code> o <code>&lt;imagen fichero="imagen.gif"/&gt;</code>.</li>
+      </ol>
+      <p><strong>Documento 1 — Solución corregida:</strong></p>
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0"?&gt;</span>
+<span class="tag-xml">&lt;documento&gt;</span>
+  <span class="tag-xml">&lt;p&gt;</span>Mi Primer <span class="tag-xml">&lt;destacar</span> <span class="tag-attr">importancia</span>=<span class="tag-val">"1"</span><span class="tag-xml">&gt;</span>documento XML<span class="tag-xml">&lt;/destacar&gt;&lt;/p&gt;</span>
+  <span class="tag-xml">&lt;p&gt;</span>Comienza con la etiqueta <span class="tag-xml">&amp;lt;documento&amp;gt;&lt;/p&gt;</span>
+  <span class="tag-xml">&lt;p&gt;</span>A continuacion colocamos un elemento sin contenido<span class="tag-xml">&lt;/p&gt;</span>
+  <span class="tag-xml">&lt;imagen</span> <span class="tag-attr">fichero</span>=<span class="tag-val">"imagen.gif"</span><span class="tag-xml">&gt;&lt;/imagen&gt;</span>
+<span class="tag-xml">&lt;/documento&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+
+      <p><strong>Documento 2 — Errores:</strong></p>
+      <ol>
+        <li><code>&lt;/libro]</code> → la etiqueta debe cerrarse con <code>&gt;</code>, no con <code>]</code>.</li>
+        <li><code>&lt;autor nombre=cervantes nombre=cervantes&gt;</code> → atributo sin comillas y repetido. Corregir: <code>&lt;autor nombre="cervantes"&gt;&lt;/autor&gt;</code> o usar elementos anidados para múltiples autores.</li>
+        <li><code>m&lt;ejor</code> → la <code>&lt;</code> se interpreta como etiqueta. Corregir: escribir "mejor" sin <code>&lt;</code>.</li>
+        <li><code>&lt;/Libros&gt;</code> → case-sensitive: debe ser <code>&lt;/libros&gt;</code> en minúsculas.</li>
+      </ol>
+      <p><strong>Documento 2 — Solución corregida:</strong></p>
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0"?&gt;</span>
+<span class="tag-xml">&lt;libros&gt;</span>
+  <span class="tag-xml">&lt;libro</span> <span class="tag-attr">id</span>=<span class="tag-val">"quijote"</span><span class="tag-xml">&gt;</span>
+    <span class="tag-xml">&lt;titulo&gt;</span>El Quijote<span class="tag-xml">&lt;/titulo&gt;</span>
+    <span class="tag-xml">&lt;autor</span> <span class="tag-attr">nombre</span>=<span class="tag-val">"cervantes"</span><span class="tag-xml">&gt;&lt;/autor&gt;</span>
+    <span class="tag-xml">&lt;descripcion&gt;</span>Es el mejor libro de cervantes.<span class="tag-xml">&lt;/descripcion&gt;</span>
+  <span class="tag-xml">&lt;/libro&gt;</span>
+<span class="tag-xml">&lt;/libros&gt;</span></div>
+<button class="exp-btn" onclick="e(this)">📖 Explicar</button>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Este ejercicio presenta dos documentos XML con errores sintácticos. El objetivo es identificar cada infracción de las reglas de "bien formado" y corregirla. Es el ejercicio más formativo para interiorizar la sintaxis XML.</p>
+
+<p><strong>Documento 1 — Estructura</strong></p>
+<p>Raíz: <code>&lt;documento&gt;</code>. Hijos: tres <code>&lt;p&gt;</code> y un <code>&lt;imagen&gt;</code>. Hay <strong>4 errores</strong>:</p>
+<ol>
+  <li><strong>Cierre incorrecto:</strong> <code>&lt;/p]</code> usa <code>]</code> en vez de <code>&gt;</code>. Toda etiqueta de cierre debe terminar con <code>&gt;</code>.</li>
+  <li><strong>Atributo sin comillas:</strong> <code>importancia=1</code> debe ser <code>importancia="1"</code>. Los valores de atributos siempre van entre comillas.</li>
+  <li><strong>Carácter &lt; sin escapar:</strong> <code>&lt;documento&gt;</code> en el texto se interpreta como nueva etiqueta. Debe ser <code>&amp;lt;documento&amp;gt;</code>.</li>
+  <li><strong>Etiqueta sin cerrar:</strong> <code>&lt;imagen&gt;</code> no tiene cierre. Solución: <code>&lt;imagen /&gt;</code> o <code>&lt;imagen&gt;&lt;/imagen&gt;</code>.</li>
+</ol>
+
+<p><strong>Documento 2 — Estructura</strong></p>
+<p>Raíz: <code>&lt;libros&gt;</code>. Hijo: <code>&lt;libro&gt;</code> (con <code>id="quijote"</code>). Dentro: <code>&lt;titulo&gt;</code>, <code>&lt;autor&gt;</code>, <code>&lt;descripcion&gt;</code>. Hay <strong>4 errores</strong>:</p>
+<ol>
+  <li><strong>Cierre incorrecto:</strong> <code>&lt;/libro]</code> &#8594; debe ser <code>&lt;/libro&gt;</code>.</li>
+  <li><strong>Atributo repetido y sin comillas:</strong> <code>nombre=cervantes nombre=cervantes</code> &#8594; atributo duplicado y sin comillas. Además <code>&lt;autor&gt;</code> no tiene cierre.</li>
+  <li><strong>Carácter &lt; en contenido:</strong> <code>m&lt;ejor</code> se interpreta como etiqueta. Debe ser "mejor".</li>
+  <li><strong>Case-sensitive:</strong> <code>&lt;/Libros&gt;</code> no coincide con <code>&lt;libros&gt;</code>. En XML mayúsculas y minúsculas son distintas.</li>
+</ol>
+
+<p><strong>Reglas que se violan:</strong></p>
+<ul>
+  <li>Toda etiqueta abierta debe cerrarse con <code>&gt;</code>.</li>
+  <li>Los atributos requieren comillas en su valor.</li>
+  <li>Los caracteres <code>&lt;</code> y <code>&amp;</code> en contenido textual deben escaparse con entidades.</li>
+  <li>XML distingue mayúsculas/minúsculas en nombres de etiqueta.</li>
+</ul>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 6 ============ -->
+  <h4 id="ra456-ej6" style="font-size:13px;color:var(--accent);margin:16px 0 4px">📝 Ejercicio 6 — Coches (concesionario)</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Un concesionario envía información de vehículos en oferta: marca, modelo, motor, matrícula, kilómetros, precio original, precio oferta, extras, fotos. Crear XML con al menos 2 coches.</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;oferta&gt;</span>
+  <span class="tag-xml">&lt;vehiculo&gt;</span>
+    <span class="tag-xml">&lt;marca&gt;</span>ford<span class="tag-xml">&lt;/marca&gt;</span>
+    <span class="tag-xml">&lt;modelo&gt;</span>focus<span class="tag-xml">&lt;/modelo&gt;</span>
+    <span class="tag-xml">&lt;motor&gt;</span>duratorc 1.4<span class="tag-xml">&lt;/motor&gt;</span>
+    <span class="tag-xml">&lt;matricula&gt;</span>1234AAA<span class="tag-xml">&lt;/matricula&gt;</span>
+    <span class="tag-xml">&lt;kilometros&gt;</span>12500<span class="tag-xml">&lt;/kilometros&gt;</span>
+    <span class="tag-xml">&lt;precio_inicial&gt;</span>12000<span class="tag-xml">&lt;/precio_inicial&gt;</span>
+    <span class="tag-xml">&lt;precio_oferta&gt;</span>10000<span class="tag-xml">&lt;/precio_oferta&gt;</span>
+    <span class="tag-xml">&lt;extra&gt;</span>pintura metalizada<span class="tag-xml">&lt;/extra&gt;</span>
+    <span class="tag-xml">&lt;extra&gt;</span>llantas<span class="tag-xml">&lt;/extra&gt;</span>
+    <span class="tag-xml">&lt;foto&gt;</span>11325.jpg<span class="tag-xml">&lt;/foto&gt;</span>
+    <span class="tag-xml">&lt;foto&gt;</span>11326.jpg<span class="tag-xml">&lt;/foto&gt;</span>
+  <span class="tag-xml">&lt;/vehiculo&gt;</span>
+  <span class="tag-xml">&lt;vehiculo&gt;</span>
+    <span class="tag-xml">&lt;marca&gt;</span>ford<span class="tag-xml">&lt;/marca&gt;</span>
+    <span class="tag-xml">&lt;modelo&gt;</span>focus<span class="tag-xml">&lt;/modelo&gt;</span>
+    <span class="tag-xml">&lt;motor&gt;</span>duratorc 2.0<span class="tag-xml">&lt;/motor&gt;</span>
+    <span class="tag-xml">&lt;matricula&gt;</span>1235AAA<span class="tag-xml">&lt;/matricula&gt;</span>
+    <span class="tag-xml">&lt;kilometros&gt;</span>125000<span class="tag-xml">&lt;/kilometros&gt;</span>
+    <span class="tag-xml">&lt;precio_inicial&gt;</span>10000<span class="tag-xml">&lt;/precio_inicial&gt;</span>
+    <span class="tag-xml">&lt;precio_oferta&gt;</span>9000<span class="tag-xml">&lt;/precio_oferta&gt;</span>
+    <span class="tag-xml">&lt;extra&gt;</span>pintura metalizada<span class="tag-xml">&lt;/extra&gt;</span>
+    <span class="tag-xml">&lt;extra&gt;</span>spoiler trasero<span class="tag-xml">&lt;/extra&gt;</span>
+    <span class="tag-xml">&lt;extra&gt;</span>climatizador<span class="tag-xml">&lt;/extra&gt;</span>
+    <span class="tag-xml">&lt;foto&gt;</span>11327.jpg<span class="tag-xml">&lt;/foto&gt;</span>
+    <span class="tag-xml">&lt;foto&gt;</span>11328.jpg<span class="tag-xml">&lt;/foto&gt;</span>
+  <span class="tag-xml">&lt;/vehiculo&gt;</span>
+<span class="tag-xml">&lt;/oferta&gt;</span></div>
+      <p>Nota: los elementos <code>&lt;extra&gt;</code> y <code>&lt;foto&gt;</code> se repiten porque pueden haber múltiples valores. Así es válido y práctico.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Este XML modela la oferta de un concesionario de coches de segunda mano. Cada vehículo incluye datos técnicos (marca, modelo, motor, matrícula, kilómetros), precios (inicial y oferta), extras opcionales y fotos. Demuestra cómo manejar elementos repetitivos de forma correcta.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;oferta&gt;</code>. Contiene 2 elementos <code>&lt;vehiculo&gt;</code>. Cada vehículo tiene: <code>&lt;marca&gt;</code>, <code>&lt;modelo&gt;</code>, <code>&lt;motor&gt;</code>, <code>&lt;matricula&gt;</code>, <code>&lt;kilometros&gt;</code>, <code>&lt;precio_inicial&gt;</code>, <code>&lt;precio_oferta&gt;</code>, y luego múltiples <code>&lt;extra&gt;</code> y <code>&lt;foto&gt;</code>.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;oferta&gt;</code> — Raíz. Agrupa todos los vehículos en oferta.</li>
+  <li><code>&lt;vehiculo&gt;</code> — Contenedor por coche. Se repite una vez por cada vehículo.</li>
+  <li><code>&lt;marca&gt;</code> / <code>&lt;modelo&gt;</code> / <code>&lt;motor&gt;</code> — Datos de identificación del coche.</li>
+  <li><code>&lt;matricula&gt;</code> — Matrícula (ej: "1234AAA").</li>
+  <li><code>&lt;kilometros&gt;</code> — Kilometraje actual.</li>
+  <li><code>&lt;precio_inicial&gt;</code> / <code>&lt;precio_oferta&gt;</code> — Precio original y precio rebajado.</li>
+  <li><code>&lt;extra&gt;</code> — Elemento repetible. Cada ocurrencia es un equipamiento distinto.</li>
+  <li><code>&lt;foto&gt;</code> — Elemento repetible. Cada ocurrencia es una imagen (nombre de archivo).</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>oferta &#8594; vehiculo* &#8594; [marca, modelo, motor, matricula, kilometros, precio_inicial, precio_oferta, extra*, foto*]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. Es importante notar que <code>&lt;extra&gt;</code> y <code>&lt;foto&gt;</code> se repiten con el mismo nombre de etiqueta. Esto es válido y recomendable: un parser que busque "extra" encontrará todos los extras de golpe, a diferencia de usar nombres distintos (<code>&lt;extra1&gt;</code>, <code>&lt;extra2&gt;</code>).</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 7 ============ -->
+  <h4 id="ra456-ej7" style="font-size:13px;color:var(--green);margin:16px 0 4px">📝 Ejercicio 7 — Árboles</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Escribir un documento XML con información botánica sobre árboles: nombre latino, nombre común, vegetación, altura, estructura, color primavera, color otoño, resistencia heladas. Incluir: Acer monspessulanum, Olea europea, Platanus orientalis, Quercus ilex.</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;ARBOLES&gt;</span>
+  <span class="tag-xml">&lt;ESPECIE&gt;</span>
+    <span class="tag-xml">&lt;n.latin&gt;</span>Acer monspessulanum<span class="tag-xml">&lt;/n.latin&gt;</span>
+    <span class="tag-xml">&lt;n.vulgar&gt;</span>Arce de Montpellier, Arce menor<span class="tag-xml">&lt;/n.vulgar&gt;</span>
+    <span class="tag-xml">&lt;hoja&gt;</span>Caducifolio<span class="tag-xml">&lt;/hoja&gt;</span>
+    <span class="tag-xml">&lt;altura&gt;</span>De 6 a 10 metro<span class="tag-xml">&lt;/altura&gt;</span>
+    <span class="tag-xml">&lt;estructura&gt;</span>Copa esférica. Tronco principal recto con bifurcaciones. Ramaje colgante<span class="tag-xml">&lt;/estructura&gt;</span>
+    <span class="tag-xml">&lt;color_prim&gt;</span>Haz verde brillante, envés verde blanquecino<span class="tag-xml">&lt;/color_prim&gt;</span>
+    <span class="tag-xml">&lt;color_otonyo&gt;&lt;/color_otonyo&gt;</span>
+    <span class="tag-xml">&lt;resistencia&gt;</span>Heladas fuertes (hasta -15ºC)<span class="tag-xml">&lt;/resistencia&gt;</span>
+  <span class="tag-xml">&lt;/ESPECIE&gt;</span>
+  <span class="tag-xml">&lt;ESPECIE&gt;</span>
+    <span class="tag-xml">&lt;n.latin&gt;</span>Olea europea<span class="tag-xml">&lt;/n.latin&gt;</span>
+    <span class="tag-xml">&lt;n.vulgar&gt;</span>Olivo<span class="tag-xml">&lt;/n.vulgar&gt;</span>
+    <span class="tag-xml">&lt;hoja&gt;</span>Perenne<span class="tag-xml">&lt;/hoja&gt;</span>
+    <span class="tag-xml">&lt;altura&gt;</span>De 8 a 15 metros<span class="tag-xml">&lt;/altura&gt;</span>
+    <span class="tag-xml">&lt;estructura&gt;</span>Copa irregular. Tronco principal irregular con bifurcaciones.<span class="tag-xml">&lt;/estructura&gt;</span>
+    <span class="tag-xml">&lt;color_prim&gt;&lt;/color_prim&gt;</span>
+    <span class="tag-xml">&lt;color_otonyo&gt;&lt;/color_otonyo&gt;</span>
+    <span class="tag-xml">&lt;resistencia&gt;&lt;/resistencia&gt;</span>
+  <span class="tag-xml">&lt;/ESPECIE&gt;</span>
+  <span class="tag-xml">&lt;ESPECIE&gt;</span>
+    <span class="tag-xml">&lt;n.latin&gt;</span>Platanus orientalis<span class="tag-xml">&lt;/n.latin&gt;</span>
+    <span class="tag-xml">&lt;n.vulgar&gt;</span>Platano<span class="tag-xml">&lt;/n.vulgar&gt;</span>
+    <span class="tag-xml">&lt;hoja&gt;</span>Caducifolio<span class="tag-xml">&lt;/hoja&gt;</span>
+    <span class="tag-xml">&lt;altura&gt;</span>De 20 a 25 metros<span class="tag-xml">&lt;/altura&gt;</span>
+    <span class="tag-xml">&lt;estructura&gt;</span>Copa ovoidal. Tronco principal recto. Ramaje expandido<span class="tag-xml">&lt;/estructura&gt;</span>
+    <span class="tag-xml">&lt;color_prim&gt;</span>Haz verde medio, enves verde claro<span class="tag-xml">&lt;/color_prim&gt;</span>
+    <span class="tag-xml">&lt;color_otonyo&gt;</span>Ocre<span class="tag-xml">&lt;/color_otonyo&gt;</span>
+    <span class="tag-xml">&lt;resistencia&gt;</span>Heladas fuertes (hasta -20ºC)<span class="tag-xml">&lt;/resistencia&gt;</span>
+  <span class="tag-xml">&lt;/ESPECIE&gt;</span>
+  <span class="tag-xml">&lt;ESPECIE&gt;</span>
+    <span class="tag-xml">&lt;n.latin&gt;</span>Quercus ilex<span class="tag-xml">&lt;/n.latin&gt;</span>
+    <span class="tag-xml">&lt;n.vulgar&gt;</span>Encina<span class="tag-xml">&lt;/n.vulgar&gt;</span>
+    <span class="tag-xml">&lt;hoja&gt;</span>Perenne<span class="tag-xml">&lt;/hoja&gt;</span>
+    <span class="tag-xml">&lt;altura&gt;</span>En torno a 25 metros<span class="tag-xml">&lt;/altura&gt;</span>
+    <span class="tag-xml">&lt;estructura&gt;</span>Copa esférica o elíptica irregular. Tronco principal recto. Ramaje tortuoso<span class="tag-xml">&lt;/estructura&gt;</span>
+    <span class="tag-xml">&lt;color_prim&gt;</span>Plateado en hojas jóvenes. En hojas antiguas, haz verde oscuro, envés plateado<span class="tag-xml">&lt;/color_prim&gt;</span>
+    <span class="tag-xml">&lt;color_otonyo&gt;&lt;/color_otonyo&gt;</span>
+    <span class="tag-xml">&lt;resistencia&gt;</span>Heladas fuertes (hasta -15ºC)<span class="tag-xml">&lt;/resistencia&gt;</span>
+  <span class="tag-xml">&lt;/ESPECIE&gt;</span>
+<span class="tag-xml">&lt;/ARBOLES&gt;</span></div>
+      <p><strong>Detalles importantes del profesor:</strong> (1) <code>&lt;n.latin&gt;</code> incluye el punto en la etiqueta, es válido aunque inusual. (2) Incluir SIEMPRE <code>&lt;color_prim&gt;</code> y <code>&lt;color_otonyo&gt;</code> aunque estén vacíos, para mantener la estructura homogénea. (3) Evita usar la eñe o acentos en etiquetas XML, no son caracteres ASCII básicos y pueden dar problemas en XML 1.0.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Catálogo botánico de especies arbóreas. Cada ficha contiene nombre latino, nombre común, tipo de hoja, altura, estructura de copa, colores estacionales y resistencia a heladas. Es un ejemplo de datos científicos estructurados jerárquicamente.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;ARBOLES&gt;</code> (mayúsculas). Contiene 4 elementos <code>&lt;ESPECIE&gt;</code>. Cada especie tiene 9 hijos: <code>&lt;n.latin&gt;</code>, <code>&lt;n.vulgar&gt;</code>, <code>&lt;hoja&gt;</code>, <code>&lt;altura&gt;</code>, <code>&lt;estructura&gt;</code>, <code>&lt;color_prim&gt;</code>, <code>&lt;color_otonyo&gt;</code>, <code>&lt;resistencia&gt;</code>.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;ARBOLES&gt;</code> — Raíz (mayúsculas intencionadamente).</li>
+  <li><code>&lt;ESPECIE&gt;</code> — Contenedor por árbol. Se repite 4 veces.</li>
+  <li><code>&lt;n.latin&gt;</code> — Nombre científico en latín (ej: "Acer monspessulanum"). El punto en la etiqueta es válido aunque inusual.</li>
+  <li><code>&lt;n.vulgar&gt;</code> — Nombre común o vulgar.</li>
+  <li><code>&lt;hoja&gt;</code> — Tipo: "Caducifolio" o "Perenne".</li>
+  <li><code>&lt;altura&gt;</code> — Rango de altura en metros.</li>
+  <li><code>&lt;estructura&gt;</code> — Descripción morfológica de copa y tronco.</li>
+  <li><code>&lt;color_prim&gt;</code> / <code>&lt;color_otonyo&gt;</code> — Color en primavera y otoño. Pueden estar vacíos.</li>
+  <li><code>&lt;resistencia&gt;</code> — Tolerancia a heladas.</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>ARBOLES &#8594; ESPECIE* &#8594; [n.latin, n.vulgar, hoja, altura, estructura, color_prim, color_otonyo, resistencia]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. Detalles importantes: (1) El elemento <code>&lt;n.latin&gt;</code> usa punto en el nombre — válido en XML 1.0 aunque poco común. (2) <code>&lt;color_prim&gt;</code> y <code>&lt;color_otonyo&gt;</code> se incluyen siempre aunque estén vacíos, para mantener la estructura homogénea. (3) Se evitan eñes y acentos en nombres de etiqueta por compatibilidad.</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 8 ============ -->
+  <h4 id="ra456-ej8" style="font-size:13px;color:var(--yellow);margin:16px 0 4px">📝 Ejercicio 8 — Libros (múltiples librerías)</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Crear un XML con información de libros sobre XML de varias librerías. Datos por libro: ISBN, título, nivel (básico/intermedio/avanzado), autores, editorial, fecha, web, precio. Mínimo 2 librerías con 3 libros cada una.</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;catalogo&gt;</span>
+  <span class="tag-cmt">&lt;!-- ********** LIBRERÍA 1 ************** --&gt;</span>
+  <span class="tag-xml">&lt;libreria</span> <span class="tag-attr">nombre</span>=<span class="tag-val">"Ebooks Baratos"</span> <span class="tag-attr">web</span>=<span class="tag-val">"http://www.cheapebooks.com"</span><span class="tag-xml">&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>123456789<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Básico"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>Introducción a XML<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Perico de los palotes<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Antonio de los palotes<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>La cabaña de los cuentos<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"3"</span><span class="tag-xml">&gt;</span>27-09-1999<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmlintroduction.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"euro"</span><span class="tag-xml">&gt;</span>35.56<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>987654321<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Avanzado"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>XML para expertos<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Perico de los pimientos<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Antonio de las naranjas<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>La casa oscura<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"1"</span><span class="tag-xml">&gt;</span>02-09-2002<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmladvanced.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"dolar"</span><span class="tag-xml">&gt;</span>39.56<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>456789123<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Intermedio"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>Tus pinitos en XML<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Camilo de los pimientos<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Juanjo de las naranjas<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>La casa y ya está<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"9"</span><span class="tag-xml">&gt;</span>08-08-2008<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmlintermediate.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"libra"</span><span class="tag-xml">&gt;</span>28.56<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+  <span class="tag-xml">&lt;/libreria&gt;</span>
+  <span class="tag-cmt">&lt;!-- ********** LIBRERÍA 2 ************** --&gt;</span>
+  <span class="tag-xml">&lt;libreria</span> <span class="tag-attr">nombre</span>=<span class="tag-val">"Ebooks a tutti pleni"</span> <span class="tag-attr">web</span>=<span class="tag-val">"http://www.tuttiebooks.com"</span><span class="tag-xml">&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>888987896<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Intermedio"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>XML pa el que se la pele<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Camilo José Cela<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Juan Ramón Jimenez<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>Libros pirata<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"22"</span><span class="tag-xml">&gt;</span>01-08-2011<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmlpalqueselapele.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"dolar argentino"</span><span class="tag-xml">&gt;</span>33000.55<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>123456789<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Básico"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>Introducción a XML<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Perico de los palotes<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Antonio de los palotes<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>La cabaña de los cuentos<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"3"</span><span class="tag-xml">&gt;</span>27-09-1999<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmlintroduction.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"euro"</span><span class="tag-xml">&gt;</span>10.56<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+    <span class="tag-xml">&lt;libro&gt;</span>
+      <span class="tag-xml">&lt;ISBN&gt;</span>987654321<span class="tag-xml">&lt;/ISBN&gt;</span>
+      <span class="tag-xml">&lt;tematica</span> <span class="tag-attr">nivel</span>=<span class="tag-val">"Avanzado"</span><span class="tag-xml">&gt;</span>XML<span class="tag-xml">&lt;/tematica&gt;</span>
+      <span class="tag-xml">&lt;titulo&gt;</span>XML para expertos<span class="tag-xml">&lt;/titulo&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Perico de los pimientos<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;autor&gt;</span>Antonio de las naranjas<span class="tag-xml">&lt;/autor&gt;</span>
+      <span class="tag-xml">&lt;editorial&gt;</span>La casa oscura<span class="tag-xml">&lt;/editorial&gt;</span>
+      <span class="tag-xml">&lt;fecha</span> <span class="tag-attr">num_edicion</span>=<span class="tag-val">"1"</span><span class="tag-xml">&gt;</span>02-09-2002<span class="tag-xml">&lt;/fecha&gt;</span>
+      <span class="tag-xml">&lt;web_site&gt;</span>http://xmladvanced.html<span class="tag-xml">&lt;/web_site&gt;</span>
+      <span class="tag-xml">&lt;precio</span> <span class="tag-attr">moneda</span>=<span class="tag-val">"dolar"</span><span class="tag-xml">&gt;</span>30.56<span class="tag-xml">&lt;/precio&gt;</span>
+    <span class="tag-xml">&lt;/libro&gt;</span>
+  <span class="tag-xml">&lt;/libreria&gt;</span>
+<span class="tag-xml">&lt;/catalogo&gt;</span></div>
+      <p>Nota: se usa <code>&lt;tematica nivel="Básico"&gt;XML&lt;/tematica&gt;</code> con atributo <code>nivel</code> para indicar la profundidad. Las librerías llevan atributos <code>nombre</code> y <code>web</code>.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Catálogo de libros sobre XML distribuidos en varias librerías. Cada libro tiene ISBN, temática (con nivel), título, autores (pueden ser varios), editorial, fecha (con número de edición), web y precio (con moneda). Es el ejemplo más completo de estructura multinivel con atributos en distintos niveles.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;catalogo&gt;</code>. Contiene 2 elementos <code>&lt;libreria&gt;</code>, cada una con 3 <code>&lt;libro&gt;</code>. Las librerías se distinguen por atributos (<code>nombre</code>, <code>web</code>). Cada libro tiene hasta 8 hijos, varios con atributos propios.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;catalogo&gt;</code> — Raíz del documento.</li>
+  <li><code>&lt;libreria&gt;</code> — Contenedor por tienda. Atributos: <code>nombre</code> y <code>web</code>. Se repite 2 veces.</li>
+  <li><code>&lt;libro&gt;</code> — Contenedor por título. Se repite 3 veces por librería.</li>
+  <li><code>&lt;ISBN&gt;</code> — Código identificador del libro.</li>
+  <li><code>&lt;tematica&gt;</code> — Tema (siempre "XML"). Atributo <code>nivel</code>: "Básico", "Intermedio" o "Avanzado".</li>
+  <li><code>&lt;titulo&gt;</code> — Título del libro.</li>
+  <li><code>&lt;autor&gt;</code> — Elemento repetible. Cada autor se marca con una etiqueta independiente.</li>
+  <li><code>&lt;editorial&gt;</code> — Nombre de la editorial.</li>
+  <li><code>&lt;fecha&gt;</code> — Fecha de publicación. Atributo <code>num_edicion</code>.</li>
+  <li><code>&lt;web_site&gt;</code> — URL del libro.</li>
+  <li><code>&lt;precio&gt;</code> — Precio. Atributo <code>moneda</code>: "euro", "dolar", "libra", etc.</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>catalogo &#8594; libreria* &#8594; libro* &#8594; [ISBN, tematica, titulo, autor+, editorial, fecha, web_site, precio]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. La solución demuestra atributos en distintos niveles del árbol: <code>libreria</code> lleva <code>nombre</code>+<code>web</code>; <code>tematica</code> lleva <code>nivel</code>; <code>fecha</code> lleva <code>num_edicion</code>; <code>precio</code> lleva <code>moneda</code>. Uso correcto de elementos repetibles <code>&lt;autor&gt;</code> para múltiples autores. El mismo ISBN aparece en dos librerías distintas, lo cual es válido (un libro puede venderse en varias tiendas).</p>
+</div>
+</details>
+
+  <!-- ============ EJERCICIO 9 ============ -->
+  <h4 id="ra456-ej9" style="font-size:13px;color:var(--red);margin:16px 0 4px">📝 Ejercicio 9 — CDs de música (The Beatles, Rolling Stones)</h4>
+  <div class="ej-box">
+    <h5>Enunciado</h5>
+    <p style="font-size:13px;color:var(--text2)">Escribir un documento XML para almacenar información de CDs: artista, título del CD, sello, referencia, año, país, formato, observaciones, género, canciones (con número, título, compositor, duración).</p>
+  </div>
+  <details class="vm">
+    <summary>📖 Solución oficial (extracto — The Beatles + Rolling Stones)</summary>
+    <div class="vm-c">
+      <div class="cd"><span class="tag-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="tag-xml">&lt;coleccion&gt;</span>
+  <span class="tag-xml">&lt;cd&gt;</span>
+    <span class="tag-xml">&lt;artista&gt;</span>The Beatles<span class="tag-xml">&lt;/artista&gt;</span>
+    <span class="tag-xml">&lt;titulocd&gt;</span>A hard day's night<span class="tag-xml">&lt;/titulocd&gt;</span>
+    <span class="tag-xml">&lt;sello&gt;</span>Emy Records<span class="tag-xml">&lt;/sello&gt;</span>
+    <span class="tag-xml">&lt;referencia&gt;</span>CDP7464372<span class="tag-xml">&lt;/referencia&gt;</span>
+    <span class="tag-xml">&lt;anyo&gt;</span>1964<span class="tag-xml">&lt;/anyo&gt;</span>
+    <span class="tag-xml">&lt;pais&gt;</span>Inglaterra<span class="tag-xml">&lt;/pais&gt;</span>
+    <span class="tag-xml">&lt;formato&gt;</span>CD<span class="tag-xml">&lt;/formato&gt;</span>
+    <span class="tag-xml">&lt;observaciones&gt;</span>1964 Original Sound Recording made by Emi Records<span class="tag-xml">&lt;/observaciones&gt;</span>
+    <span class="tag-xml">&lt;genero&gt;</span>Rock<span class="tag-xml">&lt;/genero&gt;</span>
+    <span class="tag-xml">&lt;canciones&gt;</span>
+      <span class="tag-xml">&lt;contenido_cd</span> <span class="tag-attr">numero</span>=<span class="tag-val">"1"</span><span class="tag-xml">&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"01"</span><span class="tag-xml">&gt;</span><span class="tag-xml">&lt;titulo&gt;</span>A Hard Day's Night<span class="tag-xml">&lt;/titulo&gt;</span><span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"02"</span><span class="tag-xml">&gt;</span><span class="tag-xml">&lt;titulo&gt;</span>I Should Have Know Better<span class="tag-xml">&lt;/titulo&gt;</span><span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"03"</span><span class="tag-xml">&gt;</span><span class="tag-xml">&lt;titulo&gt;</span>If i Fell<span class="tag-xml">&lt;/titulo&gt;</span><span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-cmt">&lt;!-- ... más canciones ... --&gt;</span>
+      <span class="tag-xml">&lt;/contenido_cd&gt;</span>
+    <span class="tag-xml">&lt;/canciones&gt;</span>
+  <span class="tag-xml">&lt;/cd&gt;</span>
+  <span class="tag-xml">&lt;cd&gt;</span>
+    <span class="tag-xml">&lt;artista&gt;</span>The Beatles<span class="tag-xml">&lt;/artista&gt;</span>
+    <span class="tag-xml">&lt;titulocd&gt;</span>Abbey Road<span class="tag-xml">&lt;/titulocd&gt;</span>
+    <span class="tag-xml">&lt;sello&gt;</span>Emy Records<span class="tag-xml">&lt;/sello&gt;</span>
+    <span class="tag-xml">&lt;referencia&gt;</span>CDP7464462<span class="tag-xml">&lt;/referencia&gt;</span>
+    <span class="tag-xml">&lt;anyo&gt;</span>1969<span class="tag-xml">&lt;/anyo&gt;</span>
+    <span class="tag-xml">&lt;pais&gt;</span>Inglaterra<span class="tag-xml">&lt;/pais&gt;</span>
+    <span class="tag-xml">&lt;formato&gt;</span>CD<span class="tag-xml">&lt;/formato&gt;</span>
+    <span class="tag-xml">&lt;observaciones&gt;</span>1969 Original Sound Recording made by Emi Records<span class="tag-xml">&lt;/observaciones&gt;</span>
+    <span class="tag-xml">&lt;genero&gt;</span>Rock<span class="tag-xml">&lt;/genero&gt;</span>
+    <span class="tag-xml">&lt;canciones&gt;</span>
+      <span class="tag-xml">&lt;contenido_cd</span> <span class="tag-attr">numero</span>=<span class="tag-val">"1"</span><span class="tag-xml">&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"01"</span><span class="tag-xml">&gt;</span><span class="tag-xml">&lt;titulo&gt;</span>Come Together<span class="tag-xml">&lt;/titulo&gt;</span><span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"02"</span><span class="tag-xml">&gt;</span><span class="tag-xml">&lt;titulo&gt;</span>Something<span class="tag-xml">&lt;/titulo&gt;</span><span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-cmt">&lt;!-- ... más canciones ... --&gt;</span>
+      <span class="tag-xml">&lt;/contenido_cd&gt;</span>
+    <span class="tag-xml">&lt;/canciones&gt;</span>
+  <span class="tag-xml">&lt;/cd&gt;</span>
+  <span class="tag-xml">&lt;cd&gt;</span>
+    <span class="tag-xml">&lt;artista&gt;</span>The Rolling Stones<span class="tag-xml">&lt;/artista&gt;</span>
+    <span class="tag-xml">&lt;titulocd&gt;</span>Flowers<span class="tag-xml">&lt;/titulocd&gt;</span>
+    <span class="tag-xml">&lt;sello&gt;</span>London Records<span class="tag-xml">&lt;/sello&gt;</span>
+    <span class="tag-xml">&lt;referencia&gt;</span>CD8201392<span class="tag-xml">&lt;/referencia&gt;</span>
+    <span class="tag-xml">&lt;anyo&gt;</span>1967<span class="tag-xml">&lt;/anyo&gt;</span>
+    <span class="tag-xml">&lt;pais&gt;</span>Inglaterra<span class="tag-xml">&lt;/pais&gt;</span>
+    <span class="tag-xml">&lt;formato&gt;</span>CD<span class="tag-xml">&lt;/formato&gt;</span>
+    <span class="tag-xml">&lt;observaciones /&gt;</span>
+    <span class="tag-xml">&lt;genero&gt;</span>Rock<span class="tag-xml">&lt;/genero&gt;</span>
+    <span class="tag-xml">&lt;canciones&gt;</span>
+      <span class="tag-xml">&lt;contenido_cd</span> <span class="tag-attr">numero</span>=<span class="tag-val">"1"</span> <span class="tag-attr">duracion</span>=<span class="tag-val">"36.56"</span><span class="tag-xml">&gt;</span>
+        <span class="tag-xml">&lt;cancion</span> <span class="tag-attr">numero</span>=<span class="tag-val">"01"</span><span class="tag-xml">&gt;</span>
+          <span class="tag-xml">&lt;titulo&gt;</span>Ruby Tuesday<span class="tag-xml">&lt;/titulo&gt;</span>
+          <span class="tag-xml">&lt;compositor&gt;</span>Jagger<span class="tag-xml">&lt;/compositor&gt;</span>
+          <span class="tag-xml">&lt;compositor&gt;</span>Richards<span class="tag-xml">&lt;/compositor&gt;</span>
+          <span class="tag-xml">&lt;duracion&gt;&lt;minutos&gt;</span>3<span class="tag-xml">&lt;/minutos&gt;&lt;segundos&gt;</span>15<span class="tag-xml">&lt;/segundos&gt;&lt;/duracion&gt;</span>
+        <span class="tag-xml">&lt;/cancion&gt;</span>
+        <span class="tag-cmt">&lt;!-- ... más canciones con compositor y duración ... --&gt;</span>
+      <span class="tag-xml">&lt;/contenido_cd&gt;</span>
+    <span class="tag-xml">&lt;/canciones&gt;</span>
+  <span class="tag-xml">&lt;/cd&gt;</span>
+<span class="tag-xml">&lt;/coleccion&gt;</span></div>
+      <p>Este es el ejercicio más completo. Incluye: estructura anidada de canciones, atributos en varias jerarquías, elementos vacíos con <code>&lt;observaciones /&gt;</code>, duración desglosada en minutos/segundos, y múltiples compositores por canción.</p>
+    </div>
+  </details>
+
+<details class="vm">
+<summary>📖 Explicación paso a paso</summary>
+<div class="vm-c">
+<p><strong>Visión general:</strong> Colección de CDs musicales con metadatos del álbum (artista, sello, año, país, etc.) y la lista de canciones desglosada con título, compositores y duración. Es el ejercicio más rico en anidamiento y en el uso combinado de elementos y atributos.</p>
+
+<p><strong>1. Estructura del documento</strong></p>
+<p>Raíz: <code>&lt;coleccion&gt;</code>. Contiene 3 elementos <code>&lt;cd&gt;</code> (dos de The Beatles, uno de Rolling Stones). Cada <code>&lt;cd&gt;</code> tiene metadatos básicos y un contenedor <code>&lt;canciones&gt;</code> que a su vez contiene <code>&lt;contenido_cd&gt;</code> con las <code>&lt;cancion&gt;</code> individuales. Hay 5 niveles de profundidad.</p>
+
+<p><strong>2. Elementos clave</strong></p>
+<ul>
+  <li><code>&lt;coleccion&gt;</code> — Raíz. Agrupa todos los CDs.</li>
+  <li><code>&lt;cd&gt;</code> — Contenedor por álbum. Contiene 10 hijos directos.</li>
+  <li><code>&lt;artista&gt;</code> / <code>&lt;titulocd&gt;</code> / <code>&lt;sello&gt;</code> / <code>&lt;referencia&gt;</code> / <code>&lt;anyo&gt;</code> / <code>&lt;pais&gt;</code> / <code>&lt;formato&gt;</code> — Metadatos del disco.</li>
+  <li><code>&lt;observaciones&gt;</code> — Notas adicionales. Puede ser elemento vacío: <code>&lt;observaciones /&gt;</code>.</li>
+  <li><code>&lt;genero&gt;</code> — Estilo musical (Rock).</li>
+  <li><code>&lt;canciones&gt;</code> — Contenedor del listado. Dentro tiene <code>&lt;contenido_cd&gt;</code>.</li>
+  <li><code>&lt;contenido_cd&gt;</code> — Agrupa canciones de un disco. Atributos: <code>numero</code> (nº de disco), opcionalmente <code>duracion</code>.</li>
+  <li><code>&lt;cancion&gt;</code> — Una pista. Atributo <code>numero</code>. Contiene: <code>&lt;titulo&gt;</code>, <code>&lt;compositor&gt;</code>+ (repetible), <code>&lt;duracion&gt; &#8594; [minutos, segundos]</code>.</li>
+</ul>
+<p><strong>Jerarquía:</strong> <code>coleccion &#8594; cd* &#8594; [artista, titulocd, sello, referencia, anyo, pais, formato, observaciones, genero, canciones &#8594; contenido_cd &#8594; cancion* &#8594; [titulo, compositor+, duracion &#8594; [minutos, segundos]]]</code></p>
+
+<p><strong>3. Validación / DTD</strong></p>
+<p>No hay DTD. La solución muestra cuatro técnicas avanzadas: (1) elementos vacíos con sintaxis abreviada <code>&lt;observaciones /&gt;</code>. (2) Múltiples <code>&lt;compositor&gt;</code> dentro de una canción (Jagger/Richards). (3) Duración desglosada en <code>&lt;minutos&gt;</code> y <code>&lt;segundos&gt;</code> para facilitar el procesamiento. (4) Atributos en varios niveles: <code>numero</code> y <code>duracion</code> en <code>contenido_cd</code>, <code>numero</code> en <code>cancion</code>.</p>
+</div>
+</details>
+
+  <div class="box blue">
+    <span>📌</span>
+    <span><strong>Resumen RA4-5-6:</strong> (1) XML bien formado (declaración, raíz única, etiquetas cerradas, case-sensitive, atributos entre comillas, correcto anidamiento). (2) XML válido = bien formado + cumple DTD/Schema. (3) 9 ejercicios oficiales de XML del PDF del profesor: crear catálogos, agendas, identificar errores, álbumes de fotos, pedidos, bibliotecas, discos.</span>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  LM · IES Juan de Garay · DAW
+</footer>
+
+<script>
+window.RA_SECTIONS = ['ra456-estructura','ra456-ejercicios'];
+</script>
+<script src="js/shared.js"></script>
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
+</body>
+</html>
