@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>first-surname.name Conditionals: Task 2</title>
+  </head>
+  <body>
+  </body>
+  <script src="scripts/get-response/main.js"></script>
+  <script>
+    'use strict';
+    let response;
+    let score = 75;
+    let machineActive = false;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    response = getResponse(score, machineActive);
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    let para1 = document.createElement('p');
+    let para2 = document.createElement('p');
+    para1.textContent = `Your score is ${ score }`;
+    para2.textContent = response;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>
