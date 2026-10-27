@@ -1,17 +1,20 @@
 #!/usr/bin/env bash
-# Pull the teacher's shared OneDrive folder "dwec-shared" using the local
-# OneDrive client (onedrive-abraunegg). Setup notes are in README-dwec-sync.md.
+# Two steps: (1) pull the teacher's shared OneDrive folder "dwec-shared" into
+# ~/Documents/dwec-shared-mirror with the OneDrive client, (2) rsync it into
+# this folder's dwec-shared-onedrive/. Credentials live outside this repo, in
+# ~/.config/onedrive-dwec (never copy them under ~/Studies). See README-dwec-sync.md.
 set -euo pipefail
-# Name of the shortcut in your OneDrive "My files" (OneDrive prefixed the owner).
+CONFDIR="$HOME/.config/onedrive-dwec"
+MIRROR="$HOME/Documents/dwec-shared-mirror"
 REMOTE_DIR="MARCELO LLACER, DANIEL's files - dwec-shared"
-SYNC_DIR="$HOME/OneDrive"       # the client's sync_dir (its default)
-LINK="$HOME/Studies/DAW_2/DWEC/sync/dwec-shared-onedrive"
+DEST="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)/dwec-shared-onedrive"
 
 # Download only this one folder; never upload or delete anything online.
-onedrive --sync --download-only --single-directory "$REMOTE_DIR" "$@"
+onedrive --confdir "$CONFDIR" --sync --download-only --single-directory "$REMOTE_DIR" "$@"
 
-# Make the folder show up inside ~/Studies as a symlink.
-if [ ! -L "$LINK" ]; then
-  [ -d "$LINK" ] && rmdir "$LINK"   # only succeeds if it is still empty
-  ln -s "$SYNC_DIR/$REMOTE_DIR" "$LINK"
-fi
+# Skip the copy on --dry-run.
+for a in "$@"; do [ "$a" = "--dry-run" ] && exit 0; done
+
+[ -L "$DEST" ] && rm "$DEST"
+mkdir -p "$DEST"
+rsync -a --delete "$MIRROR/$REMOTE_DIR/" "$DEST/"
