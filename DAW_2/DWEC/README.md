@@ -24,7 +24,9 @@
 | Path | Contents |
 |---|---|
 | `dwec-shared/` | Shared class material (extracted from `dwec-shared.zip`: `jsinfo.2025-10.zip`, `common/`, `dwec0-prev/`, `dwec1-js/`) |
-| `DWEC_cloud/`, `shared/` | Placeholder folders from earlier setup |
+| `sync/` | OneDrive sync tooling for the teacher's folder (`./sync/dwec help`); the live link is `sync/dwec-shared-onedrive` |
+| `My_Solutions/DWEC-Exs/` | Earlier exercise repos (dwec1p2, dwec1p3) |
+| `shared` | Loose HTML file from earlier setup |
 
 ## How the folders relate
 

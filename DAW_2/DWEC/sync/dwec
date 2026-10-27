@@ -4,7 +4,7 @@
 set -euo pipefail
 DIR="$(cd "$(dirname "$(readlink -f "$0")")" && pwd)"
 SYNC="$DIR/sync-dwec-shared.sh"
-SHARED="$DIR/dwec-shared"
+SHARED="$DIR/dwec-shared-onedrive"
 UNIT="dwec-shared-sync"
 
 usage() {

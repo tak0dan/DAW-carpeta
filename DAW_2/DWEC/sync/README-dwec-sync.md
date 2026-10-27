@@ -21,11 +21,11 @@ already installed and authorised.
 ## Everyday use
 
 ```bash
-~/Studies/DWEC_Desarrollo_Web_en_Entorno_Cliente/sync-dwec-shared.sh
+~/Studies/DAW_2/DWEC/sync/sync-dwec-shared.sh
 ```
 
 - Downloads only the shortcut (named `MARCELO LLACER, DANIEL's files - dwec-shared`
-  in "My files") into `~/OneDrive/` and links it here as `dwec-shared/`.
+  in "My files") into `~/OneDrive/` and links it here as `dwec-shared-onedrive/`.
 - It is download-only: nothing is uploaded or deleted online.
 - Add `--dry-run` to see what it would do without changing anything.
 - If the shortcut has a different name in "My files", change `REMOTE_DIR` in
