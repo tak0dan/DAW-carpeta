@@ -1,0 +1,511 @@
+<!DOCTYPE html><html lang="es" data-theme-enabled="1">
+<!-- Mirrored from es.javascript.info/testing-mocha by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:52:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">Automatización de pruebas con Mocha</title><link href="pack/styles.30dd9c4627007e6c9584.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><!-- chrome autotranslate is enabled only for "en" main version--><meta name="google" content="notranslate"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="testing-mocha.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="Automatización de pruebas con Mocha"><meta property="og:image" content="https://es.javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Automatización de pruebas con Mocha"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="ninja-code.html"><link rel="next" href="polyfills.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.5d7bf060746ac03f75b7.js"></script><script src="pack/head.7277f6307285ec41ba98.js" defer></script><meta property="og:title" content="Automatización de pruebas con Mocha"><meta property="og:type" content="article"><script src="pack/tutorial.1fd2eb45c196482dd6c4.js" defer></script><script src="pack/footer.2c081af06e54a9cb6d00.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Lo sentimos, Internet Explorer no es compatible. Utilice un navegador más nuevo.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "es";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>ES</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/testing-mocha"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://javascript.info/testing-mocha"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="testing-mocha.html"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/testing-mocha"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/testing-mocha"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/testing-mocha"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/testing-mocha"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/testing-mocha"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/testing-mocha"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/testing-mocha"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/testing-mocha"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/testing-mocha"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/testing-mocha"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/testing-mocha"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>Queremos que este proyecto de código abierto esté disponible para personas de todo el mundo.</p> <p><a href="https://javascript.info/translate">Ayuda a traducir</a> el contenido de este tutorial a tu idioma!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Comprar</span>EPUB/PDF</a></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://es.javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Buscar en Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Buscar</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://es.javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Buscar en el tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Buscar</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/testing-mocha">عربي</option><option value="https://javascript.info/testing-mocha">English</option><option value="https://es.javascript.info/testing-mocha" selected>Español</option><option value="https://fa.javascript.info/testing-mocha">فارسی</option><option value="https://fr.javascript.info/testing-mocha">Français</option><option value="https://id.javascript.info/testing-mocha">Indonesia</option><option value="https://it.javascript.info/testing-mocha">Italiano</option><option value="https://ja.javascript.info/testing-mocha">日本語</option><option value="https://ko.javascript.info/testing-mocha">한국어</option><option value="https://learn.javascript.ru/testing-mocha">Русский</option><option value="https://tr.javascript.info/testing-mocha">Türkçe</option><option value="https://uk.javascript.info/testing-mocha">Українська</option><option value="https://uz.javascript.info/testing-mocha">Oʻzbek</option><option value="https://zh.javascript.info/testing-mocha">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="27" max="94" data-tooltip="Lección 27 de 94"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="js.html"><span>El lenguaje JavaScript</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="code-quality.html"><span>Calidad del código</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://es.javascript.info/"},{"@type":"ListItem","position":2,"name":"El lenguaje JavaScript","item":"https://es.javascript.info/js"},{"@type":"ListItem","position":3,"name":"Calidad del código","item":"https://es.javascript.info/code-quality"}]}</script></ol><div class="updated-at" data-tooltip="Última actualización el 10 de febrero de 2024"><div class="updated-at__content">10 de febrero de 2024</div></div></div><h1 class="main__header-title">Automatización de pruebas con Mocha</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="Automatización de pruebas con Mocha"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><p>Veremos la automatización de tests en las tareas que siguen. Es algo ampliamente usado en proyectos reales.</p>
+<h2><a class="main__anchor" name="por-que-necesitamos-tests" href="#por-que-necesitamos-tests">¿Por qué necesitamos tests?</a></h2><p>Cuando escribimos una función, normalmente imaginamos qué debe hacer: Para tales parámetros, tal resultado.</p>
+<p>Durante el desarrollo, podemos comprobar la función ejecutándola y comparando el resultado con la salida esperada. Por ejemplo, podemos hacer eso en la consola.</p>
+<p>Si algo está incorrecto: corregimos el código, ejecutamos de nuevo, comprobamos el resultado. Y así sucesivamente hasta que funcione.</p>
+<p>Pero esas “re-ejecuciones” manuales son imperfectas.</p>
+<p><strong>Cuando probamos un código manualmente, es fácil obviar algo.</strong></p>
+<p>Por ejemplo, estamos creando una función <code>f</code>. Escribimos algo de código y probamos: <code>f(1)</code> funciona, pero <code>f(2)</code> no funciona. Corregimos el código y ahora funciona <code>f(2)</code>. Terminamos, ¿es cierto? Pero hemos olvidado volver a probar <code>f(1)</code>. Esto puede llevar a saltarnos un error.</p>
+<p>Esto es muy típico. Cuando desarrollamos algo, mantenemos muchos casos de uso posibles en la cabeza. Pero es difícil esperar que un programador los compruebe a todos después de cada cambio. Se vuelve fácil arreglar una cosa y romper otra.</p>
+<p><strong>La automatización implica escribir un código de prueba por separado, además del código principal. Estos tests ejecutan nuestras funciones de varias formas y comparan los resultados con los esperados.</strong></p>
+<h2><a class="main__anchor" name="desarrollo-guiado-por-comportamiento-behavior-driven-development-bdd" href="#desarrollo-guiado-por-comportamiento-behavior-driven-development-bdd">Desarrollo guiado por comportamiento (Behavior Driven Development, BDD)</a></h2><p>Vamos a usar una técnica llamada <a href="https://es.wikipedia.org/wiki/Desarrollo_guiado_por_comportamiento">Desarrollo guiado por comportamiento</a> o, por sus siglas en inglés, BDD.</p>
+<p><strong>BDD son tres cosas en una: tests, documentación y ejemplos.</strong></p>
+<p>Para entender BDD, examinaremos un caso de desarrollo práctico:</p>
+<h2><a class="main__anchor" name="desarrollo-de-pow-especificacion" href="#desarrollo-de-pow-especificacion">Desarrollo de “pow”: Especificación</a></h2><p>Digamos que queremos hacer una función <code>pow(x, n)</code> que eleve <code>x</code> a la potencia de un entero <code>n</code>. Asumimos que <code>n≥0</code>.</p>
+<p>Esta tarea es sólo un ejemplo; ya hay un operador <code>**</code> en JavaScript que lo hace, pero queremos concentrarnos en el flujo de desarrollo que puede ser aplicado a tareas más complejas.</p>
+<p>Antes de crear el código de <code>pow</code>, podemos imaginar lo que debe hacer la función y describirlo.</p>
+<p>Esa descripción es llamada <em>especificación</em>, o “spec”, y contiene las descripciones de uso junto con los tests para probarlas. Como:</p>
+<div id="3pe17mx7sp" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  it(&quot;eleva a la n-ésima potencia&quot;, function() {
+    assert.equal(pow(2, 3), 8);
+  });
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Una spec tiene tres bloques principales:</p>
+<dl>
+<dt><code>describe(&quot;titulo&quot;, function() { ... })</code></dt>
+<dd>
+<p>descripción ¿Qué funcionalidad estamos describiendo? En nuestro caso, la función misma, <code>pow</code>. Es utilizado para agrupar bloques de trabajo: los bloques <code>it</code>.</p>
+</dd>
+<dt><code>it(&quot;titulo&quot;, function() { ... })</code></dt>
+<dd>
+<p>bloque “it”. En el título de <code>it</code> introducimos una descripción legible del caso de uso. El segundo argumento es la función que lo prueba.</p>
+</dd>
+<dt><code>assert.equal(value1, value2)</code></dt>
+<dd>
+<p>comprobación. El código dentro del bloque <code>it</code> que, si la implementación es correcta, debe ejecutar sin errores.</p>
+<p>Las funciones <code>assert.*</code> son usadas para comprobar que <code>pow</code> funcione como esperamos. Aquí mismo utilizamos una de ellas: <code>assert.equal</code>, que compara argumentos y produce un error si los mismos no son iguales. Arriba se está comprobando que el resultado de <code>pow(2, 3)</code> sea igual a <code>8</code>. Hay otros tipos de comparaciones y comprobaciones que veremos más adelante.</p>
+</dd>
+</dl>
+<p>La especificación puede ser ejecutada y hará las pruebas del bloque <code>it</code>.  Lo veremos luego.</p>
+<h2><a class="main__anchor" name="flujo-de-desarrollo" href="#flujo-de-desarrollo">Flujo de desarrollo</a></h2><p>El flujo de desarrollo se ve así:</p>
+<ol>
+<li>Se escribe una especificación inicial, con tests para la funcionalidad más básica.</li>
+<li>Se crea Una implementación inicial.</li>
+<li>Para comprobar que funciona, ejecutamos el framework de test <a href="https://mochajs.org/">Mocha</a> (detallado más adelante) que ejecuta la “spec”.  Mostrará los errores mientras la funcionalidad no esté completa. Hacemos correcciones hasta que todo funciona.</li>
+<li>Ahora tenemos una implementación inicial con tests.</li>
+<li>Añadimos más casos de uso a la spec, seguramente no soportados aún por la implementación. Los tests empiezan a fallar.</li>
+<li>Ir a 3, actualizar la implementación hasta que los tests no den errores.</li>
+<li>Se repiten los pasos 3-6 hasta que la funcionalidad esté lista.</li>
+</ol>
+<p>De tal forma, el desarrollo es iterativo. Escribimos la especificación, la implementamos, nos aseguramos de que los tests pasen, entonces escribimos más tests, y nos volvemos a asegurar de que pasen, etc. Al final tenemos una implementación funcionando con tests para ella.</p>
+<p>Veamos el flujo de desarrollo en nuestro caso práctico.</p>
+<p>El primer paso ya está completo: tenemos una spec inicial para <code>pow</code>. Ahora, antes de realizar la implementación, usemos algunas librerías JavaScript para ejecutar los tests, solo para verificar que funcionan (van a fallar todos).</p>
+<h2><a class="main__anchor" name="la-spec-en-accion" href="#la-spec-en-accion">La spec en acción</a></h2><p>En este tutorial estamos usando las siguientes librerías JavaScript para los tests:</p>
+<ul>
+<li><a href="https://mochajs.org/">Mocha</a> – el framework central: brinda funciones para pruebas comunes como <code>describe</code> e <code>it</code> y la función principal que ejecuta los tests.</li>
+<li><a href="https://chaijs.com/">Chai</a> – una librería con muchas funciones de comprobación (assertions). Permite el uso de diferentes comprobaciones. De momento usaremos <code>assert.equal</code>.</li>
+<li><a href="https://sinonjs.org/">Sinon</a> – una librería para espiar funciones, emular funciones incorporadas al lenguaje y más. La necesitaremos a menudo más adelante.</li>
+</ul>
+<p>Estas librerías son adecuadas tanto para tests en el navegador como en el lado del servidor. Aquí nos enfocaremos en el navegador.</p>
+<p>La que sigue es la página HTML con estos frameworks y nuestra spec de <code>pow</code>:</p>
+<div id="g3r7xk1e39" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;!-- incluir css para mocha, para mostrar los resultados --&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css&quot;&gt;
+  &lt;!-- incluir el código del framework mocha --&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    mocha.setup('bdd'); // configuración mínima
+  &lt;/script&gt;
+  &lt;!-- incluir chai --&gt;
+  &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/chai/3.5.0/chai.js&quot;&gt;&lt;/script&gt;
+  &lt;script&gt;
+    // chai tiene un montón de cosas, hacemos assert global
+    let assert = chai.assert;
+  &lt;/script&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;script&gt;
+    function pow(x, n) {
+      /* código a escribir de la función, de momento vacío */
+    }
+  &lt;/script&gt;
+
+  &lt;!-- el script con los tests (describe, it...) --&gt;
+  &lt;script src=&quot;test.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- el elemento con id=&quot;mocha&quot; que contiene los resultados de los tests --&gt;
+  &lt;div id=&quot;mocha&quot;&gt;&lt;/div&gt;
+
+  &lt;!-- ¡ejectuar los tests! --&gt;
+  &lt;script&gt;
+    mocha.run();
+  &lt;/script&gt;
+&lt;/body&gt;
+
+&lt;/html&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Esta página puede ser dividida en cinco partes:</p>
+<ol>
+<li>El <code>&lt;head&gt;</code> – importa librerías de terceros y estilos para los tests.</li>
+<li>El <code>&lt;script&gt;</code> con la función a comprobar, en nuestro caso con el código de <code>pow</code>.</li>
+<li>Los tests – en nuestro caso un fichero externo <code>test.js</code> que contiene una sentencia <code>describe(&quot;pow&quot;, ...)</code> al inicio.</li>
+<li>El elemento HTML <code>&lt;div id=&quot;mocha&quot;&gt;</code> utilizado para la salida de los resultados.</li>
+<li>Los test se inician con el comando <code>mocha.run()</code>.</li>
+</ol>
+<p>El resultado:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/Ur4wzVPPCi3RJl0V?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="Ur4wzVPPCi3RJl0V" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:250px" src="https://es.js.cx/article/testing-mocha/pow-1/"></iframe>
+  </div><p>De momento, el test falla. Es lógico: tenemos el código vacío en la función <code>pow</code>, así que <code>pow(2,3)</code> devuelve <code>undefined</code> en lugar de <code>8</code>.</p>
+<p>Para más adelante, ten en cuenta que hay avanzados test-runners (Herramientas para ejecutar los test en diferentes entornos de forma automática), como <a href="https://karma-runner.github.io/">karma</a> y otros. Por lo que generalmente no es un problema configurar muchos tests diferentes.</p>
+<h2><a class="main__anchor" name="implementacion-inicial" href="#implementacion-inicial">Implementación inicial</a></h2><p>Vamos a realizar una implementación simple de <code>pow</code>, apenas suficiente para pasar el test:</p>
+<div id="pq2z1z236j" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function pow(x, n) {
+  return 8; // :) ¡hacemos trampas!
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>¡Ahora funciona!</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/hMamwb0QOJ7PGvNi?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="hMamwb0QOJ7PGvNi" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:250px" src="https://es.js.cx/article/testing-mocha/pow-min/"></iframe>
+  </div><h2><a class="main__anchor" name="mejoramos-el-spec" href="#mejoramos-el-spec">Mejoramos el spec</a></h2><p>Lo que hemos hecho es trampa. La función no trabaja bien: al ejecutar un cálculo diferente, como <code>pow(3,4)</code>, nos devuelve un resultado incorrecto, pero el test pasa.</p>
+<p>Esta situación es habitual, ocurre en la práctica. Los tests pasan, pero la función no funciona bien. Nuestra especificación está incompleta. Necesitamos añadir más casos de uso a la especificación.</p>
+<p>Vamos a incluir un test para ver si <code>pow(3,4) = 81</code>.</p>
+<p>Podemos escoger entre dos formas de organizar el test:</p>
+<ol>
+<li>
+<p>La primera forma – añadir un <code>assert</code> en el mismo <code>it</code>:</p>
+<div id="skgnjm9eju" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:4,&quot;end&quot;:4}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  it(&quot;eleva a la n-ésima potencia&quot;, function() {
+    assert.equal(pow(2, 3), 8);
+    assert.equal(pow(3, 4), 81);
+  });
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div></li>
+<li>
+<p>La segunda – hacer dos tests:</p>
+<div id="dz2gz1tnz7" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  it(&quot;2 elevado a la potencia de 3 es 8&quot;, function() {
+    assert.equal(pow(2, 3), 8);
+  });
+
+  it(&quot;3 elevado a la potencia de 3 es 27&quot;, function() {
+    assert.equal(pow(3, 3), 27);
+  });
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div></li>
+</ol>
+<p>Notemos que cuando <code>assert</code> lanza un error, el bloque <code>it</code> termina inmediatamente. Aquí vemos la diferencia principal: si en la primera forma el primer <code>assert</code> falla, no veremos nunca el resultado del segundo <code>assert</code>.</p>
+<p>Hacer los tests separados es útil para recoger información sobre qué está pasando, así que la segunda forma es mejor.</p>
+<p>A parte de eso, hay otra regla que es bueno seguir.</p>
+<p><strong>Un test comprueba una sola cosa</strong></p>
+<p>Si vemos que un test contiene dos comprobaciones independientes, es mejor separar el test en dos tests más simples.</p>
+<p>Así que continuamos con la segunda forma.</p>
+<p>El resultado:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/SJqqGqAKHACVxs7f?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="SJqqGqAKHACVxs7f" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:250px" src="https://es.js.cx/article/testing-mocha/pow-2/"></iframe>
+  </div><p>Como podemos esperar, el segundo falla. Nuestra función siempre devuelve <code>8</code>, mientras que el <code>assert</code> espera <code>27</code>.</p>
+<h2><a class="main__anchor" name="mejoramos-la-implementacion" href="#mejoramos-la-implementacion">Mejoramos la implementación</a></h2><p>Vamos a escribir algo más real para que pasen los tests:</p>
+<div id="cdfdw5y9gc" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function pow(x, n) {
+  let result = 1;
+
+  for (let i = 0; i &lt; n; i++) {
+    result *= x;
+  }
+
+  return result;
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Para estar seguros de que la función trabaja bien, vamos a hacer comprobaciones para más valores. En lugar de escribir bloques <code>it</code> manualmente, vamos a generarlos con un <code>for</code>:</p>
+<div id="d58yuea1m6" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  function makeTest(x) {
+    let expected = x * x * x;
+    it(`${x} elevado a 3 es ${expected}`, function() {
+      assert.equal(pow(x, 3), expected);
+    });
+  }
+
+  for (let x = 1; x &lt;= 5; x++) {
+    makeTest(x);
+  }
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El resultado:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/ZTzFEUPxOlGnnwRE?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="ZTzFEUPxOlGnnwRE" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:250px" src="https://es.js.cx/article/testing-mocha/pow-3/"></iframe>
+  </div><h2><a class="main__anchor" name="describe-anidados" href="#describe-anidados"><code>Describe</code> anidados</a></h2><p>Vamos a añadir más tests. Pero antes, hay que apuntar que la función <code>makeTest</code> y la instrucción <code>for</code> deben ser agrupados juntos. No queremos <code>makeTest</code> en otros tests, solo se necesita en el <code>for</code>: su tarea común es comprobar cómo <code>pow</code> eleva a una potencia concreta.</p>
+<p>Agrupar tests se realiza con <code>describe</code>:</p>
+<div id="12ahs5gvpu" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:15,&quot;end&quot;:15},{&quot;start&quot;:2,&quot;end&quot;:2}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  describe(&quot;eleva x a la potencia de 3&quot;, function() {
+
+    function makeTest(x) {
+      let expected = x * x * x;
+      it(`${x} elevado a 3 es ${expected}`, function() {
+        assert.equal(pow(x, 3), expected);
+      });
+    }
+
+    for (let x = 1; x &lt;= 5; x++) {
+      makeTest(x);
+    }
+
+  });
+
+  // ... otros test irían aquí, se puede escribir describe como it
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El <code>describe</code> anidado define un nuevo subgrupo de tests. En la salida podemos ver la indentación en los títulos:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/OTHGvpg3eaChXfNK?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="OTHGvpg3eaChXfNK" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:250px" src="https://es.js.cx/article/testing-mocha/pow-4/"></iframe>
+  </div><p>En el futuro podemos añadir más <code>it</code> y <code>describe</code> en el nivel superior con sus propias funciones de ayuda, no se solaparán con <code>makeTest</code>.</p>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type"><code>before/after</code> y <code>beforeEach/afterEach</code></span></div>
+            <div class="important__content"><p>Podemos configurar funciones <code>before/after</code> que se ejecuten antes/después de la ejecución de los tests, y también funciones <code>beforeEach/afterEach</code> que ejecuten antes/después de cada <code>it</code>.</p>
+<p>Por ejemplo:</p>
+<div id="isxj9iufk6" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;test&quot;, function() {
+
+  before(() =&gt; alert(&quot;Inicio testing – antes de todos los tests&quot;));
+  after(() =&gt; alert(&quot;Final testing – después de todos los tests&quot;));
+
+  beforeEach(() =&gt; alert(&quot;Antes de un test – entramos al test&quot;));
+  afterEach(() =&gt; alert(&quot;Después de un test – salimos del test&quot;));
+
+  it('test 1', () =&gt; alert(1));
+  it('test 2', () =&gt; alert(2));
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>La secuencia que se ejecuta es la siguiente:</p>
+<div id="67suvflifg" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-none"><code>Inicio testing – antes de todos los tests (before)
+Antes de un test – entramos al test (beforeEach)
+1
+Después de un test – salimos del test   (afterEach)
+Antes de un test – entramos al test (beforeEach)
+2
+Después de un test – salimos del test   (afterEach)
+Final testing – después de todos los tests (after)</code></pre>
+        </div>
+      </div>
+      
+      </div><a class="edit" target="_blank" href="https://plnkr.co/edit/rUSeHcl1ANxJN5Sg?p=preview">Abre el ejemplo en un sandbox.</a><p>Normalmente, <code>beforeEach/afterEach</code> (<code>before/after</code>) son usados para realizar la inicialización, poner contadores a cero o hacer algo entre cada test o cada grupo de tests.</p>
+</div></div>
+<h2><a class="main__anchor" name="extender-los-spec" href="#extender-los-spec">Extender los spec</a></h2><p>La funcionalidad básica de <code>pow</code> está completa. La primera iteración del desarrollo está hecha. Cuando acabemos de celebrar y beber champán… sigamos adelante y mejorémosla.</p>
+<p>Como se dijo, la función <code>pow(x, n)</code> está dedicada a trabajar con valores enteros positivos <code>n</code>.</p>
+<p>Para indicar un error matemático, JavaScript normalmente devuelve <code>NaN</code> como resultado de una función. Hagamos lo mismo para valores incorrectos de <code>n</code>.</p>
+<p>Primero incluyamos el comportamiento en el spec(!):</p>
+<div id="ljok9wb45h" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:9,&quot;end&quot;:9},{&quot;start&quot;:5,&quot;end&quot;:5}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;pow&quot;, function() {
+
+  // ...
+
+  it(&quot;para n negativos el resultado es NaN&quot;, function() {
+    assert.isNaN(pow(2, -1));
+  });
+
+  it(&quot;para no enteros el resultado is NaN&quot;, function() {
+    assert.isNaN(pow(2, 1.5));
+  });
+
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El resultado con los nuevos tests:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/lQKVZK9XmiulsFt7?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="lQKVZK9XmiulsFt7" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:530px" src="https://es.js.cx/article/testing-mocha/pow-nan/"></iframe>
+  </div><p>El test recién creado falla, porque nuestra implementación no lo soporta. Así es como funciona la metodología BDD: primero escribimos un test que falle y luego realizamos la implementación para que pase.</p>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type">Otras comprobaciones</span></div>
+            <div class="important__content"><p>Por favor, ten en cuenta la comprobación <code>assert.isNaN</code>: ella comprueba que el valor es <code>NaN</code>.</p>
+<p>Hay otras comprobaciones en Chai también <a href="https://chaijs.com/">Chai</a>, por ejemplo:</p>
+<ul>
+<li><code>assert.equal(value1, value2)</code> – prueba la igualdad  <code>value1 == value2</code>.</li>
+<li><code>assert.strictEqual(value1, value2)</code> – prueba la igualdad estricta <code>value1 === value2</code>.</li>
+<li><code>assert.notEqual</code>, <code>assert.notStrictEqual</code> – el contrario que arriba.</li>
+<li><code>assert.isTrue(value)</code> – prueba que <code>value === true</code></li>
+<li><code>assert.isFalse(value)</code> – prueba que <code>value === false</code></li>
+<li>… la lista completa se puede encontrar en <a href="https://chaijs.com/api/assert/">docs</a></li>
+</ul>
+</div></div>
+<p>Así que podemos añadir un par de líneas a <code>pow</code>:</p>
+<div id="0dc71hc8hb" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:1,&quot;end&quot;:2}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function pow(x, n) {
+  if (n &lt; 0) return NaN;
+  if (Math.round(n) != n) return NaN;
+
+  let result = 1;
+
+  for (let i = 0; i &lt; n; i++) {
+    result *= x;
+  }
+
+  return result;
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Ahora funciona y todos los tests pasan:</p>
+<div class="code-result">
+    <div class="code-result__toolbar toolbar"><div class="toolbar__tool">
+        <a href="https://plnkr.co/edit/xmZE9aEa3CMdjmT1?p=preview" target="_blank" title="abrir en entorno controlado"
+        data-plunk-id="xmZE9aEa3CMdjmT1" class="toolbar__button toolbar__button_edit"></a>
+      </div>
+      </div>
+    <iframe class="code-result__iframe" data-trusted="1" style="height:300px" src="https://es.js.cx/article/testing-mocha/pow-full/"></iframe>
+  </div><a class="edit" target="_blank" href="https://plnkr.co/edit/xmZE9aEa3CMdjmT1?p=preview">Abre el ejemplo final en un sandbox.</a><h2><a class="main__anchor" name="resumen" href="#resumen">Resumen</a></h2><p>En BDD, la especificación va primero, seguida de la implementación. Al final tenemos tanto la especificación como la implementación.</p>
+<p>El spec puede ser usado de tres formas:</p>
+<ol>
+<li>Como <strong>Tests</strong> garantizan que el código funciona correctamente.</li>
+<li>Como <strong>Docs</strong> – los títulos de los <code>describe</code> e <code>it</code> nos dicen lo que la función hace.</li>
+<li>Como <strong>Ejemplos</strong> – los tests son también ejemplos funcionales que muestran cómo una función puede ser usada.</li>
+</ol>
+<p>Con la especificación, podemos mejorar de forma segura, cambiar, incluso reescribir la función desde cero y estar seguros de que seguirá funcionando.</p>
+<p>Esto es especialmente importante en proyectos largos cuando una función es usada en muchos sitios. Cuando cambiamos una función, no hay forma manual de comprobar si cada sitio donde se usaba sigue funcionando correctamente.</p>
+<p>Sin tests, la gente tiene dos opciones:</p>
+<ol>
+<li>Realizar el cambio como sea. Luego nuestros usuarios encontrarán errores porque probablemente fallemos en encontrarlos.</li>
+<li>O, si el castigo debido a los errores es duro, la gente tendrá miedo de hacer cambios en las funciones. Entonces el código envejecerá, nadie querrá meterse en él y eso no es bueno para el desarrollo.</li>
+</ol>
+<p><strong>¡La automatización de pruebas ayuda a evitar estos problemas!</strong></p>
+<p>Si el proyecto tiene la cobertura  de pruebas automatizadas, no tendremos ese problema. Podemos correr los tests y hacer multitud de comprobaciones en cuestión de segundos.</p>
+<p><strong>Además, un código bien probado tendrá una mejor arquitectura.</strong></p>
+<p>Es natural, porque el código será más fácil de cambiar y mejorar. Pero no sólo eso.</p>
+<p>Al escribir tests, el código debe estar organizado de tal manera que cada función tenga un propósito claro y explícito, una entrada y una salida bien definida. Eso implica una buena arquitectura desde el principio.</p>
+<p>En la vida real, a veces no es tan fácil. Suele ser difícil escribir una especificación antes que el código, porque aún no está claro cómo debe comportarse dicho código. Pero en general, escribir los tests hace el desarrollo más rápido y estable.</p>
+<p>En el tutorial encontrarás más adelante muchas tareas respaldadas con tests. Veremos más ejemplos prácticos de ellos.</p>
+<p>Escribir tests requiere un buen conocimiento de JavaScript, pero acabamos de empezar a aprenderlo. No es necesario que escribas tests ahora, pero serás capaz de leerlos incluso si son más complejos que los de este capítulo.</p>
+</div></article><div class="tasks formatted"><h2 class="tasks__title" id="tasks"><a class="tasks__title-anchor main__anchor main__anchor main__anchor_noicon" href="#tasks">Tareas</a></h2><div class="task tasks__task"><div class="task__header"><div class="task__title-wrap"><h3 class="task__title"><a class="main__anchor" href="#que-esta-mal-en-el-test" name="que-esta-mal-en-el-test">¿Qué está mal en el test?</a></h3><a class="task__open-link" href="task/pow-test-wrong.html" target="_blank"></a></div><div class="task__header-note"><span class="task__importance" title="Qué tan importante es la tarea, del 1 a 5">importancia: 5</span></div><div class="task__content"><div class="task__formatted"><p>¿Qué es incorrecto en esta prueba de <code>pow</code>?</p>
+<div id="wkfm2r7hza" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>it(&quot;Eleva x a la potencia n&quot;, function() {
+  let x = 5;
+
+  let result = x;
+  assert.equal(pow(x, 1), result);
+
+  result *= x;
+  assert.equal(pow(x, 2), result);
+
+  result *= x;
+  assert.equal(pow(x, 3), result);
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>P.S. La prueba es sintácticamente correcta y la supera.</p>
+</div><button class="task__solution" type="button">solución</button><div class="task__answer"><div class="task__answer-content"><div class="formatted"><p>Este test nos muestra una tentación habitual del desarrollador al escribirlos.</p>
+<p>Lo que tenemos aquí son en realidad 3 pruebas, pero presentadas como una sola función con 3 afirmaciones.</p>
+<p>A veces es más fácil escribir de esta manera, pero si ocurre un error, es mucho menos obvio saber qué salió mal.</p>
+<p>Si un error ocurre en el medio de un flujo de ejecución complejo, tendremos que imaginar los datos en tal punto. Tendremos, en realidad, que hacer un <em>debug del test</em></p>
+<p>Es mucho mejor dividir la prueba en múltiples bloques ‘it’ con entradas y salidas claramente escritas.</p>
+<p>Como esto:</p>
+<div id="pqzno7l835" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;Eleva x a la potencia n&quot;, function() {
+  it(&quot;5 elevado a 1 es igual a 5&quot;, function() {
+    assert.equal(pow(5, 1), 5);
+  });
+
+  it(&quot;5 elevado a 2 es igual a 25&quot;, function() {
+    assert.equal(pow(5, 2), 25);
+  });
+
+  it(&quot;5 elevado a 3 es igual a 125&quot;, function() {
+    assert.equal(pow(5, 3), 125);
+  });
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Reemplazamos el único <code>it</code> por un <code>describe</code> y agrupamos los bloques <code>it</code> dentro. Ahora, si algo sale mal, podemos ver claramente qué dato fue.</p>
+<p>Además podemos aislar un único test y ejecutarlo individualmente escribiendo <code>it.only</code> en lugar de <code>it</code>:</p>
+<div id="05yns2kfsw" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:5,&quot;end&quot;:8}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>describe(&quot;Eleva x a la potencia de n&quot;, function() {
+  it(&quot;5 elevado a 1 es igual a 5&quot;, function() {
+    assert.equal(pow(5, 1), 5);
+  });
+
+  // Mocha sólo ejecutará este bloque
+  it.only(&quot;5 elevado a 2 es igual a 25&quot;, function() {
+    assert.equal(pow(5, 2), 25);
+  });
+
+  it(&quot;5 elevado a 3 es igual a 125&quot;, function() {
+    assert.equal(pow(5, 3), 125);
+  });
+});</code></pre>
+        </div>
+      </div>
+      
+      </div></div></div><button class="close-button task__answer-close" type="button" title="cerrar"></button></div></div></div></div></div></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="ninja-code.html" data-tooltip="Código ninja"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Lección anterior</span></a><a class="page__nav page__nav_next" href="polyfills.html" data-tooltip="Polyfills y transpiladores"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Próxima lección</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div></div><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comentarios</a></h2><div class="comments__read-before"><span class="comments__read-before-link">lea esto antes de comentar…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>Si tiene sugerencias sobre qué mejorar, por favor <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">enviar una propuesta de GitHub</a> o una solicitud de extracción en lugar de comentar.</li><li>Si no puede entender algo en el artículo, por favor explique.</li><li>Para insertar algunas palabras de código, use la etiqueta <code>&lt;code&gt;</code>, para varias líneas – envolverlas en la etiqueta <code>&lt;pre&gt;</code>, para más de 10 líneas – utilice una entorno controlado (sandbox) (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/es.javascript.info\/testing-mocha","identifier":"\/testing-mocha"}); };</script><script>var disqus_shortname = "es-javascript-info";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Mapa del Tutorial"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Capítulo</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="code-quality.html">Calidad del código</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Navegación de lección</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#por-que-necesitamos-tests">¿Por qué necesitamos tests?</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#desarrollo-guiado-por-comportamiento-behavior-driven-development-bdd">Desarrollo guiado por comportamiento (Behavior Driven Development, BDD)</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#desarrollo-de-pow-especificacion">Desarrollo de “pow”: Especificación</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#flujo-de-desarrollo">Flujo de desarrollo</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#la-spec-en-accion">La spec en acción</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#implementacion-inicial">Implementación inicial</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#mejoramos-el-spec">Mejoramos el spec</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#mejoramos-la-implementacion">Mejoramos la implementación</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#describe-anidados"><code>Describe</code> anidados</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#extender-los-spec">Extender los spec</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#resumen">Resumen</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#tasks">Tareas (1)</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comentarios</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Compartir</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fes.javascript.info%2Ftesting-mocha" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/es.javascript.info/blob/master/1-js/03-code-quality/05-testing-mocha" rel="nofollow">Editar en GitHub</a></div></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">acerca del proyecto</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contáctenos</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from es.javascript.info/testing-mocha by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:52:14 GMT -->
+</html>
