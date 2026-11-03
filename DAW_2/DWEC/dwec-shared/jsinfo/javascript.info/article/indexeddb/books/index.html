@@ -1,0 +1,71 @@
+<!doctype html>
+<script src="../../../../cdn.jsdelivr.net/npm/idb%403.0.2/build/idb.min.js"></script>
+
+<button onclick="addBook()">Add a book</button>
+<button onclick="clearBooks()">Clear books</button>
+
+<p>Books list:</p>
+
+<ul id="listElem"></ul>
+
+<script>
+let db;
+
+init();
+
+async function init() {
+  db = await idb.openDb('booksDb', 1, db => {
+    db.createObjectStore('books', {keyPath: 'name'});
+  });
+
+  list();
+}
+
+async function list() {
+  let tx = db.transaction('books');
+  let bookStore = tx.objectStore('books');
+
+  let books = await bookStore.getAll();
+
+  if (books.length) {
+    listElem.innerHTML = books.map(book => `<li>
+        name: ${book.name}, price: ${book.price}
+      </li>`).join('');
+  } else {
+    listElem.innerHTML = '<li>No books yet. Please add books.</li>'
+  }
+
+
+}
+
+async function clearBooks() {
+  let tx = db.transaction('books', 'readwrite');
+  await tx.objectStore('books').clear();
+  await list();
+}
+
+async function addBook() {
+  let name = prompt("Book name?");
+  let price = +prompt("Book price?");
+
+  let tx = db.transaction('books', 'readwrite');
+
+  try {
+    await tx.objectStore('books').add({name, price});
+    await list();
+  } catch(err) {
+    if (err.name == 'ConstraintError') {
+      alert("Such book exists already");
+      await addBook();
+    } else {
+      throw err;
+    }
+  }
+}
+
+window.addEventListener('unhandledrejection', event => {
+  alert("Error: " + event.reason.message);
+});
+
+</script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>

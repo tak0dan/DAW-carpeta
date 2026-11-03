@@ -1,0 +1,461 @@
+<!DOCTYPE html><html lang="es" data-theme-enabled="1">
+<!-- Mirrored from es.javascript.info/modules-intro by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:53:53 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">Módulos, introducción</title><link href="pack/styles.30dd9c4627007e6c9584.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><!-- chrome autotranslate is enabled only for "en" main version--><meta name="google" content="notranslate"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="modules-intro.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="Módulos, introducción"><meta property="og:image" content="https://es.javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Módulos, introducción"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="modules.html"><link rel="next" href="import-export.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.5d7bf060746ac03f75b7.js"></script><script src="pack/head.7277f6307285ec41ba98.js" defer></script><meta property="og:title" content="Módulos, introducción"><meta property="og:type" content="article"><script src="pack/tutorial.1fd2eb45c196482dd6c4.js" defer></script><script src="pack/footer.2c081af06e54a9cb6d00.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Lo sentimos, Internet Explorer no es compatible. Utilice un navegador más nuevo.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "es";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>ES</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/modules-intro"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://javascript.info/modules-intro"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="modules-intro.html"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/modules-intro"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/modules-intro"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/modules-intro"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/modules-intro"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/modules-intro"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/modules-intro"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/modules-intro"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/modules-intro"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/modules-intro"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/modules-intro"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/modules-intro"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>Queremos que este proyecto de código abierto esté disponible para personas de todo el mundo.</p> <p><a href="https://javascript.info/translate">Ayuda a traducir</a> el contenido de este tutorial a tu idioma!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Comprar</span>EPUB/PDF</a></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://es.javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Buscar en Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Buscar</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://es.javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Buscar en el tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Buscar</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/modules-intro">عربي</option><option value="https://javascript.info/modules-intro">English</option><option value="https://es.javascript.info/modules-intro" selected>Español</option><option value="https://fa.javascript.info/modules-intro">فارسی</option><option value="https://fr.javascript.info/modules-intro">Français</option><option value="https://id.javascript.info/modules-intro">Indonesia</option><option value="https://it.javascript.info/modules-intro">Italiano</option><option value="https://ja.javascript.info/modules-intro">日本語</option><option value="https://ko.javascript.info/modules-intro">한국어</option><option value="https://learn.javascript.ru/modules-intro">Русский</option><option value="https://tr.javascript.info/modules-intro">Türkçe</option><option value="https://uk.javascript.info/modules-intro">Українська</option><option value="https://uz.javascript.info/modules-intro">Oʻzbek</option><option value="https://zh.javascript.info/modules-intro">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="85" max="94" data-tooltip="Lección 85 de 94"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="js.html"><span>El lenguaje JavaScript</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="modules.html"><span>Módulos</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://es.javascript.info/"},{"@type":"ListItem","position":2,"name":"El lenguaje JavaScript","item":"https://es.javascript.info/js"},{"@type":"ListItem","position":3,"name":"Módulos","item":"https://es.javascript.info/modules"}]}</script></ol><div class="updated-at" data-tooltip="Última actualización el 16 de octubre de 2023"><div class="updated-at__content">16 de octubre de 2023</div></div></div><h1 class="main__header-title">Módulos, introducción</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="Módulos, introducción"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><p>A medida que nuestra aplicación crece, queremos dividirla en múltiples archivos, llamados “módulos”. Un módulo puede contener una clase o una biblioteca de funciones para un propósito específico.</p>
+<p>Durante mucho tiempo, JavaScript existió sin una sintaxis de módulo a nivel de lenguaje. Esto no era un problema, porque inicialmente los scripts eran pequeños y simples.</p>
+<p>Pero con el tiempo los scripts se volvieron cada vez más complejos, por lo que la comunidad inventó una variedad de formas de organizar el código en módulos, bibliotecas especiales para cargar módulos a pedido.</p>
+<p>Para nombrar algunos (por razones históricas):</p>
+<ul>
+<li><a href="https://es.wikipedia.org/wiki/Asynchronous_module_definition">AMD</a> – uno de los sistemas de módulos más antiguos, implementado inicialmente por la biblioteca <a href="https://requirejs.org/">require.js</a>.</li>
+<li><a href="https://wiki.commonjs.org/wiki/Modules/1.1">CommonJS</a> – el sistema de módulos creado para el servidor Node.js.</li>
+<li><a href="https://github.com/umdjs/umd">UMD</a> – un sistema de módulos más, sugerido como universal, compatible con AMD y CommonJS.</li>
+</ul>
+<p>Todo esto se va convirtiendo lentamente en parte de la historia, pero aún podemos encontrarlos en viejos scripts.</p>
+<p>El sistema de módulos a nivel de lenguaje apareció en el estándar en 2015, evolucionó gradualmente desde entonces, y ahora es soportado por todos los navegadores importantes y por Node.js. Así que de ahora en adelante estudiaremos los módulos de Javascript modernos.</p>
+<h2><a class="main__anchor" name="que-es-un-modulo" href="#que-es-un-modulo">Qué es un módulo?</a></h2><p>Un módulo es simplemente un archivo. Un script es un módulo. Tan sencillo como eso.</p>
+<p>Los módulos pueden cargarse entre sí y usar directivas especiales <code>export</code> e <code>import</code> para intercambiar funcionalidad, llamar a funciones de un módulo de otro:</p>
+<ul>
+<li>La palabra clave <code>export</code> etiqueta las variables y funciones que necesitan ser accesibles desde fuera del módulo actual.</li>
+<li><code>import</code> permite importar funcionalidades desde otros módulos.</li>
+</ul>
+<p>Por ejemplo, si tenemos un archivo <code>sayHi.js</code> que exporta una función:</p>
+<div id="zgyhhg6bzi" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 sayHi.js
+export function sayHi(user) {
+  alert(`Hello, ${user}!`);
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>…Luego, otro archivo puede importarlo y usarlo:</p>
+<div id="e4sjo7db06" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 main.js
+import {sayHi} from './sayHi.js';
+
+alert(sayHi); // function...
+sayHi('John'); // Hello, John!</code></pre>
+        </div>
+      </div>
+      
+      </div><p>La directiva <code>import</code> carga el módulo por la ruta <code>./sayHi.js</code> relativa a la del archivo actual, y asigna la función exportada <code>sayHi</code> a la variable correspondiente.</p>
+<p>Ejecutemos el ejemplo en el navegador.</p>
+<p>Como los módulos admiten palabras clave y características especiales, debemos decirle al navegador que un script debe tratarse como un módulo, utilizando el atributo <code>&lt;script type =&quot; module &quot;&gt;</code>.</p>
+<p>Asi:</p>
+<div class="code-tabs"><div class="code-tabs__tools"><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_left" title="&amp;larr;" data-code-tabs-left="data-code-tabs-left"></button></div><div class="code-tabs__switches-wrap"><div class="code-tabs__switches" data-code-tabs-switches="data-code-tabs-switches"><div class="code-tabs__switches-items"><div class="code-tabs__switch">Resultado</div><div class="code-tabs__switch">say.js</div><div class="code-tabs__switch code-tabs__switch_current">index.html</div></div></div></div><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_right" title="&amp;rarr;" data-code-tabs-right="data-code-tabs-right"></button></div><div class="code-tabs__buttons"><a class="code-tabs__button code-tabs__button_external" target="_blank" title="abrir en una nueva ventana" href="article/modules-intro/say/index.html"></a><a class="code-tabs__button code-tabs__button_edit" target="_blank" title="editar en entorno controlado" href="https://plnkr.co/edit/yFVrKmrsLNpPEY7J?p=preview"></a></div></div><div class="code-tabs__content" data-code-tabs-content="data-code-tabs-content" style="height:140px"><div class="code-tabs__section"><iframe class="code-tabs__result" src="article/modules-intro/say/index.html"></iframe></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>export function sayHi(user) {
+  return `Hello, ${user}!`;
+}</code></pre></div><div class="code-tabs__section code-tabs__section_current"><pre class="language-markup line-numbers"><code>&lt;!doctype html&gt;
+&lt;script type=&quot;module&quot;&gt;
+  import {sayHi} from './say.js';
+
+  document.body.innerHTML = sayHi('John');
+&lt;/script&gt;</code></pre></div></div></div><p>El navegador busca y evalúa automáticamente el módulo importado (y sus importaciones si es necesario), y luego ejecuta el script.</p>
+<div class="important important_warn">
+            <div class="important__header"><span class="important__type">Los módulos funcionan solo a través de HTTP(s), no localmente</span></div>
+            <div class="important__content"><p>Si intenta abrir una página web localmente a través del protocolo <code>file://</code>, encontrará que las directivas <code>import y export</code> no funcionan. Use un servidor web local, como <a href="https://www.npmjs.com/package/static-server#getting-started">static-server</a>, o use la capacidad de “servidor vivo” de su editor, como VS Code <a href="https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer">Live Server Extension</a> para probar los módulos.</p>
+</div></div>
+<h2><a class="main__anchor" name="caracteristicas-principales-de-los-modulos" href="#caracteristicas-principales-de-los-modulos">Características principales de los módulos</a></h2><p>¿Qué hay de diferente en los módulos en comparación con los scripts “normales”?</p>
+<p>Estas son las características principales, válidas tanto para el navegador como para JavaScript del lado del servidor.</p>
+<h3><a class="main__anchor" name="siempre-en-modo-estricto" href="#siempre-en-modo-estricto">Siempre en modo estricto</a></h3><p>Los módulos siempre trabajan en modo estricto. Por ejemplo, asignar a una variable sin declarar nos dará un error.</p>
+<div id="aw5sedw2f1" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script type=&quot;module&quot;&gt;
+  a = 5; // error
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><h3><a class="main__anchor" name="alcance-a-nivel-de-modulo" href="#alcance-a-nivel-de-modulo">Alcance a nivel de módulo</a></h3><p>Cada módulo tiene su propio alcance de nivel superior. En otras palabras, las variables y funciones de nivel superior de un módulo no se ven en otros scripts.</p>
+<p>En el siguiente ejemplo, se importan dos scripts y <code>hello.js</code> intenta usar la variable <code>user</code> declarada en <code>user.js</code>. Falla, porque es un módulo separado (puedes ver el error en la consola):</p>
+<div class="code-tabs"><div class="code-tabs__tools"><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_left" title="&amp;larr;" data-code-tabs-left="data-code-tabs-left"></button></div><div class="code-tabs__switches-wrap"><div class="code-tabs__switches" data-code-tabs-switches="data-code-tabs-switches"><div class="code-tabs__switches-items"><div class="code-tabs__switch">Resultado</div><div class="code-tabs__switch">hello.js</div><div class="code-tabs__switch">user.js</div><div class="code-tabs__switch code-tabs__switch_current">index.html</div></div></div></div><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_right" title="&amp;rarr;" data-code-tabs-right="data-code-tabs-right"></button></div><div class="code-tabs__buttons"><a class="code-tabs__button code-tabs__button_external" target="_blank" title="abrir en una nueva ventana" href="article/modules-intro/scopes/index.html"></a><a class="code-tabs__button code-tabs__button_edit" target="_blank" title="editar en entorno controlado" href="https://plnkr.co/edit/9I1863ItkzggJfPy?p=preview"></a></div></div><div class="code-tabs__content" data-code-tabs-content="data-code-tabs-content" style="height:140px"><div class="code-tabs__section"><iframe class="code-tabs__result" src="article/modules-intro/scopes/index.html"></iframe></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>alert(user); // no existe tal variable (cada módulo tiene variables independientes)</code></pre></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>let user = &quot;John&quot;;</code></pre></div><div class="code-tabs__section code-tabs__section_current"><pre class="language-markup line-numbers"><code>&lt;!doctype html&gt;
+&lt;script type=&quot;module&quot; src=&quot;user.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;hello.js&quot;&gt;&lt;/script&gt;</code></pre></div></div></div><p>Los módulos deben hacer <code>export</code> a lo que ellos quieren que esté accesible desde afuera, y hacer <code>import</code> de lo que necesiten.</p>
+<ul>
+<li><code>user.js</code> debe exportar la variable <code>user</code> .</li>
+<li><code>hello.js</code> debe importarla desde el módulo <code>user.js</code>.</li>
+</ul>
+<p>En otra palabras, con módulos usamos import/export en lugar de depender de variables globales.</p>
+<p>Esta es la variante correcta:</p>
+<div class="code-tabs"><div class="code-tabs__tools"><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_left" title="&amp;larr;" data-code-tabs-left="data-code-tabs-left"></button></div><div class="code-tabs__switches-wrap"><div class="code-tabs__switches" data-code-tabs-switches="data-code-tabs-switches"><div class="code-tabs__switches-items"><div class="code-tabs__switch">Resultado</div><div class="code-tabs__switch code-tabs__switch_current">hello.js</div><div class="code-tabs__switch">user.js</div><div class="code-tabs__switch">index.html</div></div></div></div><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_right" title="&amp;rarr;" data-code-tabs-right="data-code-tabs-right"></button></div><div class="code-tabs__buttons"><a class="code-tabs__button code-tabs__button_external" target="_blank" title="abrir en una nueva ventana" href="article/modules-intro/scopes-working/index.html"></a><a class="code-tabs__button code-tabs__button_edit" target="_blank" title="editar en entorno controlado" href="https://plnkr.co/edit/OQCArk53J849SXvF?p=preview"></a></div></div><div class="code-tabs__content" data-code-tabs-content="data-code-tabs-content" style="height:140px"><div class="code-tabs__section"><iframe class="code-tabs__result" src="article/modules-intro/scopes-working/index.html"></iframe></div><div class="code-tabs__section code-tabs__section_current"><pre class="language-javascript line-numbers"><code>import {user} from './user.js';
+
+document.body.innerHTML = user; // John</code></pre></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>export let user = &quot;John&quot;;</code></pre></div><div class="code-tabs__section"><pre class="language-markup line-numbers"><code>&lt;!doctype html&gt;
+&lt;script type=&quot;module&quot; src=&quot;hello.js&quot;&gt;&lt;/script&gt;</code></pre></div></div></div><p>En el navegador, hablando de páginas HTML, también existe el alcance independiente de nivel superior para cada <code>&lt;script type=&quot;module&quot;&gt;</code>:</p>
+<p>Aquí hay dos scripts en la misma página, ambos <code>type=&quot;module&quot;</code>. No ven entre sí sus variables de nivel superior:</p>
+<div id="i3y2p8euow" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:6,&quot;end&quot;:6}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script type=&quot;module&quot;&gt;
+  // La variable sólo es visible en éste script de módulo
+  let user = &quot;John&quot;;
+&lt;/script&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  alert(user); // Error: user no está definido
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><div class="important important_smart">
+            <div class="important__header"><span class="important__type">Por favor tome nota:</span></div>
+            <div class="important__content"><p>En el navegador, podemos hacer que una variable sea global a nivel window si explícitamente la asignamos a la propiedad <code>window</code>, por ejemplo <code>window.user = &quot;John&quot;</code>.</p>
+<p>Así todos los scripts la verán, con o sin <code>type=&quot;module&quot;</code>.</p>
+<p>Dicho esto, hacer este tipo de variables globales está muy mal visto. Por favor evítalas.</p>
+</div></div>
+<h3><a class="main__anchor" name="un-codigo-de-modulo-se-evalua-solo-la-primera-vez-cuando-se-importa" href="#un-codigo-de-modulo-se-evalua-solo-la-primera-vez-cuando-se-importa">Un código de módulo se evalúa solo la primera vez cuando se importa</a></h3><p>Si el mismo módulo se importa en varios otros módulos, su código se ejecuta solo una vez: en el primer import. Luego, sus exportaciones se otorgan a todos los importadores que siguen.</p>
+<p>Eso tiene consecuencias importantes para las que debemos estar prevenidos.</p>
+<p>Echemos un vistazo usando ejemplos:</p>
+<p>Primero, si ejecutar un código de módulo trae efectos secundarios, como mostrar un mensaje, importarlo varias veces lo activará solamente una vez, la primera:</p>
+<div id="klqxpingny" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 alert.js
+alert(&quot;Módulo es evaluado!&quot;);</code></pre>
+        </div>
+      </div>
+      
+      </div><div id="q5wp58o8o6" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// Importar el mismo módulo desde archivos distintos
+
+// 📁 1.js
+import `./alert.js`; // Módulo es evaluado!
+
+// 📁 2.js
+import `./alert.js`; // (no muestra nada)</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El segundo import no muestra nada, porque el módulo ya fue evaluado.</p>
+<p>Existe una regla: el código de módulos del nivel superior debe ser usado para la inicialización y creación de estructuras de datos internas específicas del módulo. Si necesitamos algo que pueda ser llamado varias veces debemos exportarlo como una función, como hicimos con el <code>sayHi</code> de arriba.</p>
+<p>Consideremos un ejemplo más avanzado.</p>
+<p>Digamos que un módulo exporta un objeto:</p>
+<div id="zgalrfno7l" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 admin.js
+export let admin = {
+  name: &quot;John&quot;
+};</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Si este módulo se importa desde varios archivos, el módulo solo se evalúa la primera vez, se crea el objeto <code>admin</code> y luego se pasa a todos los importadores adicionales.</p>
+<p>Todos los importadores obtienen exactamente este mismo y único objeto <code>admin</code>:</p>
+<div id="gw5uf05ktf" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:8,&quot;end&quot;:9}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 1.js
+import {admin} from './admin.js';
+admin.name = &quot;Pete&quot;;
+
+// 📁 2.js
+import {admin} from './admin.js';
+alert(admin.name); // Pete
+
+// Ambos, 1.js y 2.js, hacen referencia al mismo objeto admin
+// Los cambios realizados en 1.js son visibles en 2.js</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Como puedes ver, cuando <code>1.js</code> cambia la propiedad <code>name</code> en el <code>admin</code> importado, entonces <code>2.js</code> puede ver el nuevo <code>admin.name</code>.</p>
+<p>Esto es porque el módulo se ejecuta solo una vez. Los exports son generados y luego compartidos entre importadores, entonces si algo cambia en el objeto <code>admin</code>, otros importadores lo verán.</p>
+<p><strong>Tal comportamiento es en verdad muy conveniente, porque nos permite <em>configurar</em> módulos.</strong></p>
+<p>En otras palabras, un módulo puede brindar una funcionalidad genérica que necesite ser configurada. Por ejemplo, la autenticación necesita credenciales. Entonces se puede exportar un objeto de configuración esperando que el código externo se lo asigne.</p>
+<p>Aquí está el patrón clásico:</p>
+<ol>
+<li>Un módulo exporta algún medio de configuración, por ejemplo un  objeto configuración.</li>
+<li>En el primer import lo inicializamos, escribimos en sus propiedades. Los scripts de la aplicación de nivel superior pueden hacerlo.</li>
+<li>Importaciones posteriores usan el módulo.</li>
+</ol>
+<p>Por ejemplo, el módulo <code>admin.js</code> puede proporcionar cierta funcionalidad (ej. autenticación), pero espera que las credenciales entren al objeto <code>admin</code> desde afuera:</p>
+<div id="itl0ufet26" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 admin.js
+export let config = { };
+
+export function sayHi() {
+  alert(`Ready to serve, ${config.user}!`);
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Aquí <code>admin.js</code> exporta el objeto <code>config</code> (inicialmente vacío, pero podemos tener propiedades por defecto también).</p>
+<p>Entonces en <code>init.js</code>, el primer script de nuestra app, importamos <code>config</code> de él y establecemos <code>config.user</code>:</p>
+<div id="u000hyplkk" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 init.js
+import {config} from './admin.js';
+config.user = &quot;Pete&quot;;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>…Ahora el módulo <code>admin.js</code> está configurado.</p>
+<p>Importadores posteriores pueden llamarlo, y él muestra correctamente el usuario actual:</p>
+<div id="cfymlsuoeb" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:3,&quot;cols&quot;:[{&quot;start&quot;:28,&quot;end&quot;:32}]}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// 📁 another.js
+import {sayHi} from './admin.js';
+
+sayHi(); // Ready to serve, Pete!</code></pre>
+        </div>
+      </div>
+      
+      </div><h3><a class="main__anchor" name="import-meta" href="#import-meta">import.meta</a></h3><p>El objeto <code>import.meta</code> contiene la información sobre el módulo actual.</p>
+<p>Su contenido depende del entorno. En el navegador, contiene la URL del script, o la URL de la página web actual si está dentro de HTML:</p>
+<div id="6j335q790b" data-trusted="1" class="code-example" data-demo-height="0">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script type=&quot;module&quot;&gt;
+  alert(import.meta.url); // script URL
+  // para un script inline es la URL de la página HTML actual
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><h3><a class="main__anchor" name="en-un-modulo-this-es-indefinido-undefined" href="#en-un-modulo-this-es-indefinido-undefined">En un módulo, “this” es indefinido (undefined).</a></h3><p>Esa es una característica menor, pero para ser exhaustivos debemos mencionarla.</p>
+<p>En un módulo, el nivel superior <code>this</code> no está definido.</p>
+<p>Compárelo con scripts que no sean módulos, donde <code>this</code> es un objeto global:</p>
+<div id="kw7mpfpafp" data-trusted="1" class="code-example" data-demo-height="0">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script&gt;
+  alert(this); // window
+&lt;/script&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  alert(this); // undefined
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="funciones-especificas-del-navegador" href="#funciones-especificas-del-navegador">Funciones específicas del navegador</a></h2><p>También hay varias diferencias específicas de los scripts del navegador con <code>type =&quot; module &quot;</code> en comparación con los normales.</p>
+<p>Es posible que desee omitir esta sección por ahora si está leyendo por primera vez o si no usa JavaScript en un navegador.</p>
+<h3><a class="main__anchor" name="los-modulos-son-diferidos" href="#los-modulos-son-diferidos">Los módulos son diferidos</a></h3><p>Los módulos están <em>siempre</em> diferidos, el mismo efecto que el atributo <code>defer</code> (descrito en el capítulo <a href="script-async-defer.html">Scripts: async, defer</a>), para ambos scripts, externos y en línea.</p>
+<p>En otras palabras:</p>
+<ul>
+<li>descargar módulos de script externos <code>&lt;script type=&quot;module&quot; src=&quot;...&quot;&gt;</code> no bloquea el procesamiento de HTML, se cargan en paralelo junto con otros recursos.</li>
+<li>los módulos esperan hasta que el documento HTML esté completamente listo (incluso si son pequeños y cargan más rápido que HTML), y luego lo ejecuta.</li>
+<li>se mantiene el orden relativo de los scripts: los scripts que van primero en el documento, se ejecutan primero.</li>
+</ul>
+<p>Como efecto secundario, los módulos siempre “ven” la página HTML completamente cargada, incluidos los elementos HTML debajo de ellos.</p>
+<p>Por ejemplo:</p>
+<div id="bcki00sgos" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:8,&quot;end&quot;:8},{&quot;start&quot;:1,&quot;end&quot;:1}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script type=&quot;module&quot;&gt;
+  alert(typeof button); // objeto: el script puede 'ver' el botón de abajo
+  // debido que los módulos son diferidos, el script se ejecuta después de que la página entera se haya cargado
+&lt;/script&gt;
+
+Abajo compare con un script normal:
+
+&lt;script&gt;
+  alert(typeof button); // button es indefinido, el script no puede ver los elementos de abajo
+  // los scripts normales corren inmediatamente, antes de que el resto de la página sea procesada
+&lt;/script&gt;
+
+&lt;button id=&quot;button&quot;&gt;Button&lt;/button&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Note que: ¡el segundo script se ejecuta antes que el primero! Entonces vemos primero <code>undefined</code>, y después <code>object</code>.</p>
+<p>Esto se debe a que los módulos están diferidos, por lo que esperamos a que se procese el documento. El script normal se ejecuta inmediatamente, por lo que vemos su salida primero.</p>
+<p>Al usar módulos, debemos tener en cuenta que la página HTML se muestra a medida que se carga, y los módulos JavaScript se ejecutan después de eso, por lo que el usuario puede ver la página antes de que la aplicación JavaScript esté lista. Es posible que algunas funciones aún no funcionen. Deberíamos poner “indicadores de carga”, o asegurarnos de que el visitante no se confunda con eso.</p>
+<h3><a class="main__anchor" name="async-funciona-en-scripts-en-linea" href="#async-funciona-en-scripts-en-linea">Async funciona en scripts en línea</a></h3><p>Para los scripts que no son módulos, el atributo <code>async</code> solo funciona en scripts externos. Los scripts asíncronos se ejecutan inmediatamente cuando están listos, independientemente de otros scripts o del documento HTML.</p>
+<p>Para los scripts de módulo, esto también funciona en scripts en línea.</p>
+<p>Por ejemplo, el siguiente script en línea tiene <code>async</code>, por lo que no espera nada.</p>
+<p>Realiza la importación (extrae <code>./Analytics.js</code>) y se ejecuta cuando está listo, incluso si el documento HTML aún no está terminado o si aún hay otros scripts pendientes.</p>
+<p>Eso es bueno para la funcionalidad que no depende de nada, como contadores, anuncios, detectores de eventos a nivel de documento.</p>
+<div id="c4w44r0b9j" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:2,&quot;cols&quot;:[{&quot;start&quot;:8,&quot;end&quot;:13}]}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;!-- todas las dependencias se extraen (analytics.js), y el script se ejecuta --&gt;
+&lt;!-- no espera por el documento u otras etiquetas &lt;script&gt; --&gt;
+&lt;script async type=&quot;module&quot;&gt;
+  import {counter} from './analytics.js';
+
+  counter.count();
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><h3><a class="main__anchor" name="scripts-externos" href="#scripts-externos">Scripts externos</a></h3><p>Los scripts externos que tienen <code>type=&quot;module&quot;</code> son diferentes en dos aspectos:</p>
+<ol>
+<li>
+<p>Los scripts externos con el mismo <code>src</code> sólo se ejecutan una vez:</p>
+<div id="2ey3408blx" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;!-- el script my.js se extrae y ejecuta sólo una vez --&gt;
+&lt;script type=&quot;module&quot; src=&quot;my.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;my.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div></li>
+<li>
+<p>Los scripts externos que se buscan desde otro origen (p.ej. otra sitio web) requieren encabezados <a href="https://developer.mozilla.org/es/docs/Web/HTTP/Access_control_CORS">CORS</a>, como se describe en el capítulo <a href="fetch-crossorigin.html">Fetch: Cross-Origin Requests</a>. En otras palabras, si un script de módulo es extraído desde otro origen, el servidor remoto debe proporcionar un encabezado <code>Access-Control-Allow-Origin</code> permitiendo la búsqueda.</p>
+<div id="8gnlmbk4vq" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:2,&quot;cols&quot;:[{&quot;start&quot;:27,&quot;end&quot;:60}]}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;!-- otro-sitio-web.com debe proporcionar Access-Control-Allow-Origin --&gt;
+&lt;!-- si no, el script no se ejecutará --&gt;
+&lt;script type=&quot;module&quot; src=&quot;http://otro-sitio-web.com/otro.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Esto asegura mejor seguridad de forma predeterminada.</p>
+</li>
+</ol>
+<h3><a class="main__anchor" name="no-se-permiten-modulos-sueltos" href="#no-se-permiten-modulos-sueltos">No se permiten módulos sueltos</a></h3><p>En el navegador, <code>import</code> debe obtener una URL, sea relativa o absoluta. Los módulos sin ninguna ruta se denominan módulos sueltos. Dichos módulos no están permitidos en <code>import</code>.</p>
+<p>Por ejemplo, este <code>import</code> no es válido:</p>
+<div id="j311kzrz60" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>import {sayHi} from 'sayHi'; // Error, módulo suelto
+// el módulo debe tener una ruta, por ejemplo './sayHi.js' o dondequiera que el módulo esté</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Ciertos entornos, como Node.js o herramientas de empaquetado permiten módulos simples sin ninguna ruta, ya que tienen sus propias formas de encontrar módulos y engancharlos. Pero los navegadores aún no admiten módulos sueltos.</p>
+<h3><a class="main__anchor" name="compatibilidad-nomodule" href="#compatibilidad-nomodule">Compatibilidad, “nomodule”</a></h3><p>Los navegadores antiguos no entienden <code>type = &quot;module&quot;</code>. Los scripts de un tipo desconocido simplemente se ignoran. Para ellos es posible proporcionar una alternativa, utilizando el atributo <code>nomodule</code>:</p>
+<div id="6p9bkjte8x" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="mostrar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;script type=&quot;module&quot;&gt;
+  alert(&quot;Se ejecuta en navegadores modernos&quot;);
+&lt;/script&gt;
+
+&lt;script nomodule&gt;
+  alert(&quot;Los navegadores modernos conocen tanto type=module como nomodule, así que omiten esto&quot;)
+  alert(&quot;Los navegadores antiguos ignoran la secuencia de comandos, desconocida para ellos, con type=module, pero ejecutan esto.&quot;)
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="herramientas-de-ensamblaje" href="#herramientas-de-ensamblaje">Herramientas de Ensamblaje</a></h2><p>En la vida real, los módulos de navegador rara vez se usan en su forma “pura”. Por lo general, los agrupamos con una herramienta especial como <a href="https://webpack.js.org/">Webpack</a> y los implementamos en el servidor de producción.</p>
+<p>Uno de los beneficios de usar empaquetadores es que dan más control sobre cómo se resuelven los módulos, permitiendo módulos simples y mucho más, como los módulos CSS/HTML.</p>
+<p>Las herramientas de compilación hacen lo siguiente:</p>
+<ol>
+<li>Toman un módulo “principal”, el que se pretende colocar en <code>&lt;script type=&quot;module&quot;&gt;</code> en HTML.</li>
+<li>Analiza sus dependencias: las importa, y luego importa de esas importaciones, etcétera.</li>
+<li>Compila un único archivo con todos los módulos (o múltiples archivos, eso es configurable), reemplazando los llamados nativos de <code>import</code> con funciones del empaquetador. Los módulos de tipo “especial” como módulos HTML/CSS también son soportados.</li>
+<li>Durante el proceso, otras transformaciones y optimizaciones se pueden aplicar:
+<ul>
+<li>Se elimina el código inaccesible.</li>
+<li>Se eliminan las exportaciones sin utilizar (“tree-shaking”, sacudir el árbol).</li>
+<li>Las sentencias específicas de desarrollo tales como <code>console</code> y <code>debugger</code> se eliminan.</li>
+<li>La sintaxis JavaScript demasiado moderna (con riesgo de no ser aún soportada) puede transformarse en una sintaxis más antigua con una funcionalidad equivalente utilizando <a href="https://babeljs.io/">Babel</a>.</li>
+<li>El archivo resultante se minimiza (se eliminan espacios, las variables se reemplazan con nombres más cortos, etc).</li>
+</ul>
+</li>
+</ol>
+<p>Si utilizamos herramientas de ensamblaje, entonces, a medida que los scripts se agrupan en un solo archivo (o pocos archivos), las declaraciones <code>import/export</code> dentro de esos scripts se reemplazan por funciones especiales de ensamblaje. Por lo tanto, el script “empaquetado” resultante no contiene ninguna <code>import/export</code>, no requiere <code>type=&quot;module&quot;</code>, y podemos ponerla en un script normal:</p>
+<div id="1mujy5fane" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-markup"><code>&lt;!-- Asumiendo que obtenemos bundle.js desde una herramienta como Webpack --&gt;
+&lt;script src=&quot;bundle.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Dicho esto, los módulos nativos también se pueden utilizar. Por lo tanto no estaremos utilizando Webpack aquí: tú lo podrás configurar más adelante.</p>
+<h2><a class="main__anchor" name="resumen" href="#resumen">Resumen</a></h2><p>Para resumir, los conceptos centrales son:</p>
+<ol>
+<li>Un módulo es un archivo. Para que funcione <code>import/export</code>, los navegadores necesitan <code>&lt;script type=&quot;module&quot;&gt;</code>. Los módulos tienen varias diferencias:
+<ul>
+<li>Diferido por defecto.</li>
+<li>Async funciona en scripts en línea.</li>
+<li>Para cargar scripts externos de otro origen (dominio/protocolo/puerto), se necesitan encabezados CORS.</li>
+<li>Se ignoran los scripts externos duplicados.</li>
+</ul>
+</li>
+<li>Los módulos tienen su propio alcance local de alto nivel y funcionalidad de intercambio a través de ‘import/export’.</li>
+<li>Los módulos siempre funcionan en modo estricto.</li>
+<li>El código del módulo se ejecuta solo una vez. Las exportaciones se crean una vez y se comparten entre los importadores.</li>
+</ol>
+<p>Cuando usamos módulos, cada módulo implementa la funcionalidad y la exporta. Luego usamos <code>import</code> para importarlo directamente donde sea necesario. El navegador carga y evalúa los scripts automáticamente.</p>
+<p>En la producción, se suelen usar paquetes como <a href="https://webpack.js.org/">Webpack</a> para agrupar módulos, para mejor rendimiento y otras razones.</p>
+<p>En el próximo capítulo veremos más ejemplos de módulos y cómo se pueden exportar/importar cosas.</p>
+</div></article></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="modules.html" data-tooltip="Módulos"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Lección anterior</span></a><a class="page__nav page__nav_next" href="import-export.html" data-tooltip="Export e Import"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Próxima lección</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div></div><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comentarios</a></h2><div class="comments__read-before"><span class="comments__read-before-link">lea esto antes de comentar…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>Si tiene sugerencias sobre qué mejorar, por favor <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">enviar una propuesta de GitHub</a> o una solicitud de extracción en lugar de comentar.</li><li>Si no puede entender algo en el artículo, por favor explique.</li><li>Para insertar algunas palabras de código, use la etiqueta <code>&lt;code&gt;</code>, para varias líneas – envolverlas en la etiqueta <code>&lt;pre&gt;</code>, para más de 10 líneas – utilice una entorno controlado (sandbox) (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/es.javascript.info\/modules-intro","identifier":"\/modules-intro"}); };</script><script>var disqus_shortname = "es-javascript-info";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Mapa del Tutorial"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Capítulo</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="modules.html">Módulos</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Navegación de lección</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#que-es-un-modulo">Qué es un módulo?</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#caracteristicas-principales-de-los-modulos">Características principales de los módulos</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#funciones-especificas-del-navegador">Funciones específicas del navegador</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#herramientas-de-ensamblaje">Herramientas de Ensamblaje</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#resumen">Resumen</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comentarios</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Compartir</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fes.javascript.info%2Fmodules-intro" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/es.javascript.info/blob/master/1-js/13-modules/01-modules-intro" rel="nofollow">Editar en GitHub</a></div></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">acerca del proyecto</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contáctenos</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from es.javascript.info/modules-intro by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:53:53 GMT -->
+</html>

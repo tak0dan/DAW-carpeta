@@ -1,0 +1,433 @@
+<!DOCTYPE html><html lang="es" data-theme-enabled="1">
+<!-- Mirrored from es.javascript.info/cookie by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:55:25 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">Cookies, document.cookie</title><link href="pack/styles.30dd9c4627007e6c9584.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><!-- chrome autotranslate is enabled only for "en" main version--><meta name="google" content="notranslate"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="cookie.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="Cookies, document.cookie"><meta property="og:image" content="https://es.javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Cookies, document.cookie"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="data-storage.html"><link rel="next" href="localstorage.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.5d7bf060746ac03f75b7.js"></script><script src="pack/head.7277f6307285ec41ba98.js" defer></script><meta property="og:title" content="Cookies, document.cookie"><meta property="og:type" content="article"><script src="pack/tutorial.1fd2eb45c196482dd6c4.js" defer></script><script src="pack/footer.2c081af06e54a9cb6d00.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Lo sentimos, Internet Explorer no es compatible. Utilice un navegador más nuevo.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "es";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>ES</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/cookie"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://javascript.info/cookie"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="cookie.html"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/cookie"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/cookie"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/cookie"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/cookie"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/cookie"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/cookie"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/cookie"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/cookie"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/cookie"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/cookie"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/cookie"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>Queremos que este proyecto de código abierto esté disponible para personas de todo el mundo.</p> <p><a href="https://javascript.info/translate">Ayuda a traducir</a> el contenido de este tutorial a tu idioma!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Comprar</span>EPUB/PDF</a></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://es.javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Buscar en Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Buscar</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://es.javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Buscar en el tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Buscar</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/cookie">عربي</option><option value="https://javascript.info/cookie">English</option><option value="https://es.javascript.info/cookie" selected>Español</option><option value="https://fa.javascript.info/cookie">فارسی</option><option value="https://fr.javascript.info/cookie">Français</option><option value="https://id.javascript.info/cookie">Indonesia</option><option value="https://it.javascript.info/cookie">Italiano</option><option value="https://ja.javascript.info/cookie">日本語</option><option value="https://ko.javascript.info/cookie">한국어</option><option value="https://learn.javascript.ru/cookie">Русский</option><option value="https://tr.javascript.info/cookie">Türkçe</option><option value="https://uk.javascript.info/cookie">Українська</option><option value="https://uz.javascript.info/cookie">Oʻzbek</option><option value="https://zh.javascript.info/cookie">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="1" max="3" data-tooltip="Lección 1 de 3"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="data-storage.html"><span>Almacenando datos en el navegador</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://es.javascript.info/"},{"@type":"ListItem","position":2,"name":"Almacenando datos en el navegador","item":"https://es.javascript.info/data-storage"}]}</script></ol><div class="updated-at" data-tooltip="Última actualización el 11 de noviembre de 2024"><div class="updated-at__content">11 de noviembre de 2024</div></div></div><h1 class="main__header-title">Cookies, document.cookie</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="Cookies, document.cookie"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><p>Las cookies son pequeñas cadenas de datos que se almacenan directamente en el navegador. Son parte del protocolo HTTP, definido por la especificación <a href="https://tools.ietf.org/html/rfc6265">RFC 6265</a>.</p>
+<p>Las cookies generalmente se establecen desde un servidor web utilizando la cabecera de respuesta HTTP <code>Set-Cookie</code>. Luego, el navegador los agrega automáticamente a (casi) toda solicitud al mismo dominio usando la cabecera HTTP <code>Cookie</code>.</p>
+<p>Uno de los casos de uso más difundidos es la autenticación:</p>
+<ol>
+<li>Al  iniciar sesión, el servidor usa la cabecera HTTP <code>Set-Cookie</code> en respuesta para establecer una cookie con un “identificador de sesión” único.</li>
+<li>Al enviar la siguiente solicitud al mismo dominio, el navegador envía la cookie usando la cabecera HTTP <code>Cookie</code>.</li>
+<li>Así el servidor sabe quién hizo la solicitud.</li>
+</ol>
+<p>También podemos acceder a las cookies desde el navegador usando la propiedad <code>document.cookie</code>.</p>
+<p>Hay muchas complejidades en las cookies y sus atributos. En este artículo las veremos en detalle.</p>
+<h2><a class="main__anchor" name="leyendo-a-document-cookie" href="#leyendo-a-document-cookie">Leyendo a document.cookie</a></h2><p>¿Puede tu navegador almacenar cookies de este sitio? Veamos:</p>
+<div id="tzlo166109" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="ejecutar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// En javascript.info, usamos Google Analytics para estadísticas,
+// así que debería haber algunas cookies
+alert( document.cookie ); // cookie1=value1; cookie2=value2;...</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El valor de <code>document.cookie</code> consiste de pares <code>name=value</code> delimitados por <code>;</code>. Cada uno es una cookie separada.</p>
+<p>Para encontrar una cookie particular, podemos separar <code>document.cookie</code> por <code>;</code> y encontrar el nombre correcto. Podemos usar tanto una expresión regular como funciones de array para ello.</p>
+<p>Lo dejamos como ejercicio para el lector. Al final del artículo encontrarás funciones de ayuda para manipular cookies.</p>
+<h2><a class="main__anchor" name="escribiendo-en-document-cookie" href="#escribiendo-en-document-cookie">Escribiendo en document.cookie</a></h2><p>Podemos escribir en <code>document.cookie</code>. Pero no es una propiedad de datos, es un <a href="property-accessors.html">accessor (getter/setter)</a>. Una asignación a él se trata especialmente.</p>
+<p><strong>Una operación de escritura a <code>document.cookie</code> actualiza solo las cookies mencionadas en ella, y no toca las demás.</strong></p>
+<p>Por ejemplo, este llamado establece una cookie con el nombre <code>user</code> y el valor <code>John</code>:</p>
+<div id="9yzuacoyp7" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="ejecutar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>document.cookie = &quot;user=John&quot;; // modifica solo la cookie llamada 'user'
+alert(document.cookie); // muestra todas las cookies</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Si lo ejecutas, probablemente verás múltiples cookies. Esto es porque la operación <code>document.cookie=</code> no sobrescribe todas las cookies. Solo configura la cookie mencionada <code>user</code>.</p>
+<p>Técnicamente, nombre y valor pueden tener cualquier carácter. Pero para mantener un formato válido, los caracteres especiales deben escaparse usando la función integrada <code>encodeURIComponent</code>:</p>
+<div id="ays5myrofv" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="ejecutar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// los caracteres especiales (espacios), necesitan codificarse
+let name = &quot;my name&quot;;
+let value = &quot;John Smith&quot;
+
+// codifica la cookie como my%20name=John%20Smith
+document.cookie = encodeURIComponent(name) + '=' + encodeURIComponent(value);
+
+alert(document.cookie); // ...; my%20name=John%20Smith</code></pre>
+        </div>
+      </div>
+      
+      </div><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Limitaciones</span></div>
+            <div class="important__content"><p>Hay algunas limitaciones:</p>
+<ul>
+<li>Solo puedes establecer/modificar una cookie a la vez usando <code>document.cookie</code>.</li>
+<li>El par <code>name=value</code>, después del <code>encodeURIComponent</code>, no debe exceder 4KB. Así que no podemos almacenar algo enorme en una cookie.</li>
+<li>La cantidad total de cookies por dominio está limitada a alrededor de más de 20, el límite exacto depende del navegador.</li>
+</ul>
+</div></div>
+<p>Las cookies tienen varios atributos, muchos de ellos importantes y deberían ser configurados.</p>
+<p>Las atributos son listados después de <code>key=value</code>, delimitadas por un <code>;</code>:</p>
+<div id="wne80t02z8" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="ejecutar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>document.cookie = &quot;user=John; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT&quot;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="domain" href="#domain">domain</a></h2><ul>
+<li><strong><code>domain=site.com</code></strong></li>
+</ul>
+<p>Un dominio define dónde la cookie es accesible. Aunque en la práctica hay limitaciones y no podemos configurar cualquier dominio.</p>
+<p><strong>No hay forma de hacer que una cookie sea accesible desde otro dominio de segundo nivel, entonces <code>other.com</code> nunca recibirá una cookie establecida en <code>site.com</code>.</strong></p>
+<p>Es una restricción de seguridad, para permitirnos almacenar datos sensibles en cookies que deben estar disponibles para un único sitio solamente.</p>
+<p>De forma predeterminada, una cookie solo es accesible en el dominio que la establece.</p>
+<p>Pero toma nota: de forma predeterminada, una cookie tampoco es compartida por un subdominio (como <code>forum.site.com</code>).</p>
+<div id="nq1ih2cbe8" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// en site.com
+document.cookie = &quot;user=John&quot;
+
+// en forum.site.com
+alert(document.cookie); // no user</code></pre>
+        </div>
+      </div>
+      
+      </div><p>… aunque esto puede cambiarse. Si queremos permitir que un subdominio como <code>forum.site.com</code> obtenga una cookie establecida por <code>site.com</code>, es posible hacerlo.</p>
+<p>Para ello, cuando establecemos una cookie en <code>site.com</code>, debemos establecer explícitamente la raíz del dominio en el atributo <code>domain</code>: <code>domain=site.com</code>. Así todos los subdominios verán la cookie.</p>
+<p>Por ejemplo:</p>
+<div id="0iinx67uio" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:2,&quot;cols&quot;:[{&quot;start&quot;:30,&quot;end&quot;:45}]}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// en site.com
+// hacer la cookie accesible en cualquier subdominio *.site.com:
+document.cookie = &quot;user=John; domain=site.com&quot;
+
+// ...luego
+
+// en forum.site.com
+alert(document.cookie); // tiene la cookie user=John</code></pre>
+        </div>
+      </div>
+      
+      </div><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Sintaxis heredada</span></div>
+            <div class="important__content"><p>Históricamente, <code>domain=.site.com</code> (con un punto antes de <code>site.com</code>) se usaba para este propósito, permitir el acceso a la cookie desde los subdominios. Actualmente, los puntos al inicio de nombres de dominio se ignoran, pero algunos navegadores podrían rechazar la configuración de cookies que los contengan.</p>
+</div></div>
+<p>Resumiendo, el atributo <code>domain</code> permite que las cookies sean accesibles en los subdominios.</p>
+<h2><a class="main__anchor" name="path" href="#path">path</a></h2><ul>
+<li><strong><code>path=/mypath</code></strong></li>
+</ul>
+<p>La ruta URL del prefijo <code>path</code> debe ser absoluta. Esto hace que la cookie sea accesible a las páginas bajo esa ruta. De forma predeterminada, es la ruta actual.</p>
+<p>Si una cookie se establece con <code>path=/admin</code>, será visible en las páginas <code>/admin</code> y <code>/admin/something</code>, pero no en <code>/home</code>, <code>/adminpage</code>, o <code>/</code>.</p>
+<p>Lo usual es establecer <code>path</code> en la raíz: <code>path=/</code>, para hacer la cookie accesible a todas las páginas del sitio web. Si este atributo no se establece, el predeterminado es calculado unsando <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies#path_default_value">este método</a>.</p>
+<h2><a class="main__anchor" name="expires-max-age" href="#expires-max-age">expires, max-age</a></h2><p>De forma predeterminada, una cookie desaparece cuando el navegador se cierra. Tales cookies se denominan “cookies de sesión”.</p>
+<p>Para que las cookies sobrevivan al cierre del navegador, podemos establecer uno de estos atrubutos: <code>expires</code> o <code>max-age</code>.</p>
+<ul>
+<li><strong><code>expires=Tue, 19 Jan 2038 03:14:07 GMT</code></strong></li>
+</ul>
+<p>La fecha de expiración define el momento en que el navegador la borrará automáticamente (según la zona horaria del navegador).</p>
+<p>La fecha debe estar exactamente en ese formato, en el huso horario GMT. Podemos obtenerlo con <code>date.toUTCString</code>. Por ejemplo, podemos configurar que la cookie expire en un día:</p>
+<div id="yxx70771o0" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// +1 día desde ahora
+let date = new Date(Date.now() + 86400e3);
+date = date.toUTCString();
+document.cookie = &quot;user=John; expires=&quot; + date;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Si establecemos <code>expires</code> en una fecha en el pasado, la cookie es eliminada.</p>
+<ul>
+<li><strong><code>max-age=3600</code></strong></li>
+</ul>
+<p><code>max-age</code> es una alternativa a <code>expires</code>, y especifica la expiración de la cookie en segundos desde el momento actual.</p>
+<p>Si la configuramos a cero, o a un valor negativo, la cookie se elimina:</p>
+<div id="ff45y1x47u" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// la cookie morirá en +1 hora a partir de ahora
+document.cookie = &quot;user=John; max-age=3600&quot;;
+
+// borra la cookie (la hacemos expirar ya)
+document.cookie = &quot;user=John; max-age=0&quot;;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="secure" href="#secure">secure</a></h2><ul>
+<li><strong><code>secure</code></strong></li>
+</ul>
+<p>La cookie debe ser transferida solamente a través de HTTPS.</p>
+<p><strong>De forma predeterminada, si establecemos una cookie en <code>http://site.com</code>, entonces también aparece en <code>https://site.com</code> y viceversa.</strong></p>
+<p>Esto es, las cookies están basadas en el dominio, no distinguen entre protocolos.</p>
+<p>Con el atributo <code>secure</code>, si una cookie se establece para <code>https://site.com</code>, entonces no aparecerá cuando el mismo sitio sea accedido por HTTP, como <code>http://site.com</code>. Entonces, si una cookie tiene información sensible que nunca debe ser enviada sobre HTTP sin encriptar, debe configurarse <code>secure</code>.</p>
+<div id="ii3qohuml2" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// asumiendo que estamos en https:// ahora
+// configuramos la cookie para ser segura (solo accesible sobre HTTPS)
+document.cookie = &quot;user=John; secure&quot;;</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="samesite" href="#samesite">samesite</a></h2><p>Este es otro atributo de seguridad. <code>samesite</code> está diseñado para protección contra los ataques XSRF (cross-site request forgery, falsificación de solicitud entre sitios).</p>
+<p>Para entender cómo funciona y su utilidad, veamos primero los ataques XSRF.</p>
+<h3><a class="main__anchor" name="ataque-xsrf" href="#ataque-xsrf">ataque XSRF</a></h3><p>Imagina que tienes una sesión en el sitio <code>bank.com</code>. Esto es: tienes una cookie de autenticación para ese sitio. Tu navegador lo envía a <code>bank.com</code> en cada solicitud, así aquel te reconoce y ejecuta todas las operaciones financieras sensibles.</p>
+<p>Ahora, mientras navegas la red en otra ventana, accidentalmente entras en otro sitio <code>evil.com</code>. Este sitio tiene código JavaScript que envía un formulario <code>&lt;form action=&quot;https://bank.com/pay&quot;&gt;</code> a <code>bank.com</code> con los campos que inician una transacción hacia la cuenta del hacker.</p>
+<p>El navegador envía cookies cada vez que visitas el sitio <code>bank.com</code>, incluso si el form fue enviado desde <code>evil.com</code>. Entonces el banco te reconoce y realmente ejecuta el pago.</p>
+<figure><div class="image" style="width:668px">
+      <div class="image__ratio" style="padding-top:24.850299401197603%"></div>
+      <object type="image/svg+xml" data="article/cookie/cookie-xsrf.svg" width="668" height="166" class="image__image" data-use-theme>
+        <img src="article/cookie/cookie-xsrf.svg" alt="" width="668" height="166">
+      </object>
+      </div></figure><p>Ese es el ataque llamado “Cross-Site Request Forgery” (XSRF).</p>
+<p>Los bancos reales están protegidos contra esto por supuesto. Todos los formularios generados por <code>bank.com</code> tienen un campo especial, llamado “token de protección XSRF”, que una página maliciosa no puede generar o extraer desde una página remota. Puede enviar el form, pero no obtiene respuesta a la solicitud. El sitio <code>bank.com</code> verifica tal token en cada form que recibe.</p>
+<p>Tal protección toma tiempo para implementarla. Necesitamos asegurarnos de que cada form tiene dicho campo token, y debemos verificar todas las solicitudes.</p>
+<h3><a class="main__anchor" name="uso-del-atributo-samesite" href="#uso-del-atributo-samesite">Uso del atributo samesite</a></h3><p>El atributo <code>samesite</code> brinda otra forma de protegerse de tales ataques, que (en teoría) no requiere el “token de protección XSRF”.</p>
+<p>Tiene dos valores posibles:</p>
+<ul>
+<li><strong><code>samesite=strict</code></strong></li>
+</ul>
+<p>Una cookie con <code>samesite=strict</code> nunca es enviada si el usuario viene desde fuera del mismo sitio.</p>
+<p>En otras palabras, si el usuario sigue un enlace desde su correo, envía un form desde <code>evil.com</code>, o hace cualquier operación originada desde otro dominio, la cookie no será enviada.</p>
+<p>Cuando las cookies de autenticación tienen el atributo <code>samesite=strict</code>, un ataque XSRF no tiene posibilidad de éxito, porque el envío de <code>evil.com</code> llega sin cookies. Así <code>bank.com</code> no reconoce el usuario y no procederá con el pago.</p>
+<p>Esta protección es muy confiable. Solo las operaciones que provienen de <code>bank.com</code> enviarán la cookie <code>samesite=strict</code>, por ejemplo, el envío de un form desde otra página en <code>bank.com</code>.</p>
+<p>Aunque hay un pequeño inconveniente.</p>
+<p>Cuando el usuario sigue un enlace legítimo a <code>bank.com</code>, por ejemplo desde sus propio correo, será sorprendido con que <code>bank.com</code> no lo reconoce. Efectivamente, las cookies <code>samesite=strict</code> no son enviadas en ese caso.</p>
+<p>Podemos sortear esto usando dos cookies: una para el “reconocimiento general”, con el solo propósito de decir: “Hola, John”, y la otra para operaciones de datos con <code>samesite=strict</code>. Entonces, la persona que venga desde fuera del sitio llega a la página de bienvenida, pero los pagos serían iniciados desde dentro del sitio web del banco, entonces la segunda cookie sí será enviada.</p>
+<ul>
+<li><strong><code>samesite=lax</code> (es lo mismo que <code>samesite</code> sin un valor)</strong></li>
+</ul>
+<p>Un enfoque más laxo que también protege de ataques XSRF y no afecta la experiencia de usuario.</p>
+<p>El modo <code>lax</code>, como <code>strict</code>, prohíbe al navegador enviar cookies cuando viene desde fuera del sitio, pero agrega una excepción.</p>
+<p>Una cookie <code>samesite=lax</code> es enviada si se cumplen dos condiciones:</p>
+<ol>
+<li>
+<p>El método HTTP es seguro (por ejemplo GET, pero no POST).</p>
+<p>La lista completa de métodos seguros HTTP está en la especificación <a href="https://tools.ietf.org/html/rfc7231#section-4.2.1">RFC7231</a>. Son métodos que deben ser usados para leer, pero no escribir datos. No debem ejecutar ninguna operación de alteración de datos. Seguir un enlace es siempre GET, el método seguro.</p>
+</li>
+<li>
+<p>La operación ejecuta una navegación del más alto nivel (cambia la URL en la barra de dirección del navegador).</p>
+<p>Generalmente esto es verdad, pero si la navegación es ejecutada dentro de un <code>&lt;iframe&gt;</code>, entonces no es de alto nivel. Además, los métodos JavaScript para solicitudes de red no ejecutan ninguna navegación.</p>
+</li>
+</ol>
+<p>Entonces, lo que hace <code>samesite=lax</code> es permitir la operación más común “ir a URL” para obtener cookies. Por ejemplo, abrir un sitio desde el link en una agenda sí satisface estas condiciones.</p>
+<p>Pero cualquier cosa más complicada, como solicitudes de red desde otro sitio, o un “form submit”, pierde las cookies.</p>
+<p>Si esto es adecuado para ti, entonces agregar <code>samesite=lax</code> probablemente no dañe la experiencia de usuario y agrega protección.</p>
+<p>Por sobre todo, <code>samesite</code> es un atributo excelente.</p>
+<p>Tiene una importante debilidad:</p>
+<ul>
+<li><code>samesite</code> es ignorado (no soportado) por navegadores viejos, de hasta alrededor de 2017.</li>
+</ul>
+<p><strong>Así que si solo confiamos en <code>samesite</code> para brindar protección, habrá navegadores que serán vulnerables.</strong></p>
+<p>Pero podemos usar <code>samesite</code> junto con otras medidas de protección, como los tokens xsrf, para agregar una capa adicional de defensa. En el futuro, cuando los viejos navegadores mueran, probablemente podamos descartar la necesidad de tokens xsrf.</p>
+<h2><a class="main__anchor" name="httponly" href="#httponly">httpOnly</a></h2><p>Est atributo no tiene nada que ver con JavaScript, pero debemos mencionarlo para completar la guía.</p>
+<p>El servidor web usa la cabecera <code>Set-Cookie</code> para establecer la cookie. También puede establecer el atributo <code>httpOnly</code>.</p>
+<p>Este atributo impide a JavaScript todo acceso a la cookie. No podemos ver ni manipular tal cookie usando <code>document.cookie</code>.</p>
+<p>Esto es usado como medida de precaución, para proteger de ciertos ataques donde el hacker inyecta su propio código JavaScript en una página y espera que el usuario visite esa página. Esto no debería ser posible en absoluto, los hackers no deberían poder insertar su código en nuestro sitio, pero puede haber bugs que les permitan hacerlo.</p>
+<p>Normalmente, si eso sucede y el usuario visita una página web con el código JavaScript del hacker, entonces ese código se ejecuta y gana acceso a <code>document.cookie</code> con las cookies del usuario conteniendo información de autenticación. Eso es malo.</p>
+<p>Pero si una cookie es <code>httpOnly</code>, <code>document.cookie</code> no la ve y está protegida.</p>
+<h2><a class="main__anchor" name="apendice-funciones-de-cookies" href="#apendice-funciones-de-cookies">Apéndice: Funciones de cookies</a></h2><p>Aquí hay un pequeño conjunto de funciones para trabajar con cookies, más conveniente que la modificación manual de <code>document.cookie</code>.</p>
+<p>Existen muchas librerías de cookies para eso, asi que estas son para demostración solamente. Aunque completamente funcionales.</p>
+<h3><a class="main__anchor" name="getcookie-name" href="#getcookie-name">getCookie(name)</a></h3><p>La forma más corta de acceder a una cookie es usar una <a href="regular-expressions.html">expresión regular</a>.</p>
+<p>La función <code>getCookie(name)</code> devuelve la cookie con el nombre <code>name</code> dado:</p>
+<div id="s2z2lofdu9" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// devuelve la cookie con el nombre dado,
+// o undefined si no la encuentra
+function getCookie(name) {
+  let matches = document.cookie.match(new RegExp(
+    &quot;(?:^|; )&quot; + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + &quot;=([^;]*)&quot;
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Aquí <code>new RegExp</code> se genera dinámicamente para coincidir <code>; name=&lt;value&gt;</code>.</p>
+<p>Nota que el valor de una cookie está codificado, entonces <code>getCookie</code> usa una función integrada <code>decodeURIComponent</code> para decodificarla.</p>
+<h3><a class="main__anchor" name="setcookie-name-value-attributes" href="#setcookie-name-value-attributes">setCookie(name, value, attributes)</a></h3><p>Establece el nombre de la cookie <code>name</code> al valor dado <code>value</code>, con la ruta por defecto <code>path=/</code>, y puede ser modificada para agregar otros valores predeterminados:</p>
+<div id="n574onimwl" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="toolbar codebox__toolbar">
+          <div class="toolbar__tool">
+            <a href="#" title="ejecutar" data-action="run" class="toolbar__button toolbar__button_run"></a>
+          </div>
+          <div class="toolbar__tool">
+            <a href="#" title="abrir en entorno controlado" target="_blank" data-action="edit" class="toolbar__button toolbar__button_edit"></a>
+          </div>
+        </div>
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function setCookie(name, value, attributes = {}) {
+
+  attributes = {
+    path: '/',
+    // agregar otros valores predeterminados si es necesario
+    ...attributes
+  };
+
+  if (attributes.expires instanceof Date) {
+    attributes.expires = attributes.expires.toUTCString();
+  }
+
+  let updatedCookie = encodeURIComponent(name) + &quot;=&quot; + encodeURIComponent(value);
+
+  for (let attributeKey in attributes) {
+    updatedCookie += &quot;; &quot; + attributeKey;
+    let attributeValue = attributes[attributeKey];
+    if (attributeValue !== true) {
+      updatedCookie += &quot;=&quot; + attributeValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+}
+
+// Ejemplo de uso:
+setCookie('user', 'John', {secure: true, 'max-age': 3600});</code></pre>
+        </div>
+      </div>
+      
+      </div><h3><a class="main__anchor" name="deletecookie-name" href="#deletecookie-name">deleteCookie(name)</a></h3><p>Para borrar una cookie, podemos llamarla con una fecha de expiración negativa:</p>
+<div id="nllc0zo4le" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function deleteCookie(name) {
+  setCookie(name, &quot;&quot;, {
+    'max-age': -1
+  })
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><div class="important important_warn">
+            <div class="important__header"><span class="important__type">La modificación o eliminación debe usar la misma ruta y dominio</span></div>
+            <div class="important__content"><p>Por favor nota que cuando alteramos o borramos una cookie debemos usar exactamente el mismo “path” y “domain” que cuando la establecimos.</p>
+</div></div>
+<p>Completo: <a href="article/cookie/cookie.js">cookie.js</a>.</p>
+<h2><a class="main__anchor" name="apendice-cookies-de-terceros" href="#apendice-cookies-de-terceros">Apéndice: Cookies de terceros</a></h2><p>Una cookie es llamada “third-party” o “de terceros” si es colocada por un dominio distinto al de la página que el usuario está visitando.</p>
+<p>Por ejemplo:</p>
+<ol>
+<li>
+<p>Una página en <code>site.com</code> carga un banner desde otro sitio: <code>&lt;img src=&quot;https://ads.com/banner.png&quot;&gt;</code>.</p>
+</li>
+<li>
+<p>Junto con el banner, el servidor remoto en <code>ads.com</code> puede configurar la cabecera <code>Set-Cookie</code> con una cookie como <code>id=1234</code>. Tal cookie tiene origen en el dominio <code>ads.com</code>, y será visible solamente en <code>ads.com</code>:</p>
+<figure><div class="image" style="width:668px">
+      <div class="image__ratio" style="padding-top:28.74251497005988%"></div>
+      <object type="image/svg+xml" data="article/cookie/cookie-third-party.svg" width="668" height="192" class="image__image" data-use-theme>
+        <img src="article/cookie/cookie-third-party.svg" alt="" width="668" height="192">
+      </object>
+      </div></figure></li>
+<li>
+<p>La próxima vez que se accede a <code>ads.com</code>, el servidor remoto obtiene la cookie <code>id</code> y reconoce al usuario:</p>
+<figure><div class="image" style="width:668px">
+      <div class="image__ratio" style="padding-top:28.74251497005988%"></div>
+      <object type="image/svg+xml" data="article/cookie/cookie-third-party-2.svg" width="668" height="192" class="image__image" data-use-theme>
+        <img src="article/cookie/cookie-third-party-2.svg" alt="" width="668" height="192">
+      </object>
+      </div></figure></li>
+<li>
+<p>Lo que es más importante aquí, cuando el usuario cambia de <code>site.com</code> a otro sitio <code>other.com</code> que también tiene un banner, entonces <code>ads.com</code> obtiene la cookie porque pertenece a <code>ads.com</code>, reconociendo al visitante y su movimiento entre sitios:</p>
+<figure><div class="image" style="width:668px">
+      <div class="image__ratio" style="padding-top:28.74251497005988%"></div>
+      <object type="image/svg+xml" data="article/cookie/cookie-third-party-3.svg" width="668" height="192" class="image__image" data-use-theme>
+        <img src="article/cookie/cookie-third-party-3.svg" alt="" width="668" height="192">
+      </object>
+      </div></figure></li>
+</ol>
+<p>Las cookies de terceros son tradicionalmente usados para rastreo y servicios de publicidad (ads) debido a su naturaleza. Ellas están vinculadas al dominio de origen, entonces <code>ads.com</code> puede rastrear al mismo usuario a través de diferentes sitios si ellos los acceden.</p>
+<p>Naturalmente, a algunos no les gusta ser seguidos, así que los navegadores permiten deshabilitar tales cookies.</p>
+<p>Además, algunos navegadores modernos emplean políticas especiales para tales cookies:</p>
+<ul>
+<li>Safari no permite cookies de terceros en absoluto.</li>
+<li>Firefox viene con una “lista negra” de dominios de terceros y bloquea las cookies de tales orígenes.</li>
+</ul>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type">Por favor tome nota:</span></div>
+            <div class="important__content"><p>Si cargamos un script desde un dominio de terceros, como <code>&lt;script src=&quot;https://google-analytics.com/analytics.js&quot;&gt;</code>, y ese script usa <code>document.cookie</code> para configurar una cookie, tal cookie no es “de terceros”.</p>
+<p>Si un script configura una cookie, no importa de dónde viene el script: la cookie pertenece al dominio de la página web actual.</p>
+</div></div>
+<h2><a class="main__anchor" name="apendice-gdpr" href="#apendice-gdpr">Apéndice: GDPR</a></h2><p>Este tópico no está relacionado a JavaScript en absoluto, solo es algo para tener en mente cuando configuramos cookies.</p>
+<p>Hay una legislación en Europa llamada GDPR. Es un conjunto de reglas que fuerza a los sitios web a respetar la privacidad del usuario. Una de estas reglas es requerir el permiso explícito del usuario para el uso de cookies de seguimiento.</p>
+<p>Nota que esto solo se refiere a cookies de seguimiento, identificación y autorización.</p>
+<p>Así que si queremos configurar una cookie que solo guarda alguna información pero no hace seguimiento ni identificación del usuario, somos libres de hacerlo.</p>
+<p>Pero si vamos a configurar una cookie con una sesión de autenticación o un id de seguimiento, el usuario debe dar su permiso.</p>
+<p>Los sitios web generalmente tienen dos variantes para cumplir con el GDPR. Debes de haberlas visto en la web:</p>
+<ol>
+<li>
+<p>Si un sitio web quiere establecer cookies de seguimiento solo para usuarios autenticados.</p>
+<p>Para hacerlo, el form de registro debe tener un checkbox como: “aceptar la política de privacidad” (que describe cómo las cookies son usadas), el usuario debe marcarlo, entonces el sitio web es libre para establecer cookies de autenticación.</p>
+</li>
+<li>
+<p>Si un sitio web quiere establecer cookies de seguimiento a todo visitante.</p>
+<p>Para hacerlo legalmente, el sitio web muestra un mensaje del tipo “pantalla de bienvenida (splash screen)” a los recién llegados que les pide aceptar las cookies. Entonces el sitio web puede configurarlas y les deja ver el contenido. Esto puede ser molesto para el visitante. A nadie le gusta que aparezca una pantalla modal con la obligación de cliquear en ella en lugar del contenido. Pero el GDPR requiere el acuerdo explícito.</p>
+</li>
+</ol>
+<p>El GDPR no trata solo de cookies, también es acerca de otros problemas relacionados a la privacidad, pero eso va más allá de nuestro objetivo.</p>
+<h2><a class="main__anchor" name="resumen" href="#resumen">Resumen</a></h2><p><code>document.cookie</code> brinda acceso a las cookies.</p>
+<ul>
+<li>la operación de escritura modifica solo cookies mencionadas en ella.</li>
+<li>nombre y valor deben estar codificados.</li>
+<li>Una cookie no debe exceder los 4 KB. El número de cookies está limitado a alrededor de más de 20 por sitio (depende del navegador).</li>
+</ul>
+<p>Atributos de Cookie:</p>
+<ul>
+<li><code>path=/</code>, por defecto la ruta actual, hace la cookie visible solo bajo esa ruta.</li>
+<li><code>domain=site.com</code>, por defecto una cookie es visible solo en el dominio actual. Si el domino se establece explícitamente, la cookie se hace visible a los subdominios.</li>
+<li><code>expires</code> o <code>max-age</code> configuran el tiempo de expiración de la cookie. Sin ellas la cookie muere cuando el navegador se cierra.</li>
+<li><code>secure</code> hace la cookie solo para HTTPS.</li>
+<li><code>samesite</code> prohíbe al navegador enviar la cookie a solicitudes que vengan desde fuera del sitio. Esto ayuda a prevenir ataques XSRF.</li>
+</ul>
+<p>Adicionalmente:</p>
+<ul>
+<li>El navegador puede prohibir las cookies de terceros. Por ejemplo, Safari lo hace por defecto.</li>
+<li>Cuando se configuran cookies de seguimiento para ciudadanos de la UE, la regulación GDPR requiere la autorización del usuario.</li>
+</ul>
+</div></article></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="data-storage.html" data-tooltip="Almacenando datos en el navegador"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Lección anterior</span></a><a class="page__nav page__nav_next" href="localstorage.html" data-tooltip="LocalStorage, sessionStorage"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Próxima lección</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div></div><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comentarios</a></h2><div class="comments__read-before"><span class="comments__read-before-link">lea esto antes de comentar…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>Si tiene sugerencias sobre qué mejorar, por favor <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">enviar una propuesta de GitHub</a> o una solicitud de extracción en lugar de comentar.</li><li>Si no puede entender algo en el artículo, por favor explique.</li><li>Para insertar algunas palabras de código, use la etiqueta <code>&lt;code&gt;</code>, para varias líneas – envolverlas en la etiqueta <code>&lt;pre&gt;</code>, para más de 10 líneas – utilice una entorno controlado (sandbox) (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/es.javascript.info\/cookie","identifier":"\/cookie"}); };</script><script>var disqus_shortname = "es-javascript-info";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Mapa del Tutorial"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Capítulo</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="data-storage.html">Almacenando datos en el navegador</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Navegación de lección</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#leyendo-a-document-cookie">Leyendo a document.cookie</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#escribiendo-en-document-cookie">Escribiendo en document.cookie</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#domain">domain</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#path">path</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#expires-max-age">expires, max-age</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#secure">secure</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#samesite">samesite</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#httponly">httpOnly</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#apendice-funciones-de-cookies">Apéndice: Funciones de cookies</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#apendice-cookies-de-terceros">Apéndice: Cookies de terceros</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#apendice-gdpr">Apéndice: GDPR</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#resumen">Resumen</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comentarios</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Compartir</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fes.javascript.info%2Fcookie" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/es.javascript.info/blob/master/6-data-storage/01-cookie" rel="nofollow">Editar en GitHub</a></div></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">acerca del proyecto</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contáctenos</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from es.javascript.info/cookie by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:55:30 GMT -->
+</html>
