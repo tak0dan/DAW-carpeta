@@ -12,8 +12,11 @@ https://gvaedu-my.sharepoint.com/personal/d_marcelo_edu_gva_es/Documents/dwec-sh
 1. The OneDrive client (`onedrive`, abraunegg) pulls the shortcut into
    `~/Documents/dwec-shared-mirror/` (download-only, nothing is uploaded or
    deleted online).
-2. `rsync` copies that mirror into `dwec-shared-onedrive/` next to this file.
-3. A user systemd timer (`dwec-shared-sync.timer`) repeats this every 5 hours.
+2. `rsync` copies that mirror into `dwec-shared-onedrive-vendored/` next to
+   this file.
+3. `dwec-shared-onedrive` is a committed relative symlink to that directory,
+   so a fresh clone can read the material before the first sync.
+4. A user systemd timer (`dwec-shared-sync.timer`) repeats this every 5 hours.
 
 **Credentials are never stored in this repo.** The client's config and token
 live in `~/.config/onedrive-dwec/` (outside `~/Studies`).
@@ -34,5 +37,14 @@ live in `~/.config/onedrive-dwec/` (outside `~/Studies`).
    `sync_dir = "~/Documents/dwec-shared-mirror"` and
    `sync_business_shared_items = "true"` in `~/.config/onedrive-dwec/config`.
 3. Install the timer units from `~/.config/systemd/user/` and run `./dwec enable`.
+
+The `dwec-shared-onedrive` symlink is already in the repository and points at
+the vendored copy, so it works immediately after cloning. You can also repoint
+it at the live mirror if you prefer:
+
+```bash
+ln -sfn "$HOME/Documents/dwec-shared-mirror/MARCELO LLACER, DANIEL's files - dwec-shared" \
+  dwec-shared-onedrive
+```
 
 Do not run a bare `onedrive --sync`: it mirrors the whole OneDrive.
