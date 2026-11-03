@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>conditionals3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let machineActive = true;
+    let pwd = "cheese";
+    let machineResult;
+    let pwdResult;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    machineResult = machineActive ? 'The machine is on.'
+      : 'The machine is off.';
+
+    // The password is only checked when the machine is on. The single-line
+    // "not an if...else" is the conditional (ternary) operator.
+    // (With the machine off pwdResult stays undefined and the template
+    // prints the text "undefined": the task does not ask for more.)
+    if (machineActive) {
+      pwdResult = pwd === 'cheese' ? 'Login successful.' : 'Login failed.';
+    }
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector("body");
+    let para1 = document.createElement("p");
+    let para2 = document.createElement("p");
+    para1.textContent = machineResult;
+    para2.textContent = pwdResult;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>

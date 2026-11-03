@@ -3,6 +3,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const bank = require('./bank.js');
+const { run } = require('./runner.js');
+const { format } = require('./format.js');
 
 const titles = {
   typeof: 'typeof', numbers: 'Numbers', conversion: 'Type conversions',
@@ -13,7 +15,7 @@ const titles = {
   functions: 'Functions', loops: 'Loops', switch: 'switch',
 };
 
-const fence = (s) => '```js\n' + s.replace(/\\n/g, '\n') + '\n```';
+const fence = (s) => '```js\n' + s + '\n```';
 
 let out = '# 09 - Drills: "what does this print?"\n\n' +
   'Every answer below was **executed in Node ' + process.version +
@@ -29,7 +31,15 @@ for (const t of topics) {
   out += `## ${titles[t] || t}\n\n`;
   for (const e of bank.filter((b) => b.t === t)) {
     n++;
-    const code = e.body ? e.code.replace(/; /g, ';\n') : e.code;
+    let code = e.code;
+    if (e.body && !code.includes('\n')) {
+      // Re-run the formatted snippet: formatting must not change the result.
+      const pretty = format(code);
+      if (run(e, pretty) !== e.exp) {
+        throw new Error('formatting changed the result of: ' + e.code);
+      }
+      code = pretty;
+    }
     out += `**${n}.**${e.strict ? ' *(strict)*' : ''}\n\n` +
       fence(e.body ? `// function body\n${code}` : code) + '\n' +
       `<details><summary>Answer</summary>\n\n` +

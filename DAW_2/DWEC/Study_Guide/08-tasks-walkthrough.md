@@ -1,7 +1,11 @@
 # 08 - The assigned tasks, dissected (dwec1p2 and dwec1p3)
 
-Reference code lives in `reference/ut-refactor/`; the logic of every task is
-asserted in `tools/tasks-check.js` (`node tools/tasks-check.js`). These are
+**Complete, runnable files** (template verbatim + solution in the marked
+zone) are in `reference/tasks/*.html` and `reference/ut-refactor/`; they are
+also printed in full in Part V of `ALL-THEORY.md`. `node tools/html-run.js`
+executes every page against a stub DOM and checks what it prints (38
+checks); the logic of every task is also asserted in `tools/tasks-check.js`.
+The snippets below show only the inserted zone, so you can focus on it. These are
 **study references**: write your own first, in exam conditions, then compare.
 
 Rules of the game (from `dwec1p2-instr.md`):
