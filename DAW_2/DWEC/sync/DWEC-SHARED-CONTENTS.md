@@ -2,7 +2,9 @@
 
 Pulled 2026-11-02 with `./sync-dwec-shared.sh` (download-only, `onedrive-abraunegg`).
 Result: *"Processed 33 applicable JSON items… Sync complete"*, exit 0.
-Live copy: `sync/dwec-shared-onedrive/` → `~/OneDrive/MARCELO LLACER, DANIEL's files - dwec-shared`.
+Local copy: `sync/dwec-shared-onedrive/` is a committed symlink to
+`sync/dwec-shared-onedrive-vendored/`, which `./dwec sync` keeps in step with
+`~/Documents/dwec-shared-mirror/MARCELO LLACER, DANIEL's files - dwec-shared`.
 
 Compared with the older manual copy in `../dwec-shared/` (extracted from
 `dwec-shared.zip`), the pull added two files:
