@@ -27,8 +27,11 @@ dense expressions to read, and precise terminology.
 | `12-mock-exam.md` | an exam in his style, with answers |
 | `13-cheatsheet.md` | one page + pre-exam checklist |
 
-`reference/ut-refactor/` holds a working reference of the UT task (`main.js`,
-`uts.js`, `uts.html`, `conditionals2.html`).
+`reference/tasks/` has the **complete** HTML file of every dwec1p2 task
+(his template verbatim + the solution in the marked zone) and
+`reference/ut-refactor/` the complete UT/refactor files. `ALL-THEORY.md` is
+the single file with all the theory **and** every complete code file
+(Part V).
 
 ## Study method (his own advice, applied)
 
@@ -70,6 +73,8 @@ node verify.js        # run every drill against Node
 node gen.js           # rebuild 09-drills.md from bank.js
 node tasks-check.js
 node mock-check.js
+node html-run.js      # executes the complete HTML task files
+python3 -I build-all.py   # rebuilds ../ALL-THEORY.md
 ```
 
 Edit `tools/bank.js` to add drills (each entry carries its expected result,

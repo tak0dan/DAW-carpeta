@@ -1,19 +1,7 @@
 'use strict';
 // Runs every bank entry in Node and compares with the claimed answer.
-const util = require('node:util');
 const bank = require('./bank.js');
-
-function run(entry) {
-  const prefix = entry.strict ? "'use strict';\n" : '';
-  const src = entry.body ? entry.code : `return (${entry.code});`;
-  try {
-    // eslint-disable-next-line no-new-func
-    const fn = new Function(prefix + src);
-    return util.inspect(fn(), { breakLength: Infinity });
-  } catch (e) {
-    return `Error:${e.name}`;
-  }
-}
+const { run } = require('./runner.js');
 
 let bad = 0;
 for (const entry of bank) {

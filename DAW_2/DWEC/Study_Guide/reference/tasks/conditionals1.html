@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>conditionals1</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let season = 'summer';
+    let response;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    // One chain: separate ifs would let the last else overwrite the summer
+    // message.
+    if (season === 'summer') {
+      response = 'It is summer: enjoy the sun!';
+    } else if (season === 'winter') {
+      response = 'It is winter: wrap up warm.';
+    } else {
+      response = 'I do not know what season it is.';
+    }
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    let para1 = document.createElement('p');
+    para1.textContent = response;
+    body.appendChild(para1);
+  </script>
+</html>

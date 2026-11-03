@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>loops3</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let i = 500;
+    let text = '';
+
+    function isPrime(num) {
+      for(let i = 2; i < num; i++) {
+        if(num % i === 0) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    // 1) while: the decrement goes BEFORE continue, or it never ends.
+    while (i >= 2) {
+      if (!isPrime(i)) {
+        i--;
+        continue;
+      }
+      text += i + ' ';
+      i--;
+    }
+    text += '\n';
+
+    // 2) do..while: the shared counter must be reset first.
+    i = 500;
+    do {
+      if (isPrime(i)) {
+        text += i + ' ';
+      }
+      i--;
+    } while (i >= 2);
+    text += '\n';
+
+    // 3) for: continue still runs the step (i--).
+    for (i = 500; i >= 2; i--) {
+      if (!isPrime(i)) {
+        continue;
+      }
+      text += i + ' ';
+    }
+
+    // HTML collapses "\n" in textContent; make the paragraph show them
+    // (white-space is inherited from body).
+    document.body.style.whiteSpace = 'pre-line';
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const para = document.createElement('p');
+    para.textContent = text;
+    const body = document.querySelector('body');
+    body.appendChild(para);
+  </script>
+</html>

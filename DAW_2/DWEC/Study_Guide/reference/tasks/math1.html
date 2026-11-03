@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>math1</title>
+  </head>
+  <body>
+  </body>
+  <script>
+    let finalResult;
+    let evenOddResult;
+
+    // Add your code here
+    //{{-------------------------------------------------------
+    // Inputs chosen on purpose: (3 + 5) * (10 - 4) = 8 * 6 = 48.
+    const firstAddend = 3;
+    const secondAddend = 5;
+    const minuend = 10;
+    const subtrahend = 4;
+
+    const sum = firstAddend + secondAddend;
+    const difference = minuend - subtrahend;
+    finalResult = sum * difference;
+
+    // The template checks `evenOddResult === 0`, so store the remainder:
+    // 0 means even (a boolean here would always print "odd").
+    evenOddResult = finalResult % 2;
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+
+    const body = document.querySelector('body');
+    const para1 = document.createElement('p');
+    const finalResultCheck = finalResult === 48 ?
+      `Yes, well done!` : `No, it is ${ finalResult }`;
+    para1.textContent = `Is the finalResult 48? ${ finalResultCheck }`;
+    const para2 = document.createElement('p');
+    const evenOddResultCheck = evenOddResult === 0 ?
+      'The final result is even!' : 'The final result is odd. Hrm.'
+    para2.textContent = evenOddResultCheck;
+    body.appendChild(para1);
+    body.appendChild(para2);
+  </script>
+</html>

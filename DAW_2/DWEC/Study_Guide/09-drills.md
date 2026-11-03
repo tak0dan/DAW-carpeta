@@ -519,8 +519,7 @@ Number((4633.3333).toFixed(2))
 **47.**
 
 ```js
-+"" + +" " + +"
-"
++"" + +" " + +"\n"
 ```
 <details><summary>Answer</summary>
 
@@ -885,8 +884,7 @@ undefined + 1
 **80.**
 
 ```js
-" \t 
-" - 2
+" \t \n" - 2
 ```
 <details><summary>Answer</summary>
 
@@ -1352,9 +1350,7 @@ undefined === null
 **122.**
 
 ```js
-null == "
-0
-"
+null == "\n0\n"
 ```
 <details><summary>Answer</summary>
 
@@ -1365,9 +1361,7 @@ null == "
 **123.**
 
 ```js
-null === +"
-0
-"
+null === +"\n0\n"
 ```
 <details><summary>Answer</summary>
 
@@ -1861,8 +1855,9 @@ null || 2 && 3 || 4
 ```js
 // function body
 let log = [];
-const f = (n) => { log.push(n);
-return undefined;
+const f = (n) => {
+  log.push(n);
+  return undefined;
 };
 const r = f(1) || 2 || f(3);
 return [r, log];
@@ -1878,8 +1873,9 @@ return [r, log];
 ```js
 // function body
 let log = [];
-const f = (n) => { log.push(n);
-return undefined;
+const f = (n) => {
+  log.push(n);
+  return undefined;
 };
 const r = f(1) && f(2);
 return [r, log];
@@ -2024,8 +2020,7 @@ true ? false ? 1 : 2 : 3
 
 ```js
 `l1
-l2`.split("
-").length
+l2`.split("\n").length
 ```
 <details><summary>Answer</summary>
 
@@ -2275,8 +2270,7 @@ return num;
 ```js
 // function body
 let a = "abc"
-[1, 2].length;
-return a;
+[1, 2].length; return a;
 ```
 <details><summary>Answer</summary>
 
@@ -2289,8 +2283,7 @@ return a;
 ```js
 // function body
 const v = function () { return 1 }
-(2);
-return typeof v;
+(2); return typeof v;
 ```
 <details><summary>Answer</summary>
 
@@ -2346,7 +2339,8 @@ return (
 ```js
 // function body
 return f();
-function f() { return 1;
+function f() {
+  return 1;
 }
 ```
 <details><summary>Answer</summary>
@@ -2360,7 +2354,8 @@ function f() { return 1;
 ```js
 // function body
 return f();
-const f = function () { return 1;
+const f = function () {
+  return 1;
 };
 ```
 <details><summary>Answer</summary>
@@ -2374,7 +2369,8 @@ const f = function () { return 1;
 ```js
 // function body
 return f();
-var f = function () { return 1;
+var f = function () {
+  return 1;
 };
 ```
 <details><summary>Answer</summary>
@@ -2387,8 +2383,10 @@ var f = function () { return 1;
 
 ```js
 // function body
-function f(a, b = "d") { return b;
-} return [f(1), f(1, undefined), f(1, null), f(1, "")];
+function f(a, b = "d") {
+  return b;
+}
+return [f(1), f(1, undefined), f(1, null), f(1, "")];
 ```
 <details><summary>Answer</summary>
 
@@ -2400,8 +2398,10 @@ function f(a, b = "d") { return b;
 
 ```js
 // function body
-function f(a, b = a * 2) { return b;
-} return f(4);
+function f(a, b = a * 2) {
+  return b;
+}
+return f(4);
 ```
 <details><summary>Answer</summary>
 
@@ -2413,9 +2413,11 @@ function f(a, b = a * 2) { return b;
 
 ```js
 // function body
-function f(t) { t = t || "empty";
-return t;
-} return [f(0), f(""), f(null)];
+function f(t) {
+  t = t || "empty";
+  return t;
+}
+return [f(0), f(""), f(null)];
 ```
 <details><summary>Answer</summary>
 
@@ -2427,8 +2429,10 @@ return t;
 
 ```js
 // function body
-function f(t) { return t ?? "unknown";
-} return [f(0), f(""), f(null), f()];
+function f(t) {
+  return t ?? "unknown";
+}
+return [f(0), f(""), f(null), f()];
 ```
 <details><summary>Answer</summary>
 
@@ -2440,7 +2444,8 @@ function f(t) { return t ?? "unknown";
 
 ```js
 // function body
-function f() {} return f();
+function f() {}
+return f();
 ```
 <details><summary>Answer</summary>
 
@@ -2452,8 +2457,10 @@ function f() {} return f();
 
 ```js
 // function body
-function f() { return;
-} return f() === undefined;
+function f() {
+  return;
+}
+return f() === undefined;
 ```
 <details><summary>Answer</summary>
 
@@ -2465,7 +2472,8 @@ function f() { return;
 
 ```js
 // function body
-function f(a, b) {} return f.length;
+function f(a, b) {}
+return f.length;
 ```
 <details><summary>Answer</summary>
 
@@ -2477,7 +2485,8 @@ function f(a, b) {} return f.length;
 
 ```js
 // function body
-function f(a, b = 1, c) {} return f.length;
+function f(a, b = 1, c) {}
+return f.length;
 ```
 <details><summary>Answer</summary>
 
@@ -2489,8 +2498,10 @@ function f(a, b = 1, c) {} return f.length;
 
 ```js
 // function body
-function f(a) { return a;
-} return f(1, 2, 3);
+function f(a) {
+  return a;
+}
+return f(1, 2, 3);
 ```
 <details><summary>Answer</summary>
 
@@ -2503,8 +2514,10 @@ function f(a) { return a;
 ```js
 // function body
 let a = 1;
-function f(a) { a = 2;
-} f(5);
+function f(a) {
+  a = 2;
+}
+f(5);
 return a;
 ```
 <details><summary>Answer</summary>
@@ -2517,8 +2530,7 @@ return a;
 
 ```js
 // function body
-return new Function("a", "let a = 1;
-return a;")
+return new Function("a", "let a = 1; return a;")
 ```
 <details><summary>Answer</summary>
 
@@ -2531,9 +2543,11 @@ return a;")
 ```js
 // function body
 let n = 1;
-function f() { let n = 2;
-return n;
-} f();
+function f() {
+  let n = 2;
+  return n;
+}
+f();
 return n;
 ```
 <details><summary>Answer</summary>
@@ -2547,8 +2561,10 @@ return n;
 ```js
 // function body
 let n = 1;
-function f() { n = 2;
-} f();
+function f() {
+  n = 2;
+}
+f();
 return n;
 ```
 <details><summary>Answer</summary>
@@ -2574,8 +2590,10 @@ return f(1, 2) + f.name.length;
 
 ```js
 // function body
-function g(cb) { return cb(2);
-} return g(x => x * 3);
+function g(cb) {
+  return cb(2);
+}
+return g(x => x * 3);
 ```
 <details><summary>Answer</summary>
 
@@ -2587,7 +2605,8 @@ function g(cb) { return cb(2);
 
 ```js
 // function body
-function f() {} const alias = f;
+function f() {}
+const alias = f;
 return alias === f;
 ```
 <details><summary>Answer</summary>
@@ -2602,9 +2621,8 @@ return alias === f;
 
 ```js
 // function body
-for (let i = 0;
-i < 3;
-i++) {} return typeof i;
+for (let i = 0; i < 3; i++) {}
+return typeof i;
 ```
 <details><summary>Answer</summary>
 
@@ -2616,9 +2634,8 @@ i++) {} return typeof i;
 
 ```js
 // function body
-for (var i = 0;
-i < 3;
-i++) {} return i;
+for (var i = 0; i < 3; i++) {}
+return i;
 ```
 <details><summary>Answer</summary>
 
@@ -2631,7 +2648,8 @@ i++) {} return i;
 ```js
 // function body
 let n = 0;
-do { n++;
+do {
+  n++;
 } while (false);
 return n;
 ```
@@ -2646,8 +2664,10 @@ return n;
 ```js
 // function body
 let n = 0;
-while (false) { n++;
-} return n;
+while (false) {
+  n++;
+}
+return n;
 ```
 <details><summary>Answer</summary>
 
@@ -2674,12 +2694,12 @@ return out;
 ```js
 // function body
 let out = [];
-for (let i = 0;
-i < 6;
-i++) { if (i % 2) continue;
-if (i > 3) break;
-out.push(i);
-} return out;
+for (let i = 0; i < 6; i++) {
+  if (i % 2) continue;
+  if (i > 3) break;
+  out.push(i);
+}
+return out;
 ```
 <details><summary>Answer</summary>
 
@@ -2692,8 +2712,7 @@ out.push(i);
 ```js
 // function body
 let out = [], i = 0;
-for (;
-i < 3;) out.push(i++);
+for (; i < 3;) out.push(i++);
 return out;
 ```
 <details><summary>Answer</summary>
@@ -2707,9 +2726,7 @@ return out;
 ```js
 // function body
 let out = [];
-for (let i = 0, j = 3;
-i < j;
-i++, j--) out.push([i, j].join("-"));
+for (let i = 0, j = 3; i < j; i++, j--) out.push([i, j].join("-"));
 return out;
 ```
 <details><summary>Answer</summary>
@@ -2722,9 +2739,7 @@ return out;
 
 ```js
 // function body
-for (const i = 0;
-i < 2;
-i++) {}
+for (const i = 0; i < 2; i++) {}
 ```
 <details><summary>Answer</summary>
 
@@ -2737,14 +2752,14 @@ i++) {}
 ```js
 // function body
 let out = [];
-outer: for (let i = 0;
-i < 3;
-i++) { for (let j = 0;
-j < 3;
-j++) { if (j === 1) continue outer;
-if (i === 2) break outer;
-out.push(`${i}${j}`);
-} } return out;
+outer: for (let i = 0; i < 3; i++) {
+  for (let j = 0; j < 3; j++) {
+    if (j === 1) continue outer;
+    if (i === 2) break outer;
+    out.push(`${i}${j}`);
+  }
+}
+return out;
 ```
 <details><summary>Answer</summary>
 
@@ -2757,11 +2772,15 @@ out.push(`${i}${j}`);
 ```js
 // function body
 let t = "", i = 5;
-while (i >= 2) { if (i % 2) { i--;
-continue;
-} t += i + ",";
-i--;
-} return t;
+while (i >= 2) {
+  if (i % 2) {
+    i--;
+    continue;
+  }
+  t += i + ",";
+  i--;
+}
+return t;
 ```
 <details><summary>Answer</summary>
 
@@ -2788,13 +2807,9 @@ return out;
 ```js
 // function body
 let out = [];
-for (let i = 0;
-i < 3;
-++i) out.push(i);
+for (let i = 0; i < 3; ++i) out.push(i);
 let out2 = [];
-for (let i = 0;
-i < 3;
-i++) out2.push(i);
+for (let i = 0; i < 3; i++) out2.push(i);
 return out.join() === out2.join();
 ```
 <details><summary>Answer</summary>
@@ -2831,9 +2846,13 @@ new Function("5++")
 
 ```js
 // function body
-function f(x) { switch (x) { case 2: return "num";
-default: return "other";
-} } return f("2");
+function f(x) {
+  switch (x) {
+    case 2: return "num";
+    default: return "other";
+  }
+}
+return f("2");
 ```
 <details><summary>Answer</summary>
 
@@ -2846,11 +2865,13 @@ default: return "other";
 ```js
 // function body
 let out = "";
-switch (1) { case 1: out += "a";
-case 2: out += "b";
-break;
-case 3: out += "c";
-} return out;
+switch (1) {
+  case 1: out += "a";
+  case 2: out += "b";
+  break;
+  case 3: out += "c";
+}
+return out;
 ```
 <details><summary>Answer</summary>
 
@@ -2863,11 +2884,13 @@ case 3: out += "c";
 ```js
 // function body
 let out = "";
-switch (5) { default: out += "d";
-case 1: out += "1";
-break;
-case 2: out += "2";
-} return out;
+switch (5) {
+  default: out += "d";
+  case 1: out += "1";
+  break;
+  case 2: out += "2";
+}
+return out;
 ```
 <details><summary>Answer</summary>
 
@@ -2879,10 +2902,14 @@ case 2: out += "2";
 
 ```js
 // function body
-function f(s) { switch (true) { case s < 0 || s > 100: return "err";
-case s < 20: return "low";
-default: return "high";
-} } return [f(-1), f(19.5), f(50), f(NaN)];
+function f(s) {
+  switch (true) {
+    case s < 0 || s > 100: return "err";
+    case s < 20: return "low";
+    default: return "high";
+  }
+}
+return [f(-1), f(19.5), f(50), f(NaN)];
 ```
 <details><summary>Answer</summary>
 
@@ -2895,11 +2922,13 @@ default: return "high";
 ```js
 // function body
 let out = "";
-switch (1) { case 1: let a = 5;
-out += a;
-break;
-case 2: out += typeof a;
-} return out;
+switch (1) {
+  case 1: let a = 5;
+  out += a;
+  break;
+  case 2: out += typeof a;
+}
+return out;
 ```
 <details><summary>Answer</summary>
 
@@ -2911,9 +2940,13 @@ case 2: out += typeof a;
 
 ```js
 // function body
-function f(v) { switch (v) { case "1": case 1: return "one";
-default: return "?";
-} } return [f(1), f("1"), f(true)];
+function f(v) {
+  switch (v) {
+    case "1": case 1: return "one";
+    default: return "?";
+  }
+}
+return [f(1), f("1"), f(true)];
 ```
 <details><summary>Answer</summary>
 
