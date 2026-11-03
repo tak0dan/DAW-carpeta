@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<script>
+let eventSource;
+
+function start() { // cuando se presiona el botón "Inicio"
+  if (!window.EventSource) {
+    // IE o un navegador antiguo
+    alert("El navegador no es compatible con EventSource.");
+    return;
+  }
+
+  eventSource = new EventSource('digits');
+
+  eventSource.onopen = function(e) {
+    log("Evento: open");
+  };
+
+  eventSource.onerror = function(e) {
+    log("Evento: error");
+    if (this.readyState == EventSource.CONNECTING) {
+      log(`Reconectando (readyState=${this.readyState})...`);
+    } else {
+      log("Un error ha ocurrido.");
+    }
+  };
+
+  eventSource.addEventListener('bye', function(e) {
+    log("Evento: bye, datos: " + e.data);
+  });
+
+  eventSource.onmessage = function(e) {
+    log("Evento: message, datos: " + e.data);
+  };
+}
+
+function stop() { // cuando se presiona el botón "Detener"
+  eventSource.close();
+  log("eventSource.close()");
+}
+
+function log(msg) {
+  logElem.innerHTML += msg + "<br>";
+  document.documentElement.scrollTop = 99999999;
+}
+</script>
+
+<button onclick="start()">Inicio</button> Presiona "Inicio" para comenzar.
+<div id="logElem" style="margin: 6px 0"></div>
+
+<button onclick="stop()">Detener</button> "Detener" para terminar.
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
