@@ -1,0 +1,93 @@
+EJERCICIO TIPO-EXAMEN (tiempo: 2h30)
+
+GENERAL
+
+Crea en el escritorio una carpeta
+
+dwec1p4/
+
+que contendrá, aparte del oculto .git/, contendrá solamente el fichero o ficheros
+solicitados
+
+Entrega al final
+
+Crea en el escritorio un zip con este nombre (en lower-kebab-case tu primer
+apellido y tu nombre):
+
+dwec1p4.tu-apellido1.tu-nombre.zip
+Contiene en su raíz solamente la carpeta dwec1pa/
+
+Entrégalo como se te indique
+
+La carpeta anterior estará bajo git, en la rama moderna por omisión.
+
+Guarda progresivamente siguiendo Conventional Commits con commits
+atómicos y buenas prácticas vistas en clase, como poco al final de cada
+apartado (aunque en un apartado puedes realizar más commits intermedios).
+
+Si no sigues el orden indicado en el enunciado para los apartados, ten en
+cuenta en qué te puede estar afectando. Puedes añadir correcciones o mejoras
+de apartados pasados tras haber hecho cosas de apartados posteriores.
+
+Al PRINCIPIO de cada mensaje de guardado en git (tras la etiqueta del
+Conventional Commits), pon entre paréntesis el n* de apartado que has
+afectado. P.ej.: (*3). Si luego hay más para ese mismo apartado, añade decimal
+creciente. P.ej. (43.1), y luego (*3.2), ... No se debiera típicamente afectar a
+más de un apartado, pero si por lo que sea se hace, sepáralos por comas. P.ej.
+(*3.3,%4,45). Tras ese número entre paréntesis, ya va el resto del mensaje.
+
+Comenta cuando sea conveniente según las buenas prácticas vistas en clase.
+Entre otros, marca el id de apartado al que se refiere cada zona de tu código. Ej.:
+
+// 43
+
+Si ves conveniente acotar más explícitamente la zona a la que se refiere un
+apartado, puedes poner una marca inicial:
+
+77 43 X
+y una final:
+
+// 3
+Lo siguiente vale para todos los apartados (y contará para cada apartado):
+
+* Usa buenas prácticas. Entre otras:
+
+DRY (no te repitas). Código con estilo consistente y suscinto, siempre que sea
+comprensible y mantenible.
+
+No ineficiencia innecesaria en ejecución.
+
+Nombres semánticos de variables, funciones, etc.
+
+Código no innecesariamente ad-hoc (no particularizado para casos concretos).
+Dentro de lo razonable, que sea extensible a añadidos o cambios futuros.
+
+Indentación a dos espacios y ceñirse a 80 caracteres por línea.
+Uso de JS al estilo moderno.
+
+* Conforme avances, se valorará que comentes en lugar apropiado lo que dejes
+pendiente:
+
+Empezando por la etiqueta:
+
+* “TODO:” lo que no sabes hacer, o lo haces de manera distinta a las
+
+instrucciones, o parcialmente, o te lo saltas por ahora.
+
+* “FIXME”” siesalgo que has hecho, pero que tiene un bug.
+Tras esa etiqueta, pones el mensaje que pondrías en un commit futuro que lo
+solucionara.
+Si lo solucionas más adelante: quitas el comentario y usas su mensaje para el
+commit (adaptando la etiqueta a Conventional Commits).
+Nota: si te saltas directamente un apartado, puede no hacer falta poner el
+TODO:, pero si al final no tienes tiempo de hacerlo, te valdrá más al menos
+poner el TODO: que no hacer nada para ese apartado.
+
+* Cuando añadas funcionalidad, no debiera romper la funcionalidad anterior (efecto
+secundario imprevisto).
+
+Silo hace, elije, según el margen de tiempo que tengas entre:
+* Tresolverlo
+* o marcarlo con un “FIXME:”
+* odesactivar lo nuevo añadido dentro de comentario (marcándolo
+con un “TODO:”).

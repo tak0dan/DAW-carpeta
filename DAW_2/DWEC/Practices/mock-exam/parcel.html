@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>parcel</title>
+    <!-- 2: external file, loaded BEFORE the inline code (all classic
+         scripts share one global scope: never redeclare its names) -->
+    <script src="./scripts/shipping/main.js"></script>
+  </head>
+  <body>
+  </body>
+  <script>
+    // DISCLAIMER: 'use strict' goes outside the "Add your code here" zone
+    // because it only works as the FIRST statement of the script.
+    'use strict';
+    let totalNum;
+    let isEvenCents;
+    // Add your code here
+    //{{-------------------------------------------------------
+    // 1 (start)
+    const price = 19.99;
+    const units = 3;
+    const vatRate = 0.21;
+
+    const total = price * units * (1 + vatRate); // 72.5637
+    // toFixed() ROUNDS and returns a STRING ("72.56"), not a number.
+    const totalText = total.toFixed(2);
+    // Task asks to check it; here it is always true, kept as a guard.
+    totalNum = typeof totalText === 'string' ? Number(totalText) : totalText;
+
+    // Parity needs an INTEGER: cents of the ROUNDED amount (7256).
+    // Math.round() cleans float noise (72.56 * 100 may not be exact).
+    // The comparison is already a boolean: no if/else needed.
+    isEvenCents = Math.round(totalNum * 100) % 2 === 0;
+
+    // DISCLAIMER: 0.1 + 0.2 === 0.30000000000000004 because binary floats
+    // cannot store 0.1 exactly. It does not hurt here: we round to 2
+    // decimals first and do the parity check on integer cents.
+    // 1 (end)
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+    const p = document.createElement('p');
+    p.textContent = `Total: ${ totalNum } (even cents? ${ isEvenCents })`;
+    document.querySelector('body').appendChild(p);
+  </script>
+</html>

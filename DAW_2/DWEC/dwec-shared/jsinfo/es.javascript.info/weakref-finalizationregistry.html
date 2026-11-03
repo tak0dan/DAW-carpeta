@@ -1,0 +1,575 @@
+<!DOCTYPE html><html lang="es" data-theme-enabled="1">
+<!-- Mirrored from es.javascript.info/weakref-finalizationregistry by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:53:56 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head><script>window.currentUser = null;</script><script>window.shopCurrency = "EUR";</script><script>window.localCurrency = "EUR";</script><script>window.countryCode = "es";</script><script>window.rateShopTo = {"EUR":1,"USD":1.1621001939545224,"AMD":442.566997981432};</script><title itemprop="name">WeakRef y FinalizationRegistry</title><link href="pack/styles.30dd9c4627007e6c9584.css" rel="stylesheet"><meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1.0"><meta name="apple-mobile-web-app-capable" content="yes"><!-- chrome autotranslate is enabled only for "en" main version--><meta name="google" content="notranslate"><script>if (window.devicePixelRatio > 1) document.cookie = 'pixelRatio=' + window.devicePixelRatio + ';path=/;expires=Tue, 19 Jan 2038 03:14:07 GMT';</script><link href="../fonts.googleapis.com/css31ea.css?family=Open+Sans:bold,italic,bolditalic" rel="stylesheet"><link rel="apple-touch-icon-precomposed" href="img/favicon/apple-touch-icon-precomposed.png"><link rel="canonical" href="weakref-finalizationregistry.html"><meta name="msapplication-TileColor" content="#222A2C"><meta name="msapplication-TileImage" content="/img/favicon/tileicon.png"><link rel="icon" href="img/favicon/favicon.png"><meta itemprop="image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta property="og:title" content="WeakRef y FinalizationRegistry"><meta property="og:image" content="https://es.javascript.info/img/site_preview_en_1200x630.png"><meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="fb:admins" content="100001562528165"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="WeakRef y FinalizationRegistry"><meta name="twitter:site" content="@iliakan"><meta name="twitter:creator" content="@iliakan"><meta name="twitter:image" content="https://es.javascript.info/img/site_preview_en_512x512.png"><meta name="google-adsense-account" content="ca-pub-6204518652652613"><link rel="prev" href="unicode.html"><link rel="next" href="ui.html"><script>window.GA_ID = "UA-2056213-15";</script><script>window.YANDEX_METRIKA_ID = 32184394;</script><script>{function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-2LWB61WGYJ")}</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LWB61WGYJ"></script><script>window.metrika={reachGoal:function(){}},window.yandex_metrika_callbacks=[function(){try{window.metrika=new Ya.Metrika({id:YANDEX_METRIKA_ID,webvisor:!0,clickmap:!0,params:{user:window.currentUser&&window.currentUser.id}}),metrika.trackLinks({delay:150}),window.addEventListener("error",function(r){window.metrika.reachGoal("JSERROR",{src:(r.filename||r.errorUrl)+": "+(r.lineno||r.errorLine),stack:r.stack||r.error&&r.error.stack,message:r.message})})}catch(r){}}];</script><script src="../mc.yandex.ru/metrika/watch.js" async></script><script>window.CAPTCHA_ID = "6LfmLAEVAAAAAJMykMnf7aY8nkyTRmYi2ynx51R1";</script><script>window.CAPTCHA_TYPE = "recaptcha";</script><script src="pack/init.5d7bf060746ac03f75b7.js"></script><script src="pack/head.7277f6307285ec41ba98.js" defer></script><meta property="og:title" content="WeakRef y FinalizationRegistry"><meta property="og:type" content="article"><script src="pack/tutorial.1fd2eb45c196482dd6c4.js" defer></script><script src="pack/footer.2c081af06e54a9cb6d00.js" defer></script></head><body class="no-icons"><script>window.fontTest();</script><div class="page-wrapper page-wrapper_sidebar_on"><!--[if IE]><div style="color:red;text-align:center">Lo sentimos, Internet Explorer no es compatible. Utilice un navegador más nuevo.</div><![endif]--><div class="sitetoolbar sitetoolbar_tutorial"><script>window.langs = [{"code":"ar","name":"Arabic"},{"code":"az","name":"Azerbaijani"},{"code":"bg","name":"Bulgarian"},{"code":"bn","name":"Bengali"},{"code":"bs","name":"Bosnian"},{"code":"ca","name":"Catalan"},{"code":"cs","name":"Czech"},{"code":"da","name":"Danish"},{"code":"de","name":"German"},{"code":"el","name":"Greek"},{"code":"en","name":"English"},{"code":"es","name":"Spanish"},{"code":"fa","name":"Persian (Farsi)"},{"code":"fi","name":"Finnish"},{"code":"fr","name":"French"},{"code":"he","name":"Hebrew"},{"code":"hi","name":"Hindi"},{"code":"hr","name":"Croatian"},{"code":"hu","name":"Hungarian"},{"code":"hy","name":"Armenian"},{"code":"id","name":"Indonesian"},{"code":"it","name":"Italian"},{"code":"ja","name":"Japanese"},{"code":"ka","name":"Georgian"},{"code":"kk","name":"Kazakh"},{"code":"km","name":"Central Khmer"},{"code":"ko","name":"Korean"},{"code":"ku","name":"Kurdish"},{"code":"ky","name":"Kyrgyz"},{"code":"lt","name":"Lithuanian"},{"code":"me","name":"Montenegrin"},{"code":"ml","name":"Malayalam"},{"code":"ms","name":"Malay"},{"code":"my","name":"Burmese"},{"code":"nl","name":"Dutch"},{"code":"no","name":"Norvegian"},{"code":"pa","name":"Punjabi"},{"code":"pl","name":"Polish"},{"code":"pt","name":"Portuguese"},{"code":"ro","name":"Romanian"},{"code":"ru","name":"Russian"},{"code":"si","name":"Sinhala"},{"code":"sk","name":"Slovak"},{"code":"sl","name":"Slovenian"},{"code":"sq","name":"Albanian"},{"code":"sr","name":"Serbian"},{"code":"ta","name":"Tamil"},{"code":"te","name":"Telugu"},{"code":"test","name":"Test"},{"code":"th","name":"Thai"},{"code":"tk","name":"Turkmen"},{"code":"tr","name":"Turkish"},{"code":"ug","name":"Uyghur"},{"code":"uk","name":"Ukrainian"},{"code":"ur","name":"Urdu"},{"code":"uz","name":"Uzbek"},{"code":"v2","name":"v2"},{"code":"vi","name":"Vietnamese"},{"code":"zh-hant","name":"Chinese Traditional"},{"code":"zh","name":"Chinese"}];</script><script>window.lang = "es";</script><div class="sitetoolbar__content"><div class="sitetoolbar__lang-switcher"><button class="sitetoolbar__dropdown-button" data-dropdown-toggler>ES</button><div class="sitetoolbar__dropdown-wrap"><div class="sitetoolbar__dropdown-body"><div class="sitetoolbar__lang-switcher-body"><div class="supported-langs supported-langs_toolbar"><div class="supported-langs__container"><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://ar.javascript.info/"><span class="supported-langs__brief">AR</span><span class="supported-langs__title">عربي</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://javascript.info/weakref-finalizationregistry"><span class="supported-langs__brief">EN</span><span class="supported-langs__title">English</span></a></li><li class="supported-langs__item supported-langs__item_current"><a class="supported-langs__link" href="weakref-finalizationregistry.html"><span class="supported-langs__brief">ES</span><span class="supported-langs__title">Español</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fa.javascript.info/"><span class="supported-langs__brief">FA</span><span class="supported-langs__title">فارسی</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://fr.javascript.info/"><span class="supported-langs__brief">FR</span><span class="supported-langs__title">Français</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://id.javascript.info/"><span class="supported-langs__brief">ID</span><span class="supported-langs__title">Indonesia</span></a></li></ul><ul class="supported-langs__list" style="height:200px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://it.javascript.info/"><span class="supported-langs__brief">IT</span><span class="supported-langs__title">Italiano</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ja.javascript.info/"><span class="supported-langs__brief">JA</span><span class="supported-langs__title">日本語</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://ko.javascript.info/"><span class="supported-langs__brief">KO</span><span class="supported-langs__title">한국어</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://learn.javascript.ru/weakref-finalizationregistry"><span class="supported-langs__brief">RU</span><span class="supported-langs__title">Русский</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://tr.javascript.info/"><span class="supported-langs__brief">TR</span><span class="supported-langs__title">Türkçe</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://uk.javascript.info/weakref-finalizationregistry"><span class="supported-langs__brief">UK</span><span class="supported-langs__title">Українська</span></a></li></ul><ul class="supported-langs__list" style="height:56px"><li class="supported-langs__item"><a class="supported-langs__link" href="https://uz.javascript.info/"><span class="supported-langs__brief">UZ</span><span class="supported-langs__title">Oʻzbek</span></a></li><li class="supported-langs__item"><a class="supported-langs__link" href="https://zh.javascript.info/"><span class="supported-langs__brief">ZH</span><span class="supported-langs__title">简体中文</span></a></li></ul></div><div class="supported-langs__text"><p>Queremos que este proyecto de código abierto esté disponible para personas de todo el mundo.</p> <p><a href="https://javascript.info/translate">Ayuda a traducir</a> el contenido de este tutorial a tu idioma!</p>
+</div></div></div></div></div></div><div class="sitetoolbar__logo-wrap"><a class="sitetoolbar__link sitetoolbar__link_logo" href="index.html"><img class="sitetoolbar__logo sitetoolbar__logo_normal" src="img/sitetoolbar__logo_en.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_normal sitetoolbar__logo_dark" src="img/sitetoolbar__logo_en-white.svg" width="200" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small" src="img/sitetoolbar__logo_small_en.svg" width="70" alt="" role="presentation"/><img class="sitetoolbar__logo sitetoolbar__logo_small sitetoolbar__logo_dark" src="img/sitetoolbar__logo_small_en-white.svg" width="70" alt="" role="presentation"/><script>Array.prototype.forEach.call(document.querySelectorAll("img.sitetoolbar__logo"),function(e){let t=document.createElement("object");t.type="image/svg+xml",t.className=e.className,t.style.cssText="left:0;top:0;position:absolute",t.onload=function(){t.onload=null,e.style.visibility="hidden"},t.data=e.src,e.parentNode.insertBefore(t,e)});</script></a></div><div class="sitetoolbar__nav-toggle-wrap"><button class="sitetoolbar__nav-toggle" type="button"></button></div><nav class="sitetoolbar__sections"><ul class="sitetoolbar__sections-list"></ul></nav><div class="sitetoolbar__right-button-wrap"><a class="sitetoolbar-right-button sitetoolbar-right-button_courses" href="ebook.html"><span class="sitetoolbar-right-button__extra-text">Comprar</span>EPUB/PDF</a></div><div class="sitetoolbar__theme-switcher"><div class="theme-changer"><label class="theme-changer__label" for="theme-changer-input" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span></label></div></div><div class="sitetoolbar__search-wrap"><div class="sitetoolbar__search-content"><button class="sitetoolbar__search-toggle" type="button"></button><form class="sitetoolbar__search" method="GET" action="https://es.javascript.info/search"><div class="sitetoolbar__search-input"><div class="text-input"><input class="text-input__control" name="query" placeholder="Buscar en Javascript.info" required="required" type="text"/></div><button class="sitetoolbar__find" type="submit">Buscar</button></div></form></div></div></div><div class="tablet-menu"><div class="tablet-menu__line"><div class="tablet-menu__content"><form class="tablet-menu-search" action="https://es.javascript.info/search/"><input class="tablet-menu-search__input" type="search" name="query" placeholder="Buscar en el tutorial" required="required"/><button class="tablet-menu-search__button" type="submit" name="type" value="articles">Buscar</button></form></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="theme-changer theme-changer_tablet-menu theme-changer_has-label"><label class="theme-changer__label" for="theme-changer-input-tablet" data-tooltip="Change theme"><input class="theme-changer__input" type="checkbox" id="theme-changer-input-tablet" data-theme-changer="data-theme-changer"/><span class="theme-changer__icon theme-changer__icon_light-theme"></span><span class="theme-changer__icon theme-changer__icon_dark-theme"></span><span class="theme-changer__label-text theme-changer__label-text_light-theme">Light theme</span><span class="theme-changer__label-text theme-changer__label-text_dark-theme">Dark theme</span></label></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div></div></div><div class="tablet-menu__line"><div class="tablet-menu__content"><select class="tablet-menu__nav input-select input-select input-select_small" onchange="if(this.value) window.location.href=this.value"><option value="https://ar.javascript.info/">عربي</option><option value="https://javascript.info/weakref-finalizationregistry">English</option><option value="https://es.javascript.info/weakref-finalizationregistry" selected>Español</option><option value="https://fa.javascript.info/">فارسی</option><option value="https://fr.javascript.info/">Français</option><option value="https://id.javascript.info/">Indonesia</option><option value="https://it.javascript.info/">Italiano</option><option value="https://ja.javascript.info/">日本語</option><option value="https://ko.javascript.info/">한국어</option><option value="https://learn.javascript.ru/weakref-finalizationregistry">Русский</option><option value="https://tr.javascript.info/">Türkçe</option><option value="https://uk.javascript.info/weakref-finalizationregistry">Українська</option><option value="https://uz.javascript.info/">Oʻzbek</option><option value="https://zh.javascript.info/">简体中文</option></select></div></div></div><progress class="tutorial-progress" data-sticky value="94" max="94" data-tooltip="Lección 94 de 94"></progress></div><div class="page page_sidebar_on page_inner_padding"><script>if(localStorage.noSidebar){document.querySelector(".page").classList.remove("page_sidebar_on");let e=document.querySelector(".page-wrapper");e&&e.classList.remove("page-wrapper_sidebar_on")}setTimeout(function(){document.querySelector(".page").classList.add("page_sidebar-animation-on")});</script><div class="page__inner"><main class="main main_width-limit"><header class="main__header"><div class="main__header-inner"><div class="main__header-group"><ol class="breadcrumbs"><li class="breadcrumbs__item breadcrumbs__item_home"><a class="breadcrumbs__link" href="index.html"><span class="breadcrumbs__hidden-text">Tutorial</span></a></li><li class="breadcrumbs__item" id="breadcrumb-1"><a class="breadcrumbs__link" href="js.html"><span>El lenguaje JavaScript</span></a></li><li class="breadcrumbs__item" id="breadcrumb-2"><a class="breadcrumbs__link" href="js-misc.html"><span>Temas diversos</span></a></li><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tutorial","item":"https://es.javascript.info/"},{"@type":"ListItem","position":2,"name":"El lenguaje JavaScript","item":"https://es.javascript.info/js"},{"@type":"ListItem","position":3,"name":"Temas diversos","item":"https://es.javascript.info/js-misc"}]}</script></ol><div class="updated-at" data-tooltip="Última actualización el 30 de marzo de 2025"><div class="updated-at__content">30 de marzo de 2025</div></div></div><h1 class="main__header-title">WeakRef y FinalizationRegistry</h1></div></header><div class="content"><article class="formatted" itemscope itemtype="http://schema.org/TechArticle"><meta itemprop="name" content="WeakRef y FinalizationRegistry"><div itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="email" content="iliakan@gmail.com"><meta itemprop="name" content="Ilya Kantor"></div><div itemprop="articleBody"><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Características “ocultas” del lenguaje</span></div>
+            <div class="important__content"><p>Este artículo trata un tema muy específico que la mayoría de los desarrolladores rara vez encuentran en la práctica, e incluso pueden desconocer su existencia.</p>
+<p>Si recién estás aprendiendo JavaScript, te recomendamos saltar este capítulo.</p>
+</div></div>
+<p>El <em>principio de alcance</em>, explicado en el capítulo <a href="garbage-collection.html">Recolección de basura</a>,
+establece que el motor de JavaScript garantiza que se mantengan en memoria los valores mientras sean accesibles o estén en uso.</p>
+<p>Por ejemplo:</p>
+<div id="cii5zrbwta" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  la variable user mantiene una referencia fuerte al objeto
+let user = { name: &quot;John&quot; };
+
+// sobrescribimos el valor de la variable user
+user = null;
+
+// la referencia se pierde y el objeto será eliminado de la memoria</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Compliquemos un poco el código con dos referencias fuertes:</p>
+<div id="sjbe1tmknu" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:4,&quot;end&quot;:4}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  la variable user mantiene una referencia fuerte al objeto
+let user = { name: &quot;John&quot; };
+
+// copiamos la referencia fuerte al objeto en la variable admin
+let admin = user;
+
+// sobrescribimos el valor de la variable user
+user = null;
+
+// el objeto sigue siendo accesible a través de la variable admin</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El objeto <code>{ name: &quot;John&quot; }</code> solo se eliminará de la memoria si no quedan referencias fuertes a él; es decir, si también sobrescribimos la variable <code>admin</code>.</p>
+<p>En JavaScript existe un concepto llamado <code>WeakRef</code>, o referencia débil, que se comporta de manera diferente.</p>
+<div class="important important_smart">
+            <div class="important__header"><span class="important__type">Términos: “Referencia fuerte”, “Referencia débil”</span></div>
+            <div class="important__content"><p><strong>Referencia fuerte</strong> – es una referencia a un objeto o valor que impide que el recolector de basura lo elimine, manteniéndolo en memoria.</p>
+<p>Esto significa que el objeto o valor permanecerá en memoria y no será eliminado por el recolector de basura mientras haya referencias fuertes activas a él.</p>
+<p>En JavaScript, las referencias típicas son fuertes. Por ejemplo:</p>
+<div id="l8jm5sk7dt" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  la variable user mantiene una referencia fuerte al objeto
+let user = { name: &quot;John&quot; };</code></pre>
+        </div>
+      </div>
+      
+      </div><p><strong>Referencia débil</strong> – es una referencia a un objeto o valor que <em>no</em> impide que sean eliminados por el recolector de basura.
+Un objeto o valor puede ser borrado por el recolector de basura si las únicas referencias a él son débiles.</p>
+</div></div>
+<h2><a class="main__anchor" name="weakref" href="#weakref">WeakRef</a></h2><div class="important important_warn">
+            <div class="important__header"><span class="important__type">Advertencia</span></div>
+            <div class="important__content"><p>Antes de profundizar en el tema, es importante señalar que su uso requiere una planificación cuidadosa y que, en general, es mejor evitarlas si no son estrictamente necesarias.</p>
+</div></div>
+<p><code>WeakRef</code> – es un objeto que mantiene referencias débiles a otros objetos, llamados objetivo (<code>target</code>) o referente (<code>referent</code>).</p>
+<p>La particularidad de <code>WeakRef</code> es que no impide que el recolector de basura elimine a su “referente”. En otras palabras, un objeto <code>WeakRef</code> no mantiene vivo al objeto referido.</p>
+<p>Ahora tomemos la variable <code>user</code> como “referente” y establezcamos una referencia débil hacia ella en la variable <code>admin</code>.
+Para crear una referencia débil se debe usar el constructor <code>WeakRef</code>, pasando como argumento el objetivo (el objeto al que queremos hacer la referencia débil).</p>
+<p>En nuestro caso, ese objeto es la variable <code>user</code>:</p>
+<div id="04ib9h2l0e" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:4,&quot;end&quot;:4}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>//  la variable user mantiene una referencia fuerte al objeto
+let user = { name: &quot;John&quot; };
+
+//  la variable admin mantiene una referencia débil al objeto
+let admin = new WeakRef(user);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El siguiente diagrama muestra los dos tipos de referencia: una referencia fuerte con la variable <code>user</code> y una referencia débil con la variable <code>admin</code>:</p>
+<figure><div class="image" style="width:191px">
+      <div class="image__ratio" style="padding-top:147.64397905759162%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-01.svg" width="191" height="282" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-01.svg" alt="" width="191" height="282">
+      </object>
+      </div></figure><p>Luego, en algún momento, dejamos de usar la variable <code>user</code> (su valor se sobrescribe, sale de alcance, etc.), pero la instancia de <code>WeakRef</code> sigue almacenada en la variable <code>admin</code>:</p>
+<div id="hfia13anw9" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// sobrescribimos el valor de la variable user
+user = null;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Una referencia débil a un objeto no es suficiente para mantenerlo “vivo”. Si las únicas referencias restantes a un objeto referido son débiles, el recolector de basura puede destruirlo y reutilizar su memoria para otra cosa.</p>
+<p>Sin embargo, hasta que el objeto sea realmente eliminado, la referencia débil puede seguir devolviéndolo, incluso si ya no existen referencias fuertes hacia él.
+Es decir, nuestro objeto se convierte en una especie de “gato de Schrödinger”: no podemos saber con certeza si está “vivo” o “muerto”.</p>
+<figure><div class="image" style="width:178px">
+      <div class="image__ratio" style="padding-top:152.80898876404493%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-02.svg" width="178" height="272" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-02.svg" alt="" width="178" height="272">
+      </object>
+      </div></figure><p>En este punto, para obtener el objeto desde la instancia de <code>WeakRef</code>, usamos su método <code>deref()</code>.</p>
+<p>El método <code>deref()</code> devuelve el objeto referido al que apunta el <code>WeakRef</code>, si aún está en memoria. Si el objeto ha sido eliminado por el recolector de basura,<code>deref()</code> devolverá <code>undefined</code>:</p>
+<div id="wthq4vgf7c" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>let ref = admin.deref();
+
+if (ref) {
+  // el objeto sigue accesible: podemos manipularlo libremente
+} else {
+  // el objeto ha sido eliminado por el recolector de basura
+}</code></pre>
+        </div>
+      </div>
+      
+      </div><h2><a class="main__anchor" name="weakref-casos-de-uso" href="#weakref-casos-de-uso">WeakRef, casos de uso</a></h2><p><code>WeakRef</code> se usa típicamente para crear cachés o <a href="https://es.wikipedia.org/wiki/Tabla_hash">arrays asociativos</a> que almacenan objetos con un alto consumo de recursos.
+Esto permite evitar que dichos objetos permanezcan en memoria solo por estar en la caché o en un array asociativo…</p>
+<p>Uno de los principales ejemplos es cuando manejamos múltiples objetos de imagen binaria (por ejemplo, representados como <code>ArrayBuffer</code> o <code>Blob</code>), y queremos asociarles un nombre o una ruta.
+Las estructuras de datos existentes no son del todo adecuadas para esto:</p>
+<ul>
+<li>Usar  <code>Map</code> para asociar nombres con imágenes (o viceversa) mantiene las imágenes en memoria, ya que siguen presentes en el <code>Map</code> como claves o valores.</li>
+<li><code>WeakMap</code> tampoco es una opción válida: los objetos usados como claves en <code>WeakMap</code> tienen referencias débiles, por lo que el recolector de basura puede eliminarlos.</li>
+</ul>
+<p>En este caso, necesitamos una estructura de datos que use referencias débiles en sus valores.</p>
+<p>Para ello, podemos usar una colección <code>Map</code>, donde los valores sean instancias de <code>WeakRef</code> apuntando a los objetos grandes que queremos manejar.
+Así, evitamos mantener estos objetos grandes e innecesarios en memoria más tiempo del necesario.</p>
+<p>De este modo, si el objeto aún es accesible, podemos obtenerlo desde la caché.
+Si ha sido eliminado por el recolector de basura, lo regeneramos o lo descargamos nuevamente.</p>
+<p>Esto permite reducir el uso de memoria en ciertas situaciones.</p>
+<h2><a class="main__anchor" name="ejemplo-1-uso-de-weakref-para-cache" href="#ejemplo-1-uso-de-weakref-para-cache">Ejemplo №1: Uso de WeakRef para caché</a></h2><p>A continuación, se muestra un fragmento de código que demuestra el uso de <code>WeakRef</code>.</p>
+<p>En resumen, utilizamos un <code>Map</code> con claves de tipo string y objetos <code>WeakRef</code> como valores.
+Si el objeto referenciado por <code>WeakRef</code> no ha sido eliminado por el recolector de basura, lo recuperamos de la caché.
+Caso contrario, lo descargamos nuevamente y lo almacenamos en la caché para su posible reutilización:</p>
+<div id="gob1gonpub" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function fetchImg() {
+    // función abstracta para descargar imágenes...
+}
+
+function weakRefCache(fetchImg) { // (1)
+    const imgCache = new Map(); // (2)
+
+    return (imgName) =&gt; { // (3)
+        const cachedImg = imgCache.get(imgName); // (4)
+
+        if (cachedImg?.deref()) { // (5)
+            return cachedImg?.deref();
+        }
+
+        const newImg = fetchImg(imgName); // (6)
+        imgCache.set(imgName, new WeakRef(newImg)); // (7)
+
+        return newImg;
+    };
+}
+
+const getCachedImg = weakRefCache(fetchImg);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Analicemos en detalle lo que ocurre aquí:</p>
+<ol>
+<li><code>weakRefCache</code> – es una función de orden superior que recibe otra función, <code>fetchImg</code>, como argumento. En este ejemplo, no es necesario describir <code>fetchImg</code> en detalle, ya que puede ser cualquier lógica para descargar imágenes.</li>
+<li><code>imgCache</code> – es una caché de imágenes que almacena los resultados de <code>fetchImg</code> en un <code>map</code>, con claves de tipo <code>string</code> para los nombres de las imágenes y objetos <code>WeakRef</code> como valores.</li>
+<li>Se devuelve una función anónima que toma el nombre de la imagen como argumento. Este argumento se usa como clave en la caché.</li>
+<li>Se intenta obtener el resultado almacenado en caché usando la clave proporcionada.</li>
+<li>Si la caché contiene un valor para la clave especificada y el objeto referenciado por <code>WeakRef</code> aún existe, se devuelve el resultado en caché.</li>
+<li>Si no hay una entrada en la caché con la clave solicitada, o si <code>deref()</code> devuelve <code>undefined</code> (lo que significa que el objeto ha sido eliminado por el recolector de basura), se vuelve a descargar la imagen con <code>fetchImg</code>.</li>
+<li>La imagen descargada se almacena en la caché como un objeto <code>WeakRef</code>.</li>
+</ol>
+<p>Ahora tenemos una colección <code>Map</code>donde las claves son string con los nombres de imágenes y los valores son objetos <code>WeakRef</code> que contienen las imágenes.</p>
+<p>Esta técnica ayuda a evitar la asignación innecesaria de grandes cantidades de memoria a objetos que ya no están en uso.
+Pero también ahorra memoria y tiempo cuando se reutilizan objetos en caché.</p>
+<p>Aquí hay una representación visual de este código:</p>
+<figure><div class="image" style="width:540px">
+      <div class="image__ratio" style="padding-top:47.592592592592595%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-03.svg" width="540" height="257" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-03.svg" alt="" width="540" height="257">
+      </object>
+      </div></figure><p>Sin embargo, esta implementación tiene una desventaja: con el tiempo, <code>Map</code> se llenará de claves <code>string</code> que apuntan a <code>WeakRef</code> cuyos objetos referenciados ya han sido eliminados por el recolector de basura:</p>
+<figure><div class="image" style="width:540px">
+      <div class="image__ratio" style="padding-top:47.592592592592595%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-04.svg" width="540" height="257" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-04.svg" alt="" width="540" height="257">
+      </object>
+      </div></figure><p>Una forma de manejar este problema es limpiar periódicamente la caché para eliminar las entradas “muertas”.
+Otra opción es usar finalizadores, que exploraremos a continuación.</p>
+<h2><a class="main__anchor" name="ejemplo-2-usando-weakref-para-rastrear-objetos-del-dom" href="#ejemplo-2-usando-weakref-para-rastrear-objetos-del-dom">Ejemplo №2: Usando WeakRef para rastrear objetos del DOM</a></h2><p>Otro caso de uso de <code>WeakRef</code> es rastrear objetos del DOM.</p>
+<p>Imaginemos un escenario en el que un código o biblioteca de terceros interactúa con elementos de nuestra página mientras existan en el DOM.
+Por ejemplo, podría ser una utilidad externa que monitorea y notifica el estado del sistema (comúnmente llamada “logger”, un programa que envía mensajes informativos llamados “logs”).</p>
+<p>Ejemplo interactivo:</p>
+<div class="code-tabs code-tabs_result_on"><div class="code-tabs__tools"><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_left" title="&amp;larr;" data-code-tabs-left="data-code-tabs-left"></button></div><div class="code-tabs__switches-wrap"><div class="code-tabs__switches" data-code-tabs-switches="data-code-tabs-switches"><div class="code-tabs__switches-items"><div class="code-tabs__switch code-tabs__switch_current">Resultado</div><div class="code-tabs__switch">index.js</div><div class="code-tabs__switch">index.css</div><div class="code-tabs__switch">index.html</div></div></div></div><div class="code-tabs__scroll-wrap"><button class="code-tabs__scroll-button code-tabs__scroll-button_right" title="&amp;rarr;" data-code-tabs-right="data-code-tabs-right"></button></div><div class="code-tabs__buttons"><a class="code-tabs__button code-tabs__button_external" target="_blank" title="abrir en una nueva ventana" href="article/weakref-finalizationregistry/weakref-dom/index.html"></a><a class="code-tabs__button code-tabs__button_edit" target="_blank" title="editar en entorno controlado" href="https://plnkr.co/edit/zJUER2wPhtAuhPad?p=preview"></a></div></div><div class="code-tabs__content" data-code-tabs-content="data-code-tabs-content" style="height:420px"><div class="code-tabs__section code-tabs__section_current"><iframe class="code-tabs__result" src="article/weakref-finalizationregistry/weakref-dom/index.html"></iframe></div><div class="code-tabs__section"><pre class="language-javascript line-numbers"><code>const startMessagesBtn = document.querySelector('.start-messages'); // (1)
+const closeWindowBtn = document.querySelector('.window__button'); // (2)
+const windowElementRef = new WeakRef(document.querySelector(&quot;.window__body&quot;)); // (3)
+
+startMessagesBtn.addEventListener('click', () =&gt; { // (4)
+    startMessages(windowElementRef);
+    startMessagesBtn.disabled = true;
+});
+
+closeWindowBtn.addEventListener('click', () =&gt;  document.querySelector(&quot;.window__body&quot;).remove()); // (5)
+
+
+const startMessages = (element) =&gt; {
+    const timerId = setInterval(() =&gt; { // (6)
+        if (element.deref()) { // (7)
+            const payload = document.createElement(&quot;p&quot;);
+            payload.textContent = `Message: System status OK: ${new Date().toLocaleTimeString()}`;
+            element.deref().append(payload);
+        } else { // (8)
+            alert(&quot;The element has been deleted.&quot;); // (9)
+            clearInterval(timerId);
+        }
+    }, 1000);
+};</code></pre></div><div class="code-tabs__section"><pre class="language-css line-numbers"><code>.app {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.start-messages {
+    width: fit-content;
+}
+
+.window {
+    width: 100%;
+    border: 2px solid #464154;
+    overflow: hidden;
+}
+
+.window__header {
+    position: sticky;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #736e7e;
+}
+
+.window__title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.window__button {
+    padding: 4px;
+    background: #4f495c;
+    outline: none;
+    border: 2px solid #464154;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.window__body {
+    height: 250px;
+    padding: 16px;
+    overflow: scroll;
+    background-color: #736e7e33;
+}</code></pre></div><div class="code-tabs__section"><pre class="language-markup line-numbers"><code>&lt;!DOCTYPE HTML&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;index.css&quot;&gt;
+  &lt;title&gt;WeakRef DOM Logger&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;div class=&quot;app&quot;&gt;
+  &lt;button class=&quot;start-messages&quot;&gt;Start sending messages&lt;/button&gt;
+  &lt;div class=&quot;window&quot;&gt;
+    &lt;div class=&quot;window__header&quot;&gt;
+      &lt;p class=&quot;window__title&quot;&gt;Messages:&lt;/p&gt;
+      &lt;button class=&quot;window__button&quot;&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;window__body&quot;&gt;
+      No messages.
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+
+&lt;script type=&quot;module&quot; src=&quot;index.js&quot;&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></div></div></div><p>Cuando se hace clic en el botón “Iniciar envío de mensajes”, comienzan a aparecer mensajes (logs) en la llamada “ventana de visualización de logs” (un elemento con la clase <code>.window__body</code>).</p>
+<p>Sin embargo, tan pronto como este elemento es eliminado del DOM, el logger debería dejar de enviar mensajes.
+Para simular la eliminación de este elemento, simplemente haz clic en el botón “Cerrar” en la esquina superior derecha.</p>
+<p>Para evitar la necesidad de notificar al código externo cada vez que nuestro elemento DOM está disponible o no, podemos simplemente crear una referencia débil con <code>WeakRef</code>.</p>
+<p>Una vez que el elemento es eliminado del DOM, el logger lo detectará y dejará de enviar mensajes.</p>
+<p>Ahora veamos en detalle el código fuente (<em>pestaña <code>index.js</code></em>):</p>
+<ol>
+<li>
+<p>Obtener el elemento DOM del botón “Iniciar envío de mensajes”.</p>
+</li>
+<li>
+<p>Obtener el elemento DOM del botón “Cerrar”.</p>
+</li>
+<li>
+<p>Obtener el elemento DOM de la ventana de logs usando el constructor <code>new WeakRef()</code>. De esta manera, la variable <code>windowElementRef</code> mantiene una referencia débil al elemento del DOM.</p>
+</li>
+<li>
+<p>Agregar un event listener al botón “Iniciar envío de mensajes”, que inicia el logger cuando se hace clic.</p>
+</li>
+<li>
+<p>Agregar un event listener al botón “Cerrar”, que elimina la ventana de logs del DOM cuando se hace clic.</p>
+</li>
+<li>
+<p>Usar  <code>setInterval</code> para mostrar un nuevo mensaje cada segundo.</p>
+</li>
+<li>
+<p>Si el elemento DOM de la ventana de logs sigue disponible en memoria, crear y enviar un nuevo mensaje.</p>
+</li>
+<li>
+<p>Si el método <code>deref()</code> devuelve <code>undefined</code>, significa que el elemento DOM ha sido eliminado de la memoria. En este caso, el logger deja de mostrar mensajes y se limpia el temporizador.</p>
+</li>
+<li>
+<p>Mostrar un<code>alert</code>, cuando el elemento DOM de la ventana de logs haya sido eliminado de la memoria (es decir, después de hacer clic en el botón “Cerrar”). <strong>Nota: La eliminación de la memoria puede no ocurrir de inmediato, ya que depende únicamente de los mecanismos internos del recolector de basura.</strong></p>
+<p>No podemos controlar este proceso directamente desde el código. Sin embargo, aún es posible forzar la recolección de basura en el navegador.</p>
+<p>En Google Chrome, por ejemplo, para hacer esto, abre las herramientas para desarrolladores (<kbd class="shortcut">Ctrl</kbd> + <kbd class="shortcut">Shift</kbd> + <kbd class="shortcut">J</kbd> en Windows/Linux o <kbd class="shortcut">Option</kbd> + <kbd class="shortcut">⌘</kbd> + <kbd class="shortcut">J</kbd> en macOS), ve a la pestaña “Performance” y haz clic en el ícono de la papelera – “Collect garbage”:</p>
+<figure><div class="image" style="width:1594px">
+      <div class="image__ratio" style="padding-top:20.70263488080301%"></div>
+      <img src="article/weakref-finalizationregistry/google-chrome-developer-tools.png" alt="" width="1594" height="330" class="image__image">
+      </div></figure> <br>
+  Esta funcionalidad está disponible en la mayoría de los navegadores modernos. Después de realizar estos pasos, el  <code>alert</code> se activará inmediatamente.
+</li>
+</ol>
+<h2><a class="main__anchor" name="finalizationregistry" href="#finalizationregistry">FinalizationRegistry</a></h2><p>Es momento de hablar sobre los finalizadores. Aclaremos la terminología antes de continuar:</p>
+<p><strong>Callback de limpieza (finalizador)</strong> – es una función que se ejecuta cuando un objeto registrado en <code>FinalizationRegistry</code> es eliminado de la memoria por el recolector de basura.</p>
+<p>Su propósito es permitir realizar operaciones adicionales relacionadas con el objeto después de que haya sido eliminado de la memoria.</p>
+<p><strong>Registro</strong> (o <code>FinalizationRegistry</code>) – es un objeto especial en JavaScript que gestiona el alta y la eliminación de objetos referent junto con sus callbacks de limpieza.</p>
+<p>Este mecanismo permite registrar un objeto para rastrearlo y asociarle un callback de limpieza.
+Básicamente, es una estructura que almacena información sobre los objetos registrados y sus callbacks de limpieza, y luego los invoca automáticamente cuando los objetos son eliminados de la memoria.</p>
+<p>Para crear una instancia de <code>FinalizationRegistry</code>, se debe llamar a su constructor, el que recibe un solo argumento: el callback de limpieza (el finalizador).</p>
+<p>Sintaxis:</p>
+<div id="13o1exf7op" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function cleanupCallback(heldValue) {
+  // código del callback de limpieza
+}
+
+const registry = new FinalizationRegistry(cleanupCallback);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Donde:</p>
+<ul>
+<li><code>cleanupCallback</code> – es la función que se ejecutará automáticamente cuando un objeto registrado sea eliminado de la memoria.</li>
+<li><code>heldValue</code> – es el valor que se pasará como argumento al callback de limpieza. Si <code>heldValue</code>  es un objeto, el registro mantiene una referencia fuerte a él.</li>
+<li><code>registry</code> – es la instancia de <code>FinalizationRegistry</code>.</li>
+</ul>
+<p>Métodos de <code>FinalizationRegistry</code>:</p>
+<ul>
+<li>
+<p><code>register(target, heldValue [, unregisterToken])</code> – registra un objeto en el registro.</p>
+<p><code>target</code> –  el objeto a registrar. Si <code>target</code> es recolectado por el recolector de basura, el callback de limpieza se ejecutará con <code>heldValue</code> como argumento.</p>
+<p>Opcional <code>unregisterToken</code> – un token de desregistro. Se puede usar para anular el registro de un objeto antes de que el recolector de basura lo elimine. Por convención, suele ser el mismo <code>target</code>.</p>
+</li>
+<li>
+<p><code>unregister(unregisterToken)</code> – elimina un objeto del registro. Recibe un argumento: <code>unregisterToken</code> (el token usado al registrar el objeto).</p>
+</li>
+</ul>
+<p>Veamos un ejemplo. Usemos el ya conocido objeto <code>user</code> y creemos una instancia de <code>FinalizationRegistry</code>:</p>
+<div id="zojtqjiipx" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>let user = { name: &quot;John&quot; };
+
+const registry = new FinalizationRegistry((heldValue) =&gt; {
+  console.log(`${heldValue} ha sido recolectado por el recolector de basura.`);
+});</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Luego, registramos el objeto que requiere limpieza llamando al método <code>register</code>:</p>
+<div id="8i8es9jpzl" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>registry.register(user, user.name);</code></pre>
+        </div>
+      </div>
+      
+      </div><p>El registro no mantiene una referencia fuerte al objeto, ya que eso impediría que el recolector de basura lo eliminara.</p>
+<p>Si el objeto es eliminado por el recolector de basura, el callback de limpieza puede ejecutarse en algún momento futuro con el <code>heldValue</code> pasado como argumento:</p>
+<div id="s9h7hev3it" data-trusted="1" class="code-example">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>// Cuando el objeto user sea eliminado, se imprimirá en la consola:
+&quot;John ha sido recolectado por el recolector de basura.&quot;</code></pre>
+        </div>
+      </div>
+      
+      </div><p>Hay casos donde el callback tiene posibilidades de no ejecutarse.</p>
+<p>Por ejemplo:</p>
+<ul>
+<li>Cuando el programa termina por completo su operación (por ejemplo, al cerrar una pestaña en el navegador).</li>
+<li>Cuando la instancia de <code>FinalizationRegistry</code> mismo deja de estar accesible en el código.
+Si el objeto que creó la instancia de <code>FinalizationRegistry</code> sale del ámbito o es eliminado, los callbacks de limpieza registrados en tal registro podrían no ser invocados.</li>
+</ul>
+<h2><a class="main__anchor" name="cache-con-finalizationregistry" href="#cache-con-finalizationregistry">Caché con FinalizationRegistry</a></h2><p>Volviendo a nuestro ejemplo de caché <em>débil</em>, podemos notar lo siguiente:</p>
+<ul>
+<li>Aunque los valores envueltos en <code>WeakRef</code> hayan sido recolectados por el recolector de basura, sigue existiendo un problema de “fuga de memoria” debido a las claves restantes cuyos valores han sido eliminados.</li>
+</ul>
+<p>Esta es una versión mejorada de la caché usando <code>FinalizationRegistry</code>:</p>
+<div id="lcagicgocu" data-trusted="1" class="code-example" data-highlight="[{&quot;start&quot;:21,&quot;end&quot;:21},{&quot;start&quot;:7,&quot;end&quot;:10}]">
+      <div class="codebox code-example__codebox">
+        
+        <div class="codebox__code" data-code="1">
+          <pre class="line-numbers language-javascript"><code>function fetchImg() {
+  // función abstracta para descargar imágenes...
+}
+
+function weakRefCache(fetchImg) {
+  const imgCache = new Map();
+
+  const registry = new FinalizationRegistry((imgName) =&gt; { // (1)
+    const cachedImg = imgCache.get(imgName);
+    if (cachedImg &amp;&amp; !cachedImg.deref()) imgCache.delete(imgName);
+  });
+
+  return (imgName) =&gt; {
+    const cachedImg = imgCache.get(imgName);
+
+    if (cachedImg?.deref()) {
+      return cachedImg?.deref();
+    }
+
+    const newImg = fetchImg(imgName);
+    imgCache.set(imgName, new WeakRef(newImg));
+    registry.register(newImg, imgName); // (2)
+
+    return newImg;
+  };
+}
+
+const getCachedImg = weakRefCache(fetchImg);</code></pre>
+        </div>
+      </div>
+      
+      </div><ol>
+<li>
+<p>Para gestionar la limpieza de las entradas “muertas” de la caché cuando los objetos <code>WeakRef</code>  son eliminados por el recolector de basura, creamos un registro de limpieza con <code>FinalizationRegistry</code>.</p>
+<p>Es importante comprobar en el callback de limpieza si la entrada fue eliminada por el recolector y no ha sido reinsertada, para evitar borrar una entrada “viva”.</p>
+</li>
+<li>
+<p>Una vez que se descarga una nueva imagen y se almacena en la caché, la registramos en el <code>FinalizationRegistry</code> para rastrear el objeto <code>WeakRef</code>.</p>
+</li>
+</ol>
+<p>Esta implementación solo mantiene pares clave/valor realmente “vivos”.
+En este caso, cada objeto <code>WeakRef</code> se registra en <code>FinalizationRegistry</code>.
+Y después de que los objetos sean eliminados por el recolector de basura, el callback de limpieza eliminará todas las entradas <code>undefined</code>.</p>
+<p>Aquí la representación visual del código actualizado:</p>
+<figure><div class="image" style="width:420px">
+      <div class="image__ratio" style="padding-top:71.66666666666667%"></div>
+      <object type="image/svg+xml" data="article/weakref-finalizationregistry/weakref-finalizationregistry-05.svg" width="420" height="301" class="image__image" data-use-theme>
+        <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-05.svg" alt="" width="420" height="301">
+      </object>
+      </div></figure><p>Un aspecto clave de esta implementación es que los finalizadores permiten la ejecución en paralelo entre el programa principal y los callbacks de limpieza.
+En el contexto de JavaScript, el “programa principal” es el código JavaScript que se ejecuta en nuestra aplicación o página web.</p>
+<p>Por lo tanto, desde el momento en que un objeto es marcado para eliminación por el recolector de basura hasta que el callback de limpieza se ejecuta, puede haber un cierto lapso.
+Es importante entender que, durante este tiempo, el programa principal puede modificar el objeto o incluso restaurarlo en la memoria.</p>
+<p>Por eso, en el callback de limpieza debemos verificar si la entrada ha sido agregada nuevamente a la caché para evitar eliminar valores “vivos”.
+Del mismo modo, al buscar una clave en la caché, existe la posibilidad de que su valor haya sido eliminado por el recolector de basura, pero el callback de limpieza aún no se haya ejecutado.</p>
+<p>Estas situaciones requieren especial atención si trabajas con <code>FinalizationRegistry</code>.</p>
+<h2><a class="main__anchor" name="uso-de-weakref-y-finalizationregistry-en-la-practica" href="#uso-de-weakref-y-finalizationregistry-en-la-practica">Uso de WeakRef y FinalizationRegistry en la práctica</a></h2><p>Pasando de la teoría a la práctica, imaginemos un escenario real en el que un usuario sincroniza sus fotos en un dispositivo móvil con un servicio en la nube
+(como <a href="https://en.wikipedia.org/wiki/ICloud">iCloud</a> o <a href="https://en.wikipedia.org/wiki/Google_Photos">Google Photos</a>), y quiere verlas desde otros dispositivos.
+Además de la funcionalidad básica de visualización, estos servicios ofrecen características adicionales como:</p>
+<ul>
+<li>Edición de fotos y efectos de video.</li>
+<li>Creación de “recuerdos” y álbumes.</li>
+<li>Montajes de video a partir de una serie de fotos.</li>
+<li>… y mucho más.</li>
+</ul>
+<p>Aquí, como ejemplo, usaremos una implementación bastante primitiva de un servicio similar.
+El objetivo principal es mostrar un posible escenario en el que <code>WeakRef</code> y <code>FinalizationRegistry</code> se utilicen juntos en una aplicación real.</p>
+<p>Así es como se ve:</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:57.49999999999999%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-01.png" alt="" width="1600" height="920" class="image__image">
+      </div></figure><br>
+A la izquierda, hay una biblioteca de fotos en la nube (mostradas como miniaturas).
+Podemos seleccionar imágenes y crear un collage haciendo clic en el botón "Crear collage" en la derecha.
+Luego, el collage resultante se puede descargar como una imagen.
+</br><br>
+<p>Para acelerar la carga de la página, lo lógico es descargar y mostrar las miniaturas en calidad <em>comprimida</em>,
+pero al crear el collage, descargar y usar las imágenes en <em>calidad completa</em>.</p>
+<p>Las miniaturas tienen un tamaño de 240x240 píxeles.
+Este tamaño se eligió intencionalmente para optimizar la velocidad de carga.
+En el modo de vista previa, tampoco necesitamos imágenes en tamaño completo.</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:62.5%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-02.png" alt="" width="1600" height="1000" class="image__image">
+      </div></figure><br>
+Supongamos que queremos crear un collage con 4 fotos. Las seleccionamos y hacemos clic en "Crear collage".
+Aquí, la ya conocida función <code>weakRefCache</code> verifica si la imagen requerida está en caché.
+Si no lo está, la descarga desde la nube y la almacena para futuros usos.
+Esto ocurre para cada imagen seleccionada:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-03.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure></br>
+<p>Al observar la consola podemos ver qué fotos fueron descargadas desde la nube, indicadas por <span style="background-color:#133159;color:white;font-weight:500">FETCHED_IMAGE</span>.
+Como es la primera vez que se crea el collage, la “caché débil” estaba vacía, así que todas las imágenes se descargaron de la nube.</p>
+<p>Pero al mismo tiempo el recolector de basura está limpiando la memoria.
+Esto significa que las imágenes almacenadas con referencias débiles pueden ser eliminadas.
+Cuando esto sucede, nuestro finalizador borra la clave correspondiente de la caché.
+<span style="background-color:#901e30;color:white;font-weight:500;">CLEANED_IMAGE</span> nos lo notifica:</p>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-04.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Después, nos damos cuenta de que no nos gusta el collage y decidimos cambiar una de las imágenes.
+Para esto, desmarcamos una, seleccionamos otra y hacemos clic en "Crear collage" de nuevo:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-05.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Pero esta vez, no todas las imágenes se descargaron de la red, algunas se obtuvieron de la caché débil, como indica el mensaje <span style="background-color:#385950;color:white;font-weight:500;">CACHED_IMAGE</span>.
+Esto significa que el recolector de basura aún no eliminó algunas imágenes,
+lo que reduce el número de descargas y acelera el proceso de creación del collage.
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-06.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Juguemos un poco más. Volvamos a cambiar otra imagen y creemos un nuevo collage:
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-07.gif" alt="" width="1600" height="910" class="image__image">
+      </div></figure><br>
+Esta vez, el resultado es aún mejor. De las 4 imágenes seleccionadas, 3 fueron recuperadas de la caché débil y solo una tuvo que descargarse.
+La reducción en el uso de la red fue del 75%. Nada mal.
+</br><br>
+<figure><div class="image" style="width:1600px">
+      <div class="image__ratio" style="padding-top:56.875%"></div>
+      <img src="article/weakref-finalizationregistry/weakref-finalizationregistry-demo-08.jpg" alt="" width="1600" height="910" class="image__image">
+      </div></figure></br>
+<p>Es importante recordar que este comportamiento no está garantizado y depende de la implementación específica del recolector de basura.</p>
+<p>Dicho esto, surge una pregunta lógica: ¿por qué no usar una caché normal, que podamos gestionar manualmente en lugar de depender del recolector de basura?
+En la mayoría de los casos, no hay necesidad de usar <code>WeakRef</code> y <code>FinalizationRegistry</code>.</p>
+<p>Aquí simplemente demostramos una alternativa con un enfoque diferente y características interesantes del lenguaje.
+Sin embargo, este ejemplo no es fiable si necesitamos resultados constantes y predecibles.</p>
+<p>Puedes <a href="https://plnkr.co/edit/Ym2kSkJSWWMWjSPy?p=preview">abrir este ejemplo en el sandbox.</a>.</p>
+<h2><a class="main__anchor" name="resumen" href="#resumen">Resumen</a></h2><p><code>WeakRef</code> – está diseñado para crear referencias débiles a objetos, lo que permite que el recolector de basura los elimine si no hay referencias fuertes a ellos.
+Esto habilita al motor de JavaScript optimizar el uso de memoria y recursos del sistema.</p>
+<p><code>FinalizationRegistry</code> – permite registrar callbacks que se ejecutan cuando un objeto sin referencias fuertes es eliminado.
+Esto permite liberar manualmente recursos asociados al objeto o realizar tareas de limpieza adicionales antes de que el objeto desaparezca de la memoria.</p>
+</div></article></div><div class="page__nav-wrap"><a class="page__nav page__nav_prev" href="unicode.html" data-tooltip="Unicode, String internals"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Lección anterior</span></a><a class="page__nav page__nav_next" href="ui.html" data-tooltip="El navegador: Documentos, Eventos e Interfaces"><span class="page__nav-text"><span class="page__nav-text-shortcut"></span></span><span class="page__nav-text-alternate">Próxima lección</span></a></div><div class="article-tablet-foot tablet-only"><div class="article-tablet-foot__layout"><div class="share-icons"><span class="share-icons__title">Compartir</span><a class="share share_tw" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div><div class="article-tablet-foot__map"><a class="map" href="tutorial/map.html" data-action="tutorial-map"><span class="map__text">Mapa del Tutorial</span></a></div></div></div><div class="comments formatted" id="comments"><div class="comments__disqus"><div class="comments__header"><h2 class="comments__header-title"><a href="#comments" name="comments">Comentarios</a></h2><div class="comments__read-before"><span class="comments__read-before-link">lea esto antes de comentar…</span><div class="comments__read-before-popup"><div class="comments__read-before-popup-i"><ul><li>Si tiene sugerencias sobre qué mejorar, por favor <a href="https://github.com/javascript-tutorial/en.javascript.info/issues/new">enviar una propuesta de GitHub</a> o una solicitud de extracción en lugar de comentar.</li><li>Si no puede entender algo en el artículo, por favor explique.</li><li>Para insertar algunas palabras de código, use la etiqueta <code>&lt;code&gt;</code>, para varias líneas – envolverlas en la etiqueta <code>&lt;pre&gt;</code>, para más de 10 líneas – utilice una entorno controlado (sandbox) (<a href='https://plnkr.co/edit/?p=preview'>plnkr</a>, <a href='https://jsbin.com/'>jsbin</a>, <a href='http://codepen.io/'>codepen</a>…)</li></ul></div></div></div></div><div id="disqus_thread"></div><script>var disqus_config = function() { if (!this.page) this.page = {}; Object.assign(this.page, {"url":"https:\/\/es.javascript.info\/weakref-finalizationregistry","identifier":"\/weakref-finalizationregistry"}); };</script><script>var disqus_shortname = "es-javascript-info";</script><script>var disqus_enabled = true;</script></div></div></main></div><div class="sidebar page__sidebar sidebar sidebar_sticky-footer"><button class="sidebar__toggle" data-sidebar-toggle></button><a class="map" href="tutorial/map.html" data-action="tutorial-map" data-tooltip="Mapa del Tutorial"></a><div class="sidebar__inner"><div class="sidebar__content"><div class="sidebar__section"><h4 class="sidebar__section-title">Capítulo</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="js-misc.html">Temas diversos</a></li></ul></nav></div><div class="sidebar__section"><h4 class="sidebar__section-title">Navegación de lección</h4><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#weakref">WeakRef</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#weakref-casos-de-uso">WeakRef, casos de uso</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#ejemplo-1-uso-de-weakref-para-cache">Ejemplo №1: Uso de WeakRef para caché</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#ejemplo-2-usando-weakref-para-rastrear-objetos-del-dom">Ejemplo №2: Usando WeakRef para rastrear objetos del DOM</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#finalizationregistry">FinalizationRegistry</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#cache-con-finalizationregistry">Caché con FinalizationRegistry</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#uso-de-weakref-y-finalizationregistry-en-la-practica">Uso de WeakRef y FinalizationRegistry en la práctica</a></li><li class="sidebar__navigation-link"><a class="sidebar__link" href="#resumen">Resumen</a></li></ul></nav></div><div class="sidebar__section"><nav class="sidebar__navigation"><ul class="sidebar__navigation-links"><li class="sidebar__navigation-link"><a class="sidebar__link" href="#comments">Comentarios</a></li></ul></nav></div><div class="sidebar__section"><div class="sidebar__section-title">Compartir</div><a class="share share_tw sidebar__share" href="https://twitter.com/share?url=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a><a class="share share_fb sidebar__share" href="https://www.facebook.com/sharer/sharer.php?s=100&amp;p[url]=https%3A%2F%2Fes.javascript.info%2Fweakref-finalizationregistry" rel="nofollow"></a></div><div class="sidebar__section"><a class="sidebar__link" href="https://github.com/javascript-tutorial/es.javascript.info/blob/master/1-js/99-js-misc/07-weakref-finalizationregistry" rel="nofollow">Editar en GitHub</a></div></div></div></div></div></div><div class="page-footer"><ul class="page-footer__list"><li class="page-footer__item page-footer__item_copy">©&nbsp;2007—2025&nbsp; Ilya Kantor</li><li class="page-footer__item page-footer__item_about"><a class="page-footer__link" href="about.html">acerca del proyecto</a></li><li class="page-footer__item page-footer__item_contact"><a class="page-footer__link" href="about.html#contact-us">contáctenos</a></li></ul></div><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"version":"2024.11.0","token":"0cda2462c5944515bb0255634e18140a","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+<!-- Mirrored from es.javascript.info/weakref-finalizationregistry by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 15 Oct 2025 09:54:10 GMT -->
+</html>
