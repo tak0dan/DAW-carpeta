@@ -1,5 +1,5 @@
 'use strict';
-// 7: table-driven. Adding a test = adding one line to CASES.
+// #7: table-driven. Adding a test = adding one line to CASES.
 const CASES = [
   // [daysLate, isMember, expected]
   [0, false, 0],

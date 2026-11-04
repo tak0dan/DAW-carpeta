@@ -65,20 +65,20 @@ is in the TDZ before its line (ReferenceError).
 ### Section 7 (`ref/scripts/library/uts*`)
 Table `CASES`, `Object.is` for comparing (so `NaN` and `null` expectations
 work), final `Fails: 0`. Mutation check: change `<=`/`Math.min` boundaries
-in `main.js`, rerun: some `ok` must turn `false`; then a `fix: (*7) ...`.
+in `main.js`, rerun: some `ok` must turn `false`; then a `fix: (#7) ...`.
 
 ### Section 8 — an acceptable history
 ```
-feat: (*1) add fine total and cents check
-feat: (*2) add fineFor with tiers and cap
-fix: (*2) reject non-number days
-feat: (*3) add lateness and loanDays
-feat: (*4) add three equivalent loops and labelled break
-feat: (*5) add array processing of fines
-feat: (*6) add greet with defaults
-test: (*7) add table-driven unit tests
-fix: (*7.1) use <= at the 7 days boundary
-revert: (*3) undo switch change
+feat: (#1) add fine total and cents check
+feat: (#2) add fineFor with tiers and cap
+fix: (#2) reject non-number days
+feat: (#3) add lateness and loanDays
+feat: (#4) add three equivalent loops and labelled break
+feat: (#5) add array processing of fines
+feat: (#6) add greet with defaults
+test: (#7) add table-driven unit tests
+fix: (#7.1) use <= at the 7 days boundary
+revert: (#3) undo switch change
 ```
 (Tag list per the git doc: feat, fix, refactor, test, docs, chore, revert...)
 Revert vs reset: revert adds a new commit and keeps history truthful and

@@ -94,9 +94,9 @@ and, forbidden word, memorising (with understanding)" [F].
   `revert`).
 - Unsure of the tag? **Think by elimination** [F] 453133: a first HTML with
   visible content is `feat`; `docs` would be only comments.
-- Exam-specific: section number after the tag: `feat: (*3) ...`,
-  `(*3.1)`, `(*3,*4)` [F] PDF. (My examples keep the colon after the tag and
-  put `(*n)` after it: the PDF is ambiguous; confirm.)
+- Exam-specific: section number after the tag: `feat: (#3) ...`,
+  `(#3.1)`, `(#3,#4)` [F] PDF. (My examples keep the colon after the tag and
+  put `(#n)` after it. The current PDF uses `#`, not `*`: see §15.1.)
 - SemVer (5.4): doesn't affect the code part, but may be asked as theory [F].
 
 ---
@@ -116,7 +116,7 @@ and, forbidden word, memorising (with understanding)" [F].
 8. You may do the sections in any order, but think about the effects.
 
 What gets graded (from PROFESSOR-STYLE §5, [I] for weights):
-- Correct output, **and the process**: commit history, tags, `(*n)`,
+- Correct output, **and the process**: commit history, tags, `(#n)`,
   atomicity, markers, TODO/FIXME, disclaimers.
 - Not attempted with a `TODO:` > silence.
 - Zip name and structure (cheap points, easy to lose).
@@ -180,7 +180,7 @@ Commits too.
 | D-7..D-5 | Re-read **all of LANG2** with his comments (the `.new.md` version). Do his 11-point list (§2.1) | You can explain each in 2 sentences without looking |
 | D-5..D-4 | Type conversions + precedence drills: `../../Study_Guide/09-drills.md`, `13-cheatsheet.md` | 20/20 on mock Part A snippets of `12-mock-exam.md` |
 | D-4 | LANG1, LANG3 (style, comments, tests), 5.2 numbers, 5.4 arrays | You can write sort/map/filter/reduce from memory |
-| D-3 | Git: redo dwec1p3 steps from scratch (UT + refactor + rollback) | Clean history with `(*n)` style |
+| D-3 | Git: redo dwec1p3 steps from scratch (UT + refactor + rollback) | Clean history with `(#n)` style |
 | D-2 | **Full timed mock A**: `../mock-exam/EXAM.md` (2h30) | Zip delivered, history readable |
 | D-1 | **Full timed mock B**: `EXAM.md` here (3 h, both parts), then check against `SOLUTIONS.md` | Re-do mistakes; update the cheat-sheet |
 | Day | Light review of the cheat-sheet only | Sleep |
@@ -198,7 +198,7 @@ He allows anything on paper [F], and recommends solved exercises. Bring:
    + refactor), printed, with comments.
 2. **This exam and the mock**, solved (your own versions).
 3. A **git/commit page**: the tag list, the message rules (§2.3), the
-   `(*n)` convention, the commands (`init -b main`, `add`, `commit -m`,
+   `(#n)` convention, the commands (`init -b main`, `add`, `commit -m`,
    `log --oneline`, `diff`, `revert <sha>`, `status`, `restore`).
 4. **Operator precedence table** + his synthesis, **coercion tables** (`+`,
    `==`, `<`, `Number()`, `Boolean()`), the falsy list.
@@ -251,13 +251,13 @@ Remember: a cheat sheet doesn't replace knowledge ("deceptively tempting")
 3. Create `dwec1pX/` on the desktop, `git init -b main`, check
    `git config user.name/email` (a fresh empty user may have none!).
    First commit: `chore: init project`? Only if the PDF allows an empty
-   start; otherwise first real commit is `feat: (*1) ...`.
+   start; otherwise first real commit is `feat: (#1) ...`.
 
 **During (per section, loop of ~10–20 min)**
 1. Read the section again. Write `// n` marker.
 2. Code the smallest working version -> **open it in the browser, look at the
    console**.
-3. `git diff` + `git log --oneline` (5.1), then **one** commit with `(*n)`.
+3. `git diff` + `git log --oneline` (5.1), then **one** commit with `(#n)`.
 4. Stuck > 10 min? Write a `TODO:`/`FIXME:` with the future commit message,
    commit, move on. Come back if time remains.
 
@@ -288,7 +288,7 @@ Remember: a cheat sheet doesn't replace knowledge ("deceptively tempting")
 | `||` where `??` is needed (valid `0`) | the classic bug |
 | One giant commit | not atomic; process is graded |
 | `Added`, `Fixes.`, capital letter | wrong imperative / format |
-| No `(*n)` in message | explicit instruction in the PDF |
+| No `(#n)` in message | explicit instruction in the PDF |
 | Magic numbers / copy-pasted loops | DRY, not ad-hoc |
 | Lines over 80 / tabs | explicit rule |
 | Silence over the unfinished | `TODO:` scores more than nothing |
@@ -315,7 +315,7 @@ Remember: a cheat sheet doesn't replace knowledge ("deceptively tempting")
 
 1. Exam date and order of Part A / Part B within the 3 hours.
 2. Weights per section and for process vs result.
-3. Exact commit format: `feat: (*3) ...` or `feat(*3): ...`?
+3. ~~Exact commit format~~ (answered by the new PDF, §15.1: `(#3)` with `#`, after the tag).
 4. Is the `'use strict'` line allowed as the first line of the template script?
 5. Is the zip content checked only for the files listed?
 6. In the V/F: is "per RA" visible (which items belong to which RA)?
@@ -370,7 +370,7 @@ Reviewed 2026-11-04 against `../mock-exam/` (files `parcel_tak0.html`,
    `switch` without `default`)?
 4. Is any block copy-pasted? Extract a helper.
 5. Do all section zones have `// n` and each deviation a disclaimer?
-6. `git diff` and `git log --oneline`, then one commit with `(*n)`.
+6. `git diff` and `git log --oneline`, then one commit with `(#n)`.
 
 ### 12.4 Next steps
 - Finish Sections 3–7 of the mock (`dayType` fix, primes with labelled
@@ -1213,6 +1213,30 @@ state); **powerful functions** (a function doing too much).
 - Relation to arrays/functions: arrays and functions are also objects [P];
   objects are created without classes.
 
+**His comments on 4.1 [P]** (new file `dwec2-data/jsinfo-lang-4-objects-basics-comments.md`):
+- **Objects are first-class citizens; properties are dynamic.** Key
+  difference with Java: no class needed beforehand, `{}` creates objects ad
+  hoc; classes are the 2nd-class citizens (an ES6 addition). Properties can
+  be added/removed at run time.
+- **Objects are sort of associative arrays:** the bracket notation shows it
+  (string "indexes" instead of increasing integers; no guaranteed order).
+- **`[ ]` is context dependent:** inside an object literal in the name
+  position it is a *computed property*, not an array. "Computed" means
+  computed **name**, not computed value. Advantages: compact, and in the same
+  expression as normal properties. Any expression is valid there.
+- **Shorthand and name limitations are ES6 additions;** you may not write
+  them, but others will, so you must be able to read them.
+- **`in`:** the left side can be any expression that results in a string
+  (quoted string = the name itself; unquoted = a variable holding the name).
+  `undefined` should not be assigned explicitly (use `null`), so `in` is
+  "an exotic guest" unless you read code that does not follow that.
+- **`for...in` is completely different from the `in` operator:** the
+  operator returns a boolean inside an expression; the `for...in` keyword
+  assigns to `key` each property name in turn. **For arrays do not use
+  `for...in`** (use `for...of` or a normal `for`; reason in LANG5.4).
+- **Do not rely on creation order** (others may, in code you read). The
+  console shows creation order inline, but alphabetical when you expand it.
+
 **Traps.** `user.key` vs `user[key]`; missing quotes on multiword keys; `in`
 with a non-string left side; key order with numeric keys; `const` ≠
 immutable; `typeof {}`/`[]`/`null` are all `"object"`.
@@ -1233,3 +1257,149 @@ immutable; `typeof {}`/`[]`/`null` are all `"object"`.
 - `null == 0` false; `null >= 0` true; `"2" > "12"` true;
   `undefined == null` true; `NaN == NaN` false; `[] == []` false.
 - `null ?? undefined ?? 0` = `0`; `null || 2 && 3 || 4` = `3`.
+
+---
+
+# 15. The real mock exam (`dwec1p4`): statement, your result, lessons
+
+Sources: `sync/dwec-shared-onedrive-vendored/dwec1-js/dwec1p4/` (the two new
+PDFs, synced from the shared OneDrive on 2026-11-04) and your submission
+`Practices/mock-exam/Actual_mock_exam_result/IDENTIF.troshko.nikita.zip`.
+Reference solution (24 tests, mutation-checked): `ref-dwec1p4/main.js`.
+
+## 15.1 What the new PDFs change in my earlier material
+
+| Earlier (from the OCR of the forum PDF) | Real PDF |
+|---|---|
+| Section tag `(*3)` and `// 3` | **`(#3)`, `(#3.1)`, `(#3.3,#4,#5)` and `// #3`, `// #3 {{` ... `// #3 }}`**. The `*` was an OCR misread. Fixed in `EXAM.md`, `SOLUTIONS.md`, `ref/`. |
+| Folder name `dwec1p4` as an example | **IDENTIF = the task id you are given, in lowercase**: folder `dwec1p4/`, zip `dwec1p4.troshko.nikita.zip`, only that folder at the zip root |
+| (not stated) | "Even if you do the sections in another order, **keep the code in the order of the statement**" |
+
+Commit format stays: Conventional Commits tag first, then the section in
+parentheses, then the message: `feat: (#2) add myIndex`.
+
+## 15.2 The task, in one paragraph
+`#1` create `main.js`. `#2` `myIndex(arr, target)`: from the **end** of a flat
+array of primitives, return the first index whose element `===` target;
+`-1` if not found **or on any error**; empty array allowed; **no array
+methods**; example `myIndex([8,7,8,9], 8)` → `2`. `#3` comment that call; all
+tests inside a function `ut()` called after its declaration; exact header
+`testNum | OK/KO!| arr | target | out | expectedOut`; one line per test;
+**the test number must be literally in the code of each case (not
+autogenerated)**; `OK` / `KO!`; then a blank line and `Pass: X/Y`. `#4` more
+cases, quality over quantity, **each with its purpose commented**; bugs found
+are fixed in **separate commits**. `#5` optional third parameter `num`
+(default 1): the `num`-th match from the end; example
+`myIndex([8,8,7,8,8,7,8,9], 8, 2)` → `4`. `#6` more cases for `num`.
+
+Note: the statement's own example lacks a closing parenthesis
+(`console.log(myIndex([8, 7,8,9], 8);`). You spotted it and said so in a
+comment: that is exactly the kind of disclaimer he rewards.
+
+## 15.3 What you did well
+- Finished within the 2h30 (commits 15:09 → 17:39) with **12 progressive
+  commits**; tests grew with the sections.
+- Searched from the end with `===`, without array methods; `num` default as
+  `num = 1`; the `count === num` logic is right.
+- Found and fixed the `i > 0` bug (it skipped index 0) and the `break`
+  problem; comments with the purpose of most tests; honest `TODO:`; you
+  noticed the typo in the statement.
+
+## 15.4 Findings, by importance
+
+### A. Functional errors
+1. **Not found returns `1`, not `-1`.** The statement says `-1` (quoted
+   `“-1”`). You wrote `return 1`, then called it "a workaround", and your
+   **test expected `1`** (`ut([8,7,8,9], 6, 1)`), so the test *passed and hid
+   the bug*. A test must encode the statement, not the current behaviour.
+   Verified: `myIndex([8,7,8,9], 6)` → `1`.
+2. **Several tests are wrong, not the code.** The "KO!" lines come from wrong
+   expectations: `ut([1,2,3,4], 1, 2)` (index of 1 is 0), `ut([1,2,3,4], 1,
+   "a")`, `ut([8,7,"a",9,"a"], "a", 2)` (answer is 4). Out of 13 final tests
+   only 6 pass, and the failures give no signal because nobody can tell a
+   real bug from a bad test. A good suite is green except for real bugs.
+3. **"Any error → -1" is not handled.** `myIndex(null, 8)` throws. (The
+   statement says to assume expected types *initially*, but "any error" is
+   still stated.) A `try/catch` returning `-1`, or a disclaimer, was needed.
+4. **Invalid `num` is silently turned into 1** (`num < 1` or non-integer).
+   Undocumented; `-1` is the consistent choice, or write a disclaimer.
+
+### B. Not following the statement literally (cheap points)
+5. **`ut()` must be a function with no parameters containing all cases, called
+   once.** You made `ut(arr, target, expected, num)` and called it per test.
+6. **Test numbers autogenerated (`testNum++`)**; the statement says they
+   must be written literally at each case.
+7. **Header** is `testNum | okKo | arr| target | out | expectedOut | num`;
+   required `testNum | OK/KO!| arr | target | out | expectedOut`.
+8. **Summary** `Tests passed: X/Y` without the blank line; required a blank
+   line and `Pass: X/Y`. Also extra lines (`Block 1.1`, a duplicated `Block
+   2.1`) inside the table.
+9. **Folder and zip:** the zip is `IDENTIF.troshko.nikita.zip` (literally the
+   word IDENTIF) and the folder inside is `Solutions/`. Required:
+   `dwec1p4.troshko.nikita.zip` containing only `dwec1p4/`.
+   **`index.html` is an extra file** (only `main.js` was requested; the folder
+   must contain only requested files).
+10. **No `// #n` markers** anywhere in the code.
+11. **Code order:** two copies of the example call and a second test run
+    appended at the bottom (after #5) instead of keeping the code in the
+    statement's order.
+
+### C. Git history (it is graded)
+12. Messages begin with `Apartado 3:` before the tag. Required:
+    `type: (#3) message`. The `(#n)` is missing in all but one, where it is
+    `(#3.4)` inside the text.
+13. Tags: `todo:` and `fixed:` do not exist in Conventional Commits (`fix:`);
+    one commit has no tag (`Apartado 1: Create main.js`).
+14. Capital letters, past tense (`Created`, `implemented`), long and with
+    final periods: the rule is lowercase after the tag, imperative, no final
+    period, short (thread 450636).
+15. Commits mix purposes: `fix:` commit `1f40f17` also changes the test
+    harness (47 lines); the fix and the new tests must be separate commits
+    (the statement says so for #4 and #6). `test: tested the example. No errors
+    found.` changes code and tests together.
+16. Commit `bd1f976` ("todo: Fix the myIndex bug") only adds a comment; a
+    `TODO:` belongs in the code, committed with the thing it follows.
+
+### D. Style and hygiene
+17. 4-space indentation in `myIndex` (required 2) and mixed styles
+    (`function f(){` vs `function f() {`, `num=1`, `i>0`, `if(`); inconsistent
+    spacing everywhere.
+18. No `'use strict'`; globals `testNum`, `testsPassed` shared by both
+    test runs (reset by hand: `testNum = 0`).
+19. Dead and stale comments left: commented-out debug loop at the top, a
+    pasted terminal block (with your hostname and username) showing an old
+    run, `//Declaring aDevolver as 1 is a workaround` (the variable no
+    longer exists), and an old `TODO` describing a bug already "fixed".
+    Delete before the final commit.
+20. Names: `aDevolver` (Spanish, vague), `okKo`; use `result`/`found`.
+
+## 15.5 Estimated effect (my inference, not an official rubric)
+You would keep points for process and for the core algorithm, and lose most
+on: the wrong `-1` (a hidden functional bug the tests blessed), the `ut()`
+and header/summary format, the missing `(#n)` and `// #n`, the zip/folder
+name, and the extra file. All fixable in minutes **once you have a
+checklist**. The checklist is §15.6.
+
+## 15.6 Pre-submission checklist (print it)
+1. Read each sentence of the statement and copy **literals** (return values,
+   header text, `Pass: X/Y`) exactly; underline numbers like `-1`.
+2. Write the tests from the **statement**, not from what the code returns.
+   A test that expects a "workaround" value is a wrong test.
+3. Run all tests: every `KO!` must be a real bug you can name; else fix the
+   test.
+4. One commit = one purpose; fix commits separate from test commits.
+   Message: `type: (#n) lowercase imperative, no final period`.
+5. `// #n` on every zone; code in the order of the statement.
+6. 2-space indent, `'use strict'`, no dead code, no pasted terminal output.
+7. Folder `dwec1p4/` with **only** `main.js` + `.git`; zip
+   `dwec1p4.surname.name.zip` with only that folder at its root; `unzip -l`.
+8. Remaining time: `TODO:` for what is not done.
+
+## 15.7 What to do next
+- Redo the exam from scratch against `ref-dwec1p4/main.js` after studying the
+  differences (do not copy: type it, run it, mutate it).
+- Re-read §7 ("bites"): strict `===` and `NaN` appear in this task as test
+  cases (`NaN` target, `'8'` vs `8`, `undefined`/`null` as targets).
+- New synced material: `dwec2-data/` (his comments on LANG4/5/6,
+  `dwec2p1` task). It was missing from the repo; copied into
+  `sync/dwec-shared-onedrive-vendored/dwec2-data/`.

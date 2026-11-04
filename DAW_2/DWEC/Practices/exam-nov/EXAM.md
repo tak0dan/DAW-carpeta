@@ -35,17 +35,17 @@ If you do not follow the order of the sections, think about what that may
 affect. You may fix or improve earlier sections after doing later ones.
 
 At the START of each commit message (after the Conventional Commits tag) put
-the section number in parentheses, e.g. `feat: (*3) add ...`. More commits
-for the same section: `(*3.1)`, `(*3.2)`. Several sections: `(*3.3,*4)`.
+the section number in parentheses, e.g. `feat: (#3) add ...`. More commits
+for the same section: `(#3.1)`, `(#3.2)`. Several sections: `(#3.3,#4)`.
 After the parentheses, the rest of the message.
 
 **Comments.** Comment where convenient following class practice. Mark which
 section each zone of your code belongs to:
 
-    // 3
+    // #3
 
-To delimit a zone more explicitly, add a start mark `// 3 {{` and an end
-mark `// 3 }}`.
+To delimit a zone more explicitly, add a start mark `// #3 {{` and an end
+mark `// #3 }}`.
 
 **Valid for every section (and counted in each one):**
 
@@ -207,7 +207,7 @@ In `scripts/library/uts.js` + `uts.html` (loads `main.js`, then `uts.js`):
 
 ### Section 8 — Git (the history is graded) · 5 %
 
-1. At least one commit per section with the right tag and `(*n)`.
+1. At least one commit per section with the right tag and `(#n)`.
 2. Do a `git revert` of one commit on purpose and explain in its message
    why revert and not reset.
 3. Leave at least one honest `TODO:`.

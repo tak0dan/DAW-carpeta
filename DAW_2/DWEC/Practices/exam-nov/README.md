@@ -7,6 +7,7 @@
 | `SOLUTIONS.md` | Answer key and grading notes (don't open before trying) |
 | `ref/` | Runnable reference solution (`library.html`, `scripts/library/*`) |
 | `check.js` | `node check.js` verifies every code claim in Part B |
+| `ref-dwec1p4/main.js` | Reference solution of the real mock task `dwec1p4` (`myIndex`), 24 tests; the review of your attempt is `GUIDE.md` §15 |
 | `check-theory.js` | `node check-theory.js` verifies the code claims of `GUIDE.md` Part II |
 
 Different from `../mock-exam/` (the "parcel" simulacro): same format, new task.

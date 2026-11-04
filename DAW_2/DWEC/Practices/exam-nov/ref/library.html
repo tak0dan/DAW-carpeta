@@ -8,31 +8,31 @@
   </body>
   <script src="scripts/library/main.js"></script>
   <script>
-    'use strict'; // 0: first statement, or it does nothing (thread 445134)
+    'use strict'; // #0: first statement, or it does nothing (thread 445134)
     let totalNum;
     let endsInZeroCent;
     // Add your code here
     //{{-------------------------------------------------------
-    // 1
+    // #1
     const dailyRate = 0.35;
     const daysLate = 17;
     const discount = 0.15;
-    // 1
+    // #1
     const total = dailyRate * daysLate * (1 - discount); // 5.0574999...
     const totalText = total.toFixed(2); // "5.06": toFixed returns a STRING
     totalNum = typeof totalText === 'string' ? Number(totalText) : totalText;
     // Integer cents: avoids float surprises when testing the last digit.
     endsInZeroCent = Math.round(totalNum * 100) % 10 === 0; // 506 -> false
-    // Disclaimer (1.5): 0.1 + 0.2 is 0.30000000000000004 (binary floats).
+    // Disclaimer (#1.5): 0.1 + 0.2 is 0.30000000000000004 (binary floats).
     // Here it does not matter: we round to 2 decimals before using the value.
 
-    // 2
+    // #2
     const cost = fineFor(10, true); // 2.08
     const text = `Fine: ${cost ?? 'Invalid days'}`;
     const bad = `Fine: ${fineFor(-3) ?? 'Invalid days'}`;
     // `??` and not `||`: a valid fine of 0 must NOT become 'Invalid days'.
 
-    // 4 (for / while / do...while, same line, DRY)
+    // #4 (for / while / do...while, same line, DRY)
     const fineLine = (n) => `${n}:${fineFor(n)}`;
     const forParts = [];
     for (let n = 1; n <= 10; n++) forParts.push(fineLine(n));
@@ -55,7 +55,7 @@
     }
     console.log(prods.join(','));
 
-    // 5
+    // #5
     const daysList = [0, 3, 12, 45, 9];
     const fines = daysList.map((x) => fineFor(x));
     const positive = fines.filter((f) => f > 0);
@@ -65,7 +65,7 @@
     const copy = daysList.slice(); // independent copy; `= daysList` is alias
     console.log(fines, sum.toFixed(2), sorted);
 
-    // 6
+    // #6
     const greet = (name = 'reader', msg = 'Hello') => `${msg}, ${name}!`;
     // greet(null) -> "Hello, null!": defaults only for undefined, not null.
 

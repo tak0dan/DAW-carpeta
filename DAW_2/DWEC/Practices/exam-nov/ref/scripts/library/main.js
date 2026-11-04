@@ -1,6 +1,6 @@
 'use strict';
-// 2: tiers as data, not as a pile of ad-hoc ifs (extensible, DRY).
-// Disclaimer (2): the spec does not say if a rate applies to ALL the days
+// #2: tiers as data, not as a pile of ad-hoc ifs (extensible, DRY).
+// Disclaimer (#2): the spec does not say if a rate applies to ALL the days
 // or only to the days inside its tier. I chose the second (progressive).
 const TIERS = [
   { upTo: 7, rate: 0.20 },
@@ -25,7 +25,7 @@ const fineFor = (daysLate, isMember = false) => {
   return Math.round(fine * 100) / 100; // 2 decimals as a NUMBER
 };
 
-// 3
+// #3
 const lateness = (days) =>
   days <= 0 ? 'on time'
     : days <= 7 ? 'late'
