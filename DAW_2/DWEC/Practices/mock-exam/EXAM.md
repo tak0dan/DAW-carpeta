@@ -19,7 +19,8 @@ printed/handwritten notes.
 - Git on the default modern branch (`main`). Commit at least at the end of
   every section: **Conventional Commits, atomic**, with the section number
   right after the tag, in parentheses: `feat: (*3) add ...` (tag, then
-  `(*3)`, then the message; my reading of the PDF, confirm it in class). More commits
+  `(*3)`, then the message; my reading of the PDF, confirm it in class). 
+  More commits
   in the same section: `(*3.1)`, `(*3.2)`. Several sections: `(*3.3,*4)`.
 - In the code, mark which section each zone belongs to: `// 3`, or bounded
   with a start and an end mark.
@@ -171,8 +172,8 @@ the lines (only helps). 24 items, 20 min.
 12. ( V / F ) `a || b` returns the first truthy operand, or the last operand if
     none is truthy.
 13. ( V / F ) `"2" > "12"` is `true`.
-14. ( V / F ) In a `switch`, comparison between the value and each `case` is done
-    with strict equality.
+14. ( V / F ) In a `switch`, comparison between the value and each `case` is 
+done with strict equality.
 15. ( V / F ) A `break` in a `switch` case is optional; without it execution
     "falls through" to the next case.
 16. ( V / F ) `0.1 + 0.2 === 0.3` is `true` in JS.
@@ -212,8 +213,8 @@ the lines (only helps). 24 items, 20 min.
 
 ## B.3 Short answers (write something short)
 
-37. Explain in 2 lines why `isNaN()` was called "totally wrong" in math2 and what
-    to use instead.
+37. Explain in 2 lines why `isNaN()` was called "totally wrong" in math2 and 
+what to use instead.
 38. Why is "atomic commit" a good practice? Give a counter-example.
 39. When is `//` better than `/* */`, and what kind of comment should you
     avoid (jsinfo + teacher's view)?

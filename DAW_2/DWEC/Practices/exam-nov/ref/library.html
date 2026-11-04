@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>library</title>
+  </head>
+  <body>
+  </body>
+  <script src="scripts/library/main.js"></script>
+  <script>
+    'use strict'; // 0: first statement, or it does nothing (thread 445134)
+    let totalNum;
+    let endsInZeroCent;
+    // Add your code here
+    //{{-------------------------------------------------------
+    // 1
+    const dailyRate = 0.35;
+    const daysLate = 17;
+    const discount = 0.15;
+    // 1
+    const total = dailyRate * daysLate * (1 - discount); // 5.0574999...
+    const totalText = total.toFixed(2); // "5.06": toFixed returns a STRING
+    totalNum = typeof totalText === 'string' ? Number(totalText) : totalText;
+    // Integer cents: avoids float surprises when testing the last digit.
+    endsInZeroCent = Math.round(totalNum * 100) % 10 === 0; // 506 -> false
+    // Disclaimer (1.5): 0.1 + 0.2 is 0.30000000000000004 (binary floats).
+    // Here it does not matter: we round to 2 decimals before using the value.
+
+    // 2
+    const cost = fineFor(10, true); // 2.08
+    const text = `Fine: ${cost ?? 'Invalid days'}`;
+    const bad = `Fine: ${fineFor(-3) ?? 'Invalid days'}`;
+    // `??` and not `||`: a valid fine of 0 must NOT become 'Invalid days'.
+
+    // 4 (for / while / do...while, same line, DRY)
+    const fineLine = (n) => `${n}:${fineFor(n)}`;
+    const forParts = [];
+    for (let n = 1; n <= 10; n++) forParts.push(fineLine(n));
+    const whileParts = [];
+    let w = 1;
+    while (w <= 10) whileParts.push(fineLine(w++));
+    const doParts = [];
+    let d = 1;
+    do doParts.push(fineLine(d++)); while (d <= 10);
+    console.log(forParts.join(' '));
+    console.log(whileParts.join(' ') === forParts.join(' '));
+    console.log(doParts.join(' ') === forParts.join(' '));
+    // labelled break: stop ALL loops when a product passes 9
+    const prods = [];
+    outer: for (let a = 1; a <= 4; a++) {
+      for (let b = 1; b <= 4; b++) {
+        if (a * b > 9) break outer;
+        prods.push(a * b);
+      }
+    }
+    console.log(prods.join(','));
+
+    // 5
+    const daysList = [0, 3, 12, 45, 9];
+    const fines = daysList.map((x) => fineFor(x));
+    const positive = fines.filter((f) => f > 0);
+    const sum = positive.reduce((acc, f) => acc + f, 0);
+    const sorted = [...daysList].sort((a, b) => a - b); // numeric sort!
+    // `[10, 9, 1].sort()` gives [1, 10, 9]: default sort compares as strings.
+    const copy = daysList.slice(); // independent copy; `= daysList` is alias
+    console.log(fines, sum.toFixed(2), sorted);
+
+    // 6
+    const greet = (name = 'reader', msg = 'Hello') => `${msg}, ${name}!`;
+    // greet(null) -> "Hello, null!": defaults only for undefined, not null.
+
+    // idea: number of digits of a positive integer, no loop, no string
+    const digits = (n) => Math.floor(Math.log10(n)) + 1;
+    // TODO: n = 0 gives -Infinity + 1; spec said positive, so out of scope.
+    //}}-------------------------------------------------------
+    // Don't edit the code below here!
+    const p = document.createElement('p');
+    p.textContent =
+      `Total: ${ totalNum } (ends in zero cent? ${ endsInZeroCent })`;
+    document.querySelector('body').appendChild(p);
+  </script>
+</html>
