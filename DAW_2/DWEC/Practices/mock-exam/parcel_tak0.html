@@ -11,6 +11,25 @@ let totalNum;
 let isEvenCents;
 // Add your code here
 //{{-------------------------------------------------------
+
+const { price = 19.99, units = 3, vatRate = 0.21} = {};
+
+let total = (price * units * (1 + vatRate));
+
+let totalText = total.toFixed(2);
+
+if(typeof totalText === "string"){
+  totalNum = Number(totalText);  
+}
+
+if((totalNum*100)%2 === 0){
+  isEvenCents = true;
+}else if((totalNum*100)%2 === 1){
+  isEvenCents = false;
+}else{
+  Error;
+}
+
 //}}-------------------------------------------------------
 // Don't edit the code below here!
 const p = document.createElement('p');
